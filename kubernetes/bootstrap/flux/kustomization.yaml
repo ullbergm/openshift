@@ -1,0 +1,39 @@
+---
+# yaml-language-server: $schema=https://json.schemastore.org/kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - github.com/fluxcd/flux2/manifests/install?ref=v2.1.2
+patches:
+  - patch: |
+      apiVersion: apps/v1
+      kind: Deployment
+      metadata:
+        name: all
+      spec:
+        template:
+          spec:
+            containers:
+              - name: manager
+                securityContext:
+                  runAsUser: 65534
+                  seccompProfile:
+                    $patch: delete      
+    target:
+      kind: Deployment
+      labelSelector: app.kubernetes.io/part-of=flux
+  - patch: |-
+      - op: remove
+        path: /metadata/labels/pod-security.kubernetes.io~1warn
+      - op: remove
+        path: /metadata/labels/pod-security.kubernetes.io~1warn-version      
+    target:
+      kind: Namespace
+      labelSelector: app.kubernetes.io/part-of=flux
+  - patch: |
+      - op: add
+        path: /spec/template/spec/containers/0/args/-
+        value: --concurrent=5      
+    target:
+      kind: Deployment
+      name: "source-controller"
