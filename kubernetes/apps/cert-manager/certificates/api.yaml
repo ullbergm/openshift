@@ -14,7 +14,7 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: api.${SECRET_TLD}
+  commonName: api.openshift.${SECRET_TLD}
   dnsNames: 
-    - "api.${SECRET_TLD}"
-    - "api-int.${SECRET_TLD}"
+    - "api.openshift.${SECRET_TLD}"
+    - "api-int.openshift.${SECRET_TLD}"

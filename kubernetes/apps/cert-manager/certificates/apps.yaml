@@ -14,6 +14,6 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: apps.${SECRET_TLD}
+  commonName: apps.openshift.${SECRET_TLD}
   dnsNames: 
-    - "*.apps.${SECRET_TLD}"
+    - "*.apps.openshift.${SECRET_TLD}"
