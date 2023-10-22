@@ -6,7 +6,7 @@ metadata:
   name: openshift
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 3m
   url: ssh://git@github.com/ullbergm/openshift
   ref:
     branch: main
@@ -25,7 +25,7 @@ metadata:
   name: cluster
   namespace: flux-system
 spec:
-  interval: 30m
+  interval: 3m
   path: ./kubernetes/flux
   prune: true
   wait: false
