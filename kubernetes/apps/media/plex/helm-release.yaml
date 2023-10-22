@@ -94,6 +94,7 @@ spec:
           #       return 301 $scheme://$host/web/index.html;
           #     }
           #   }
+          route.openshift.io/termination: "edge" 
         hosts:
           - host: &host "plex.apps.openshift.${SECRET_TLD}"
             paths:
