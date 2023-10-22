@@ -25,18 +25,21 @@ spec:
       remediateLastFailure: true # remediate the last failure, when no retries remain
     cleanupOnFail: true
   values:
-    controller:
-      type: statefulset
-      annotations:
-        reloader.stakater.com/auto: "true"
-
-    image:
-      # renovate: docker-image versioning=loose
-      repository: ghcr.io/onedr0p/plex
-      tag: 1.32.6.7557-1cf77d501
-
-    env:
-      TZ: ${TIMEZONE}
+    controllers:
+      main:
+        strategy: Recreate
+        type: statefulset
+        annotations:
+          reloader.stakater.com/auto: "true"
+        containers:
+          main:
+            image:
+              # renovate: docker-image versioning=loose
+              repository: ghcr.io/onedr0p/plex
+              tag: 1.32.6.7557-1cf77d501
+              pullPolicy: IfNotPresent
+            env:
+              TZ: ${TIMEZONE}
 
     service:
       main:
@@ -99,16 +102,6 @@ spec:
               - *host
             secretName: "apps-wildcard-cert-tls"
 
-    podSecurityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
-      supplementalGroups:
-        - 44
-        - 109
-        - 100
-
     persistence:
       # config:
       #   enabled: true
@@ -117,7 +110,20 @@ spec:
       data:
         enabled: true
         existingClaim: data-volume
+        globalMounts:
+          - path: /data
 
       transcode:
         enabled: true
-        type: emptyDir
+
+    defaultPodOptions:
+    securityContext:
+        runAsUser: 568
+        runAsGroup: 568
+        fsGroup: 568
+        fsGroupChangePolicy: "OnRootMismatch"
+        supplementalGroups:
+          - 44
+          - 109
+          - 100
+          - 65535
