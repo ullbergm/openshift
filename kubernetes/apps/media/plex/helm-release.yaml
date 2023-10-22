@@ -115,6 +115,8 @@ spec:
 
       transcode:
         enabled: true
+        accessMode: ["ReadWriteOnce"]
+        type: emptyDir
 
     defaultPodOptions:
     securityContext:
