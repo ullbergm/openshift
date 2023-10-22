@@ -95,7 +95,7 @@ spec:
           #     }
           #   }
         hosts:
-          - host: &host "plex.openshift.apps.${SECRET_TLD}"
+          - host: &host "plex.apps.openshift.${SECRET_TLD}"
             paths:
               - path: /
                 pathType: Prefix
