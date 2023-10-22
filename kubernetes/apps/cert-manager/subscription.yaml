@@ -10,5 +10,4 @@ spec:
   name: cert-manager 
   source: community-operators 
   sourceNamespace: openshift-marketplace 
-  installPlanApproval: Manual
-  startingCSV: cert-manager.v1.13.1
+  installPlanApproval: Automatic
