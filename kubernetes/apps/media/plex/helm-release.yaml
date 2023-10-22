@@ -40,6 +40,9 @@ spec:
             env:
               TZ: ${TIMEZONE}
 
+    serviceAccount:
+      name: plex-sa
+
     service:
       main:
         type: LoadBalancer
