@@ -26,7 +26,6 @@ metadata:
   namespace: data
 spec:
   accessModes: ["ReadWriteMany"]
-  storageClassName: ""
   resources:
     requests:
       storage: 1Mi # Size does not matter
