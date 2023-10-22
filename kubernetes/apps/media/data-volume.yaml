@@ -1,11 +1,20 @@
 ---
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: media
+provisioner: nfs
+parameters:
+  archiveOnDelete: "false"
+---
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: data-volume
+  name: media
 spec:
+  storageClassName: media
   capacity:
-    storage: 1Mi # Size does not matter
+    storage: 1Mi # Size does not matter ...twss
   accessModes: ["ReadWriteMany"]
   persistentVolumeReclaimPolicy: Retain
   nfs:
@@ -22,10 +31,11 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: data-volume
-  namespace: data
+  name: media
+  namespace: default
 spec:
   accessModes: ["ReadWriteMany"]
+  storageClassName: media
   resources:
     requests:
-      storage: 1Mi # Size does not matter
+      storage: 1Mi # Size does not matter ...twss
