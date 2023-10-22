@@ -86,14 +86,14 @@ spec:
           hajimari.io/icon: "plex"
           hajimari.io/group: "Media"
           hajimari.io/info: "Manages your movie library"
-          kubernetes.io/ingress.class: nginx
-          nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
-          nginx.ingress.kubernetes.io/configuration-snippet: |
-            location = / {
-              if ($http_x_plex_device = ""){
-                return 301 $scheme://$host/web/index.html;
-              }
-            }
+          # kubernetes.io/ingress.class: nginx
+          # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
+          # nginx.ingress.kubernetes.io/configuration-snippet: |
+          #   location = / {
+          #     if ($http_x_plex_device = ""){
+          #       return 301 $scheme://$host/web/index.html;
+          #     }
+          #   }
         hosts:
           - host: &host "plex.openshift.apps.${SECRET_TLD}"
             paths:
