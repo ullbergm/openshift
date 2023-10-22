@@ -2,7 +2,7 @@ apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
   name: api-cert-tls
-  namespace: cert-manager
+  namespace: openshift-config
 spec:
   secretTemplate:
     annotations:
