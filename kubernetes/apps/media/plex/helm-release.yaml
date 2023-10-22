@@ -45,8 +45,8 @@ spec:
 
     service:
       main:
-        type: LoadBalancer
-        loadBalancerIP: "192.168.64.41"
+        # type: LoadBalancer
+        # loadBalancerIP: "192.168.64.41"
         ports:
           http:
             port: 32400
