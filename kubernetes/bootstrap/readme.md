@@ -85,7 +85,13 @@ get your token after logging in to the cluster
 ```sh
 oc login --token=sha256~pTLPMEs_...snip..._pthkBiyfHTS0E --server=https://api.openshift.your.domain:6443
 oc apply --server-side --kustomize ./kubernetes/bootstrap/flux
+```
 
+```sh
+oc apply --server-side --kustomize ./kubernetes/flux/config
+```
+
+```sh
 FLUX_CONTROLLERS=(
 "source-controller"
 "kustomize-controller"
