@@ -5,3 +5,7 @@ kind: Kustomization
 resources:
   # Subscription
   - ./subscription.yaml
+  # Issuers
+  - ./issuers
+  # Certificates
+  - ./certificates
