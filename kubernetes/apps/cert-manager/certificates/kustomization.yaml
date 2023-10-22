@@ -11,6 +11,7 @@ patches:
     version: v1
     kind: IngressController
     name: default
+    namespace: openshift-ingress-operator
    patch: |
     - op: add
       path: /spec/defaultCertificate
