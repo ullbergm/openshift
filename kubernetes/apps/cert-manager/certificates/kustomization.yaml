@@ -5,3 +5,14 @@ kind: Kustomization
 resources:
   - ./api.yaml
   - ./apps.yaml
+patches:
+ - target:
+    group: operator.openshift.io
+    version: v1
+    kind: IngressController
+    name: default
+   patch: |
+    - op: add
+      path: /spec/defaultCertificate
+      value:
+        name: apps-wildcard-cert-tls
