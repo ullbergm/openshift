@@ -3,24 +3,6 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - scc.yaml
-  - rolebinding.yaml
-  - github.com/kubernetes-sigs/node-feature-discovery/deployment/overlays/default-combined?ref=v0.14.3
-# patches:
-#   - patch: |
-#       apiVersion: apps/v1
-#       kind: Deployment
-#       metadata:
-#         name: all
-#       spec:
-#         template:
-#           spec:
-#             containers:
-#               - name: manager
-#                 securityContext:
-#                   runAsUser: 65534
-#                   seccompProfile:
-#                     $patch: delete      
-#     target:
-#       kind: Deployment
-#       labelSelector: app.kubernetes.io/part-of=flux
+  - namespace.yaml
+  - operatorgroup.yaml
+  - subscription.yaml
