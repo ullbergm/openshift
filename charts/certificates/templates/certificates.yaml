@@ -1,0 +1,30 @@
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: api-cert-tls
+  namespace: openshift-config
+spec:
+  secretName: api-cert-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: api.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  dnsNames: 
+    - "api.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+    - "api-int.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: apps-wildcard-cert-tls
+  namespace: openshift-ingress
+spec:
+  secretName: apps-wildcard-cert-tls
+  issuerRef:
+    name: letsencrypt-production
+    kind: ClusterIssuer
+  commonName: apps.{{ .Values.cluster_name }}.{{ .Values.top_level_domain }}
+  dnsNames: 
+    - "apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+    - "*.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
