@@ -10,7 +10,6 @@ replacements:
 - source:
     kind: Secret
     name: cert-manager-secrets
-    version: v1
   targets:
   - fieldPaths:
     - spec.commonName
