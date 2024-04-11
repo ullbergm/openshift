@@ -24,7 +24,7 @@ spec:
   issuerRef:
     name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: apps.{{ .Values.cluster_name }}.{{ .Values.top_level_domain }}
+  commonName: "apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
   dnsNames: 
     - "apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
     - "*.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"

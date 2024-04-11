@@ -14,5 +14,5 @@ annotations:
         Initial release.
 dependencies:
 - name: certificates
-  version: 0.1.0
+  version: 0.1.2
   repository: file://charts/certificates
