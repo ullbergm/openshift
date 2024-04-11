@@ -8,9 +8,9 @@ resources:
 #  - ./patch-apps-ingress.yaml
 replacements:
 - source:
-    kind: Secret
-    name: cert-manager-secrets
-    fieldPath: stringData.SECRET_TLD
+    kind: ConfigMap
+    name: cert-manager-config
+    fieldPath: data.SECRET_TLD
   targets:
   - select:
       group: cert-manager.io
