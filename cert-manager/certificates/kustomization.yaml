@@ -14,3 +14,5 @@ vars:
     name: cert-manager-secrets
     namespace: cert-manager
     apiVersion: v1
+  fieldref:
+    fieldpath: data.SECRET_TLD
