@@ -6,3 +6,14 @@ resources:
   - ./secret.yaml
   - ./letsencrypt-production.yaml
   - ./letsencrypt-staging.yaml
+replacements:
+  - path: secret.yaml
+    apiVersion: v1
+    kind: Secret
+    fieldSpecs:
+      - path: data.AWS_ACCESS_KEY_ID
+        create: true
+        from:
+          secretKeyRef:
+            name: cert-manager-secrets
+            key: AWS_ACCESS_KEY_ID
