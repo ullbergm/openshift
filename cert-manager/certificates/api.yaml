@@ -7,9 +7,9 @@ metadata:
 spec:
   secretName: api-cert-tls
   issuerRef:
-    name: letsencrypt-staging
+    name: letsencrypt-production
     kind: ClusterIssuer
-  commonName: api.openshift.SECRET_TLD_PLACEHOLDER
+  commonName: api.openshift.${SECRET_TLD}
   dnsNames: 
-    - "api.openshift.SECRET_TLD_PLACEHOLDER"
-    - "api-int.openshift.SECRET_TLD_PLACEHOLDER"
+    - "api.openshift.${SECRET_TLD}"
+    - "api-int.openshift.${SECRET_TLD}"
