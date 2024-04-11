@@ -4,11 +4,11 @@ global:
 cluster:
   top_level_domain: example.com
   name: my-cluster
-  admin_email: magnus@ullberg.us
+  admin_email: YOUR_EMAIL
 
 issuer: staging # or production
 aws:
-  region: us-east-1
+  region: YOUR_REGION
   hosted_zone_id: YOUR_HOSTED_ZONE_ID
   access_key_id: YOUR_ACCESS_KEY_ID
   access_key_secret: YOUR_SECRET_ACCESS_KEY
