@@ -1,15 +1,47 @@
----
 # yaml-language-server: $schema=https://json.schemastore.org/kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ./api.yaml
-  - ./apps.yaml
+- ./api.yaml
+- ./apps.yaml
 # Disabled until i know certs work
 #  - ./patch-apps-ingress.yaml
-vars:
-- name: SECRET_TLD
-  objref:
+replacements:
+- source:
     kind: Secret
     name: cert-manager-secrets
-    apiVersion: v1
+    version: v1
+  targets:
+  - fieldPaths:
+    - spec.commonName
+    options:
+      delimiter: .
+      index: 2
+    select:
+      group: cert-manager.io
+      kind: Certificate
+      name: apps-wildcard-cert-tls
+      namespace: openshift-ingress
+      version: v1
+  - fieldPaths:
+    - spec.dnsNames.0
+    options:
+      delimiter: .
+      index: 2
+    select:
+      group: cert-manager.io
+      kind: Certificate
+      name: apps-wildcard-cert-tls
+      namespace: openshift-ingress
+      version: v1
+  - fieldPaths:
+    - spec.dnsNames.1
+    options:
+      delimiter: .
+      index: 3
+    select:
+      group: cert-manager.io
+      kind: Certificate
+      name: apps-wildcard-cert-tls
+      namespace: openshift-ingress
+      version: v1
