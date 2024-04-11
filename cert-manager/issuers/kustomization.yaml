@@ -8,7 +8,7 @@ resources:
   - ./letsencrypt-staging.yaml
 replacements:
   - path: secret.yaml
-    apiVersion: v1
+    version: v1
     kind: Secret
     fieldSpecs:
       - path: data.AWS_ACCESS_KEY_ID
