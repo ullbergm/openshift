@@ -10,8 +10,7 @@ replacements:
 - source:
     kind: Secret
     name: cert-manager-secrets
-    namespace: cert-manager
-    fieldPath: stringData.SECRET_TLD.value
+    fieldPath: stringData.SECRET_TLD
   targets:
   - select:
       group: cert-manager.io
