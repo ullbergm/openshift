@@ -11,6 +11,7 @@ replacements:
 - source:
     kind: Secret
     name: cert-manager-secrets
+    namespace: cert-manager
     fieldPath: data.SECRET_TLD
   targets:
   - select:
