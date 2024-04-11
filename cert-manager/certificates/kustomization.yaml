@@ -23,25 +23,25 @@ replacements:
       name: apps-wildcard-cert-tls
       namespace: openshift-ingress
       version: v1
-  - fieldPaths:
-    - spec.dnsNames.0
-    options:
-      delimiter: .
-      index: 2
-    select:
-      group: cert-manager.io
-      kind: Certificate
-      name: apps-wildcard-cert-tls
-      namespace: openshift-ingress
-      version: v1
-  - fieldPaths:
-    - spec.dnsNames.1
-    options:
-      delimiter: .
-      index: 3
-    select:
-      group: cert-manager.io
-      kind: Certificate
-      name: apps-wildcard-cert-tls
-      namespace: openshift-ingress
-      version: v1
+  # - fieldPaths:
+  #   - spec.dnsNames.0
+  #   options:
+  #     delimiter: .
+  #     index: 2
+  #   select:
+  #     group: cert-manager.io
+  #     kind: Certificate
+  #     name: apps-wildcard-cert-tls
+  #     namespace: openshift-ingress
+  #     version: v1
+  # - fieldPaths:
+  #   - spec.dnsNames.1
+  #   options:
+  #     delimiter: .
+  #     index: 3
+  #   select:
+  #     group: cert-manager.io
+  #     kind: Certificate
+  #     name: apps-wildcard-cert-tls
+  #     namespace: openshift-ingress
+  #     version: v1
