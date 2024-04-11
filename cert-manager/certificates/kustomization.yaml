@@ -4,8 +4,6 @@ kind: Kustomization
 resources:
 - ./api.yaml
 - ./apps.yaml
-# Disabled until i know certs work
-#  - ./patch-apps-ingress.yaml
 replacements:
 - source:
     kind: Secret
@@ -19,11 +17,31 @@ replacements:
       name: apps-wildcard-cert-tls
       namespace: openshift-ingress
       version: v1
-    fieldPaths:
-    - spec.commonName
-    options:
-      delimiter: .
-      index: 2
+      fieldPaths:
+      - spec.commonName
+      options:
+        delimiter: .
+        index: 2
+# Disabled until i know certs work
+#  - ./patch-apps-ingress.yaml
+# replacements:
+# - source:
+#     kind: Secret
+#     name: cert-manager-secrets
+#     namespace: cert-manager
+#     fieldPath: data.SECRET_TLD.value
+#   targets:
+#   - select:
+#       group: cert-manager.io
+#       kind: Certificate
+#       name: apps-wildcard-cert-tls
+#       namespace: openshift-ingress
+#       version: v1
+#     fieldPaths:
+#     - spec.commonName
+#     options:
+#       delimiter: .
+#       index: 2
 
   # - fieldPaths:
   #   - spec.dnsNames.0
