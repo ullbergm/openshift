@@ -17,7 +17,7 @@ replacements:
       name: apps-wildcard-cert-tls
       namespace: openshift-ingress
       version: v1
-      fieldPath:
+      fieldPaths:
       - spec.commonName
       options:
         delimiter: .
