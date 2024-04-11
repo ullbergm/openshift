@@ -13,17 +13,18 @@ replacements:
     namespace: cert-manager
     fieldPath: data.SECRET_TLD.value
   targets:
-  - fieldPaths:
-    - spec.commonName
-    options:
-      delimiter: .
-      index: 2
-    select:
+  - select:
       group: cert-manager.io
       kind: Certificate
       name: apps-wildcard-cert-tls
       namespace: openshift-ingress
       version: v1
+    fieldPaths:
+    - spec.commonName
+    options:
+      delimiter: .
+      index: 2
+
   # - fieldPaths:
   #   - spec.dnsNames.0
   #   options:
