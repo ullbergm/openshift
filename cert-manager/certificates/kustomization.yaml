@@ -17,11 +17,11 @@ replacements:
       name: apps-wildcard-cert-tls
       namespace: openshift-ingress
       version: v1
-      fieldPaths:
-      - spec.commonName
-      options:
-        delimiter: .
-        index: 2
+    fieldPaths:
+    - spec.commonName
+    options:
+      delimiter: .
+      index: 2
 # Disabled until i know certs work
 #  - ./patch-apps-ingress.yaml
 # replacements:
