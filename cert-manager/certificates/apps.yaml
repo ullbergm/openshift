@@ -6,9 +6,9 @@ metadata:
 spec:
   secretName: apps-wildcard-cert-tls
   issuerRef:
-    name: letsencrypt-production
+    name: letsencrypt-staging
     kind: ClusterIssuer
-  commonName: apps.openshift.${SECRET_TLD}
+  commonName: apps.openshift.$(SECRET_TLD)
   dnsNames: 
-    - "apps.openshift.${SECRET_TLD}"
-    - "*.apps.openshift.${SECRET_TLD}"
+    - "apps.openshift.$(SECRET_TLD)"
+    - "*.apps.openshift.$(SECRET_TLD)"

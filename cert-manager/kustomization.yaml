@@ -6,3 +6,39 @@ resources:
   - ./certificates
 generators:
   - ./secrets-generator.yaml
+vars:
+  - name: SECRET_TLD
+    objref:
+      kind: Secret
+      name: cert-manager-secrets
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.SECRET_TLD
+  - name: SECRET_ADMIN_EMAIL
+    objref:
+      kind: Secret
+      name: cert-manager-secrets
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.SECRET_ADMIN_EMAIL
+  - name: AWS_REGION
+    objref:
+      kind: Secret
+      name: cert-manager-secrets
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.AWS_REGION
+  - name: AWS_HOSTED_ZONE_ID
+    objref:
+      kind: Secret
+      name: cert-manager-secrets
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.
+  - name: AWS_ACCESS_KEY_ID
+    objref:
+      kind: Secret
+      name: cert-manager-secrets
+      apiVersion: v1
+    fieldref:
+      fieldpath: data.AWS_ACCESS_KEY_ID

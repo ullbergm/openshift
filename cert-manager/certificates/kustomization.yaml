@@ -7,4 +7,3 @@ resources:
   - ./apps.yaml
 # Disabled until i know certs work
 #  - ./patch-apps-ingress.yaml
-  
