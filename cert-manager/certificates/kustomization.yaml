@@ -7,4 +7,14 @@ resources:
   - ./apps.yaml
 # Disabled until i know certs work
 #  - ./patch-apps-ingress.yaml
-  
+replacements:
+- source:
+    kind: Secret
+    name: cert-manager-secrets
+    fieldPath: data.SECRET_TLD
+  targets:
+  - select:
+      kind: Certificate
+      name: api-cert-tls
+    fieldPaths:
+    - spec.commonName
