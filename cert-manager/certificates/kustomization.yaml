@@ -10,6 +10,7 @@ replacements:
 - source:
     kind: ConfigMap
     name: cert-manager-config
+    namespace: default
     fieldPath: data.SECRET_TLD
   targets:
   - select:
