@@ -10,6 +10,7 @@ replacements:
 - source:
     kind: Secret
     name: cert-manager-secrets
+    namespace: cert-manager
     version: v1
   targets:
   - fieldPaths:
