@@ -4,174 +4,174 @@ resources:
 - ./issuers
 - ./certificates
 replacements:
+# - source:
+#     fieldPath: SECRET_TLD
+#     kind: Secret
+#     name: cert-manager-secrets
+#     namespace: cert-manager
+#     version: v1
+#   targets:
+#   - fieldPaths:
+#     - spec.acme.solvers.0.selector.dnsZones.0
+#     select:
+#       group: cert-manager.io
+#       kind: ClusterIssuer
+#       name: letsencrypt-production
+#       version: v1
+#   - fieldPaths:
+#     - spec.acme.solvers.0.selector.dnsZones.0
+#     select:
+#       group: cert-manager.io
+#       kind: ClusterIssuer
+#       name: letsencrypt-staging
+#       version: v1
+#   - fieldPaths:
+#     - spec.commonName
+#     options:
+#       delimiter: .
+#       index: 2
+#     select:
+#       group: cert-manager.io
+#       kind: Certificate
+#       name: api-cert-tls
+#       namespace: openshift-config
+#       version: v1
+#   - fieldPaths:
+#     - spec.dnsNames.0
+#     options:
+#       delimiter: .
+#       index: 2
+#     select:
+#       group: cert-manager.io
+#       kind: Certificate
+#       name: api-cert-tls
+#       namespace: openshift-config
+#       version: v1
+#   - fieldPaths:
+#     - spec.dnsNames.1
+#     options:
+#       delimiter: .
+#       index: 2
+#     select:
+#       group: cert-manager.io
+#       kind: Certificate
+#       name: api-cert-tls
+#       namespace: openshift-config
+#       version: v1
+#   - fieldPaths:
+#     - spec.commonName
+#     options:
+#       delimiter: .
+#       index: 2
+#     select:
+#       group: cert-manager.io
+#       kind: Certificate
+#       name: apps-wildcard-cert-tls
+#       namespace: openshift-ingress
+#       version: v1
+#   - fieldPaths:
+#     - spec.dnsNames.0
+#     options:
+#       delimiter: .
+#       index: 2
+#     select:
+#       group: cert-manager.io
+#       kind: Certificate
+#       name: apps-wildcard-cert-tls
+#       namespace: openshift-ingress
+#       version: v1
+#   - fieldPaths:
+#     - spec.dnsNames.1
+#     options:
+#       delimiter: .
+#       index: 3
+#     select:
+#       group: cert-manager.io
+#       kind: Certificate
+#       name: apps-wildcard-cert-tls
+#       namespace: openshift-ingress
+#       version: v1
+# - source:
+#     fieldPath: SECRET_ADMIN_EMAIL
+#     kind: Secret
+#     name: cert-manager-secrets
+#     namespace: cert-manager
+#     version: v1
+#   targets:
+#   - fieldPaths:
+#     - spec.acme.email
+#     select:
+#       group: cert-manager.io
+#       kind: ClusterIssuer
+#       name: letsencrypt-production
+#       version: v1
+#   - fieldPaths:
+#     - spec.acme.email
+#     select:
+#       group: cert-manager.io
+#       kind: ClusterIssuer
+#       name: letsencrypt-staging
+#       version: v1
+# - source:
+#     fieldPath: AWS_REGION
+#     kind: Secret
+#     name: cert-manager-secrets
+#     namespace: cert-manager
+#     version: v1
+#   targets:
+#   - fieldPaths:
+#     - spec.acme.solvers.0.dns01.route53.region
+#     select:
+#       group: cert-manager.io
+#       kind: ClusterIssuer
+#       name: letsencrypt-production
+#       version: v1
+#   - fieldPaths:
+#     - spec.acme.solvers.0.dns01.route53.region
+#     select:
+#       group: cert-manager.io
+#       kind: ClusterIssuer
+#       name: letsencrypt-staging
+#       version: v1
+# - source:
+#     fieldPath: AWS_HOSTED_ZONE_ID
+#     kind: Secret
+#     name: cert-manager-secrets
+#     namespace: cert-manager
+#     version: v1
+#   targets:
+#   - fieldPaths:
+#     - spec.acme.solvers.0.dns01.route53.hostedZoneID
+#     select:
+#       group: cert-manager.io
+#       kind: ClusterIssuer
+#       name: letsencrypt-production
+#       version: v1
+#   - fieldPaths:
+#     - spec.acme.solvers.0.dns01.route53.hostedZoneID
+#     select:
+#       group: cert-manager.io
+#       kind: ClusterIssuer
+#       name: letsencrypt-staging
+#       version: v1
 - source:
-    fieldPath: SECRET_TLD
     kind: Secret
     name: cert-manager-secrets
     namespace: cert-manager
     version: v1
+    fieldPath: data.AWS_ACCESS_KEY_ID
   targets:
-  - fieldPaths:
-    - spec.acme.solvers.0.selector.dnsZones.0
-    select:
+  - select:
       group: cert-manager.io
       kind: ClusterIssuer
       name: letsencrypt-production
       version: v1
-  - fieldPaths:
-    - spec.acme.solvers.0.selector.dnsZones.0
-    select:
-      group: cert-manager.io
-      kind: ClusterIssuer
-      name: letsencrypt-staging
-      version: v1
-  - fieldPaths:
-    - spec.commonName
-    options:
-      delimiter: .
-      index: 2
-    select:
-      group: cert-manager.io
-      kind: Certificate
-      name: api-cert-tls
-      namespace: openshift-config
-      version: v1
-  - fieldPaths:
-    - spec.dnsNames.0
-    options:
-      delimiter: .
-      index: 2
-    select:
-      group: cert-manager.io
-      kind: Certificate
-      name: api-cert-tls
-      namespace: openshift-config
-      version: v1
-  - fieldPaths:
-    - spec.dnsNames.1
-    options:
-      delimiter: .
-      index: 2
-    select:
-      group: cert-manager.io
-      kind: Certificate
-      name: api-cert-tls
-      namespace: openshift-config
-      version: v1
-  - fieldPaths:
-    - spec.commonName
-    options:
-      delimiter: .
-      index: 2
-    select:
-      group: cert-manager.io
-      kind: Certificate
-      name: apps-wildcard-cert-tls
-      namespace: openshift-ingress
-      version: v1
-  - fieldPaths:
-    - spec.dnsNames.0
-    options:
-      delimiter: .
-      index: 2
-    select:
-      group: cert-manager.io
-      kind: Certificate
-      name: apps-wildcard-cert-tls
-      namespace: openshift-ingress
-      version: v1
-  - fieldPaths:
-    - spec.dnsNames.1
-    options:
-      delimiter: .
-      index: 3
-    select:
-      group: cert-manager.io
-      kind: Certificate
-      name: apps-wildcard-cert-tls
-      namespace: openshift-ingress
-      version: v1
-- source:
-    fieldPath: SECRET_ADMIN_EMAIL
-    kind: Secret
-    name: cert-manager-secrets
-    namespace: cert-manager
-    version: v1
-  targets:
-  - fieldPaths:
-    - spec.acme.email
-    select:
-      group: cert-manager.io
-      kind: ClusterIssuer
-      name: letsencrypt-production
-      version: v1
-  - fieldPaths:
-    - spec.acme.email
-    select:
-      group: cert-manager.io
-      kind: ClusterIssuer
-      name: letsencrypt-staging
-      version: v1
-- source:
-    fieldPath: AWS_REGION
-    kind: Secret
-    name: cert-manager-secrets
-    namespace: cert-manager
-    version: v1
-  targets:
-  - fieldPaths:
-    - spec.acme.solvers.0.dns01.route53.region
-    select:
-      group: cert-manager.io
-      kind: ClusterIssuer
-      name: letsencrypt-production
-      version: v1
-  - fieldPaths:
-    - spec.acme.solvers.0.dns01.route53.region
-    select:
-      group: cert-manager.io
-      kind: ClusterIssuer
-      name: letsencrypt-staging
-      version: v1
-- source:
-    fieldPath: AWS_HOSTED_ZONE_ID
-    kind: Secret
-    name: cert-manager-secrets
-    namespace: cert-manager
-    version: v1
-  targets:
-  - fieldPaths:
-    - spec.acme.solvers.0.dns01.route53.hostedZoneID
-    select:
-      group: cert-manager.io
-      kind: ClusterIssuer
-      name: letsencrypt-production
-      version: v1
-  - fieldPaths:
-    - spec.acme.solvers.0.dns01.route53.hostedZoneID
-    select:
-      group: cert-manager.io
-      kind: ClusterIssuer
-      name: letsencrypt-staging
-      version: v1
-- source:
-    fieldPath: AWS_ACCESS_KEY_ID
-    kind: Secret
-    name: cert-manager-secrets
-    namespace: cert-manager
-    version: v1
-  targets:
-  - fieldPaths:
+    fieldPaths:
     - spec.acme.solvers.0.dns01.route53.accessKeyID
-    select:
-      group: cert-manager.io
-      kind: ClusterIssuer
-      name: letsencrypt-production
-      version: v1
-  - fieldPaths:
-    - spec.acme.solvers.0.dns01.route53.accessKeyID
-    select:
+  - select:
       group: cert-manager.io
       kind: ClusterIssuer
       name: letsencrypt-staging
       version: v1
+    fieldPaths:
+    - spec.acme.solvers.0.dns01.route53.accessKeyID
