@@ -11,7 +11,7 @@ replacements:
     kind: Secret
     name: cert-manager-secrets
     namespace: cert-manager
-    fieldPath: data.SECRET_TLD
+    fieldPath: data.SECRET_TLD.value
   targets:
   - fieldPaths:
     - spec.commonName
