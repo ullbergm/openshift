@@ -9,7 +9,7 @@ spec:
   issuerRef:
     name: letsencrypt-staging
     kind: ClusterIssuer
-  commonName: api.openshift.$(SECRET_TLD)
+  commonName: api.openshift.SECRET_TLD_PLACEHOLDER
   dnsNames: 
-    - "api.openshift.$(SECRET_TLD)"
-    - "api-int.openshift.$(SECRET_TLD)"
+    - "api.openshift.SECRET_TLD_PLACEHOLDER"
+    - "api-int.openshift.SECRET_TLD_PLACEHOLDER"
