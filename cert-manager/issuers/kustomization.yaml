@@ -7,13 +7,22 @@ resources:
   - ./letsencrypt-production.yaml
   - ./letsencrypt-staging.yaml
 replacements:
-  - path: secret.yaml
-    version: v1
-    kind: Secret
-    fieldSpecs:
-      - path: data.AWS_ACCESS_KEY_ID
-        create: true
-        from:
-          secretKeyRef:
-            name: cert-manager-secrets
-            key: AWS_ACCESS_KEY_ID
+  - source:
+      kind: Secret
+      version: v1
+      name: cert-manager-secrets
+      fieldPath: data.AWS_ACCESS_KEY_ID
+    targets:
+    - select:
+        name: route53-access-key
+
+  # - path: secret.yaml
+  #   version: v1
+  #   kind: Secret
+  #   fieldSpecs:
+  #     - path: data.AWS_ACCESS_KEY_ID
+  #       create: true
+  #       from:
+  #         secretKeyRef:
+  #           name: cert-manager-secrets
+  #           key: AWS_ACCESS_KEY_ID
