@@ -6,4 +6,11 @@ resources:
   - ./api.yaml
   - ./apps.yaml
 # Disabled until i know certs work
-#  - ./patch-apps-ingress.yaml
+# patches:
+#  - target:
+#       group: operator.openshift.io
+#       version: v1
+#       kind: IngressController
+#       name: default
+#       namespace: openshift-ingress-operator
+#    path: patch-apps-ingress.yaml

@@ -4,8 +4,6 @@ kind: Kustomization
 resources:
   - ./issuers
   - ./certificates
-generators:
-  - ./secrets-generator.yaml
 vars:
   - name: SECRET_TLD
     objref:
