@@ -13,7 +13,7 @@ replacements:
     version: v1
     name: cert-manager-secrets
     namespace: cert-manager
-    fieldPath: data.SECRET_TLD
+    fieldPath: SECRET_TLD
   targets:
   - select:
       kind: Certificate
