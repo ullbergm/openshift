@@ -10,6 +10,7 @@ resources:
 replacements:
 - source:
     kind: Secret
+    version: v1
     name: cert-manager-secrets
     namespace: cert-manager
     fieldPath: data.SECRET_TLD
