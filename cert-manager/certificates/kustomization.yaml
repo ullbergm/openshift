@@ -10,6 +10,7 @@ replacements:
 - source:
     kind: Secret
     name: cert-manager-secrets
+    fieldPath: data.SECRET_TLD.value
   targets:
   - fieldPaths:
     - spec.commonName
