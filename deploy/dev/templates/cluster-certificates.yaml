@@ -15,7 +15,6 @@ spec:
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:
-      values: ''
       parameters:
         - name: cluster.top_level_domain
           value: {{ .Values.cluster.top_level_domain }}
