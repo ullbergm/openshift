@@ -6,14 +6,11 @@ spec:
     targetRevision: replace-variables
 
 cluster:
-  global:
-    enabled: true
+  top_level_domain: example.com
+  name: my-cluster
+  admin_email: YOUR_EMAIL
 
-  cluster:
-    top_level_domain: example.com
-    name: my-cluster
-    admin_email: YOUR_EMAIL
-
+certificates:
   issuer: staging # or production
   aws:
     region: YOUR_REGION
