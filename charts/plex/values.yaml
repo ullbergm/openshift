@@ -34,6 +34,7 @@ app-template:
     main:
       # type: LoadBalancer
       # loadBalancerIP: "192.168.64.41"
+      controller: main
       ports:
         http:
           port: 32400
@@ -88,11 +89,11 @@ app-template:
             - path: /
               pathType: Prefix
               service:
-                name: main
+                identifier: main
                 port: http
-
-      tls:
-        - {}
+          tls:
+            - hosts:
+                - *host
 
   persistence:
     config:
@@ -107,7 +108,6 @@ app-template:
 
     transcode:
       enabled: true
-      accessMode: ["ReadWriteOnce"]
       type: emptyDir
 
   defaultPodOptions:
