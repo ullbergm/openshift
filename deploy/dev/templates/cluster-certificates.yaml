@@ -18,7 +18,7 @@ spec:
       values: ''
       parameters:
         - name: cluster.top_level_domain
-          value: {{ .Values.top_level_domain }}
+          value: {{ .Values.cluster.top_level_domain }}
         - name: cluster.name
           value: {{ .Values.cluster.name }}
         - name: cluster.admin_email
