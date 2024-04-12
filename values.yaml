@@ -16,3 +16,13 @@ certificates:
     hosted_zone_id: YOUR_HOSTED_ZONE_ID
     access_key_id: YOUR_ACCESS_KEY_ID
     secret_access_key: YOUR_SECRET_ACCESS_KEY
+
+democratic-csi:
+  driver:
+    config:
+      httpConnection:
+        host: my-nas
+        password: my-password
+        username: my-username
+      iscsi:
+        targetPortal: 'my-server[:port]'
