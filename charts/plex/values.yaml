@@ -1,3 +1,16 @@
+global:
+  enabled: true
+
+cluster:
+  top_level_domain: example.com
+  name: my-cluster
+  admin_email: YOUR_EMAIL
+
+media:
+  nfs:
+    server: your_nas
+    path: /volume1/kubernetes/data
+
 app-template:
   controllers:
     main:
@@ -70,7 +83,7 @@ app-template:
         #   }
         route.openshift.io/termination: "edge"
       hosts:
-        - host: &host "YOUR_HOST"
+        - host: &host "plex.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
           paths:
             - path: /
               pathType: Prefix

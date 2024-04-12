@@ -10,8 +10,8 @@ spec:
   accessModes: ["ReadWriteMany"]
   persistentVolumeReclaimPolicy: Retain
   nfs:
-    server: nas.${SECRET_TLD}
-    path: /volume1/kubernetes/data
+    server: {{ .Values.media.nfs.server }}
+    path: {{ .Values.media.nfs.path }}
   mountOptions:
     - nfsvers=4.1
     - nconnect=8
