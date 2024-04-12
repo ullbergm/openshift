@@ -40,11 +40,14 @@ app-template:
 
   persistence:
     config:
-      enabled: true
       type: configMap
       name: hajimari-config
-      subPath: config.yaml
-      mountPath: /config/config.yaml
-      readOnly: false
+      advancedMounts:
+        main: 
+          main: 
+            - path: /config/config.yaml
+              readOnly: false
+              subPath: config.yaml
+
   podAnnotations:
     configmap.reloader.stakater.com/reload: "hajimari-settings"
