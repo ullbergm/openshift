@@ -1,11 +1,13 @@
 ---
 area/ansible:
-  - "ansible/**/*"
+- changed-files:
+  - any-glob-to-any-file: "ansible/**/*"
 area/github:
-  - ".github/**/*"
+  - any-glob-to-any-file: ".github/**/*"
 area/kubernetes:
-  - "kubernetes/**/*"
+  - any-glob-to-any-file: "charts/**/*"
+  - any-glob-to-any-file: "deploy/**/*"
 area/hack:
-  - "hack/**/*"
+  - any-glob-to-any-file: "hack/**/*"
 area/terraform:
-  - "terraform/**/*"
+  - any-glob-to-any-file: "terraform/**/*"

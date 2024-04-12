@@ -1,0 +1,29 @@
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: YOUR_REPO_URL
+    targetRevision: HEAD
+
+cluster:
+  top_level_domain: example.com
+  name: my-cluster
+  admin_email: YOUR_EMAIL
+
+certificates:
+  issuer: staging # or production
+  aws:
+    region: YOUR_REGION
+    hosted_zone_id: YOUR_HOSTED_ZONE_ID
+    access_key_id: YOUR_ACCESS_KEY_ID
+    secret_access_key: YOUR_SECRET_ACCESS_KEY
+
+democratic-csi:
+  driver:
+    config:
+      httpConnection:
+        host: my-nas
+        password: my-password
+        username: my-username
+      iscsi:
+        targetPortal: 'my-server[:port]'
