@@ -26,3 +26,4 @@
                 - api.openshift.ullberg.family
                 servingCertificate:
                     name: api-cert-tls
+
