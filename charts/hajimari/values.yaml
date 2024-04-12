@@ -1,0 +1,35 @@
+app-template:
+  controllers:
+    main:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        main:
+          image:
+            # renovate: docker-image versioning=loose
+            repository: ghcr.io/ullbergm/hajimari
+            tag: latest
+            pullPolicy: Always
+          env:
+            TZ: TIMEZONE
+
+  serviceAccount:
+    name: hajimari
+
+  ingress:
+    main:
+      enabled: true
+      annotations:
+        route.openshift.io/termination: "edge"
+      hosts:
+        - host: &host "your_host"
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: main
+                port: http
+
+  podAnnotations:
+    configmap.reloader.stakater.com/reload: "hajimari-settings"
