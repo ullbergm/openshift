@@ -1,7 +1,11 @@
-global:
-  enabled: true
-    
-certificates:
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: git@github.com:A-Few-Good-Gits/openshift-stuff.git
+    targetRevision: replace-variables
+
+cluster:
   global:
     enabled: true
 
