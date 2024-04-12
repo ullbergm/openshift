@@ -22,7 +22,7 @@ spec:
         - name: cluster.admin_email
           value: {{ .Values.cluster.admin_email }}
         - name: 'app-template.ingress.main.hosts[0].host'
-          value: plex.apps.{{ .Values.certificates.cluster.name }}.{{ .Values.certificates.cluster.top_level_domain }}
+          value: plex.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
         - name: app-template.controllers.main.containers.main.env.TZ
           value: {{ .Values.cluster.timezone }}
         - name: media.nfs.server
