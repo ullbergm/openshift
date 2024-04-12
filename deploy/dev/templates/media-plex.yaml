@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: media-plex
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: media
+    server: {{ .Values.spec.destination.server }}
+  project: default
+  source:
+    path: charts/plex
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    helm:
+      parameters:
+        - name: cluster.top_level_domain
+          value: {{ .Values.cluster.top_level_domain }}
+        - name: cluster.name
+          value: {{ .Values.cluster.name }}
+        - name: cluster.admin_email
+          value: {{ .Values.cluster.admin_email }}
+        - name: 'app-template.ingress.main.hosts[0].host'
+          value: plex.apps.{{ .Values.certificates.cluster.name }}.{{ .Values.certificates.cluster.top_level_domain }}
+        - name: app-template.controllers.main.containers.main.env.TZ
+          value: {{ .Values.certificates.cluster.timezone }}
+        - name: media.nfs.server
+          value: {{ .Values.certificates.media.nfs.server }}
+        - name: media.nfs.path
+          value: {{ .Values.certificates.media.nfs.path }}
+        - name: 'app-template.ingress.main.hosts[0].paths[0].path'
+          value: /
+        - name: 'app-template.ingress.main.hosts[0].paths[0].pathType'
+          value: Prefix
+        - name: 'app-template.ingress.main.hosts[0].paths[0].service.port'
+          value: http
+        - name: 'app-template.ingress.main.hosts[0].paths[0].service.identifier'
+          value: main
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
