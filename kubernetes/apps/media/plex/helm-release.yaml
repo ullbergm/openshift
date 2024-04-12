@@ -35,7 +35,7 @@ spec:
             image:
               # renovate: docker-image versioning=loose
               repository: ghcr.io/onedr0p/plex
-              tag: 1.40.0.7998-c29d4c0c8
+              tag: 1.40.1.8227-c0dd5a73e
               pullPolicy: IfNotPresent
             env:
               TZ: ${TIMEZONE}
