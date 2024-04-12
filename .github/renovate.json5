@@ -23,17 +23,15 @@
   "suppressNotifications": ["prIgnoreNotification"],
   "ignorePaths": ["**/archive/**"],
   "timezone": "America/New_York",
-  "flux": {
-    "fileMatch": ["(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$"]
-  },
   "helm-values": {
-    "fileMatch": ["(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$"]
+    "fileMatch": ["(^|/)(charts|deploy)/.+\\.ya?ml(\\.j2)?$"]
   },
   "kubernetes": {
     "fileMatch": [
       "(^|/)\\.taskfiles/.+\\.ya?ml(\\.j2)?$",
       "(^|/)ansible/.+\\.ya?ml(\\.j2)?$",
-      "(^|/)kubernetes/.+\\.ya?ml(\\.j2)?$"
+      "(^|/)charts/.+\\.ya?ml(\\.j2)?$",
+      "(^|/)deploy/.+\\.ya?ml(\\.j2)?$"
     ]
   },
   "regexManagers": [

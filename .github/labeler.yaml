@@ -4,7 +4,8 @@ area/ansible:
 area/github:
   - ".github/**/*"
 area/kubernetes:
-  - "kubernetes/**/*"
+  - "charts/**/*"
+  - "deploy/**/*"
 area/hack:
   - "hack/**/*"
 area/terraform:
