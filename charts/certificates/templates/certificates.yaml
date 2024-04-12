@@ -9,7 +9,6 @@ spec:
   issuerRef:
     kind: ClusterIssuer
     name: letsencrypt-production
-    namespace: cert-manager
   commonName: api.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   dnsNames: 
     - "api.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
@@ -25,7 +24,6 @@ spec:
   issuerRef:
     kind: ClusterIssuer
     name: letsencrypt-production
-    namespace: cert-manager
   commonName: "apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
   dnsNames: 
     - "apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
