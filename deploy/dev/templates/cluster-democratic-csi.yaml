@@ -24,3 +24,6 @@ spec:
           value: {{ index .Values "democratic-csi" "driver" "config" "httpConnection" "username" }}
         - name: democratic-csi.driver.config.iscsi.targetPortal
           value: {{ index .Values "democratic-csi" "driver" "config" "iscsi" "targetPortal" }}
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
