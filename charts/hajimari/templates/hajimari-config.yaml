@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+    name: hajimari-config
+    namespace: default
+data:
+    config.yaml: |
+        name: "Friend"
+        title: Apps
+        darkTheme: blackboard
+        alwaysTargetBlank: false
+        showGreeting: false
+        showAppGroups: true
+        showAppStatus: false
+        showBookmarkGroups: false
+        showGlobalBookmarks: false
+        showAppUrls: false
+        defaultEnable: true
+        namespaceSelector:
+        matchNames:
+            - default
+            - downloads
+            - home
+            - media
+        customApps:
+        - group: infra
+            apps:
+            - name: Home Assistant
+                url: "https://homeassistant.{{ .Values.cluster.top_level_domain }}/"
+                icon: simple-icons:homeassistant
+                location: 1

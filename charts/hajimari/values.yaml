@@ -38,5 +38,13 @@ app-template:
                 identifier: main
                 port: http
 
+  persistence:
+    config:
+      enabled: true
+      type: configMap
+      name: hajimari-config
+      subPath: config.yaml
+      mountPath: /config/config.yaml
+      readOnly: false
   podAnnotations:
     configmap.reloader.stakater.com/reload: "hajimari-settings"
