@@ -9,6 +9,7 @@ cluster:
   top_level_domain: example.com
   name: my-cluster
   admin_email: YOUR_EMAIL
+  timezone: YOUR_TIMEZONE
 
 certificates:
   issuer: staging # or production
@@ -27,3 +28,8 @@ democratic-csi:
         username: my-username
       iscsi:
         targetPortal: 'my-server[:port]'
+
+media:
+  nfs:
+    server: my-nas
+    path: /mnt/nfs
