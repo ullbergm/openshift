@@ -17,6 +17,13 @@ app-template:
   serviceAccount:
     name: hajimari
 
+  service:
+    main:
+      controller: main
+      ports:
+        http:
+          port: 80
+
   ingress:
     main:
       enabled: true
