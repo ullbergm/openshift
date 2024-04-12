@@ -24,11 +24,11 @@ spec:
         - name: 'app-template.ingress.main.hosts[0].host'
           value: plex.apps.{{ .Values.certificates.cluster.name }}.{{ .Values.certificates.cluster.top_level_domain }}
         - name: app-template.controllers.main.containers.main.env.TZ
-          value: {{ .Values.certificates.cluster.timezone }}
+          value: {{ .Values.cluster.timezone }}
         - name: media.nfs.server
-          value: {{ .Values.certificates.media.nfs.server }}
+          value: {{ .Values.media.nfs.server }}
         - name: media.nfs.path
-          value: {{ .Values.certificates.media.nfs.path }}
+          value: {{ .Values.media.nfs.path }}
         - name: 'app-template.ingress.main.hosts[0].paths[0].path'
           value: /
         - name: 'app-template.ingress.main.hosts[0].paths[0].pathType'
