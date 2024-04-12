@@ -84,17 +84,17 @@ app-template:
         #   }
         route.openshift.io/termination: "edge"
       hosts:
-      - host: &host "plex.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
-        paths:
-          - path: /
-            pathType: Prefix
-            service:
-              identifier: main
-              port: http
+        - host: &host "plex.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: main
+                port: http
 
-          tls:
-            - hosts:
-                - *host
+              tls:
+                - hosts:
+                    - *host
 
   persistence:
     config:
