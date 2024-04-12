@@ -2,8 +2,8 @@ spec:
   destination:
     server: https://kubernetes.default.svc
   source:
-    repoURL: git@github.com:A-Few-Good-Gits/openshift-stuff.git
-    targetRevision: replace-variables
+    repoURL: YOUR_REPO_URL
+    targetRevision: HEAD
 
 cluster:
   top_level_domain: example.com
