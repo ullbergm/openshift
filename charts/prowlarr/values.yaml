@@ -30,7 +30,7 @@ app-template:
       annotations:
         forecastle.stakater.com/expose: "true"
         forecastle.stakater.com/icon: "https://raw.githubusercontent.com/Prowlarr/Prowlarr/develop/Logo/400.png"
-        forecastle.stakater.com/appName: "prowlarr"
+        forecastle.stakater.com/appName: "Prowlarr"
         forecastle.stakater.com/group: "Media"
         route.openshift.io/termination: "edge"
       hosts:
