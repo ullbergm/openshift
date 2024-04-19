@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: home-hajimari
+  name: home-forecastle
   namespace: openshift-gitops
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -22,18 +22,14 @@ spec:
           value: {{ .Values.cluster.name }}
         - name: cluster.admin_email
           value: {{ .Values.cluster.admin_email }}
-        - name: 'app-template.ingress.main.hosts[0].host'
-          value: www.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
-        - name: app-template.controllers.main.containers.main.env.TZ
+        - name: 'forecastle.ingress.hosts[0].host'
+          value: apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+        - name: forecastle.controllers.containers.main.env.TZ
           value: {{ .Values.cluster.timezone }}
-        - name: 'app-template.ingress.main.hosts[0].paths[0].path'
+        - name: 'forecastle.ingress.hosts[0].paths[0].path'
           value: /
-        - name: 'app-template.ingress.main.hosts[0].paths[0].pathType'
+        - name: 'forecastle.ingress.hosts[0].paths[0].pathType'
           value: Prefix
-        - name: 'app-template.ingress.main.hosts[0].paths[0].service.port'
-          value: http
-        - name: 'app-template.ingress.main.hosts[0].paths[0].service.identifier'
-          value: main
   syncPolicy:
     automated:
       selfHeal: true
