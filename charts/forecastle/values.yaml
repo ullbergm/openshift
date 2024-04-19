@@ -13,5 +13,6 @@ forecastle:
         insecureEdgeTerminationPolicy: Redirect
     config:
       namespaceSelector:
+        matchNames:
         - default
       title: "Cluster Dashboard"
