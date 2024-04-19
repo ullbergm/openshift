@@ -22,14 +22,8 @@ spec:
           value: {{ .Values.cluster.name }}
         - name: cluster.admin_email
           value: {{ .Values.cluster.admin_email }}
-        - name: 'forecastle.ingress.hosts[0].host'
+        - name: 'forecastle.forecastle.route.host'
           value: apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
-        - name: forecastle.controllers.containers.main.env.TZ
-          value: {{ .Values.cluster.timezone }}
-        - name: 'forecastle.ingress.hosts[0].paths[0].path'
-          value: /
-        - name: 'forecastle.ingress.hosts[0].paths[0].pathType'
-          value: Prefix
   syncPolicy:
     automated:
       selfHeal: true
