@@ -14,8 +14,8 @@ app-template:
           env:
             TZ: TIMEZONE
 
-  # serviceAccount:
-  #   name: plex-sa
+  serviceAccount:
+    name: sonarr-sa
 
   service:
     main:
