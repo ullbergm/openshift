@@ -1,13 +1,14 @@
 forecastle:
-  route:  
-    enabled: true
-    annotations: {}
-    additionalLabels: {}
-    port:
-      targetPort: http
-    wildcardPolicy: None
-    tls:
-      termination: edge
-      insecureEdgeTerminationPolicy: Redirect
-  config:
-    namespaceSelector: {}
+  forecastle:
+    route:  
+      enabled: true
+      annotations: {}
+      additionalLabels: {}
+      port:
+        targetPort: http
+      wildcardPolicy: None
+      tls:
+        termination: edge
+        insecureEdgeTerminationPolicy: Redirect
+    config:
+      namespaceSelector: {}
