@@ -1,24 +1,24 @@
-# ---
-# apiVersion: v1
-# kind: PersistentVolume
-# metadata:
-#   name: sonarr-data-volume
-# spec:
-#   storageClassName: ""
-#   capacity:
-#     storage: 1Mi
-#   accessModes: ["ReadWriteMany"]
-#   persistentVolumeReclaimPolicy: Retain
-#   nfs:
-#     server: {{ .Values.media.nfs.server }}
-#     path: {{ .Values.media.nfs.path }}
-#   mountOptions:
-#     - nfsvers=4.1
-#     - nconnect=8
-#     - hard
-#     - noatime
-#     - rsize=131072
-#     - wsize=131072
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: sonarr-data-volume
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Mi
+  accessModes: ["ReadWriteMany"]
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: {{ .Values.media.nfs.server }}
+    path: {{ .Values.media.nfs.path }}
+  mountOptions:
+    - nfsvers=4.1
+    - nconnect=8
+    - hard
+    - noatime
+    - rsize=131072
+    - wsize=131072
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -30,5 +30,5 @@ spec:
   resources:
     requests:
       storage: 1Mi
-  volumeName: data-volume
+  volumeName: sonarr-data-volume
   storageClassName: ""
