@@ -57,10 +57,9 @@ app-template:
     main:
       enabled: true
       annotations:
-        hajimari.io/enable: "true"
-        hajimari.io/icon: "plex"
-        hajimari.io/group: "Media"
-        hajimari.io/info: "Manages your movie library"
+        forecastle.stakater.com/expose: "true"
+        forecastle.stakater.com/icon: "plex"
+        forecastle.stakater.com/group: "Media"
         # kubernetes.io/ingress.class: nginx
         # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
         # nginx.ingress.kubernetes.io/configuration-snippet: |

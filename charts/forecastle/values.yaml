@@ -2,10 +2,6 @@ forecastle:
   forecastle:
     route:  
       enabled: true
-      annotations:
-        forecastle.stakater.com/expose: "true"
-        forecastle.stakater.com/icon: "plex"
-        forecastle.stakater.com/group: "Media"
       additionalLabels: {}
       host: "www"
       port:
