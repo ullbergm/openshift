@@ -1,14 +1,13 @@
 forecastle:
-  ingress:
-        enabled: true
-        annotations:
-          external-dns.home.arpa/enabled: "true"
-          auth.home.arpa/enabled: "true"
-          forecastle.stakater.com/expose: "true"
-          forecastle.stakater.com/icon: weather-sunset
-        className: nginx
-        hosts:
-          - host: &host "apps.${PUBLIC_DOMAIN}"
-            paths:
-              - path: /
-                pathType: Prefix
+  route:  
+    enabled: true
+    annotations: {}
+    additionalLabels: {}
+    port:
+      targetPort: http
+    wildcardPolicy: None
+    tls:
+      termination: edge
+      insecureEdgeTerminationPolicy: Redirect
+  config:
+    namespaceSelector: {}
