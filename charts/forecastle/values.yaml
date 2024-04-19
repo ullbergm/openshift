@@ -4,7 +4,7 @@ forecastle:
       enabled: true
       annotations: {}
       additionalLabels: {}
-      name: "www"
+      host: "www"
       port:
         targetPort: http
       wildcardPolicy: None
