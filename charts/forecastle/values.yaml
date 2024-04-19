@@ -14,3 +14,4 @@ forecastle:
       namespaceSelector:
         any: true
       title: "Cluster Dashboard"
+      crdEnabled: true 
