@@ -1,0 +1,66 @@
+app-template:
+  controllers:
+    main:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        main:
+          image:
+            # renovate: docker-image versioning=loose
+            repository: ghcr.io/onedr0p/radarr
+            tag: 5.4.6.8723
+            pullPolicy: IfNotPresent
+          env:
+            TZ: TIMEZONE
+
+  serviceAccount:
+    name: radarr-sa
+
+  service:
+    main:
+      controller: main
+      ports:
+        http:
+          port: 8989
+
+  ingress:
+    main:
+      enabled: true
+      annotations:
+        forecastle.stakater.com/expose: "true"
+        forecastle.stakater.com/icon: "https://raw.githubusercontent.com/Radarr/Radarr/develop/Logo/400.png"
+        forecastle.stakater.com/appName: "Radarr"
+        forecastle.stakater.com/group: "Media"
+        route.openshift.io/termination: "edge"
+      hosts:
+        - host: &host "your_host"
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: main
+                port: http
+
+  persistence:
+    config:
+      enabled: true
+      existingClaim: radarr-config
+
+    data:
+      enabled: true
+      existingClaim: radarr-data-volume
+      globalMounts:
+        - path: /data
+
+  defaultPodOptions:
+    securityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 44
+        - 109
+        - 100
+        - 65535
