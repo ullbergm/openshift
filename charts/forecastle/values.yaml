@@ -11,6 +11,9 @@ forecastle:
       tls:
         termination: edge
         insecureEdgeTerminationPolicy: Redirect
+    openshiftOauthProxy:
+      enabled: true
     config:
       namespaceSelector:
         - default
+      title: "Cluster Dashboard"
