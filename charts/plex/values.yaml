@@ -59,6 +59,7 @@ app-template:
       annotations:
         forecastle.stakater.com/expose: "true"
         forecastle.stakater.com/icon: "https://raw.githubusercontent.com/stakater/ForecastleIcons/master/alert-manager.png"
+        forecastle.stakater.com/appName: "Plex"
         forecastle.stakater.com/group: "Media"
         # kubernetes.io/ingress.class: nginx
         # nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
