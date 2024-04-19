@@ -49,7 +49,7 @@ app-template:
 
     data:
       enabled: true
-      existingClaim: data-volume
+      existingClaim: sonarr-data-volume
       globalMounts:
         - path: /data
 
