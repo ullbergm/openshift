@@ -22,7 +22,7 @@ spec:
           value: {{ .Values.cluster.name }}
         - name: cluster.admin_email
           value: {{ .Values.cluster.admin_email }}
-        - name: 'forecastle.forecastle.route.host'
+        - name: 'forecastle.route.host'
           value: apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   syncPolicy:
     automated:
