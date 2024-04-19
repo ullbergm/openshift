@@ -2,7 +2,10 @@ forecastle:
   forecastle:
     route:  
       enabled: true
-      annotations: {}
+      annotations:
+        forecastle.stakater.com/expose: "true"
+        forecastle.stakater.com/icon: "plex"
+        forecastle.stakater.com/group: "Media"
       additionalLabels: {}
       host: "www"
       port:
@@ -13,6 +16,5 @@ forecastle:
         insecureEdgeTerminationPolicy: Redirect
     config:
       namespaceSelector:
-        matchNames:
-        - default
+        any: true
       title: "Cluster Dashboard"
