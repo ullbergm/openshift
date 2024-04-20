@@ -8,7 +8,7 @@ app-template:
         main:
           image:
             # renovate: docker-image versioning=loose
-            repository:ghcr.io/onedr0p/tautulli
+            repository: ghcr.io/onedr0p/tautulli
             tag: 2.13.4
             pullPolicy: IfNotPresent
           env:
