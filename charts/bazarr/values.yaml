@@ -1,0 +1,66 @@
+app-template:
+  controllers:
+    main:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+      containers:
+        main:
+          image:
+            # renovate: docker-image versioning=loose
+            repository: ghcr.io/onedr0p/bazarr
+            tag: 1.4.2
+            pullPolicy: IfNotPresent
+          env:
+            TZ: TIMEZONE
+
+  serviceAccount:
+    name: bazarr-sa
+
+  service:
+    main:
+      controller: main
+      ports:
+        http:
+          port: 6767
+
+  ingress:
+    main:
+      enabled: true
+      annotations:
+        forecastle.stakater.com/expose: "true"
+        forecastle.stakater.com/icon: "https://raw.githubusercontent.com/bazarr/bazarr.github.io/master/assets/img/logo.png"
+        forecastle.stakater.com/appName: "Bazarr"
+        forecastle.stakater.com/group: "Media"
+        route.openshift.io/termination: "edge"
+      hosts:
+        - host: &host "your_host"
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: main
+                port: http
+
+  persistence:
+    config:
+      enabled: true
+      existingClaim: bazarr-config
+
+    data:
+      enabled: true
+      existingClaim: bazarr-data-volume
+      globalMounts:
+        - path: /data
+
+  defaultPodOptions:
+    securityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 44
+        - 109
+        - 100
+        - 65535
