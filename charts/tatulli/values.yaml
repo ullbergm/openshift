@@ -29,7 +29,7 @@ app-template:
       enabled: true
       annotations:
         forecastle.stakater.com/expose: "true"
-        forecastle.stakater.com/icon: "https://raw.githubusercontent.com/Tatulli/Tatulli/develop/Logo/400.png"
+        forecastle.stakater.com/icon: "https://tautulli.com/images/logo.svg"
         forecastle.stakater.com/appName: "tatulli"
         forecastle.stakater.com/group: "Media"
         route.openshift.io/termination: "edge"
