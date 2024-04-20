@@ -2,7 +2,7 @@
 kind: SecurityContextConstraints
 apiVersion: security.openshift.io/v1
 metadata:
-  name: tatulli-scc
+  name: tautulli-scc
 fsGroup:
   type: RunAsAny
 runAsUser:
@@ -12,4 +12,4 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:media:tatulli-sa
+- system:serviceaccount:media:tautulli-sa

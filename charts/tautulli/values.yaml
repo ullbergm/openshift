@@ -8,14 +8,14 @@ app-template:
         main:
           image:
             # renovate: docker-image versioning=loose
-            repository: ghcr.io/onedr0p/tatulli
+            repository:ghcr.io/onedr0p/tautulli
             tag: 2.13.4
             pullPolicy: IfNotPresent
           env:
             TZ: TIMEZONE
 
   serviceAccount:
-    name: tatulli-sa
+    name: tautulli-sa
 
   service:
     main:
@@ -30,7 +30,7 @@ app-template:
       annotations:
         forecastle.stakater.com/expose: "true"
         forecastle.stakater.com/icon: "https://tautulli.com/images/logo.svg"
-        forecastle.stakater.com/appName: "tatulli"
+        forecastle.stakater.com/appName: "tautulli"
         forecastle.stakater.com/group: "Media"
         route.openshift.io/termination: "edge"
       hosts:
@@ -45,11 +45,11 @@ app-template:
   persistence:
     config:
       enabled: true
-      existingClaim: tatulli-config
+      existingClaim: tautulli-config
 
     data:
       enabled: true
-      existingClaim: tatulli-data-volume
+      existingClaim: tautulli-data-volume
       globalMounts:
         - path: /data
 

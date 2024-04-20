@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: media-tatulli
+  name: media-tautulli
   namespace: openshift-gitops
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -11,7 +11,7 @@ spec:
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
-    path: charts/tatulli
+    path: charts/tautulli
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:
@@ -23,7 +23,7 @@ spec:
         - name: cluster.admin_email
           value: {{ .Values.cluster.admin_email }}
         - name: 'app-template.ingress.main.hosts[0].host'
-          value: tatulli.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+          value: tautulli.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
         - name: app-template.controllers.main.containers.main.env.TZ
           value: {{ .Values.cluster.timezone }}
         - name: media.nfs.server

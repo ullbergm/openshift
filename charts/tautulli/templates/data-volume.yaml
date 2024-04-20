@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: tatulli-data-volume
+  name: tautulli-data-volume
 spec:
   storageClassName: ""
   capacity:
@@ -23,12 +23,12 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: tatulli-data-volume
+  name: tautulli-data-volume
   namespace: media
 spec:
   accessModes: ["ReadWriteMany"]
   resources:
     requests:
       storage: 1Mi
-  volumeName: tatulli-data-volume
+  volumeName: tautulli-data-volume
   storageClassName: ""

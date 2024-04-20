@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
-description: A Helm chart to install tatulli.
-name: media-tatulli
+description: A Helm chart to install tautulli.
+name: media-tautulli
 version: 0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
