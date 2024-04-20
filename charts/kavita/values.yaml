@@ -46,6 +46,7 @@ app-template:
     config:
       enabled: true
       existingClaim: kavita-config
+      mountPath: /kavita/config
 
     data:
       enabled: true
