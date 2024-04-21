@@ -25,6 +25,8 @@ kind: PersistentVolumeClaim
 metadata:
   name: prowlarr-data-volume
   namespace: media
+  annotations:
+    kasten/backup: "false"
 spec:
   accessModes: ["ReadWriteMany"]
   resources:
