@@ -8,6 +8,6 @@ maintainers:
   - name: Magnus Ullberg
     email: magnus@ullberg.us
 dependencies:
-- name: snapshot-controller
+- name: democratic-csi/snapshot-controller
   version: "0.14.6"
   repository: "https://democratic-csi.github.io/charts"
