@@ -25,7 +25,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: kavita-data-volume
   labels:
-    kasten/backup: "false"
+    kasten/backup: "skip"
 spec:
   accessModes: ["ReadWriteMany"]
   resources:
