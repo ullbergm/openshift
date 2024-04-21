@@ -4,6 +4,8 @@ app-template:
       type: statefulset
       annotations:
         reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
       containers:
         main:
           image:
