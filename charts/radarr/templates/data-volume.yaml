@@ -25,7 +25,7 @@ kind: PersistentVolumeClaim
 metadata:
   name: radarr-data-volume
   labels:
-    kasten/backup: "skip"
+    kasten/skip: "true"
 spec:
   accessModes: ["ReadWriteMany"]
   resources:
