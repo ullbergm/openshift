@@ -1,0 +1,12 @@
+---
+apiVersion: v2
+description: A Helm chart to configure backups
+name: kasten
+version: 0.1.0
+kubeVersion: ">=1.22.0-0"
+maintainers:
+  - name: Magnus Ullberg
+    email: magnus@ullberg.us
+keywords:
+  - backups
+  - kasten
