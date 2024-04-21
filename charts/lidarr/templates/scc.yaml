@@ -12,4 +12,4 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:media:lidarr-sa
+- system:serviceaccount:{{.Release.Namespace}}:lidarr-sa

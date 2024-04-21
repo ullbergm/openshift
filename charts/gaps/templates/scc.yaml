@@ -12,4 +12,4 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:media:gaps-sa
+- system:serviceaccount:{{.Release.Namespace}}:gaps-sa

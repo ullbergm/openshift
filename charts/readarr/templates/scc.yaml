@@ -12,4 +12,4 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:media:readarr-sa
+- system:serviceaccount:{{.Release.Namespace}}:readarr-sa

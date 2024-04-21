@@ -12,4 +12,4 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:media:kavita-sa
+- system:serviceaccount:{{.Release.Namespace}}:kavita-sa

@@ -12,4 +12,4 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:media:prowlarr-sa
+- system:serviceaccount:{{.Release.Namespace}}:prowlarr-sa
