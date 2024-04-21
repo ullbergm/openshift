@@ -89,7 +89,7 @@ democratic-csi:
           description: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
           
           # btrfs thin provisioning
-          type: "BLUN"
+          # type: "BLUN"
           # tpws = Hardware-assisted zeroing
           # caw = Hardware-assisted locking
           # 3pc = Hardware-assisted data transfer
@@ -119,7 +119,10 @@ democratic-csi:
           #  enable: 1
 
           # ext4 thinn provisioning UI sends everything with enabled=0
-          #type: "THIN"
+          type: "THIN"
+          dev_attribs:
+          - dev_attrib: can_snapshot
+            enable: 1
 
           # ext4 thin with advanced legacy features set
           # can only alter tpu (all others are set as enabled=1)
