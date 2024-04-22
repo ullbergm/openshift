@@ -1,0 +1,68 @@
+app-template:
+  controllers:
+    main:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+      containers:
+        main:
+          image:
+            # renovate: docker-image versioning=loose
+            repository: ghcr.io/onedr0p/sabnzbd
+            tag: 4.2.3
+            pullPolicy: IfNotPresent
+          env:
+            TZ: TIMEZONE
+
+  serviceAccount:
+    name: sabnzbd-sa
+
+  service:
+    main:
+      controller: main
+      ports:
+        http:
+          port: 8080
+
+  ingress:
+    main:
+      enabled: true
+      annotations:
+        forecastle.stakater.com/expose: "true"
+        forecastle.stakater.com/icon: "https://raw.githubusercontent.com/sabnzbd/sabnzbd/develop/icons/logo-arrow.svg"
+        forecastle.stakater.com/appName: "sabnzbd"
+        forecastle.stakater.com/group: "Downloading"
+        route.openshift.io/termination: "edge"
+      hosts:
+        - host: &host "your_host"
+          paths:
+            - path: /
+              pathType: Prefix
+              service:
+                identifier: main
+                port: http
+
+  persistence:
+    config:
+      enabled: true
+      existingClaim: sabnzbd-config
+
+    data:
+      enabled: true
+      existingClaim: sabnzbd-data-volume
+      globalMounts:
+        - path: /data
+
+  defaultPodOptions:
+    securityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 44
+        - 109
+        - 100
+        - 65535
