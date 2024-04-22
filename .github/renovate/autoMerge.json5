@@ -16,8 +16,7 @@
       "automerge": true,
       "ignoreTests": true,
       "automergeType": "branch",
-      "matchUpdateTypes": ["digest"],
-      "matchPackagePatterns": ["ghcr.io/onedr0p"]
+      "matchUpdateTypes": ["minor", "patch"]
     },
     {
       "description": "Auto merge GitHub Actions",
