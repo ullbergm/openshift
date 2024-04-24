@@ -1,0 +1,9 @@
+---
+apiVersion: v2
+description: A Helm chart to install the cert-manager-operator.
+name: cert-manager-operator
+version: 0.1.3
+kubeVersion: ">=1.22.0-0"
+maintainers:
+  - name: Magnus Ullberg
+    email: magnus@ullberg.us
