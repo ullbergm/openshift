@@ -24,7 +24,7 @@ spec:
           value: {{ .Values.cluster.admin_email }}
         - name: 'app-template.ingress.main.hosts[0].host'
           value: sabnzbd.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
-        - name: 'app-template.controllers.main.initContainers.config-fix.env.HOSTNAME'
+        - name: 'app-template.controllers.main.initContainers[0].env.HOSTNAME'
           value: sabnzbd.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
         - name: app-template.controllers.main.containers.main.env.TZ
           value: {{ .Values.cluster.timezone }}
