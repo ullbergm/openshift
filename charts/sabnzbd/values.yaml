@@ -22,10 +22,6 @@ app-template:
               add: ["CHOWN"]
             runAsUser: 0
             runAsNonRoot: false
-          volumeMounts:
-          - name: config
-            globalMounts:
-              - path: /config
       containers:
         main:
           image:
