@@ -16,7 +16,7 @@ metadata:
   namespace: metallb-system
 spec:
     ipAddressPools:
-    - name: static-pool
+    - static-pool
 ---
 apiVersion: metallb.io/v1beta1
 kind: IPAddressPool
@@ -36,4 +36,4 @@ metadata:
   namespace: metallb-system
 spec:
     ipAddressPools:
-    - name: static-pool
+    - auto-pool
