@@ -7,7 +7,7 @@ app-template:
       labels:
         kasten/backup: "true"
       initContainers:
-        config-fix:
+      - config-fix:
           name: config-fix
           image: registry.hub.docker.com/library/alpine:3.19.1
           #command: ["find", "/config", "-not", "-user", "1000", "-or", "-not", "-group", "1000", "-exec", "chown", "1000:1000", "{}", "+"]
@@ -23,7 +23,8 @@ app-template:
             runAsNonRoot: false
           volumeMounts:
           - name: config
-            mountPath: /config
+            globalMounts:
+              - path: /config
       containers:
         main:
           image:
