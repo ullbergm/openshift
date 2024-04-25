@@ -61,6 +61,8 @@ app-template:
     config:
       enabled: true
       existingClaim: sabnzbd-config
+      globalMounts:
+        - path: /config
 
     data:
       enabled: true
