@@ -6,6 +6,7 @@ metadata:
   namespace: metallb-system
 spec:
   avoidBuggyIPs: true
+  autoAssign: false
   addresses:
     - {{ .Values.network.plexIP }}/32
 ---
@@ -24,7 +25,6 @@ metadata:
   name: auto-pool
   namespace: metallb-system
 spec:
-  autoAssign: false
   avoidBuggyIPs: true
   addresses:
   - {{ .Values.network.startIP }}-{{ .Values.network.endIP }}
