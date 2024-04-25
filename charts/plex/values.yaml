@@ -22,8 +22,9 @@ app-template:
   service:
     main:
       annotations:
-        metallb.universe.tf/loadBalancerIPs: 10.0.0.1
+        metallb.universe.tf/loadBalancerIPs: *lbip
       type: LoadBalancer
+      loadBalancerIP: &lbip 10.0.0.1
       controller: main
       ports:
         http:
