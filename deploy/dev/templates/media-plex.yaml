@@ -38,6 +38,8 @@ spec:
           value: http
         - name: 'app-template.ingress.main.hosts[0].paths[0].service.identifier'
           value: main
+        - name: 'app-template.ingress.main.annotations["metallb.universe.tf/loadBalancerIPs"]'
+          value: {{ .Values.network.plexIP }}
   syncPolicy:
     automated:
       selfHeal: true

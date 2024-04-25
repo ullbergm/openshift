@@ -21,8 +21,9 @@ app-template:
 
   service:
     main:
-      # type: LoadBalancer
-      # loadBalancerIP: "192.168.64.41"
+      annotations:
+        metallb.universe.tf/loadBalancerIPs: 10.0.0.1
+      type: LoadBalancer
       controller: main
       ports:
         http:

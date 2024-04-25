@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cluster-nmstate-operator
+  name: cluster-metallb-operator
   namespace: openshift-gitops
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -11,10 +11,17 @@ spec:
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
-    path: charts/nmstate-operator
+    path: charts/metallb-operator
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:
+      parameters:
+        - name: network.startIP
+          value: {{ .Values.network.startIP }}
+        - name: network.endIP
+          value: {{ .Values.network.endIP }}
+        - name: network.plexIP
+          value: {{ .Values.network.plexIP }}
   syncPolicy:
     automated:
       selfHeal: true
