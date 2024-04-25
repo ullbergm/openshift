@@ -17,9 +17,6 @@ app-template:
             HOSTNAME: HOSTNAME
           securityContext:
             readOnlyRootFilesystem: true
-            capabilities:
-              drop: ["all"]
-              add: ["CHOWN"]
             runAsUser: 0
             runAsNonRoot: false
       containers:
