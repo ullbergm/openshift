@@ -1,4 +1,7 @@
 app-template:
+  defaultPodOptions:
+    hostname: sabnzbd
+
   controllers:
     main:
       type: statefulset
