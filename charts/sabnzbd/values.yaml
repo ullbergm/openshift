@@ -12,7 +12,7 @@ app-template:
             repository: registry.hub.docker.com/library/alpine
             tag: 3.19.1
           #command: ["find", "/config", "-not", "-user", "1000", "-or", "-not", "-group", "1000", "-exec", "chown", "1000:1000", "{}", "+"]
-          command: ["sh", "-c", 'touch /config/sabnzbd.ini ; sed -ei "s/^host_whitelist.*/host_whitelist = $HOSTNAME/" /config/sabnzbd.ini']
+          command: ["sh", "-c", 'ls -la /config; touch /config/sabnzbd.ini ; sed -ei "s/^host_whitelist.*/host_whitelist = $HOSTNAME/" /config/sabnzbd.ini']
           env:
             HOSTNAME: HOSTNAME
           securityContext:
