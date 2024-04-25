@@ -39,7 +39,7 @@ spec:
         - name: 'app-template.ingress.main.hosts[0].paths[0].service.identifier'
           value: main
         - name: 'app-template.service.main.loadBalancerIP'
-          value: '{{ .Values.network.plexIP }}'
+          value: '&lbip {{ .Values.network.plexIP }}'
   syncPolicy:
     automated:
       selfHeal: true
