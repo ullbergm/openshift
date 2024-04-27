@@ -2,10 +2,10 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   annotations:
-    forecastle.stakater.com/expose: "true"
-    forecastle.stakater.com/icon: "https://raw.githubusercontent.com/bazarr/bazarr.github.io/master/assets/img/logo.png"
-    forecastle.stakater.com/appName: "Bazarr"
-    forecastle.stakater.com/group: "Media"
+    hajimari.io/enable: "true"
+    hajimari.io/icon: "subtitles"
+    hajimari.io/group: "Media"
+    hajimari.io/info: "Manages and downloads subtitles"
     route.openshift.io/termination: "edge"
   name: bazarr
   namespace: bazarr
