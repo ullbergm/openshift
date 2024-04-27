@@ -47,3 +47,16 @@ app-template:
         - path: /config/config.yaml
           subPath: config.yaml
           readOnly: true
+
+hajimari:
+    defaultEnable: true
+    theme: null
+    lightTheme: gazette
+    darkTheme: blackboard
+    showGreeting: false
+    showAppGroups: true
+    showAppInfo: true
+    showAppUrls: false
+    showBookmarkGroups: true
+    targetBlank: false
+    name: "friend"

@@ -5,17 +5,4 @@ metadata:
   namespace: hajimari
 data:
   config.yaml: |-
-    # Hajimari configuration file
-    #
-    hajimari:
-        defaultEnable: true
-        theme: null
-        lightTheme: gazette
-        darkTheme: blackboard
-        showGreeting: false
-        showAppGroups: true
-        showAppInfo: true
-        showAppUrls: false
-        showBookmarkGroups: true
-        targetBlank: false
-        name: "friend"
+{{ toYaml .Values.hajimari | indent 4 }}
