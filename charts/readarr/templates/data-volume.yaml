@@ -3,8 +3,6 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: readarr-data-volume
-  labels:
-    app.kubernetes.io/instance={{ .Release.Name }}
 spec:
   storageClassName: ""
   capacity:
