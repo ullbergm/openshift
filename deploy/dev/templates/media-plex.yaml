@@ -42,7 +42,7 @@ spec:
           value: '{{ .Values.network.plexIP }}'
   syncPolicy:
     automated:
-    prune: true
+      prune: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true

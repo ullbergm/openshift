@@ -26,7 +26,7 @@ spec:
           value: apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   syncPolicy:
     automated:
-    prune: true
+      prune: true
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
