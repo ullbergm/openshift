@@ -22,22 +22,12 @@ spec:
           value: {{ .Values.cluster.name }}
         - name: cluster.admin_email
           value: {{ .Values.cluster.admin_email }}
-        - name: 'app-template.ingress.main.hosts[0].host'
-          value: sonarr.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
         - name: app-template.controllers.main.containers.main.env.TZ
           value: {{ .Values.cluster.timezone }}
         - name: media.nfs.server
           value: {{ .Values.media.nfs.server }}
         - name: media.nfs.path
           value: {{ .Values.media.nfs.path }}
-        - name: 'app-template.ingress.main.hosts[0].paths[0].path'
-          value: /
-        - name: 'app-template.ingress.main.hosts[0].paths[0].pathType'
-          value: Prefix
-        - name: 'app-template.ingress.main.hosts[0].paths[0].service.port'
-          value: http
-        - name: 'app-template.ingress.main.hosts[0].paths[0].service.identifier'
-          value: main
   syncPolicy:
     automated:
       prune: true

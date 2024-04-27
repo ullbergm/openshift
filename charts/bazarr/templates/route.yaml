@@ -1,0 +1,24 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  annotations:
+    forecastle.stakater.com/expose: "true"
+    forecastle.stakater.com/icon: "https://raw.githubusercontent.com/bazarr/bazarr.github.io/master/assets/img/logo.png"
+    forecastle.stakater.com/appName: "Bazarr"
+    forecastle.stakater.com/group: "Media"
+    route.openshift.io/termination: "edge"
+  name: bazarr
+  namespace: bazarr
+spec:
+  host: bazarr.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  path: /
+  to:
+    kind: Service
+    name: media-bazarr
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

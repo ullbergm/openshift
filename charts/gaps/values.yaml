@@ -26,24 +26,6 @@ app-template:
         http:
           port: 8484
 
-  ingress:
-    main:
-      enabled: true
-      annotations:
-        forecastle.stakater.com/expose: "true"
-        forecastle.stakater.com/icon: "https://raw.githubusercontent.com/JasonHHouse/gaps/master/images/Final-Black.png"
-        forecastle.stakater.com/appName: "Gaps"
-        forecastle.stakater.com/group: "Media"
-        route.openshift.io/termination: "edge"
-      hosts:
-        - host: &host "your_host"
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                identifier: main
-                port: http
-
   persistence:
     config:
       enabled: true

@@ -26,24 +26,6 @@ app-template:
         http:
           port: 9696
 
-  ingress:
-    main:
-      enabled: true
-      annotations:
-        forecastle.stakater.com/expose: "true"
-        forecastle.stakater.com/icon: "https://tautulli.com/images/logo.svg"
-        forecastle.stakater.com/appName: "tautulli"
-        forecastle.stakater.com/group: "Media"
-        route.openshift.io/termination: "edge"
-      hosts:
-        - host: &host "your_host"
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                identifier: main
-                port: http
-
   persistence:
     config:
       enabled: true
