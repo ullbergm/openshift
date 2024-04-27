@@ -21,12 +21,12 @@ app-template:
 
   service:
     main:
-      controller: main
+      controller: &controller main
       ports:
         http:
-          port: 8686
+          port: &port 8686
 
-  ingress:
+  route:
     main:
       enabled: true
       annotations:
@@ -35,14 +35,19 @@ app-template:
         forecastle.stakater.com/appName: "lidarr"
         forecastle.stakater.com/group: "Media"
         route.openshift.io/termination: "edge"
-      hosts:
-        - host: &host "your_host"
-          paths:
-            - path: /
-              pathType: Prefix
-              service:
-                identifier: main
-                port: http
+      hostnames:
+        - &host "your_host"
+    rules:
+      - matches:
+          - path:
+              type: PathPrefix
+              value: /
+        backendRefs:
+          - kind: Service
+            port: *port
+            name: *controller
+            namespace: default
+            weight: 1
 
   persistence:
     config:
