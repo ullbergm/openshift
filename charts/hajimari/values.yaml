@@ -1,0 +1,87 @@
+app-template:
+  controllers:
+    main:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+      containers:
+        main:
+          image:
+            # renovate: docker-image versioning=loose
+            repository: ghcr.io/ullbergm/hajimari
+            tag: latest
+            pullPolicy: Always
+          env:
+            TZ: TIMEZONE
+
+  serviceAccount:
+    name: tautulli-sa
+
+  service:
+    main:
+      controller: main
+      ports:
+        http:
+          port: 9696
+
+  persistence:
+    config:
+      enabled: true
+      existingClaim: tautulli-config
+
+    data:
+      enabled: true
+      existingClaim: tautulli-data-volume
+      globalMounts:
+        - path: /data
+
+  defaultPodOptions:
+    securityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 44
+        - 109
+        - 100
+        - 65535
+
+  hajimari:
+    defaultEnable: true
+    theme: null
+    lightTheme: gazette
+    darkTheme: blackboard
+    showGreeting: false
+    showAppGroups: true
+    showAppInfo: true
+    showAppUrls: false
+    showBookmarkGroups: true
+    targetBlank: false
+    name: "friend"
+#   customApps:
+#     - group: Media
+#       apps:
+#       - name: Synology
+#         url: http://nas.ullberg.family:5000
+#         icon: nas
+#         info: "Network attached storage"
+    globalBookmarks:
+      - group: Communicate
+        bookmarks:
+          - name: Reddit
+            url: "https://old.reddit.com"
+          - name: Zoho email
+            url: "https://mail.zoho.com"
+      - group: Media
+        bookmarks:
+          - name: Plex
+            url: "https://plex.tv/desktop/"
+          - name: Netflix
+            url: "https://netflix.com"
+          - name: Amazon Video
+            url: "https://www.amazon.com/gp/video/storefront/"
+          - name: Spotify
+            url: "https://browse.spotify.com"
