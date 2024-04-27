@@ -10,7 +10,7 @@ metadata:
   name: lidarr
   namespace: lidarr
 spec:
-  host: {{ .Values.app.hostname }}
+  host: lidarr.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   path: /
   to:
     kind: Service
