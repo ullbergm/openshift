@@ -60,3 +60,5 @@ hajimari:
     showBookmarkGroups: true
     targetBlank: false
     name: "friend"
+    namespaceSelector:
+      any: true
