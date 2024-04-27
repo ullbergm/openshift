@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: hajimari-config
+  namespace: hajimari
+data:
+  config.yaml: |-
+    # Hajimari configuration file
+    #
+    hajimari:
+        defaultEnable: true
+        theme: null
+        lightTheme: gazette
+        darkTheme: blackboard
+        showGreeting: false
+        showAppGroups: true
+        showAppInfo: true
+        showAppUrls: false
+        showBookmarkGroups: true
+        targetBlank: false
+        name: "friend"
+        globalBookmarks:
+        - group: Communicate
+            bookmarks:
+            - name: Reddit
+                url: "https://old.reddit.com"
+            - name: Zoho Mail
+                url: "https://mail.zoho.com"
+        - group: Media
+            bookmarks:
+            - name: Plex
+                url: "https://plex.tv/desktop/"
+            - name: Netflix
+                url: "https://netflix.com"
+            - name: Amazon Video
+                url: "https://www.amazon.com/gp/video/storefront/"
+            - name: Spotify
+                url: "https://browse.spotify.com"
