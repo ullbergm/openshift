@@ -26,11 +26,6 @@ app-template:
         http:
           port: 9696
 
-  persistence:
-    config:
-      enabled: true
-      existingClaim: hajimari-config
-
   defaultPodOptions:
     securityContext:
       runAsUser: 568
