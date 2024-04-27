@@ -37,17 +37,17 @@ app-template:
         route.openshift.io/termination: "edge"
       hostnames:
         - &host "your_host"
-    rules:
-      - matches:
-          - path:
-              type: PathPrefix
-              value: /
-        backendRefs:
-          - kind: Service
-            port: *port
-            name: *controller
-            namespace: default
-            weight: 1
+      rules:
+        - matches:
+            - path:
+                type: PathPrefix
+                value: /
+          backendRefs:
+            - kind: Service
+              port: *port
+              name: *controller
+              namespace: default
+              weight: 1
 
   persistence:
     config:
