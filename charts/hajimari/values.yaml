@@ -24,7 +24,7 @@ app-template:
       controller: main
       ports:
         http:
-          port: 9696
+          port: 8080
 
   defaultPodOptions:
     securityContext:
