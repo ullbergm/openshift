@@ -22,7 +22,7 @@ spec:
           value: {{ .Values.cluster.name }}
         - name: cluster.admin_email
           value: {{ .Values.cluster.admin_email }}
-        - name: 'app-template.route.main.hostnames[0]'
+        - name: 'app.hostname'
           value: lidarr.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
         - name: app-template.controllers.main.containers.main.env.TZ
           value: {{ .Values.cluster.timezone }}

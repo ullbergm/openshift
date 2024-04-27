@@ -1,3 +1,6 @@
+app:
+  hostname: lidarr.apps.CLUSTER_NAME.CLUSTER_TOP_LEVEL_DOMAIN
+
 app-template:
   controllers:
     main:

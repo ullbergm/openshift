@@ -1,0 +1,24 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  annotations:
+    forecastle.stakater.com/appName: lidarr
+    forecastle.stakater.com/expose: 'true'
+    forecastle.stakater.com/group: Media
+    forecastle.stakater.com/icon: 'https://raw.githubusercontent.com/Lidarr/Lidarr/develop/Logo/400.png'
+    route.openshift.io/termination: edge
+  name: lidarr
+  namespace: lidarr
+spec:
+  host: {{ .Values.app.hostname }}
+  path: /
+  to:
+    kind: Service
+    name: media-lidarr
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
