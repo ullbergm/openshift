@@ -26,29 +26,6 @@ app-template:
         http:
           port: &port 8686
 
-  route:
-    main:
-      enabled: true
-      annotations:
-        forecastle.stakater.com/expose: "true"
-        forecastle.stakater.com/icon: "https://raw.githubusercontent.com/Lidarr/Lidarr/develop/Logo/400.png"
-        forecastle.stakater.com/appName: "lidarr"
-        forecastle.stakater.com/group: "Media"
-        route.openshift.io/termination: "edge"
-      hostnames:
-        - &host "your_host"
-      rules:
-        - matches:
-            - path:
-                type: PathPrefix
-                value: /
-          backendRefs:
-            - kind: Service
-              port: *port
-              name: *controller
-              namespace: default
-              weight: 1
-
   persistence:
     config:
       enabled: true
