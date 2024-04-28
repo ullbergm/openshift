@@ -14,7 +14,7 @@ spec:
   path: /
   to:
     kind: Service
-    name: media-sabnzbd
+    name: downloading-sabnzbd
     weight: 100
   port:
     targetPort: http
