@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  generateName: nginx-ingress-
+  annotations:
+    olm.providedAPIs: NginxIngress.v1alpha1.charts.nginx.org
+  name: nginx-ingress-cluster
+  namespace: nginx-ingress
+spec:
+  upgradeStrategy: Default
