@@ -11,4 +11,4 @@ spec:
   name: metallb-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: metallb-operator.v4.15.0-202404030309
+  startingCSV: metallb-operator.v4.15.0-202404151834
