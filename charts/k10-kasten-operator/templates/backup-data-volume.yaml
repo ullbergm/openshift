@@ -24,6 +24,7 @@ apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: backup-data-volume
+  namespace: kasten-io
   labels:
     kasten/skip: "true"
 spec:
