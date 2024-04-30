@@ -11,8 +11,6 @@ app-template:
         kasten/backup: "true"
       containers:
         main:
-          annotations:
-            sidecar.istio.io/inject: 'true'
           image:
             # renovate: docker-image
             repository: housewrecker/gaps
@@ -43,6 +41,8 @@ app-template:
         - path: /data
 
   defaultPodOptions:
+    labels:
+      sidecar.istio.io/inject: "true"
     securityContext:
       runAsUser: 568
       runAsGroup: 568
