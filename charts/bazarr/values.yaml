@@ -40,8 +40,9 @@ app-template:
         - path: /data
 
   defaultPodOptions:
-    labels:
       sidecar.istio.io/inject: "true"
+      app: bazarr
+      version: 1.0.0
     securityContext:
       runAsUser: 568
       runAsGroup: 568

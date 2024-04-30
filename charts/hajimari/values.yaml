@@ -27,6 +27,9 @@ app-template:
           port: 3000
 
   defaultPodOptions:
+      sidecar.istio.io/inject: "true"
+      app: hajimari
+      version: 1.0.0
     securityContext:
       runAsUser: 568
       runAsGroup: 568

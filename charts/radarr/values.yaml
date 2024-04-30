@@ -41,6 +41,9 @@ app-template:
         - path: /data
 
   defaultPodOptions:
+      sidecar.istio.io/inject: "true"
+      app: radarr
+      version: 1.0.0
     securityContext:
       runAsUser: 568
       runAsGroup: 568
