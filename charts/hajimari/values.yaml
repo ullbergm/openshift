@@ -27,6 +27,7 @@ app-template:
           port: 3000
 
   defaultPodOptions:
+    labels:
       sidecar.istio.io/inject: "true"
       app: hajimari
       version: 1.0.0

@@ -41,6 +41,7 @@ app-template:
         - path: /data
 
   defaultPodOptions:
+    labels:
       sidecar.istio.io/inject: "true"
       app: lidarr
       version: 1.0.0
