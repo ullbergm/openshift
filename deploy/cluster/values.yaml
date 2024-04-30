@@ -29,6 +29,9 @@ democratic-csi:
       iscsi:
         targetPortal: 'my-server[:port]'
 
+config:
+  storageClassName: "synology-iscsi"
+
 media:
   nfs:
     server: my-nas
