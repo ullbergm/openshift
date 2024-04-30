@@ -30,6 +30,8 @@ spec:
           value: {{ .Values.media.nfs.path }}
         - name: 'app-template.service.main.annotations.metallb\.universe\.tf/loadBalancerIPs'
           value: '{{ .Values.network.plexIP }}'
+        - name: config.storageClassName
+          value: {{ .Values.config.storageClassName }}
   syncPolicy:
     automated:
       prune: true

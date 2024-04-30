@@ -28,6 +28,8 @@ spec:
           value: {{ .Values.media.nfs.server }}
         - name: media.nfs.path
           value: {{ .Values.media.nfs.path }}
+        - name: config.storageClassName
+          value: {{ .Values.config.storageClassName }}
   syncPolicy:
     automated:
       prune: true
