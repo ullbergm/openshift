@@ -11,9 +11,6 @@ app-template:
         kasten/backup: "true"
       containers:
         main:
-          metadata:
-            annotations:
-              sidecar.istio.io/inject: 'true'
           image:
             # renovate: docker-image versioning=loose
             repository: ghcr.io/onedr0p/bazarr
@@ -21,7 +18,6 @@ app-template:
             pullPolicy: IfNotPresent
           env:
             TZ: TIMEZONE
-
   serviceAccount:
     name: bazarr-sa
 
@@ -44,6 +40,8 @@ app-template:
         - path: /data
 
   defaultPodOptions:
+    labels:
+      sidecar.istio.io/inject: "true"
     securityContext:
       runAsUser: 568
       runAsGroup: 568
