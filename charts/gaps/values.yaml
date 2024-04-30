@@ -43,6 +43,8 @@ app-template:
   defaultPodOptions:
     labels:
       sidecar.istio.io/inject: "true"
+      app: gaps
+      version: 1.0.0
     securityContext:
       runAsUser: 568
       runAsGroup: 568
