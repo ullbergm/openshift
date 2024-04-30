@@ -41,7 +41,7 @@ app-template:
         - path: /data
 
   defaultPodOptions:
-    annotations:
+    labels:
       sidecar.istio.io/inject: "true"
       app: tautulli
       version: 1.0.0

@@ -56,7 +56,7 @@ app-template:
         - path: /data
 
   defaultPodOptions:
-    annotations:
+    labels:
       sidecar.istio.io/inject: "true"
       app: sabnzbd
       version: 1.0.0
