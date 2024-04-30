@@ -11,8 +11,9 @@ app-template:
         kasten/backup: "true"
       containers:
         main:
-          annotations:
-            sidecar.istio.io/inject: 'true'
+          metadata:
+            annotations:
+              sidecar.istio.io/inject: 'true'
           image:
             # renovate: docker-image versioning=loose
             repository: ghcr.io/onedr0p/bazarr
