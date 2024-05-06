@@ -10,7 +10,7 @@ app-template:
         main:
           image:
             # renovate: docker-image versioning=loose
-            repository: ghcr.io/ullbergm/hajimari
+            repository: ullbergm/hajimari
             tag: latest
             pullPolicy: Always
           env:
