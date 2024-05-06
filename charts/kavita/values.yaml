@@ -44,7 +44,6 @@ app-template:
 
   defaultPodOptions:
     labels:
-      sidecar.istio.io/inject: "true"
       app: kavita
       version: 1.0.0
     securityContext:

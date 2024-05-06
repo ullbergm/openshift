@@ -1,0 +1,11 @@
+apiVersion: hajimari.io/v1alpha1
+kind: Application
+metadata:
+  name: kavita
+spec:
+  name: Kavita
+  group: Media
+  icon: book
+  url: https://kavita.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  info: Manga reader
+  targetBlank: true

@@ -1,0 +1,11 @@
+apiVersion: hajimari.io/v1alpha1
+kind: Application
+metadata:
+  name: overseerr
+spec:
+  name: Overseerr
+  group: Media
+  icon: eye-circle
+  url: https://overseerr.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  info: Helps you find media you want to watch
+  targetBlank: true

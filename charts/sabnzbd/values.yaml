@@ -57,7 +57,6 @@ app-template:
 
   defaultPodOptions:
     labels:
-      sidecar.istio.io/inject: "true"
       app: sabnzbd
       version: 1.0.0
     securityContext:

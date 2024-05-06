@@ -1,0 +1,11 @@
+apiVersion: hajimari.io/v1alpha1
+kind: Application
+metadata:
+  name: lidarr
+spec:
+  name: Lidarr
+  group: Media
+  icon: music-box
+  url: https://lidarr.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  info: Manages your music library
+  targetBlank: true

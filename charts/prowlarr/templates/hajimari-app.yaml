@@ -1,0 +1,11 @@
+apiVersion: hajimari.io/v1alpha1
+kind: Application
+metadata:
+  name: prowlarr
+spec:
+  name: Prowlarr
+  group: Media
+  icon: cloud-search
+  url: https://prowlarr.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  info: Indexer manager/proxy
+  targetBlank: true
