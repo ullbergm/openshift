@@ -65,16 +65,6 @@ hajimari:
     targetBlank: false
     name: "friend"
     namespaceSelector:
-      any: true
-      matchNames:
-        - bazarr
-        - gaps
-        - kavita
-        - lidarr
-        - overseerr
-        - plex
-        - radarr
-        - readarr
-        - sabnzbd
-        - sonarr
-        - tautulli
+      labelSelector:
+        matchLabels:
+          istio-injection: enabled
