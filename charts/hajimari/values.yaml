@@ -66,3 +66,15 @@ hajimari:
     name: "friend"
     namespaceSelector:
       any: true
+      matchNames:
+        - bazarr
+        - gaps
+        - kavita
+        - lidarr
+        - overseerr
+        - plex
+        - radarr
+        - readarr
+        - sabnzbd
+        - sonarr
+        - tautulli
