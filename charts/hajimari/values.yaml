@@ -65,6 +65,4 @@ hajimari:
     targetBlank: false
     name: "friend"
     namespaceSelector:
-      labelSelector:
-        matchLabels:
-          istio-injection: enabled
+      any: true
