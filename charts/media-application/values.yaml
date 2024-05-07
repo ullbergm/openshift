@@ -39,11 +39,11 @@ app-template:
         main:
           image:
             # renovate: docker-image versioning=loose
-            repository: {{ tpl .Value.application.image.repository . }}
-            tag: {{ tpl .Value.application.image.tag . }}
-            pullPolicy: {{ tpl .Value.application.image.pullPolicy . }}
+            repository: "{{ tpl .Value.application.image.repository . }}"
+            tag: "{{ tpl .Value.application.image.tag . }}"
+            pullPolicy: "{{ tpl .Value.application.image.pullPolicy . }}"
           env:
-            TZ: {{ tpl .Values.cluster.timezone . }}
+            TZ: "{{ tpl .Values.cluster.timezone . }}"
 
   serviceAccount:
     name: "{{ tpl .Value.application.name . | lower }}-sa"
