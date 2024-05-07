@@ -1,35 +1,35 @@
 apiVersion: hajimari.io/v1alpha1
 kind: Application
 metadata:
-  name: {{ tpl .Values.application.name . | lower }}
+  name: {{ tpl .Value.application.name . | lower }}
 spec:
-  name: {{ tpl .Values.application.name . }}
+  name: {{ tpl .Value.application.name . }}
   group: Media
   icon: movie-open
-  url: https://{{ tpl .Values.application.name . | lower }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  url: https://{{ tpl .Value.application.name . | lower }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   info: Manages your movie library
   targetBlank: true
 ---
 apiVersion: console.openshift.io/v1
 kind: ConsoleLink
 metadata:
-  name: "{{ tpl .Values.application.name . | lower }}-application-menu-link"
+  name: "{{ tpl .Value.application.name . | lower }}-application-menu-link"
 spec:
-  href: https://{{ tpl .Values.application.name . | lower }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  href: https://{{ tpl .Value.application.name . | lower }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   location: ApplicationMenu
   applicationMenu:
     section: "Media Tools"
-    imageURL: {{ tpl .Values.application.image }}
-  text: "{{ tpl .Values.application.name . }}"
+    imageURL: {{ tpl .Value.application.image }}
+  text: "{{ tpl .Value.application.name . }}"
 ---
 apiVersion: console.openshift.io/v1
 kind: ConsoleLink
 metadata:
-  name: "{{ tpl .Values.application.name . | lower }}-namespace-dashboard-link"
+  name: "{{ tpl .Value.application.name . | lower }}-namespace-dashboard-link"
 spec:
-  href: https://{{ tpl .Values.application.name . | lower }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  href: https://{{ tpl .Value.application.name . | lower }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   location: NamespaceDashboard
   namespaceDashboard:
     namespaces:
-      - {{ tpl .Values.application.name . | lower }}
+      - {{ tpl .Value.application.name . | lower }}
   text: 'Access Application'

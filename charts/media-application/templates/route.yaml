@@ -3,18 +3,18 @@ apiVersion: route.openshift.io/v1
 metadata:
   annotations:
     forecastle.stakater.com/expose: "true"
-    forecastle.stakater.com/icon: "{{ tpl .Values.application.image . }}"
-    forecastle.stakater.com/appName: "{{ tpl .Values.application.name . }}"
-    forecastle.stakater.com/group: "{{ tpl .Values.application.group . }}"
+    forecastle.stakater.com/icon: "{{ tpl .Value.application.image . }}"
+    forecastle.stakater.com/appName: "{{ tpl .Value.application.name . }}"
+    forecastle.stakater.com/group: "{{ tpl .Value.application.group . }}"
     route.openshift.io/termination: "edge"
-  name: {{ tpl .Values.application.name . | lower }}
-  namespace: {{ tpl .Values.application.name . | lower }}
+  name: {{ tpl .Value.application.name . | lower }}
+  namespace: {{ tpl .Value.application.name . | lower }}
 spec:
-  host: {{ tpl .Values.application.name . | lower }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  host: {{ tpl .Value.application.name . | lower }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   path: /
   to:
     kind: Service
-    name: {{ tpl .Values.application.name . | lower }}
+    name: {{ tpl .Value.application.name . | lower }}
     weight: 100
   port:
     targetPort: http

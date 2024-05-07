@@ -2,7 +2,7 @@
 kind: SecurityContextConstraints
 apiVersion: security.openshift.io/v1
 metadata:
-  name: "{{ tpl .Values.application.name . | lower }}-scc"
+  name: "{{ tpl .Value.application.name . | lower }}-scc"
 fsGroup:
   type: RunAsAny
 runAsUser:
@@ -12,4 +12,4 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 users:
-- "system:serviceaccount:{{.Release.Namespace}}:{{ tpl .Values.application.name . | lower }}-sa"
+- "system:serviceaccount:{{.Release.Namespace}}:{{ tpl .Value.application.name . | lower }}-sa"
