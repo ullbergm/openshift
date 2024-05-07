@@ -2,7 +2,7 @@ cluster:
   top_level_domain: example.com
   name: openshift
   admin_email: admin@example.com
-  timezone: America/New_York
+  timezone: &timezone America/New_York
 
 application:
   name: app
@@ -43,7 +43,7 @@ app-template:
             tag: *imageTag
             pullPolicy: *pullPolicy
           env:
-            TZ: "{{ tpl .Values.cluster.timezone . }}"
+            TZ: *timezone
 
   serviceAccount:
     name: "{{ tpl .Values.application.name . | lower }}-sa"
