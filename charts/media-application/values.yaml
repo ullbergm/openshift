@@ -58,11 +58,11 @@ app-template:
   persistence:
     config:
       enabled: true
-      existingClaim: {{ tpl .Value.application.name . | lower }}-config
+      existingClaim: "{{ tpl .Value.application.name . | lower }}-config"
 
     data:
       enabled: true
-      existingClaim: {{ tpl .Value.application.name . | lower }}-data-volume
+      existingClaim: "{{ tpl .Value.application.name . | lower }}-data-volume"
       globalMounts:
         - path: /data
 
