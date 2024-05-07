@@ -1,0 +1,82 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+
+application:
+  name: app
+  group: Media
+  icon: simple-icons:app
+  image: https://raw.githubusercontent.com/app/app/develop/Logo/400.png
+  description: "A tool for managing stuff."
+  port: 8080
+
+storage:
+  storageClassName: synology-iscsi
+  media:
+    nfs:
+      server: nas
+      path: /volume1/media
+
+image:
+  # renovate: docker-image versioning=loose
+  repository: ghcr.io/onedr0p/app
+  tag: 1.0.0.0000
+  pullPolicy: IfNotPresent
+
+## Define app-template parameters based on the values above
+
+app-template:
+  controllers:
+    main:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+      containers:
+        main:
+          image:
+            # renovate: docker-image versioning=loose
+            repository: {{ tpl .Value.application.image.repository . }}
+            tag: {{ tpl .Value.application.image.tag . }}
+            pullPolicy: {{ tpl .Value.application.image.pullPolicy . }}
+          env:
+            TZ: {{ tpl .Values.cluster.timezone . }}
+
+  serviceAccount:
+    name: {{ tpl .Value.application.name . | lower }}-sa
+
+  service:
+    main:
+      controller: main
+      ports:
+        http:
+          port: {{ tpl .Value.application.port . }}
+
+  persistence:
+    config:
+      enabled: true
+      existingClaim: {{ tpl .Value.application.name . | lower }}-config
+
+    data:
+      enabled: true
+      existingClaim: {{ tpl .Value.application.name . | lower }}-data-volume
+      globalMounts:
+        - path: /data
+
+  defaultPodOptions:
+    labels:
+      app: {{ tpl .Value.application.name . | lower }}
+      version: 1.0.0
+    securityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 44
+        - 109
+        - 100
+        - 65535

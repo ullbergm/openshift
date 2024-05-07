@@ -11,25 +11,40 @@ spec:
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
-    path: charts/gaps
+    path: charts/media-application
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:
       parameters:
-        - name: cluster.top_level_domain
-          value: {{ .Values.cluster.top_level_domain }}
-        - name: cluster.name
-          value: {{ .Values.cluster.name }}
-        - name: cluster.admin_email
-          value: {{ .Values.cluster.admin_email }}
-        - name: app-template.controllers.main.containers.main.env.TZ
+        - name: cluster
+          value: {{ tpl (.Values.cluster | toYaml) . | indent 2 }}
           value: {{ .Values.cluster.timezone }}
-        - name: media.nfs.server
-          value: {{ .Values.media.nfs.server }}
-        - name: media.nfs.path
-          value: {{ .Values.media.nfs.path }}
-        - name: config.storageClassName
+        - name: storage.storageClassName
           value: {{ .Values.config.storageClassName }}
+        - name: storage.media.nfs.server
+          value: {{ .Values.media.nfs.server }}
+        - name: storage.media.nfs.path
+          value: {{ .Values.media.nfs.path }}
+
+        - name: application.name
+          value: Gaps
+        - name: application.group
+          value: Media
+        - name: application.icon
+          value: movie-open
+        - name: application.image
+          value: 'https://raw.githubusercontent.com/JasonHHouse/gaps/master/images/Final-Black.png'
+        - name: application.description
+          value: 'Helps find missing movies in a series'
+        - name: application.port
+          value: '8484'
+        - name: image.repository
+          value: housewrecker/gaps
+        - name: image.tag
+          value: 'x64-v0.10.4'
+        - name: image.pullPolicy
+          value: IfNotPresent
+
   syncPolicy:
     automated:
       prune: true
