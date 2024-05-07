@@ -27,7 +27,7 @@ app-template:
       controller: main
       ports:
         http:
-          port: 9696
+          port: 8787
 
   persistence:
     config:
