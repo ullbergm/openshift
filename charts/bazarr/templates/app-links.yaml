@@ -13,7 +13,7 @@ spec:
 apiVersion: console.openshift.io/v1
 kind: ConsoleLink
 metadata:
-  name: application-menu-link
+  name: bazarr-application-menu-link
 spec:
   href: https://bazarr.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   location: ApplicationMenu
@@ -25,7 +25,7 @@ spec:
 apiVersion: console.openshift.io/v1
 kind: ConsoleLink
 metadata:
-  name: namespace-dashboard-link
+  name: bazarr-namespace-dashboard-link
 spec:
   href: https://bazarr.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   location: NamespaceDashboard

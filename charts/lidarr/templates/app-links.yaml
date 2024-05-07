@@ -1,0 +1,35 @@
+apiVersion: hajimari.io/v1alpha1
+kind: Application
+metadata:
+  name: lidarr
+spec:
+  name: Lidarr
+  group: Media
+  icon: music-box
+  url: https://lidarr.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  info: Manages your music library
+  targetBlank: true
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: lidarr-application-menu-link
+spec:
+  href: https://lidarr.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  location: ApplicationMenu
+  applicationMenu:
+    section: "Media Tools"
+    imageURL: https://raw.githubusercontent.com/Lidarr/Lidarr/develop/Logo/400.png
+  text: 'Lidarr'
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: lidarr-namespace-dashboard-link
+spec:
+  href: https://lidarr.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  location: NamespaceDashboard
+  namespaceDashboard:
+    namespaces:
+      - lidarr
+  text: 'Access Application'
