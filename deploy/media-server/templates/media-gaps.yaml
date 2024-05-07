@@ -16,9 +16,15 @@ spec:
     targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:
       parameters:
-        - name: cluster
-          value: {{ tpl .Values.cluster . }}
+        - name: cluster.top_level_domain
+          value: {{ .Values.cluster.top_level_domain }}
+        - name: cluster.name
+          value: {{ .Values.cluster.name }}
+        - name: cluster.admin_email
+          value: {{ .Values.cluster.admin_email }}
+        - name: cluster.timezone
           value: {{ .Values.cluster.timezone }}
+          
         - name: storage.storageClassName
           value: {{ .Values.config.storageClassName }}
         - name: storage.media.nfs.server
