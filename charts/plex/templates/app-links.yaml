@@ -1,0 +1,35 @@
+apiVersion: hajimari.io/v1alpha1
+kind: Application
+metadata:
+  name: plex
+spec:
+  name: Plex
+  group: Media
+  icon: plex
+  url: https://plex.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  info: Manages your movie library
+  targetBlank: true
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: plex-application-menu-link
+spec:
+  href: https://plex.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  location: ApplicationMenu
+  applicationMenu:
+    section: "Media Tools"
+    imageURL: https://upload.wikimedia.org/wikipedia/commons/7/7b/Plex_logo_2022.svg
+  text: 'Plex'
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: plex-namespace-dashboard-link
+spec:
+  href: https://plex.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  location: NamespaceDashboard
+  namespaceDashboard:
+    namespaces:
+      - plex
+  text: 'Access Application'
