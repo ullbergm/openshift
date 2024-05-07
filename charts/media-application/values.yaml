@@ -45,29 +45,29 @@ app-template:
             TZ: "{{ tpl .Values.cluster.timezone . }}"
 
   serviceAccount:
-    name: "{{ tpl .Value.application.name . | lower }}-sa"
+    name: "{{ tpl .Values.application.name . | lower }}-sa"
 
   service:
     main:
       controller: main
       ports:
         http:
-          port: "{{ tpl .Value.application.port . }}"
+          port: "{{ tpl .Values.application.port . }}"
 
   persistence:
     config:
       enabled: true
-      existingClaim: "{{ tpl .Value.application.name . | lower }}-config"
+      existingClaim: "{{ tpl .Values.application.name . | lower }}-config"
 
     data:
       enabled: true
-      existingClaim: "{{ tpl .Value.application.name . | lower }}-data-volume"
+      existingClaim: "{{ tpl .Values.application.name . | lower }}-data-volume"
       globalMounts:
         - path: /data
 
   defaultPodOptions:
     labels:
-      app: "{{ tpl .Value.application.name . | lower }}"
+      app: "{{ tpl .Values.application.name . | lower }}"
       version: 1.0.0
     securityContext:
       runAsUser: 568
