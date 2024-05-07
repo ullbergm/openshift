@@ -53,7 +53,7 @@ app-template:
       controller: main
       ports:
         http:
-          port: {{ tpl .Value.application.port . }}
+          port: "{{ tpl .Value.application.port . }}"
 
   persistence:
     config:
