@@ -46,7 +46,7 @@ app-template:
             TZ: {{ tpl .Values.cluster.timezone . }}
 
   serviceAccount:
-    name: {{ tpl .Value.application.name . | lower }}-sa
+    name: "{{ tpl .Value.application.name . | lower }}-sa"
 
   service:
     main:
