@@ -19,7 +19,7 @@ spec:
   location: ApplicationMenu
   applicationMenu:
     section: "Media Tools"
-    imageURL: {{ tpl .Values.application.image }}
+    imageURL: {{ tpl .Values.application.image . }}
   text: "{{ tpl .Values.application.name . }}"
 ---
 apiVersion: console.openshift.io/v1
