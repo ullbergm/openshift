@@ -39,9 +39,9 @@ app-template:
         main:
           image:
             # renovate: docker-image versioning=loose
-            repository: {{ tpl .Values.image.repository . }}
-            tag: {{ tpl .Values.image.tag . }}
-            pullPolicy: {{ tpl .Values.image.pullPolicy . }}
+            repository: "{{ tpl .Values.image.repository . }}"
+            tag: "{{ tpl .Values.image.tag . }}"
+            pullPolicy: "{{ tpl .Values.image.pullPolicy . }}"
           env:
             TZ: *timezone
 
