@@ -21,9 +21,9 @@ storage:
 
 image:
   # renovate: docker-image versioning=loose
-  repository: &imageRepository ghcr.io/onedr0p/app
-  tag: &imageTag 1.0.0.0000
-  pullPolicy: &pullPolicy IfNotPresent
+  repository: ghcr.io/onedr0p/app
+  tag: 1.0.0.0000
+  pullPolicy: IfNotPresent
 
 ## Define app-template parameters based on the values above
 
@@ -39,9 +39,9 @@ app-template:
         main:
           image:
             # renovate: docker-image versioning=loose
-            repository: *imageRepository
-            tag: *imageTag
-            pullPolicy: *pullPolicy
+            repository: {{ tpl .Values.image.repository . }}
+            tag: {{ tpl .Values.image.tag . }}
+            pullPolicy: {{ tpl .Values.image.pullPolicy . }}
           env:
             TZ: *timezone
 
