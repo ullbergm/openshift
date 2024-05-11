@@ -46,7 +46,7 @@ app-template:
             TZ: America/New_York
 
   serviceAccount:
-    name: "{{ .Release.Name }}-sa"
+    name: "{{ tpl .Release.Name . }}-sa"
 
   service:
     main:
