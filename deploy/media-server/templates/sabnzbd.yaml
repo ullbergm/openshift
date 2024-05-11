@@ -55,8 +55,6 @@ spec:
           value: "-c"
         - name: app-template.controllers.main.initContainers.config-fix.command[2]
           value: 'if test -f /config/sabnzbd.ini; then sed -i "s/^host_whitelist.*/host_whitelist = sabnzbd.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}/" /config/sabnzbd.ini; fi'
-        - name: app-template.controllers.main.initContainers.config-fix.env.HOSTNAME
-          value: sabnzbd.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
         - name: app-template.controllers.main.initContainers.config-fix.securityContext.readOnlyRootFilesystem
           value: 'true'
         - name: app-template.controllers.main.initContainers.config-fix.securityContext.runAsUser
