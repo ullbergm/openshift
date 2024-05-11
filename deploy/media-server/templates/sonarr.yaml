@@ -43,7 +43,7 @@ spec:
         - name: application.description
           value: "Manages your TV show library"
         - name: app-template.service.main.ports.http.port
-          value: 8989
+          value: '8989'
 
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/onedr0p/sonarr
