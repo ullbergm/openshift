@@ -25,31 +25,7 @@ spec:
         - name: cluster.timezone
           value: {{ .Values.cluster.timezone }}
           
-        - name: storage.storageClassName
-          value: {{ .Values.config.storageClassName }}
-        - name: storage.media.nfs.server
-          value: {{ .Values.media.nfs.server }}
-        - name: storage.media.nfs.path
-          value: {{ .Values.media.nfs.path }}
 
-        - name: application.name
-          value: Gaps
-        - name: application.group
-          value: Media
-        - name: application.icon
-          value: movie-open
-        - name: application.image
-          value: 'https://raw.githubusercontent.com/JasonHHouse/gaps/master/images/Final-Black.png'
-        - name: application.description
-          value: "Helps find missing movies in a series"
-        - name: app-template.service.main.ports.http.port
-          value: '8484'
-        - name: app-template.controllers.main.containers.main.image.repository
-          value: housewrecker/gaps
-        - name: app-template.controllers.main.containers.main.image.tag
-          value: 'x64-v0.10.4'
-        - name: app-template.controllers.main.containers.main.image.pullPolicy
-          value: IfNotPresent
 
   syncPolicy:
     automated:
