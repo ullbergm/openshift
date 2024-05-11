@@ -1,4 +1,4 @@
-{{ $at := index .Value "app-template" }}
+{{ $at := index .Values "app-template" }}
 ---
 apiVersion: v1
 kind: PersistentVolume
