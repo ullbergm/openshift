@@ -1,8 +1,9 @@
+{{ $at := index .Values "app-template" }}
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ index .Values "app-template" "persistence.config.existingClaim" }}
+  name: {{ $at.persistence.config.existingClaim }}
 spec:
   accessModes:
     - ReadWriteOnce
