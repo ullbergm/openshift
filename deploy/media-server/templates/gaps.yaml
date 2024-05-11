@@ -61,6 +61,8 @@ spec:
           value: gaps-data-volume
         - name: app-template.persistence.config.existingClaim
           value: gaps-config
+        - name: app-template.persistence.config.globalMounts[0].path
+          value: /usr/data
 
         - name: app-template.defaultPodOptions.labels.app
           value: gaps
