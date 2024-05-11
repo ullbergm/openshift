@@ -41,7 +41,7 @@ spec:
         - name: application.image
           value: 'https://raw.githubusercontent.com/JasonHHouse/gaps/master/images/Final-Black.png'
         - name: application.description
-          value: 'Helps find missing movies in a series'
+          value: "Helps find missing movies in a series"
         - name: app-template.service.main.ports.http.port
           value: '8484'
         - name: app-template.controllers.main.containers.main.image.repository
