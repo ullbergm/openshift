@@ -62,9 +62,9 @@ spec:
         - name: app-template.persistence.config.existingClaim
           value: gaps-config
 
-        - name: app-template.defaultPodOptions.lables.app
+        - name: app-template.defaultPodOptions.labels.app
           value: gaps
-        - name: app-template.defaultPodOptions.lables.version
+        - name: app-template.defaultPodOptions.labels.version
           value: '0.10.4'
 
   syncPolicy:
