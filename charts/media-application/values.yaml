@@ -44,39 +44,3 @@ app-template:
             pullPolicy: IfNotPresent
           env:
             TZ: America/New_York
-
-  serviceAccount:
-    name: "{{ .Release.Name }}-sa"
-
-  service:
-    main:
-      controller: main
-      ports:
-        http:
-          port: 8080
-
-  persistence:
-    config:
-      enabled: true
-      existingClaim: "{{ .Release.Name }}-config"
-
-    data:
-      enabled: true
-      existingClaim: "{{ .Release.Name }}-data-volume"
-      globalMounts:
-        - path: /data
-
-  defaultPodOptions:
-    labels:
-      app: "{{ .Release.Name }}"
-      version: 1.0.0
-    securityContext:
-      runAsUser: 568
-      runAsGroup: 568
-      fsGroup: 568
-      fsGroupChangePolicy: "OnRootMismatch"
-      supplementalGroups:
-        - 44
-        - 109
-        - 100
-        - 65535
