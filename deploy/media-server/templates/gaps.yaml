@@ -44,12 +44,28 @@ spec:
           value: "Helps find missing movies in a series"
         - name: app-template.service.main.ports.http.port
           value: '8484'
+
+
         - name: app-template.controllers.main.containers.main.image.repository
           value: housewrecker/gaps
         - name: app-template.controllers.main.containers.main.image.tag
           value: 'x64-v0.10.4'
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
+        - name: app-template.controllers.main.containers.main.env.TZ
+          value: America/New_York
+
+        - name: app-template.serviceAccount.name
+          value: gaps-sa
+        - name: app-template.persistence.existingClaim
+          value: gaps-data-volume
+        - name: app-template.persistence.config.existingClaim
+          value: gaps-config
+
+        - name: app-template.defaultPodOptions.lables.app
+          value: gaps
+        - name: app-template.defaultPodOptions.lables.version
+          value: '0.10.4'
 
   syncPolicy:
     automated:

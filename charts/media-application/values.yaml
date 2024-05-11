@@ -2,7 +2,7 @@ cluster:
   top_level_domain: example.com
   name: openshift
   admin_email: admin@example.com
-  timezone: &timezone America/New_York
+  timezone: America/New_York
 
 application:
   name: App
@@ -13,19 +13,12 @@ application:
   port: 8080
 
 storage:
-  storageClassName: synology-iscsi
+  config:
+    storageClassName: synology-iscsi
   media:
     nfs:
       server: nas
       path: /volume1/media
-
-image:
-  # renovate: docker-image versioning=loose
-  repository: ghcr.io/onedr0p/app
-  tag: 1.0.0.0000
-  pullPolicy: IfNotPresent
-
-## Define app-template parameters based on the values above
 
 app-template:
   controllers:
@@ -46,7 +39,7 @@ app-template:
             TZ: America/New_York
 
   serviceAccount:
-    name: "{{ tpl .Release.Name . }}-sa"
+    name: app-sa
 
   service:
     main:
@@ -58,18 +51,18 @@ app-template:
   persistence:
     config:
       enabled: true
-      existingClaim: "{{ .Release.Name }}-config"
+      existingClaim: app-config
 
     data:
       enabled: true
-      existingClaim: "{{ .Release.Name }}-data-volume"
+      existingClaim: app-data-volume
       globalMounts:
         - path: /data
 
   defaultPodOptions:
     labels:
-      app: "{{ .Release.Name }}"
-      version: 1.0.0
+      app: app
+      version: 1.0.0.0000
     securityContext:
       runAsUser: 568
       runAsGroup: 568
