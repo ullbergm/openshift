@@ -7,14 +7,14 @@ metadata:
     forecastle.stakater.com/appName: "{{ tpl .Values.application.name . }}"
     forecastle.stakater.com/group: "{{ tpl .Values.application.group . }}"
     route.openshift.io/termination: "edge"
-  name: {{ tpl .Values.application.name . | lower }}
-  namespace: {{ tpl .Values.application.name . | lower }}
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Name }}
 spec:
-  host: {{ tpl .Values.application.name . | lower }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  host: {{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   path: /
   to:
     kind: Service
-    name: {{ tpl .Values.application.name . | lower }}
+    name: {{ .Release.Name }}
     weight: 100
   port:
     targetPort: http

@@ -42,13 +42,13 @@ spec:
           value: 'https://raw.githubusercontent.com/JasonHHouse/gaps/master/images/Final-Black.png'
         - name: application.description
           value: 'Helps find missing movies in a series'
-        - name: application.port
+        - name: app-template.service.main.ports.http.port
           value: '8484'
-        - name: image.repository
+        - name: app-template.controllers.main.containers.main.image
           value: housewrecker/gaps
-        - name: image.tag
+        - name: app-template.controllers.main.containers.main.tag
           value: 'x64-v0.10.4'
-        - name: image.pullPolicy
+        - name: app-template.controllers.main.containers.main.pullPolicy
           value: IfNotPresent
 
   syncPolicy:

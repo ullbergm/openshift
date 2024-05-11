@@ -5,7 +5,7 @@ cluster:
   timezone: &timezone America/New_York
 
 application:
-  name: app
+  name: App
   group: Media
   icon: simple-icons:app
   image: https://raw.githubusercontent.com/app/app/develop/Logo/400.png
@@ -39,36 +39,36 @@ app-template:
         main:
           image:
             # renovate: docker-image versioning=loose
-            repository: "{{ tpl .Values.image.repository . }}"
-            tag: "{{ tpl .Values.image.tag . }}"
-            pullPolicy: "{{ tpl .Values.image.pullPolicy . }}"
+            repository: ghcr.io/onedr0p/app
+            tag: 1.0.0.0000
+            pullPolicy: IfNotPresent
           env:
-            TZ: *timezone
+            TZ: America/New_York
 
   serviceAccount:
-    name: "{{ tpl .Values.application.name . | lower }}-sa"
+    name: "{{ .Release.Name }}-sa"
 
   service:
     main:
       controller: main
       ports:
         http:
-          port: "{{ tpl .Values.application.port . }}"
+          port: 8080
 
   persistence:
     config:
       enabled: true
-      existingClaim: "{{ tpl .Values.application.name . | lower }}-config"
+      existingClaim: "{{ .Release.Name }}-config"
 
     data:
       enabled: true
-      existingClaim: "{{ tpl .Values.application.name . | lower }}-data-volume"
+      existingClaim: "{{ .Release.Name }}-data-volume"
       globalMounts:
         - path: /data
 
   defaultPodOptions:
     labels:
-      app: "{{ tpl .Values.application.name . | lower }}"
+      app: "{{ .Release.Name }}"
       version: 1.0.0
     securityContext:
       runAsUser: 568
