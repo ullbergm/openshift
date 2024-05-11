@@ -54,11 +54,11 @@ spec:
         - name: app-template.controllers.main.initContainers.config-fix.env.HOSTNAME
           value: sabnzbd.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
         - name: app-template.controllers.main.initContainers.config-fix.securityContext.readOnlyRootFilesystem
-          value: true
+          value: 'true'
         - name: app-template.controllers.main.initContainers.config-fix.securityContext.runAsUser
-          value: 0
+          value: '0'
         - name: app-template.controllers.main.initContainers.config-fix.securityContext.runAsNonRoot
-          value: false
+          value: 'false'
 
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/onedr0p/sabnzbd
