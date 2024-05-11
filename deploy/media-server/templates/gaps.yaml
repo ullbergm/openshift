@@ -57,7 +57,7 @@ spec:
 
         - name: app-template.serviceAccount.name
           value: gaps-sa
-        - name: app-template.persistence.existingClaim
+        - name: app-template.persistence.data.existingClaim
           value: gaps-data-volume
         - name: app-template.persistence.config.existingClaim
           value: gaps-config

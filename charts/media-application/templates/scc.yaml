@@ -12,4 +12,4 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 users:
-- "system:serviceaccount:{{ .Release.Namespace }}:{{ .Release.Name }}-sa"
+- "system:serviceaccount:{{ .Release.Namespace }}:{{ .Values.app-template.serviceAccount.name }}"

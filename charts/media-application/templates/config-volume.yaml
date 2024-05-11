@@ -2,11 +2,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: "{{ .Release.Name }}-config"
+  name: "{{ .Values.app-template.persistence.config.existingClaim }}"
 spec:
   accessModes:
     - ReadWriteOnce
-  storageClassName: {{ .Values.storage.storageClassName }}
+  storageClassName: {{ .Values.storage.config.storageClassName }}
   resources:
     requests:
       storage: 15Gi
