@@ -45,19 +45,20 @@ spec:
         - name: app-template.service.main.ports.http.port
           value: '8080'
 
-        - name: app-template.controllers.main.initContainers:
-          value: |- 
-            config-fix:
-              image: 
-                repository: registry.hub.docker.com/library/alpine
-                tag: 3.19.1
-              command: ["sh", "-c", 'if test -f /config/sabnzbd.ini; then sed -i "s/^host_whitelist.*/host_whitelist = $HOSTNAME/" /config/sabnzbd.ini; fi']
-              env:
-                HOSTNAME: HOSTNAME
-              securityContext:
-                readOnlyRootFilesystem: true
-                runAsUser: 0
-                runAsNonRoot: false
+        - name: app-template.controllers.main.initContainers.config-fix.image.repository
+          value: registry.hub.docker.com/library/alpine
+        - name: app-template.controllers.main.initContainers.config-fix.image.tag
+          value: 3.19.1
+        - name: app-template.controllers.main.initContainers.config-fix.command
+          value: ["sh", "-c", 'if test -f /config/sabnzbd.ini; then sed -i "s/^host_whitelist.*/host_whitelist = $HOSTNAME/" /config/sabnzbd.ini; fi']
+        - name: app-template.controllers.main.initContainers.config-fix.env.HOSTNAME
+          value: sabnzbd.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+        - name: app-template.controllers.main.initContainers.config-fix.securityContext.readOnlyRootFilesystem
+          value: true
+        - name: app-template.controllers.main.initContainers.config-fix.securityContext.runAsUser
+          value: 0
+        - name: app-template.controllers.main.initContainers.config-fix.securityContext.runAsNonRoot
+          value: false
 
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/onedr0p/sabnzbd
