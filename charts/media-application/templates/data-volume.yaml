@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ .Values.app-template.persistence.data.existingClaim }}
+  name: {{ index .Values "app-template" "persistence.data.existingClaim" }}
 spec:
   storageClassName: ""
   capacity:
@@ -23,7 +23,7 @@ spec:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ .Values.app-template.persistence.data.existingClaim }}
+  name: {{ index .Values "app-template" "persistence.data.existingClaim" }}
   labels:
     kasten/skip: "true"
 spec:
@@ -31,5 +31,5 @@ spec:
   resources:
     requests:
       storage: 1Mi
-  volumeName: {{ .Values.app-template.persistence.data.existingClaim }}
+  volumeName: {{ index .Values "app-template" "persistence.data.existingClaim" }}
   storageClassName: ""
