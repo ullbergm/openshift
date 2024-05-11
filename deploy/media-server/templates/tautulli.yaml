@@ -43,7 +43,7 @@ spec:
         - name: application.description
           value: "Statistics for Plex"
         - name: app-template.service.main.ports.http.port
-          value: '9696'
+          value: '8181'
 
 
         - name: app-template.controllers.main.containers.main.image.repository
