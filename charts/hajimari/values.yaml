@@ -63,7 +63,6 @@ hajimari:
     showBookmarkGroups: true
     showGlobalBookmarks: true
     alwaysTargetBlank: false
-    showAppUrls: true
     targetBlank: false
     name: "friend"
     namespaceSelector:
