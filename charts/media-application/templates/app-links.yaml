@@ -4,10 +4,10 @@ metadata:
   name: {{ .Release.Name }}
 spec:
   name: {{ tpl .Values.application.name . }}
-  group: Media
-  icon: movie-open
+  group: "{{ .Values.application.group }}"
+  icon: "{{ .Values.application.icon }}"
   url: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
-  info: Manages your movie library
+  info: "{{ .Values.application.description }}"
   targetBlank: true
 ---
 apiVersion: console.openshift.io/v1
@@ -18,7 +18,7 @@ spec:
   href: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   location: ApplicationMenu
   applicationMenu:
-    section: "Media Tools"
+    section: "{{ .Values.application.group }}"
     imageURL: {{ tpl .Values.application.image . }}
   text: "{{ tpl .Values.application.name . }}"
 ---
