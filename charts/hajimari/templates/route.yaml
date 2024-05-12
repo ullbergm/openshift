@@ -12,7 +12,7 @@ spec:
   path: /
   to:
     kind: Service
-    name: home-hajimari
+    name: hajimari
     weight: 100
   port:
     targetPort: http
