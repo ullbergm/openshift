@@ -51,11 +51,11 @@ spec:
         - name: hajimari.globalBookmarks[1].bookmarks[2].name
           value: "Youtube"
         - name: hajimari.globalBookmarks[1].bookmarks[2].url
-          value: "https://youtube.com/"
+          value: "https://youtube.com/feed/subscriptions"
         - name: hajimari.globalBookmarks[1].bookmarks[3].name
           value: "Spotify"
         - name: hajimari.globalBookmarks[1].bookmarks[3].url
-          value: "https://spotify.com/"
+          value: "https://browse.spotify.com/"
         - name: hajimari.globalBookmarks[2].group
           value: "3d Printing"
         - name: hajimari.globalBookmarks[2].bookmarks[0].name
@@ -66,6 +66,20 @@ spec:
           value: "Printables"
         - name: hajimari.globalBookmarks[2].bookmarks[1].url
           value: "https://printables.com/"
+        - name: hajimari.globalBookmarks[2].bookmarks[2].name
+          value: "Thingiverse"
+        - name: hajimari.globalBookmarks[2].bookmarks[2].url
+          value: "https://thingiverse.com/"
+        - name: hajimari.globalBookmarks[2].bookmarks[3].name
+          value: "Thangs"
+        - name: hajimari.globalBookmarks[2].bookmarks[3].url
+          value: "https://thangs.com/"
+        - name: hajimari.globalBookmarks[3].group
+          value: "Business"
+        - name: hajimari.globalBookmarks[3].bookmarks[0].name
+          value: "LinkedIn"
+        - name: hajimari.globalBookmarks[3].bookmarks[0].url
+          value: "https://linkedin.com/"
   syncPolicy:
     automated:
       prune: true

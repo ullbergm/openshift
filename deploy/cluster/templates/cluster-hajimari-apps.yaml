@@ -1,0 +1,90 @@
+apiVersion: hajimari.io/v1alpha1
+kind: Application
+metadata:
+  name: nas
+  namespace: hajimari
+spec:
+  name: Synology
+  group: Infrastructure
+  icon: nas
+  url: https://nas.{{ .Values.cluster.top_level_domain }}
+  info: Storage
+  targetBlank: true
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Application
+metadata:
+  name: homeassistant
+  namespace: hajimari
+spec:
+  name: HomeAssistant
+  group: Home Automation
+  icon: home-assistant
+  url: http://homeassistant.{{ .Values.cluster.top_level_domain }}:8123
+  info: Home automation
+  targetBlank: true
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Application
+metadata:
+  name: valetudo
+  namespace: hajimari
+spec:
+  name: Vacuum
+  group: Home Automation
+  icon: robot-vacuum
+  url: http://homeassistant.{{ .Values.cluster.top_level_domain }}:8123
+  info: Home automation
+  targetBlank: true
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Application
+metadata:
+  name: unifi
+  namespace: hajimari
+spec:
+  name: UniFi
+  group: Infrastructure
+  icon: arcticons:unifi-network
+  url: https://unifi.{{ .Values.cluster.top_level_domain }}:8443
+  info: Manage WIFI 
+  targetBlank: true
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Application
+metadata:
+  name: firewall
+  namespace: hajimari
+spec:
+  name: Router
+  group: Infrastructure
+  icon: material-symbols:router-network
+  url: http://firewall.{{ .Values.cluster.top_level_domain }}
+  info: Manage firewall
+  targetBlank: true
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Application
+metadata:
+  name: switch
+  namespace: hajimari
+spec:
+  name: Main switch
+  group: Infrastructure
+  icon: material-symbols:switch
+  url: http://switch.{{ .Values.cluster.top_level_domain }}
+  info: Manage Router
+  targetBlank: true
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Application
+metadata:
+  name: switch2
+  namespace: hajimari
+spec:
+  name: PoE switch
+  group: Infrastructure
+  icon: material-symbols:switch
+  url: http://switch2.{{ .Values.cluster.top_level_domain }}
+  info: Manage Router
+  targetBlank: true
