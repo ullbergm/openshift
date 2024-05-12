@@ -16,7 +16,7 @@ spec:
     targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:
       valuesFile:
-        - hajimari.yaml
+        - hajimari.txt
       parameters:
         - name: cluster.top_level_domain
           value: {{ .Values.cluster.top_level_domain }}
