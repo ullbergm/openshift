@@ -9,7 +9,6 @@ spec:
   icon: nas
   url: http://nas.{{ .Values.cluster.top_level_domain }}
   info: Storage
-  targetBlank: true
 ---
 apiVersion: hajimari.io/v1alpha1
 kind: Application
@@ -22,7 +21,6 @@ spec:
   icon: home-assistant
   url: http://homeassistant.{{ .Values.cluster.top_level_domain }}:8123
   info: Home automation
-  targetBlank: true
 ---
 apiVersion: hajimari.io/v1alpha1
 kind: Application
@@ -33,9 +31,8 @@ spec:
   name: Vacuum
   group: Home Automation
   icon: robot-vacuum
-  url: http://homeassistant.{{ .Values.cluster.top_level_domain }}:8123
+  url: http://valetudo.{{ .Values.cluster.top_level_domain }}:8123
   info: Home automation
-  targetBlank: true
 ---
 apiVersion: hajimari.io/v1alpha1
 kind: Application
@@ -48,7 +45,6 @@ spec:
   icon: arcticons:unifi-network
   url: http://unifi.{{ .Values.cluster.top_level_domain }}:8443
   info: Manage WIFI 
-  targetBlank: true
 ---
 apiVersion: hajimari.io/v1alpha1
 kind: Application
@@ -61,7 +57,6 @@ spec:
   icon: router-network
   url: http://firewall.{{ .Values.cluster.top_level_domain }}
   info: Manage firewall
-  targetBlank: true
 ---
 apiVersion: hajimari.io/v1alpha1
 kind: Application
@@ -74,7 +69,6 @@ spec:
   icon: material-symbols:switch
   url: http://switch.{{ .Values.cluster.top_level_domain }}
   info: Manage Router
-  targetBlank: true
 ---
 apiVersion: hajimari.io/v1alpha1
 kind: Application
@@ -87,4 +81,3 @@ spec:
   icon: material-symbols:switch
   url: http://poe-switch.{{ .Values.cluster.top_level_domain }}
   info: Manage Router
-  targetBlank: true
