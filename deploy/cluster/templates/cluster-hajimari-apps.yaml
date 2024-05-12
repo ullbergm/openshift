@@ -58,7 +58,7 @@ metadata:
 spec:
   name: Router
   group: Infrastructure
-  icon: material-symbols:router-network
+  icon: router-network
   url: http://firewall.{{ .Values.cluster.top_level_domain }}
   info: Manage firewall
   targetBlank: true
