@@ -29,11 +29,43 @@ spec:
         - name: media.nfs.path
           value: {{ .Values.media.nfs.path }}
         - name: hajimari.globalBookmarks[0].group
-          value: "Communicate"
+          value: "Communication"
         - name: hajimari.globalBookmarks[0].bookmarks[0].name
-          value: "Discord"
+          value: "Zoho Mail"
         - name: hajimari.globalBookmarks[0].bookmarks[0].url
-          value: "https://discord.com"
+          value: "https://mail.zoho.com/"
+        - name: hajimari.globalBookmarks[0].bookmarks[1].name
+          value: "Reddit"
+        - name: hajimari.globalBookmarks[0].bookmarks[1].url
+          value: "https://old.reddit.com/"
+        - name: hajimari.globalBookmarks[1].group
+          value: "Media"
+        - name: hajimari.globalBookmarks[1].bookmarks[0].name
+          value: "Netflix"
+        - name: hajimari.globalBookmarks[1].bookmarks[0].url
+          value: "https://netflix.com/"
+        - name: hajimari.globalBookmarks[1].bookmarks[1].name
+          value: "Amazon Video"
+        - name: hajimari.globalBookmarks[1].bookmarks[1].url
+          value: "https://www.amazon.com/gp/video/storefront/"
+        - name: hajimari.globalBookmarks[1].bookmarks[2].name
+          value: "Youtube"
+        - name: hajimari.globalBookmarks[1].bookmarks[2].url
+          value: "https://youtube.com/"
+        - name: hajimari.globalBookmarks[1].bookmarks[3].name
+          value: "Spotify"
+        - name: hajimari.globalBookmarks[1].bookmarks[3].url
+          value: "https://spotify.com/"
+        - name: hajimari.globalBookmarks[2].group
+          value: "3d Printing"
+        - name: hajimari.globalBookmarks[2].bookmarks[0].name
+          value: "Makerworld"
+        - name: hajimari.globalBookmarks[2].bookmarks[0].url
+          value: "https://makerworld.com/"
+        - name: hajimari.globalBookmarks[2].bookmarks[1].name
+          value: "Printables"
+        - name: hajimari.globalBookmarks[2].bookmarks[1].url
+          value: "https://printables.com/"
   syncPolicy:
     automated:
       prune: true
