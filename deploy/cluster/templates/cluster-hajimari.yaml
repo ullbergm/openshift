@@ -30,6 +30,12 @@ spec:
           value: {{ .Values.media.nfs.server }}
         - name: media.nfs.path
           value: {{ .Values.media.nfs.path }}
+        - name: hajimari.globalBookmarks[0].group
+          value: "Communicate"
+        - name: hajimari.globalBookmarks[0].bookmarks[0].name
+          value: "Discord"
+        - name: hajimari.globalBookmarks[0].bookmarks[0].url
+          value: "https://discord.com"
   syncPolicy:
     automated:
       prune: true
