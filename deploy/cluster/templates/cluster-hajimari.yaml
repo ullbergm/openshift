@@ -15,6 +15,8 @@ spec:
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:
+       valuesFile:
+        - hajimari.yaml
       parameters:
         - name: cluster.top_level_domain
           value: {{ .Values.cluster.top_level_domain }}
@@ -28,24 +30,6 @@ spec:
           value: {{ .Values.media.nfs.server }}
         - name: media.nfs.path
           value: {{ .Values.media.nfs.path }}
-        - name: hajimari.globalBookmarks
-          value:
-            - group: Communicate
-              bookmarks:
-                - name: Discord
-                  url: 'https://discord.com'
-                - name: Gmail
-                  url: 'http://gmail.com'
-                - name: Slack
-                  url: 'https://slack.com/signin'
-            - group: Cloud
-              bookmarks:
-                - name: Box
-                  url: 'https://box.com'
-                - name: Dropbox
-                  url: 'https://dropbox.com'
-                - name: Drive
-                  url: 'https://drive.google.com'
   syncPolicy:
     automated:
       prune: true
