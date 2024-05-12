@@ -31,7 +31,7 @@ spec:
   name: Vacuum
   group: Home Automation
   icon: robot-vacuum
-  url: http://valetudo.{{ .Values.cluster.top_level_domain }}:8123
+  url: http://valetudo.{{ .Values.cluster.top_level_domain }}
   info: Home automation
 ---
 apiVersion: hajimari.io/v1alpha1
