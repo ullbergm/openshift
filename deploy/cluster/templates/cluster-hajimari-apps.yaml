@@ -7,7 +7,7 @@ spec:
   name: Synology
   group: Infrastructure
   icon: nas
-  url: https://nas.{{ .Values.cluster.top_level_domain }}
+  url: http://nas.{{ .Values.cluster.top_level_domain }}
   info: Storage
   targetBlank: true
 ---
@@ -46,7 +46,7 @@ spec:
   name: UniFi
   group: Infrastructure
   icon: arcticons:unifi-network
-  url: https://unifi.{{ .Values.cluster.top_level_domain }}:8443
+  url: http://unifi.{{ .Values.cluster.top_level_domain }}:8443
   info: Manage WIFI 
   targetBlank: true
 ---
