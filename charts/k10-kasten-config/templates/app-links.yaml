@@ -6,7 +6,7 @@ spec:
   name: Kasten K10
   group: Infrastructure
   icon: backup
-  url: https://k10-route-kasten-io.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  url: https://k10-route-kasten-io.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}/k10/
   info: "Backup and recovery."
 ---
 apiVersion: console.openshift.io/v1
@@ -14,7 +14,7 @@ kind: ConsoleLink
 metadata:
   name: "kasten-k10-application-menu-link"
 spec:
-  href: https://k10-route-kasten-io.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  href: https://k10-route-kasten-io.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}/k10/
   location: ApplicationMenu
   applicationMenu:
     section: Infrastructure
@@ -26,7 +26,7 @@ kind: ConsoleLink
 metadata:
   name: "kasten-k10-namespace-dashboard-link"
 spec:
-  href: https://k10-route-kasten-io.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  href: https://k10-route-kasten-io.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}/k10/
   location: NamespaceDashboard
   namespaceDashboard:
     namespaces:
