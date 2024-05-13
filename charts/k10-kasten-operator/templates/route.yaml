@@ -12,7 +12,7 @@ spec:
     kind: Service
     name: k10-kasten-operator-rhmp-controller-manager-metrics-svc
   tls:
-    termination: edge
+    termination: reencrypt
     insecureEdgeTerminationPolicy: Redirect
   port:
     targetPort: '8443'
