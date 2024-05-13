@@ -1,0 +1,14 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    operators.coreos.com/kernel-module-management.openshift-kmm: ''
+  name: kernel-module-management
+  namespace: openshift-kmm
+spec:
+  channel: stable
+  installPlanApproval: Automatic
+  name: kernel-module-management
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: kernel-module-management.v2.1.0

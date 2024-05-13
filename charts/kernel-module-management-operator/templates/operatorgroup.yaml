@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  generateName: openshift-kmm-
+  annotations:
+    olm.providedAPIs: 'Module.v1beta1.kmm.sigs.x-k8s.io,NodeModulesConfig.v1beta1.kmm.sigs.x-k8s.io,PreflightValidation.v1beta1.kmm.sigs.x-k8s.io,PreflightValidation.v1beta2.kmm.sigs.x-k8s.io,PreflightValidationOCP.v1beta1.kmm.sigs.x-k8s.io,PreflightValidationOCP.v1beta2.kmm.sigs.x-k8s.io'
+  name: openshift-kmm-cluster
+  namespace: openshift-kmm
+spec:
+  upgradeStrategy: Default
