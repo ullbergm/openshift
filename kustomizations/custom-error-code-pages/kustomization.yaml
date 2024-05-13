@@ -6,7 +6,9 @@ resources:
   - custom-error-code-pages.yaml
 patches:
   - target:
+      group: operator.openshift.io
       kind: IngressController
+      version: v1
       name: default
       namespace: openshift-ingress-operator
     path: patch-ingresscontroller.yaml
