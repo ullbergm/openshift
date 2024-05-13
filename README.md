@@ -10,7 +10,7 @@
     | helm | bjw-s | https://bjw-s.github.io/helm-charts       |
     | git  |       | https://github.com/ullbergm/openshift.git |
 
-5. Add the cluster application to Argo
+4. Add the cluster application to Argo
 
         apiVersion: argoproj.io/v1alpha1
         kind: Application
@@ -74,8 +74,12 @@
                 prune: true
                 selfHeal: true
 
-6. Once the certificates are working, update the IngressController object with:
+5. Once the certificates are working, update the IngressController object with:
 
         spec:
             defaultCertificate:
                 name: apps-wildcard-cert-tls
+
+6. Update the synology-iscsi VolumeSnapshotClass to have this annotation:
+
+       k10.kasten.io/is-snapshot-class: true
