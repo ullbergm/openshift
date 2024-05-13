@@ -7,53 +7,53 @@ spec: {}
 apiVersion: nmstate.io/v1
 kind: NodeNetworkConfigurationPolicy
 metadata:
-  name: master-0-storage-ip
+  name: node0-storage-ip
 spec:
   desiredState:
     interfaces:
       - ipv4:
           address:
-            - ip: {{ .Values.network.master-0.storage-ip.ip }}
-              prefix-length: {{ .Values.network.master-0.storage-ip.prefix-length }}
+            - ip: {{ .Values.network.node0.storageIp.ip }}
+              prefix-length: {{ .Values.network.node0.storageIp.prefixLength }}
           enabled: true
-        name: {{ .Values.network.master-0.storage-interface.name }}
+        name: {{ .Values.network.node0.storageInterface.name }}
         state: up
         type: ethernet
   nodeSelector:
-    kubernetes.io/hostname: master-0
+    kubernetes.io/hostname: {{ .Values.network.node0.name }}
 ---
 apiVersion: nmstate.io/v1
 kind: NodeNetworkConfigurationPolicy
 metadata:
-  name: master-1-storage-ip
+  name: node1-storage-ip
 spec:
   desiredState:
     interfaces:
       - ipv4:
           address:
-            - ip: {{ .Values.network.master-0.storage-ip.ip }}
-              prefix-length: {{ .Values.network.master-0.storage-ip.prefix-length }}
+            - ip: {{ .Values.network.node1.storageIp.ip }}
+              prefix-length: {{ .Values.network.node1.storageIp.prefixLength }}
           enabled: true
-        name: {{ .Values.network.master-0.storage-interface.name }}
+        name: {{ .Values.network.node1.storageInterface.name }}
         state: up
         type: ethernet
   nodeSelector:
-    kubernetes.io/hostname: master-1
+    kubernetes.io/hostname: {{ .Values.network.node1.name }}
 ---
 apiVersion: nmstate.io/v1
 kind: NodeNetworkConfigurationPolicy
 metadata:
-  name: master-2-storage-ip
+  name: node2-storage-ip
 spec:
   desiredState:
     interfaces:
       - ipv4:
           address:
-            - ip: {{ .Values.network.master-0.storage-ip.ip }}
-              prefix-length: {{ .Values.network.master-0.storage-ip.prefix-length }}
+            - ip: {{ .Values.network.node2.storageIp.ip }}
+              prefix-length: {{ .Values.network.node2.storageIp.prefixLength }}
           enabled: true
-        name: {{ .Values.network.master-0.storage-interface.name }}
+        name: {{ .Values.network.node2.storageInterface.name }}
         state: up
         type: ethernet
   nodeSelector:
-    kubernetes.io/hostname: master-2
+    kubernetes.io/hostname: {{ .Values.network.node2.name }}
