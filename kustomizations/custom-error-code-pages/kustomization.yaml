@@ -7,7 +7,7 @@ patches:
       kind: IngressController
       name: default
       namespace: openshift-ingress-operator
-  - patch: |-
+    patch: |-
       - op: add
         path: /spec/httpErrorCodePages
         value:
