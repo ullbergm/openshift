@@ -32,20 +32,7 @@ democratic-csi:
 config:
   storageClassName: "synology-iscsi"
 
-media:
-  nfs:
-    server: my-nas
-    path: /mnt/nfs
-
-backup:
-  nfs:
-    server: my-nas
-    path: /mnt/nfs
-
 network:
-  startIP: 192.168.64.55
-  endIP: 192.168.64.59
-  plexIP: 192.168.64.49
   node0:
     name: master-0
     storageInterface:
