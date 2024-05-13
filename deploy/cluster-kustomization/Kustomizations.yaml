@@ -1,0 +1,2 @@
+resources:
+- ../kustomizations/custom-error-pages
