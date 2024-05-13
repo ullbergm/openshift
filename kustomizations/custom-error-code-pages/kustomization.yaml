@@ -9,8 +9,4 @@ patches:
       kind: IngressController
       name: default
       namespace: openshift-ingress-operator
-    patch: |-
-      - op: add
-        path: /spec/httpErrorCodePages
-        value:
-          name: custom-error-code-pages
+    path: patch-ingresscontroller.yaml
