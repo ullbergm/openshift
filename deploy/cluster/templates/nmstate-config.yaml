@@ -21,7 +21,7 @@ spec:
         - name: network.node0.storageIp.ip
           value: {{ .Values.network.node0.storageIp.ip }}
         - name: network.node0.storageIp.prefixLength
-          value: {{ .Values.network.node0.storageIp.prefixLength }}
+          value: "{{ .Values.network.node0.storageIp.prefixLength }}"
         - name: network.node0.storageInterface.name
           value: {{ .Values.network.node0.storageInterface.name }}
         - name: network.node1.name
@@ -29,7 +29,7 @@ spec:
         - name: network.node1.storageIp.ip
           value: {{ .Values.network.node1.storageIp.ip }}
         - name: network.node1.storageIp.prefixLength
-          value: {{ .Values.network.node1.storageIp.prefixLength }}
+          value: "{{ .Values.network.node1.storageIp.prefixLength }}"
         - name: network.node1.storageInterface.name
           value: {{ .Values.network.node1.storageInterface.name }}
         - name: network.node2.name
@@ -37,7 +37,7 @@ spec:
         - name: network.node2.storageIp.ip
           value: {{ .Values.network.node2.storageIp.ip }}
         - name: network.node2.storageIp.prefixLength
-          value: {{ .Values.network.node2.storageIp.prefixLength }}
+          value: "{{ .Values.network.node2.storageIp.prefixLength }}"
         - name: network.node2.storageInterface.name
           value: {{ .Values.network.node2.storageInterface.name }}
   syncPolicy:
