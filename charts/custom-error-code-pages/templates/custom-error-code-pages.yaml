@@ -1,4 +1,9 @@
+---
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: custom-error-code-pages
+  namespace: openshift-config
 data:
   error-page-404.http: "HTTP/1.0 404 File Not Found\nCache-Control: no-cache\nConnection: close\nContent-Type: text/html\n\n<!DOCTYPE html>\n<!--\n    Error 404: Not Found\n    Description:
     The server can not find the requested page\n-->\n<html lang=\"en\">\n<head>\n
@@ -280,7 +285,4 @@ data:
     () => p.removeChild(s));\n            p.appendChild(s);\n        })(document.createElement('script'),
     document.body);\n    }\n    // \n</script>\n<!--\n    Error 503: Service Unavailable\n
     \   Description: The server is temporarily overloading or down\n-->\n</html>\n"
-kind: ConfigMap
-metadata:
-  name: custom-error-code-pages
-  namespace: openshift-config
+

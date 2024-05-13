@@ -1,4 +1,0 @@
-- op: add
-  path: /spec/httpErrorCodePages
-  value:
-    name: custom-error-code-pages
