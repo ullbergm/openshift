@@ -46,3 +46,21 @@ network:
   startIP: 192.168.64.55
   endIP: 192.168.64.59
   plexIP: 192.168.64.49
+  master-0:
+    storage-interface:
+      name: enp2s0
+    storage-ip:
+      ip: 10.0.0.1
+      prefix-length: 24
+  master-1:
+    storage-interface:
+      name: enp2s0
+    storage-ip:
+      ip: 10.0.0.2
+      prefix-length: 24
+  master-2:
+    storage-interface:
+      name: enp2s0
+    storage-ip:
+      ip: 10.0.0.3
+      prefix-length: 24
