@@ -1,0 +1,14 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    operators.coreos.com/amd-gpu-operator.openshift-amd-gpu: ''
+  name: amd-gpu-operator
+  namespace: openshift-amd-gpu
+spec:
+  channel: alpha
+  installPlanApproval: Automatic
+  name: amd-gpu-operator
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: amd-gpu-operator.v0.0.3
