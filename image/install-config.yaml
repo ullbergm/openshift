@@ -1,0 +1,45 @@
+apiVersion: v1
+baseDomain: my.base.domain
+compute:
+- name: worker
+  replicas: 0
+controlPlane:
+  name: master
+  replicas: 3
+metadata:
+  name: openshift
+networking:
+  clusterNetwork:
+  - cidr: 10.128.0.0/14
+    hostPrefix: 23
+  machineNetwork:
+  - cidr: 192.168.0.0/24
+  networkType: OVNKubernetes
+  serviceNetwork:
+  - 172.30.0.0/16
+platform:
+  baremetal:
+    ingressVIPs:
+      - 192.168.0.60
+    apiVIPs:
+      - 192.168.0.61
+capabilities:
+  baselineCapabilitySet: None
+  additionalEnabledCapabilities:
+  - baremetal
+  - MachineAPI
+  - marketplace
+  - OperatorLifecycleManager
+  # - openshift-samples
+  - Console
+  # - Insights
+  - Storage
+  - CSISnapshot
+  - NodeTuning
+  - ImageRegistry
+  - Build
+  # - CloudCredential
+  - DeploymentConfig
+pullSecret: '{"auths":{.....}}'
+sshKey: |
+  ssh-rsa AAAAB3NzaC1yc2EAAAA...........+VosMbNToylVNUYmU5w9WXtPbI5ZqP7zkYcvRRkMx my.key

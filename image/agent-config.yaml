@@ -1,0 +1,90 @@
+apiVersion: v1beta1
+kind: AgentConfig
+metadata:
+  name: cluster-agent-config
+  namespace: cluster
+hosts:
+- hostname: master-0
+  role: master
+  rootDeviceHints:
+    deviceName: /dev/sda
+  interfaces:
+    - macAddress: 84:xx:xx:xx:xx:D0
+      name: eno1
+  networkConfig:
+    interfaces:
+      - name: eno1
+        type: ethernet
+        state: up
+        ipv4:
+          enabled: true
+          address:
+            - ip: 192.168.0.65
+              prefix-length: 24
+          dhcp: false
+    dns-resolver:
+      config:
+        server:
+          - 192.168.0.1
+    routes:
+      config:
+        - destination: 0.0.0.0/0
+          next-hop-address: 192.168.0.1
+          next-hop-interface: eno1
+          table-id: 254
+- hostname: master-1
+  role: master
+  rootDeviceHints:
+    deviceName: /dev/sda
+  interfaces:
+    - macAddress: 84:xx:xx:xx:xx:52
+      name: eno1
+  networkConfig:
+    interfaces:
+      - name: eno1
+        type: ethernet
+        state: up
+        ipv4:
+          enabled: true
+          address:
+            - ip: 192.168.0.66
+              prefix-length: 24
+          dhcp: false
+    dns-resolver:
+      config:
+        server:
+          - 192.168.0.1
+    routes:
+      config:
+        - destination: 0.0.0.0/0
+          next-hop-address: 192.168.0.1
+          next-hop-interface: eno1
+          table-id: 254
+- hostname: master-2
+  role: master
+  rootDeviceHints:
+    deviceName: /dev/sda
+  interfaces:
+    - macAddress: 84:xx:xx:xx:xx:E8
+      name: eno1
+  networkConfig:
+    interfaces:
+      - name: eno1
+        type: ethernet
+        state: up
+        ipv4:
+          enabled: true
+          address:
+            - ip: 192.168.0.67
+              prefix-length: 24
+          dhcp: false
+    dns-resolver:
+      config:
+        server:
+          - 192.168.0.1
+    routes:
+      config:
+        - destination: 0.0.0.0/0
+          next-hop-address: 192.168.0.1
+          next-hop-interface: eno1
+          table-id: 254
