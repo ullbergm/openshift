@@ -1,0 +1,23 @@
+apiVersion: apik10.kasten.io/v1alpha1
+kind: K10
+metadata:
+  annotations:
+    helm.sdk.operatorframework.io/rollback-force: 'false'
+  name: k10
+  namespace: kasten-io
+spec:
+  auth:
+    basicAuth:
+      enabled: false
+    tokenAuth:
+      enabled: true
+  global:
+    persistence:
+      storageClass: synology-iscsi
+  metering:
+    mode: airgap
+  route:
+    enabled: true
+    host: k10.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+    tls:
+      enabled: true

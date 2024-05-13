@@ -1,0 +1,8 @@
+cluster:
+  top_level_domain: example.com
+  name: my-cluster
+  
+backup:
+  nfs:
+    server: my-nas
+    path: /my-backups

@@ -15,11 +15,6 @@ spec:
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:
-      parameters:
-        - name: backup.nfs.server
-          value: {{ .Values.backup.nfs.server }}
-        - name: backup.nfs.path
-          value: {{ .Values.backup.nfs.path }}
   syncPolicy:
     automated:
       selfHeal: true
