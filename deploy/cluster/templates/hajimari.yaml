@@ -24,10 +24,6 @@ spec:
           value: {{ .Values.cluster.admin_email }}
         - name: app-template.controllers.main.containers.main.env.TZ
           value: {{ .Values.cluster.timezone }}
-        - name: media.nfs.server
-          value: {{ .Values.media.nfs.server }}
-        - name: media.nfs.path
-          value: {{ .Values.media.nfs.path }}
         - name: hajimari.globalBookmarks[0].group
           value: "Communication"
         - name: hajimari.globalBookmarks[0].bookmarks[0].name
