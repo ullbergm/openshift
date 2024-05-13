@@ -15,6 +15,13 @@ spec:
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:
+      parameters:
+        - name: network.node0.storageIp.ip
+          value: {{ .Values.network.node0.storageIp.ip }}
+        - name: network.node1.storageIp.ip
+          value: {{ .Values.network.node1.storageIp.ip }}
+        - name: network.node2.storageIp.ip
+          value: {{ .Values.network.node2.storageIp.ip }}
   syncPolicy:
     automated:
       selfHeal: true
