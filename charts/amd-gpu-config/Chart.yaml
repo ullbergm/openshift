@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
-description: A Helm chart to install the amd gpu operator.
-name: amd-gpu-operator-operator
+description: A Helm chart to configure the amd gpu operator.
+name: amd-gpu-config
 version: 0.1.3
 kubeVersion: ">=1.22.0-0"
 maintainers:
