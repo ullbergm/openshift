@@ -282,6 +282,5 @@ data:
     \   Description: The server is temporarily overloading or down\n-->\n</html>\n"
 kind: ConfigMap
 metadata:
-  creationTimestamp: null
   name: custom-error-code-pages
   namespace: openshift-config
