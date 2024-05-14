@@ -15,13 +15,13 @@
         apiVersion: argoproj.io/v1alpha1
         kind: Application
         metadata:
-        name: cluster
-        namespace: openshift-gitops
+          name: cluster
+          namespace: openshift-gitops
         spec:
-        destination:
+          destination:
             server: 'https://kubernetes.default.svc'
-        project: default
-        source:
+          project: default
+          source:
             helm:
                 parameters:
                 - name: certificates.aws.access_key_id
