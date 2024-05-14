@@ -13,3 +13,5 @@ spec:
   claimPropertySets:
     - accessModes:
       - ReadWriteOnce
+      volumeMode: 
+        Filesystem
