@@ -11,5 +11,5 @@ metadata:
   name: synology-iscsi
 spec:
   claimPropertySets:
-    accessModes:
+    - accessModes:
       - ReadWriteOnce
