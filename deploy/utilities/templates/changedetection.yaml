@@ -1,13 +1,13 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: cyberchef
+  name: changedetection
   namespace: openshift-gitops
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: cyberchef
+    namespace: changedetection
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
@@ -33,22 +33,22 @@ spec:
           value: {{ .Values.media.nfs.path }}
 
         - name: application.name
-          value: cyberchef
+          value: changedetection
         - name: application.group
           value: Utilities
         - name: application.icon
-          value: chef-hat
+          value: magnify
         - name: application.image
           value: 'https://www.bazarr.media/assets/img/logo.png'
         - name: application.description
-          value: "The Cyber Swiss Army Knife"
+          value: "Web Site Change Detection"
         - name: app-template.service.main.ports.http.port
           value: '5000'
 
         - name: app-template.controllers.main.containers.main.image.repository
-          value: ghcr.io/gchq/cyberchef
+          value: ghcr.io/dgtlmoon/changedetection.io
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 0.45.22
+          value: 10.18.6
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
@@ -66,7 +66,12 @@ spec:
         - name: app-template.defaultPodOptions.labels.app
           value: cyberchef
         - name: app-template.defaultPodOptions.labels.version
-          value: 0.45.22
+          value: 10.18.6
+
+        - name: app-template.defaultPodOptions.securityContext.runAsUser
+          value: "0"
+        - name: app-template.defaultPodOptions.securityContext.runAsGroup
+          value: "0"
 
   syncPolicy:
     automated:
