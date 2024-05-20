@@ -55,16 +55,16 @@ spec:
           value: America/New_York
 
         - name: app-template.serviceAccount.name
-          value: cyberchef-sa
+          value: cyberchchangedetectionef-sa
         - name: app-template.persistence.data.existingClaim
-          value: cyberchef-data-volume
+          value: changedetection-data-volume
         - name: app-template.persistence.config.existingClaim
-          value: cyberchef-config
+          value: changedetection-config
         - name: app-template.persistence.config.globalMounts[0].path
           value: /datastore
 
         - name: app-template.defaultPodOptions.labels.app
-          value: cyberchef
+          value: changedetection
         - name: app-template.defaultPodOptions.labels.version
           value: 10.18.6
 
