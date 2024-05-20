@@ -48,7 +48,7 @@ spec:
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/gchq/cyberchef
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 0.45.22
+          value: 10.18.6
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
@@ -66,7 +66,7 @@ spec:
         - name: app-template.defaultPodOptions.labels.app
           value: cyberchef
         - name: app-template.defaultPodOptions.labels.version
-          value: 0.45.22
+          value: 10.18.6
 
         - name: app-template.defaultPodOptions.securityContext.runAsUser
           value: "0"
