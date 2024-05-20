@@ -61,12 +61,17 @@ spec:
         - name: app-template.persistence.config.existingClaim
           value: cyberchef-config
         - name: app-template.persistence.config.globalMounts[0].path
-          value: /datastore
+          value: /config
 
         - name: app-template.defaultPodOptions.labels.app
           value: cyberchef
         - name: app-template.defaultPodOptions.labels.version
           value: 0.45.22
+
+        - name: app-template.defaultPodOptions.securityContext.runAsUser
+          value: "0"
+        - name: app-template.defaultPodOptions.securityContext.runAsGroup
+          value: "0"
 
   syncPolicy:
     automated:
