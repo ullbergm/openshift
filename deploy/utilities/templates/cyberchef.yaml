@@ -61,7 +61,7 @@ spec:
         - name: app-template.persistence.config.existingClaim
           value: cyberchef-config
         - name: app-template.persistence.config.globalMounts[0].path
-          value: /config
+          value: /datastore
 
         - name: app-template.defaultPodOptions.labels.app
           value: cyberchef
