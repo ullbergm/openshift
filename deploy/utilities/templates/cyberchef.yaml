@@ -43,7 +43,7 @@ spec:
         - name: application.description
           value: "The Cyber Swiss Army Knife"
         - name: app-template.service.main.ports.http.port
-          value: '5000'
+          value: '80'
 
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/gchq/cyberchef
