@@ -1,0 +1,76 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cyberchef
+  namespace: openshift-gitops
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: cyberchef
+    server: {{ .Values.spec.destination.server }}
+  project: default
+  source:
+    path: charts/media-application
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    helm:
+      parameters:
+        - name: cluster.top_level_domain
+          value: {{ .Values.cluster.top_level_domain }}
+        - name: cluster.name
+          value: {{ .Values.cluster.name }}
+        - name: cluster.admin_email
+          value: {{ .Values.cluster.admin_email }}
+        - name: cluster.timezone
+          value: {{ .Values.cluster.timezone }}
+          
+        - name: storage.storageClassName
+          value: {{ .Values.config.storageClassName }}
+        - name: storage.media.nfs.server
+          value: {{ .Values.media.nfs.server }}
+        - name: storage.media.nfs.path
+          value: {{ .Values.media.nfs.path }}
+
+        - name: application.name
+          value: cyberchef
+        - name: application.group
+          value: Utilities
+        - name: application.icon
+          value: chef-hat
+        - name: application.image
+          value: 'https://www.bazarr.media/assets/img/logo.png'
+        - name: application.description
+          value: "The Cyber Swiss Army Knife"
+        - name: app-template.service.main.ports.http.port
+          value: '80'
+
+        - name: app-template.controllers.main.containers.main.image.repository
+          value: ghcr.io/gchq/cyberchef
+        - name: app-template.controllers.main.containers.main.image.tag
+          value: 10.18.6
+        - name: app-template.controllers.main.containers.main.image.pullPolicy
+          value: IfNotPresent
+        - name: app-template.controllers.main.containers.main.env.TZ
+          value: America/New_York
+
+        - name: app-template.serviceAccount.name
+          value: cyberchef-sa
+        - name: app-template.persistence.data.existingClaim
+          value: cyberchef-data-volume
+        - name: app-template.persistence.config.existingClaim
+          value: cyberchef-config
+        - name: app-template.persistence.config.globalMounts[0].path
+          value: /config
+
+        - name: app-template.defaultPodOptions.labels.app
+          value: cyberchef
+        - name: app-template.defaultPodOptions.labels.version
+          value: 10.18.6
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
