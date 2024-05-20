@@ -68,6 +68,11 @@ spec:
         - name: app-template.defaultPodOptions.labels.version
           value: release
 
+        - name: app-template.defaultPodOptions.securityContext.runAsUser
+          value: "0"
+        - name: app-template.defaultPodOptions.securityContext.runAsGroup
+          value: "0"
+
   syncPolicy:
     automated:
       prune: true
