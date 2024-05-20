@@ -37,7 +37,7 @@ spec:
         - name: application.group
           value: Utilities
         - name: application.icon
-          value: speech-bubble
+          value: simple-icons:chatbot
         - name: application.image
           value: 'https://www.bazarr.media/assets/img/logo.png'
         - name: application.description
