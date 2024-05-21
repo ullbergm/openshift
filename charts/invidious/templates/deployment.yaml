@@ -21,7 +21,7 @@ spec:
           env:
             - name: INVIDIOUS_CONFIG
               value: |
-                port: 3000
+                port: 30000
                 db:
                   dbname: invidious
                   user: kemal
@@ -42,6 +42,6 @@ spec:
             periodSeconds: 30
             timeoutSeconds: 5
           ports:
-            - containerPort: 3000
-              hostPort: 3000
+            - containerPort: 30000
+              hostPort: 30000
               protocol: TCP
