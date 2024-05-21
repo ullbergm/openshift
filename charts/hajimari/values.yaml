@@ -1,7 +1,9 @@
 app-template:
   controllers:
     main:
-      type: statefulset
+      type: deployment
+      replicas: 3
+      strategy: RollingUpdate
       annotations:
         reloader.stakater.com/auto: "true"
       labels:
