@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: openshift
   namespace: hajimari
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   name: OpenShift
   group: Infrastructure
@@ -15,6 +17,8 @@ kind: Application
 metadata:
   name: nas
   namespace: hajimari
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   name: Synology
   group: Infrastructure
@@ -27,6 +31,8 @@ kind: Application
 metadata:
   name: homeassistant
   namespace: hajimari
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   name: HomeAssistant
   group: Home Automation
@@ -39,6 +45,8 @@ kind: Application
 metadata:
   name: valetudo
   namespace: hajimari
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   name: Vacuum
   group: Home Automation
@@ -51,6 +59,8 @@ kind: Application
 metadata:
   name: unifi
   namespace: hajimari
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   name: UniFi
   group: Infrastructure
@@ -63,6 +73,8 @@ kind: Application
 metadata:
   name: firewall
   namespace: hajimari
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   name: Router
   group: Infrastructure
@@ -75,6 +87,8 @@ kind: Application
 metadata:
   name: switch
   namespace: hajimari
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   name: Main switch
   group: Infrastructure
@@ -87,6 +101,8 @@ kind: Application
 metadata:
   name: poe-switch
   namespace: hajimari
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   name: PoE switch
   group: Infrastructure
