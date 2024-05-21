@@ -1,0 +1,8 @@
+postgres:
+  auth:
+    database: invidious
+    username: kemal
+    password: kemal
+
+  persistence:
+    size: 15Gi
