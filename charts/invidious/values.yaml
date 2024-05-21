@@ -1,4 +1,4 @@
-postgres:
+postgresql:
   auth:
     database: invidious
     username: kemal
