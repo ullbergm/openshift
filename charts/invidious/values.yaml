@@ -1,3 +1,16 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+
+application:
+  name: Invidious
+  group: Utilities
+  icon: shield-search
+  image: https://github.com/benbusby/whoogle-search/raw/main/app/static/img/favicon/favicon-96x96.png
+  description: "A self-hosted YouTube frontend."
+  
 postgresql:
   auth:
     database: invidious

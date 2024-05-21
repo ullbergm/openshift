@@ -1,0 +1,24 @@
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  annotations:
+    forecastle.stakater.com/expose: "true"
+    forecastle.stakater.com/icon: "{{ tpl .Values.application.image . }}"
+    forecastle.stakater.com/appName: "{{ tpl .Values.application.name . }}"
+    forecastle.stakater.com/group: "{{ tpl .Values.application.group . }}"
+    route.openshift.io/termination: "edge"
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Name }}
+spec:
+  host: {{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  path: /
+  to:
+    kind: Service
+    name: {{ .Release.Name }}
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
