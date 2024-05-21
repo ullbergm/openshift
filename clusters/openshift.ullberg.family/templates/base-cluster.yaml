@@ -15,66 +15,75 @@ spec:
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:
-      spec:
-        destination:
-          server: {{ .Values.spec.destination.server }}
-        source:
-          repoURL: {{ .Values.spec.source.repoURL }}
-          targetRevision: {{ .Values.spec.source.targetRevision }}
+      parameters:
+        - name: spec.destination.server
+          value: {{ .Values.spec.destination.server }}
+        - name: spec.destination.server
+          value: {{ .Values.spec.destination.server }}
+        - name: spec.source.repoURL
+          value: {{ .Values.spec.source.repoURL }}
+        - name: spec.source.targetRevision
+          value: {{ .Values.spec.source.targetRevision }}
 
-      cluster:
-        top_level_domain: {{ .Values.cluster.top_level_domain }}
-        name: {{ .Values.cluster.name }}
-        admin_email: {{ .Values.cluster.admin_email }}
-        timezone: {{ .Values.cluster.timezone }}
+        - name: cluster.top_level_domain
+          value: {{ .Values.cluster.top_level_domain }}
+        - name: cluster.name
+          value: {{ .Values.cluster.name }}
+        - name: cluster.admin_email
+          value: {{ .Values.cluster.admin_email }}
+        - name: cluster.timezone
+          value: {{ .Values.cluster.timezone }}
 
-      certificates:
-        issuer: {{ .Values.certificates.issuer }}
-        aws:
-          region: {{ .Values.certificates.aws.region }}
-          hosted_zone_id: {{ .Values.certificates.aws.hosted_zone_id }}
-          access_key_id: {{ .Values.certificates.aws.access_key_id }}
-          secret_access_key: {{ .Values.certificates.aws.secret_access_key }}
+        - name: certificates.issuer
+          value: {{ .Values.certificates.issuer }}
+        - name: certificates.aws.region
+          value: {{ .Values.certificates.aws.region }}
+        - name: certificates.aws.hosted_zone_id
+          value: {{ .Values.certificates.aws.hosted_zone_id }}
+        - name: certificates.aws.access_key_id
+          value: {{ .Values.certificates.aws.access_key_id }}
+        - name: certificates.aws.secret_access_key
+          value: {{ .Values.certificates.aws.secret_access_key }}
 
-{{ $csi := index .Values "democratic-csi" }}
+        {{ $csi := index .Values "democratic-csi" }}
+        - name: democratic-csi.driver.config.httpConnection.host
+          value: {{ $csi.driver.config.httpConnection.host }}
+        - name: democratic-csi.driver.config.httpConnection.password
+          value: {{ $csi.driver.config.httpConnection.password }}
+        - name: democratic-csi.driver.config.httpConnection.username
+          value: {{ $csi.driver.config.httpConnection.username }}
+        - name: democratic-csi.driver.config.iscsi.targetPortal
+          value: {{ $csi.driver.config.iscsi.targetPortal }}
 
-      democratic-csi:
-        driver:
-          config:
-            httpConnection:
-              host: {{ $csi.driver.config.httpConnection.host }}
-              password: {{ $csi.driver.config.httpConnection.password }}
-              username: {{ $csi.driver.config.httpConnection.username }}
-            iscsi:
-              targetPortal: {{ $csi.driver.config.iscsi.targetPortal }}
+        - name: backup.nfs.server
+          value: {{ .Values.backup.nfs.server }}
+        - name: backup.nfs.path
+          value: {{ .Values.backup.nfs.path }}
 
-      backup:
-        nfs:
-          server: {{ .Values.backup.nfs.server }}
-          path: {{ .Values.backup.nfs.path }}
-
-      network:
-        node0:
-          name: {{ .Values.network.node0.name }}
-          storageInterface:
-            name: {{ .Values.network.node0.storageInterface.name }}
-          storageIp:
-            ip: {{ .Values.network.node0.storageIp.ip }}
-            prefixLength: "{{ .Values.network.node0.storageIp.prefixLength }}"
-        node1:
-          name: {{ .Values.network.node1.name }}
-          storageInterface:
-            name: {{ .Values.network.node1.storageInterface.name }}
-          storageIp:
-            ip: {{ .Values.network.node1.storageIp.ip }}
-            prefixLength: "{{ .Values.network.node1.storageIp.prefixLength }}"
-        node2:
-          name: {{ .Values.network.node2.name }}
-          storageInterface:
-            name: {{ .Values.network.node2.storageInterface.name }}
-          storageIp:
-            ip: {{ .Values.network.node2.storageIp.ip }}
-            prefixLength: "{{ .Values.network.node2.storageIp.prefixLength }}"
-  syncPolicy:
+        - name: network.node0.name
+          value: {{ .Values.network.node0.name }}
+        - name: network.node0.storageInterface.name
+          value: {{ .Values.network.node0.storageInterface.name }}
+        - name: network.node0.storageIp.ip
+          value: {{ .Values.network.node0.storageIp.ip }}
+        - name: network.node0.storageIp.prefixLength
+          value: "{{ .Values.network.node0.storageIp.prefixLength }}"
+        - name: network.node1.name
+          value: {{ .Values.network.node1.name }}
+        - name: network.node1.storageInterface.name
+          value: {{ .Values.network.node1.storageInterface.name }}
+        - name: network.node1.storageIp.ip
+          value: {{ .Values.network.node1.storageIp.ip }}
+        - name: network.node1.storageIp.prefixLength
+          value: "{{ .Values.network.node1.storageIp.prefixLength }}"
+        - name: network.node2.name
+          value: {{ .Values.network.node2.name }}
+        - name: network.node2.storageInterface.name
+          value: {{ .Values.network.node2.storageInterface.name }}
+        - name: network.node2.storageIp.ip
+          value: {{ .Values.network.node2.storageIp.ip }}
+        - name: network.node2.storageIp.prefixLength
+          value: "{{ .Values.network.node2.storageIp.prefixLength }}"
+      syncPolicy:
     automated:
       selfHeal: true
