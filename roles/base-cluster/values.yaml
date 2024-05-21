@@ -1,0 +1,58 @@
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: YOUR_REPO_URL
+    targetRevision: HEAD
+
+cluster:
+  top_level_domain: example.com
+  name: my-cluster
+  admin_email: YOUR_EMAIL
+  timezone: YOUR_TIMEZONE
+
+certificates:
+  issuer: staging # or production
+  aws:
+    region: YOUR_REGION
+    hosted_zone_id: YOUR_HOSTED_ZONE_ID
+    access_key_id: YOUR_ACCESS_KEY_ID
+    secret_access_key: YOUR_SECRET_ACCESS_KEY
+
+democratic-csi:
+  driver:
+    config:
+      httpConnection:
+        host: my-nas
+        password: my-password
+        username: my-username
+      iscsi:
+        targetPortal: 'my-server[:port]'
+
+backup:
+  nfs:
+    server: my-nas
+    path: /my-backups
+
+network:
+  node0:
+    name: master-0
+    storageInterface:
+      name: enp2s0
+    storageIp:
+      ip: 10.0.0.1
+      prefixLength: "24"
+  node1:
+    name: master-1
+    storageInterface:
+      name: enp2s0
+    storageIp:
+      ip: 10.0.0.2
+      prefixLength: "24"
+  node2:
+    name: master-2
+    storageInterface:
+      name: enp2s0
+    storageIp:
+      ip: 10.0.0.3
+      prefixLength: "24"

@@ -1,0 +1,78 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: base-cluster
+  namespace: openshift-gitops
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: default
+    server: {{ .Values.spec.destination.server }}
+  project: default
+  source:
+    path: roles/base-cluster
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    helm:
+      spec:
+        destination:
+          server: {{ .Values.spec.destination.server }}
+        source:
+          repoURL: {{ .Values.spec.source.repoURL }}
+          targetRevision: {{ .Values.spec.source.targetRevision }}
+
+      cluster:
+        top_level_domain: {{ .Values.spec.cluster.top_level_domain }}
+        name: {{ .Values.spec.cluster.name }}
+        admin_email: {{ .Values.spec.cluster.admin_email }}
+        timezone: {{ .Values.spec.cluster.timezone }}
+
+      certificates:
+        issuer: {{ .Values.spec.certificates.issuer }}
+        aws:
+          region: {{ .Values.spec.certificates.aws.region }}
+          hosted_zone_id: {{ .Values.spec.certificates.aws.hosted_zone_id }}
+          access_key_id: {{ .Values.spec.certificates.aws.access_key_id }}
+          secret_access_key: {{ .Values.spec.certificates.aws.secret_access_key }}
+
+      democratic-csi:
+        driver:
+          config:
+            httpConnection:
+              host: {{ .Values.spec.democratic-csi.driver.config.httpConnection.host }}
+              password: {{ .Values.spec.democratic-csi.driver.config.httpConnection.password }}
+              username: {{ .Values.spec.democratic-csi.driver.config.httpConnection.username }}
+            iscsi:
+              targetPortal: {{ .Values.spec.democratic-csi.driver.config.iscsi.targetPortal }}
+
+      backup:
+        nfs:
+          server: {{ .Values.spec.backup.nfs.server }}
+          path: {{ .Values.spec.backup.nfs.path }}
+
+      network:
+        node0:
+          name: {{ .Values.spec.network.node0.name }}
+          storageInterface:
+            name: {{ .Values.spec.network.node0.storageInterface.name }}
+          storageIp:
+            ip: {{ .Values.spec.network.node0.storageIp.ip }}
+            prefixLength: "{{ .Values.spec.network.node0.storageIp.prefixLength }}"
+        node1:
+          name: {{ .Values.spec.network.node1.name }}
+          storageInterface:
+            name: {{ .Values.spec.network.node1.storageInterface.name }}
+          storageIp:
+            ip: {{ .Values.spec.network.node1.storageIp.ip }}
+            prefixLength: "{{ .Values.spec.network.node1.storageIp.prefixLength }}"
+        node2:
+          name: {{ .Values.spec.network.node2.name }}
+          storageInterface:
+            name: {{ .Values.spec.network.node2.storageInterface.name }}
+          storageIp:
+            ip: {{ .Values.spec.network.node2.storageIp.ip }}
+            prefixLength: "{{ .Values.spec.network.node2.storageIp.prefixLength }}"
+  syncPolicy:
+    automated:
+      selfHeal: true
