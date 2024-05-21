@@ -14,7 +14,6 @@ application:
   icon: simple-icons:search
   image: https://github.com/benbusby/whoogle-search/raw/main/app/static/img/favicon/favicon-96x96.png
   description: "A self-hosted search engine frontend."
-  port: 5000
 
 nameOverride: ""
 fullnameOverride: ""
