@@ -25,8 +25,8 @@ spec:
                   host: invidious-postgresql.invidious.svc.cluster.local
                   port: 5432
                 check_tables: true
-                # external_port:
-                # domain:
+                external_port: 443
+                domain: invidious.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
                 # https_only: false
                 # statistics_enabled: false
                 hmac_key: "zooquoh7zei0Thaebi5J"
