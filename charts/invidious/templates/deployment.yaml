@@ -15,9 +15,12 @@ spec:
         app: invidious
     spec:
       containers:
-        - env:
+        - name: invidious
+          image: quay.io/invidious/invidious:latest
+          env:
             - name: INVIDIOUS_CONFIG
               value: |
+                port: 3000
                 db:
                   dbname: invidious
                   user: kemal
@@ -27,11 +30,9 @@ spec:
                 check_tables: true
                 external_port: 443
                 domain: invidious.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
-                port: 3000
                 # https_only: false
                 # statistics_enabled: false
                 hmac_key: "zooquoh7zei0Thaebi5J"
-          image: quay.io/invidious/invidious:latest
           livenessProbe:
             exec:
               command:
@@ -39,5 +40,3 @@ spec:
             failureThreshold: 2
             periodSeconds: 30
             timeoutSeconds: 5
-          name: invidious
-      restartPolicy: Always
