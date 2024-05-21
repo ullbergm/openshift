@@ -14,14 +14,11 @@ spec:
       labels:
         app: invidious
     spec:
-      serviceAccountName: invidious-sa
+    spec:
       containers:
-        - name: invidious
-          image: quay.io/invidious/invidious:latest
-          env:
+        - env:
             - name: INVIDIOUS_CONFIG
               value: |
-                port: 30000
                 db:
                   dbname: invidious
                   user: kemal
@@ -29,11 +26,12 @@ spec:
                   host: invidious-postgresql.invidious.svc.cluster.local
                   port: 5432
                 check_tables: true
-                external_port: 443
-                domain: invidious.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+                # external_port:
+                # domain:
                 # https_only: false
                 # statistics_enabled: false
                 hmac_key: "zooquoh7zei0Thaebi5J"
+          image: quay.io/invidious/invidious:latest
           livenessProbe:
             exec:
               command:
@@ -41,6 +39,40 @@ spec:
             failureThreshold: 2
             periodSeconds: 30
             timeoutSeconds: 5
+          name: invidious
           ports:
-            - containerPort: 30000
+            - containerPort: 3000
+              hostIP: 127.0.0.1
+              hostPort: 3000
               protocol: TCP
+      restartPolicy: Always
+      # serviceAccountName: invidious-sa
+      # containers:
+      #   - name: invidious
+      #     image: quay.io/invidious/invidious:latest
+      #     env:
+      #       - name: INVIDIOUS_CONFIG
+      #         value: |
+      #           port: 30000
+      #           db:
+      #             dbname: invidious
+      #             user: kemal
+      #             password: kemal
+      #             host: invidious-postgresql.invidious.svc.cluster.local
+      #             port: 5432
+      #           check_tables: true
+      #           external_port: 443
+      #           domain: invidious.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+      #           # https_only: false
+      #           # statistics_enabled: false
+      #           hmac_key: "zooquoh7zei0Thaebi5J"
+      #     livenessProbe:
+      #       exec:
+      #         command:
+      #           - wget -nv --tries=1 --spider http://127.0.0.1:3000/api/v1/trending || exit 1
+      #       failureThreshold: 2
+      #       periodSeconds: 30
+      #       timeoutSeconds: 5
+      #     ports:
+      #       - containerPort: 30000
+      #         protocol: TCP
