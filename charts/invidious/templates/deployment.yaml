@@ -14,10 +14,10 @@ spec:
       labels:
         app: invidious
     spec:
+      serviceAccountName: invidious-sa
       containers:
         - name: invidious
           image: quay.io/invidious/invidious:latest
-          serviceAccount: invidious-sa
           env:
             - name: INVIDIOUS_CONFIG
               value: |
