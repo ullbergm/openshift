@@ -17,7 +17,7 @@ spec:
       containers:
         - name: invidious
           image: quay.io/invidious/invidious:latest
-          serviceaccount: invidious-sa
+          serviceAccount: invidious-sa
           env:
             - name: INVIDIOUS_CONFIG
               value: |
