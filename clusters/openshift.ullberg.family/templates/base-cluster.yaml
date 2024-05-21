@@ -36,15 +36,17 @@ spec:
           access_key_id: {{ .Values.spec.certificates.aws.access_key_id }}
           secret_access_key: {{ .Values.spec.certificates.aws.secret_access_key }}
 
+{{ $csi := index .Values "spec" "democratic-csi" }}
+
       democratic-csi:
         driver:
           config:
             httpConnection:
-              host: {{ .Values.spec.democratic-csi.driver.config.httpConnection.host }}
-              password: {{ .Values.spec.democratic-csi.driver.config.httpConnection.password }}
-              username: {{ .Values.spec.democratic-csi.driver.config.httpConnection.username }}
+              host: {{ $csi.driver.config.httpConnection.host }}
+              password: {{ $csi.driver.config.httpConnection.password }}
+              username: {{ $csi.driver.config.httpConnection.username }}
             iscsi:
-              targetPortal: {{ .Values.spec.democratic-csi.driver.config.iscsi.targetPortal }}
+              targetPortal: {{ $csi.driver.config.iscsi.targetPortal }}
 
       backup:
         nfs:
