@@ -11,7 +11,7 @@ cluster:
 application:
   name: Whoogle
   group: Utilities
-  icon: simple-icons:search
+  icon: shield-search
   image: https://github.com/benbusby/whoogle-search/raw/main/app/static/img/favicon/favicon-96x96.png
   description: "A self-hosted search engine frontend."
 
