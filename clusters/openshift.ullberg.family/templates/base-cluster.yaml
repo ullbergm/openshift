@@ -23,20 +23,20 @@ spec:
           targetRevision: {{ .Values.spec.source.targetRevision }}
 
       cluster:
-        top_level_domain: {{ .Values.spec.cluster.top_level_domain }}
-        name: {{ .Values.spec.cluster.name }}
-        admin_email: {{ .Values.spec.cluster.admin_email }}
-        timezone: {{ .Values.spec.cluster.timezone }}
+        top_level_domain: {{ .Values.cluster.top_level_domain }}
+        name: {{ .Values.cluster.name }}
+        admin_email: {{ .Values.cluster.admin_email }}
+        timezone: {{ .Values.cluster.timezone }}
 
       certificates:
-        issuer: {{ .Values.spec.certificates.issuer }}
+        issuer: {{ .Values.certificates.issuer }}
         aws:
-          region: {{ .Values.spec.certificates.aws.region }}
-          hosted_zone_id: {{ .Values.spec.certificates.aws.hosted_zone_id }}
-          access_key_id: {{ .Values.spec.certificates.aws.access_key_id }}
-          secret_access_key: {{ .Values.spec.certificates.aws.secret_access_key }}
+          region: {{ .Values.certificates.aws.region }}
+          hosted_zone_id: {{ .Values.certificates.aws.hosted_zone_id }}
+          access_key_id: {{ .Values.certificates.aws.access_key_id }}
+          secret_access_key: {{ .Values.certificates.aws.secret_access_key }}
 
-{{ $csi := index .Values "spec" "democratic-csi" }}
+{{ $csi := index .Values "democratic-csi" }}
 
       democratic-csi:
         driver:
@@ -50,31 +50,31 @@ spec:
 
       backup:
         nfs:
-          server: {{ .Values.spec.backup.nfs.server }}
-          path: {{ .Values.spec.backup.nfs.path }}
+          server: {{ .Values.backup.nfs.server }}
+          path: {{ .Values.backup.nfs.path }}
 
       network:
         node0:
-          name: {{ .Values.spec.network.node0.name }}
+          name: {{ .Values.network.node0.name }}
           storageInterface:
-            name: {{ .Values.spec.network.node0.storageInterface.name }}
+            name: {{ .Values.network.node0.storageInterface.name }}
           storageIp:
-            ip: {{ .Values.spec.network.node0.storageIp.ip }}
-            prefixLength: "{{ .Values.spec.network.node0.storageIp.prefixLength }}"
+            ip: {{ .Values.network.node0.storageIp.ip }}
+            prefixLength: "{{ .Values.network.node0.storageIp.prefixLength }}"
         node1:
-          name: {{ .Values.spec.network.node1.name }}
+          name: {{ .Values.network.node1.name }}
           storageInterface:
-            name: {{ .Values.spec.network.node1.storageInterface.name }}
+            name: {{ .Values.network.node1.storageInterface.name }}
           storageIp:
-            ip: {{ .Values.spec.network.node1.storageIp.ip }}
-            prefixLength: "{{ .Values.spec.network.node1.storageIp.prefixLength }}"
+            ip: {{ .Values.network.node1.storageIp.ip }}
+            prefixLength: "{{ .Values.network.node1.storageIp.prefixLength }}"
         node2:
-          name: {{ .Values.spec.network.node2.name }}
+          name: {{ .Values.network.node2.name }}
           storageInterface:
-            name: {{ .Values.spec.network.node2.storageInterface.name }}
+            name: {{ .Values.network.node2.storageInterface.name }}
           storageIp:
-            ip: {{ .Values.spec.network.node2.storageIp.ip }}
-            prefixLength: "{{ .Values.spec.network.node2.storageIp.prefixLength }}"
+            ip: {{ .Values.network.node2.storageIp.ip }}
+            prefixLength: "{{ .Values.network.node2.storageIp.prefixLength }}"
   syncPolicy:
     automated:
       selfHeal: true
