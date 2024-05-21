@@ -22,7 +22,7 @@ spec:
                   dbname: invidious
                   user: kemal
                   password: kemal
-                  host: invidious-postgresql
+                  host: invidious-postgresql.invidious.svc.cluster.local
                   port: 5432
                 check_tables: true
                 # external_port:
