@@ -24,6 +24,8 @@ spec:
   excludedApps:
     - cert-manager
     - cert-manager-operator
+    - default
+    - democratic-csi
     - kube-node-lease
     - kube-public
     - kube-system
