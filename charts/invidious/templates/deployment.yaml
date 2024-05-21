@@ -27,6 +27,7 @@ spec:
                 check_tables: true
                 external_port: 443
                 domain: invidious.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+                port: 3000
                 # https_only: false
                 # statistics_enabled: false
                 hmac_key: "zooquoh7zei0Thaebi5J"
