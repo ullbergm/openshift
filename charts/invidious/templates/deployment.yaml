@@ -43,5 +43,4 @@ spec:
             timeoutSeconds: 5
           ports:
             - containerPort: 30000
-              hostPort: 30000
               protocol: TCP
