@@ -39,7 +39,4 @@ spec:
             periodSeconds: 30
             timeoutSeconds: 5
           name: invidious
-          ports:
-            - containerPort: 3000
-              protocol: TCP
       restartPolicy: Always
