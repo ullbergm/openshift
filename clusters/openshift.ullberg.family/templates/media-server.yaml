@@ -41,6 +41,6 @@ spec:
         - name: media.nfs.path
           value: {{ .Values.media.nfs.path }}
 
-      syncPolicy:
+  syncPolicy:
     automated:
       selfHeal: true

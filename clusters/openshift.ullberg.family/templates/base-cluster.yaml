@@ -84,6 +84,6 @@ spec:
           value: {{ .Values.network.node2.storageIp.ip }}
         - name: network.node2.storageIp.prefixLength
           value: "{{ .Values.network.node2.storageIp.prefixLength }}"
-      syncPolicy:
+  syncPolicy:
     automated:
       selfHeal: true
