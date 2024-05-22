@@ -33,6 +33,9 @@ spec:
                   name: clusterplex-pms
               topologyKey: kubernetes.io/hostname
             weight: 100
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
       containers:
       - name: plex
         image: lscr.io/linuxserver/plex:latest

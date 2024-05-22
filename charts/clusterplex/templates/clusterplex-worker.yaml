@@ -19,6 +19,9 @@ spec:
         app.kubernetes.io/name: clusterplex-worker
         app.kubernetes.io/part-of: clusterplex
     spec:
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
       affinity:
         podAntiAffinity:
           preferredDuringSchedulingIgnoredDuringExecution:
