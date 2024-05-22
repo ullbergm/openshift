@@ -3,7 +3,6 @@ kind: ConfigMap
 apiVersion: v1
 metadata:
   name: clusterplex-worker-config
-  namespace: clusterplex
   labels:
     app.kubernetes.io/name: clusterplex-worker-config
     app.kubernetes.io/part-of: clusterplex

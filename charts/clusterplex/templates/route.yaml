@@ -8,7 +8,6 @@ metadata:
     forecastle.stakater.com/group: "Media"
     route.openshift.io/termination: "edge"
   name: plex
-  namespace: plex
 spec:
   host: plex.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   path: /
