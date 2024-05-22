@@ -43,21 +43,21 @@ spec:
         startupProbe:
           httpGet:
             path: /identity
-            scheme: HTTPS
+            scheme: HTTP
             port: 32400
           failureThreshold: 30
           periodSeconds: 10
         readinessProbe:
           httpGet:
             path: /identity
-            scheme: HTTPS
+            scheme: HTTP
             port: 32400
           initialDelaySeconds: 15
           timeoutSeconds: 5
         livenessProbe:
           httpGet:
             path: /identity
-            scheme: HTTPS
+            scheme: HTTP
             port: 32400
           initialDelaySeconds: 10
           timeoutSeconds: 10
