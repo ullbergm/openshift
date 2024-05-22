@@ -35,8 +35,8 @@ spec:
             weight: 100
       serviceAccountName: clusterplex-pms-service
       securityContext:
-        runAsUser: 911
-        runAsGroup: 1000
+        runAsUser: 0
+        runAsGroup: 0
       containers:
       - name: plex
         image: lscr.io/linuxserver/plex:latest
