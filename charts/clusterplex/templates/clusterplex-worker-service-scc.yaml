@@ -12,4 +12,4 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:{{.Release.Namespace}}:plex-sa
+- system:serviceaccount:{{.Release.Namespace}}:clusterplex-worker-service
