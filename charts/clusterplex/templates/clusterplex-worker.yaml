@@ -72,9 +72,11 @@ spec:
           requests:
             cpu: 500m
             memory: 200Mi
+            intel.com/gpu: 1
           limits:
             cpu: 3000m
             memory: 800Mi
+            intel.com/gpu: 1
       volumes:
       - name: data
         persistentVolumeClaim:
