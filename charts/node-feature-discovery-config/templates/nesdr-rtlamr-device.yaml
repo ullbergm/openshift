@@ -1,0 +1,14 @@
+apiVersion: nfd.openshift.io/v1alpha1
+kind: NodeFeatureRule
+metadata:
+  name: nesdr-rtlamr-device
+spec:
+  rules:
+    - # NESDR Nano 2 Plus
+      labels:
+        nesdr.feature.node.kubernetes.io/rtlamr: "true"
+      matchFeatures:
+        - feature: usb.device
+          matchExpressions:
+            vendor: { op: In, value: ["0bda", "2838"] }
+      name: nesdr.rtlamr
