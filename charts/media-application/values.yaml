@@ -11,6 +11,11 @@ application:
   image: https://raw.githubusercontent.com/app/app/develop/Logo/400.png
   description: "A tool for managing stuff."
   port: 8080
+  resources:
+    requests:
+      intelgpu: 0
+    limits:
+      intelgpu: 0
 
 storage:
   config:
@@ -37,6 +42,11 @@ app-template:
             pullPolicy: IfNotPresent
           env:
             TZ: America/New_York
+          resources:
+            requests:
+              "gpu.intel.com/i915": "{{ .Values.application.resources.requests.intelgpu }}"
+            limits:
+              "gpu.intel.com/i915": "{{ .Values.application.resources.limits.intelgpu }}"
 
   serviceAccount:
     name: app-sa
