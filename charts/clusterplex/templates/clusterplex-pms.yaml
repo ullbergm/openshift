@@ -35,7 +35,7 @@ spec:
             weight: 100
       serviceAccountName: clusterplex-pms-service
       securityContext:
-        runAsUser: 1000
+        runAsUser: 911
         runAsGroup: 1000
       containers:
       - name: plex
