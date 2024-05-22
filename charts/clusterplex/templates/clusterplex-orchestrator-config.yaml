@@ -1,0 +1,13 @@
+---
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: clusterplex-orchestrator-config
+  namespace: clusterplex
+  labels:
+    app.kubernetes.io/name: clusterplex-orchestrator-config
+    app.kubernetes.io/part-of: clusterplex
+data:
+  TZ: America/New_York
+  LISTENING_PORT: '3500'
+  WORKER_SELECTION_STRATEGY: LOAD_TASKS

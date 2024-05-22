@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: clusterplex-config-pvc
+  labels:
+    app.kubernetes.io/name: clusterplex-config-pvc
+    app.kubernetes.io/part-of: clusterplex
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: "15Gi"
+  storageClassName: synology-iscsi

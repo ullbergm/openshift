@@ -1,0 +1,54 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clusterplex-orchestrator
+  labels:
+    app.kubernetes.io/name: clusterplex-orchestrator
+    app.kubernetes.io/part-of: clusterplex
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: clusterplex-orchestrator
+      app.kubernetes.io/part-of: clusterplex
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: clusterplex-orchestrator
+        app.kubernetes.io/part-of: clusterplex
+    spec:
+      containers:
+      - name: plex
+        image: ghcr.io/pabloromeo/clusterplex_orchestrator:latest
+        startupProbe:
+          httpGet:
+            path: /health
+            port: 3500
+          failureThreshold: 3
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3500
+          initialDelaySeconds: 5
+          timeoutSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 3500
+          initialDelaySeconds: 5
+          timeoutSeconds: 10
+        ports:
+          - name: orchestrator
+            containerPort: 3500
+        envFrom:
+        - configMapRef:
+            name: clusterplex-orchestrator-config
+        resources:            # adapt requests and limits to your needs
+          requests:
+            cpu: 200m
+            memory: 32Mi
+          limits:
+            cpu: 500m
+            memory: 64Mi

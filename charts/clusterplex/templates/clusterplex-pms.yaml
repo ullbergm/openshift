@@ -1,0 +1,91 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: clusterplex-pms
+  labels:
+    app.kubernetes.io/name: clusterplex-pms
+    app.kubernetes.io/part-of: clusterplex
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: clusterplex-pms
+      app.kubernetes.io/part-of: clusterplex
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: clusterplex-pms
+        app.kubernetes.io/part-of: clusterplex
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  name: clusterplex-worker
+              topologyKey: kubernetes.io/hostname
+            weight: 50
+          - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  name: clusterplex-pms
+              topologyKey: kubernetes.io/hostname
+            weight: 100
+      containers:
+      - name: plex
+        image: lscr.io/linuxserver/plex:latest
+        startupProbe:
+          httpGet:
+            path: /identity
+            scheme: HTTPS
+            port: 32400
+          failureThreshold: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /identity
+            scheme: HTTPS
+            port: 32400
+          initialDelaySeconds: 15
+          timeoutSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /identity
+            scheme: HTTPS
+            port: 32400
+          initialDelaySeconds: 10
+          timeoutSeconds: 10
+        ports:
+          - name: pms
+            containerPort: 32400
+          - name: relay
+            containerPort: 32499
+        envFrom:
+        - configMapRef:
+            name: clusterplex-pms-config
+        volumeMounts:
+        - name: data
+          mountPath: /data
+        - name: config
+          mountPath: /config
+        - name: transcode
+          mountPath: /transcode
+        resources:          # adapt requests and limits to your needs
+          requests:
+            cpu: 300m
+            memory: 256Mi
+          limits:
+            cpu: 2000m
+            memory: 512Mi
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: "data-volume"
+      - name: config
+        persistentVolumeClaim:
+          claimName: "clusterplex-config-pvc"
+      - name: transcode
+        persistentVolumeClaim:
+          claimName: "clusterplex-transcode-pvc"

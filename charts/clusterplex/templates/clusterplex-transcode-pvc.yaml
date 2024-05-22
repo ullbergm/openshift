@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: clusterplex-transcode-volume
+spec:
+  storageClassName: ""
+  capacity:
+    storage: 1Mi
+  accessModes: ["ReadWriteMany"]
+  persistentVolumeReclaimPolicy: Retain
+  nfs:
+    server: {{ .Values.media.nfs.server }}
+    path: {{ .Values.media.nfs.path }}/transcode
+  mountOptions:
+    - nfsvers=4.1
+    - nconnect=8
+    - hard
+    - noatime
+    - rsize=131072
+    - wsize=131072
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+  name: clusterplex-transcode-pvc
+  labels:
+    app.kubernetes.io/name: clusterplex-transcode-pvc
+    app.kubernetes.io/part-of: clusterplex
+    kasten/skip: "true"
+spec:
+  accessModes: ["ReadWriteMany"]
+  resources:
+    requests:
+      storage: 1Mi
+  volumeName: clusterplex-transcode-volume
+  storageClassName: ""
