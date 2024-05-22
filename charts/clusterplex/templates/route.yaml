@@ -13,10 +13,10 @@ spec:
   path: /
   to:
     kind: Service
-    name: clusterplex
+    name: clusterplex-pms
     weight: 100
   port:
-    targetPort: http
+    targetPort: pms
   tls:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect
