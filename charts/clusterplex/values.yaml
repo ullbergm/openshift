@@ -1,1 +1,22 @@
 ---
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+
+application:
+  name: App
+  group: Media
+  icon: plex
+  image: https://upload.wikimedia.org/wikipedia/commons/7/7b/Plex_logo_2022.svg
+  description: "Media server for movies and TV shows."
+  port: 32400
+
+storage:
+  config:
+    storageClassName: synology-iscsi
+  media:
+    nfs:
+      server: nas
+      path: /volume1/media
