@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  generateName: nvidia-gpu-operator-
+  annotations:
+    olm.providedAPIs: 'ClusterPolicy.v1.nvidia.com,NVIDIADriver.v1alpha1.nvidia.com'
+  name: nvidia-gpu-operator-cluster
+  namespace: nvidia-gpu-operator
+spec:
+  targetNamespaces:
+    - nvidia-gpu-operator
+  upgradeStrategy: Default
