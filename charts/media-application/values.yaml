@@ -44,9 +44,9 @@ app-template:
             TZ: America/New_York
           resources:
             requests:
-              "gpu.intel.com/i915": "{{ .Values.application.resources.requests.intelgpu }}"
+              "gpu.intel.com/i915": "1"
             limits:
-              "gpu.intel.com/i915": "{{ .Values.application.resources.limits.intelgpu }}"
+              "gpu.intel.com/i915": "1"
 
   serviceAccount:
     name: app-sa
