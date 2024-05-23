@@ -20,9 +20,6 @@
   "suppressNotifications": ["prIgnoreNotification"],
   "ignorePaths": ["**/archive/**"],
   "timezone": "America/New_York",
-  "docker": {
-    "fileMatch": ["(^|/)(charts|roles|clusters)/.+\\.ya?ml(\\.j2)?$"]
-  },
   "customManagers": [
   {
     "customType": "regex",
@@ -35,10 +32,12 @@
   },
   "packageRules": [
     {
-      "description": "Loose versioning for non-semver packages",
-      "matchDatasources": ["docker"],
-      "versioning": "loose",
-      "matchPackagePatterns": ["changedetection", "plex", "qbittorrent"]
+      "matchPackagePatterns": ["*"],
+      "enabled": false
+    },
+    {
+      "matchManagers": ["github-actions", "regex"],
+      "enabled": true
     }
   ]
 }
