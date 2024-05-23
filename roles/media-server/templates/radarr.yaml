@@ -45,6 +45,7 @@ spec:
         - name: app-template.service.main.ports.http.port
           value: '7878'
 
+        # renovate custom-docker versioning=semver
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/onedr0p/radarr
         - name: app-template.controllers.main.containers.main.image.tag

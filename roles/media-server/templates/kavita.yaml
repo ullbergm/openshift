@@ -45,6 +45,7 @@ spec:
         - name: app-template.service.main.ports.http.port
           value: '5000'
 
+        # renovate custom-docker versioning=semver
         - name: app-template.controllers.main.containers.main.image.repository
           value: jvmilazz0/kavita
         - name: app-template.controllers.main.containers.main.image.tag

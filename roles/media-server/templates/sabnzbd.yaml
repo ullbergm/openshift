@@ -45,6 +45,7 @@ spec:
         - name: app-template.service.main.ports.http.port
           value: '8080'
 
+        # renovate custom-docker versioning=semver
         - name: app-template.controllers.main.initContainers.config-fix.image.repository
           value: registry.hub.docker.com/library/alpine
         - name: app-template.controllers.main.initContainers.config-fix.image.tag
@@ -62,6 +63,7 @@ spec:
         - name: app-template.controllers.main.initContainers.config-fix.securityContext.runAsNonRoot
           value: 'false'
 
+        # renovate custom-docker versioning=semver
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/onedr0p/sabnzbd
         - name: app-template.controllers.main.containers.main.image.tag
