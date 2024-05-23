@@ -33,7 +33,7 @@
                 "(^|/)[^\\.]*\\.ya?ml$"
             ],
             "matchStrings": [
-                "#\\s?renovate: image=(?<depName>.*?)\\s?value:\\s?\\\"?(?<currentValue>[\\w+\\.\\-]*)\""
+                "#\\s?renovate: image=(?<depName>.*?)\\s?value:\\s?(?<currentValue>[\\w+\\.\\-]*)"
             ]
         }
     ]
