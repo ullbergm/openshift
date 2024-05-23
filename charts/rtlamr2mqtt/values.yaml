@@ -22,7 +22,13 @@ app-template:
             TZ: TIMEZONE
             LISTEN_ONLY: yes
             RTL_MSGTYPE: all
-
+          volumeMounts:
+            - mountPath: /dev/bus/usb
+              name: usb
+      volumes:
+        - name: usb
+          hostPath:
+            path: /dev/bus/usb
   serviceAccount:
     name: rtlamr2mqtt-sa
 
