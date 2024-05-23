@@ -36,9 +36,5 @@
                 "#\\s?renovate: image=(?<depName>.*?)\\s?value:\\s?\\\"?(?<currentValue>[\\w+\\.\\-]*)\""
             ]
         }
-    ],
-    "enabledManagers": [
-        "custom.regex",
-        "github-actions"
     ]
 }
