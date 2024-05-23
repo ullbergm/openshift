@@ -45,7 +45,7 @@ spec:
         - name: app-template.service.main.ports.http.port
           value: '8686'
 
-        # renovate custom-docker versioning=semver
+        # renovate custom-docker versioning=loose
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/onedr0p/lidarr
         - name: app-template.controllers.main.containers.main.image.tag
