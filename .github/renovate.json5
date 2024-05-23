@@ -33,7 +33,7 @@
                 "(^|/)[^\\.]*\\.ya?ml$"
             ],
             "matchStrings": [
-                "#\\s?renovate custom-docker\\s?(?: versioning=(?<versioning>[a-z-]+?))?\\n\\s*- name:.*\\s*\\nvalue:\\s?(?<depName>.*)\\n\\s*- name:.*\\s\\n*value:\\s?(?<currentValue>.*)\\n"
+                "#\\s?renovate custom-docker\\s?(?: versioning=(?<versioning>[a-z-]+?))?\\n\\s*- name:.*\\n\\s*value:\\s?(?<depName>.*)\\n\\s*- name:.*\\n\\s*value:\\s?(?<currentValue>.*)\\n"
             ]
         }
     ],
