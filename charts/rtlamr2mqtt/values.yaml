@@ -15,8 +15,8 @@ app-template:
             privileged: true
           image:
             # renovate: docker-image versioning=loose
-            repository: docker.io/allangood/rtlamr2mqtt
-            tag: 2.3.4
+            repository: hertzg/rtl_433
+            tag: 22.11
             pullPolicy: Always
           env:
             TZ: TIMEZONE
