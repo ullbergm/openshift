@@ -24,10 +24,14 @@ app-template:
             RTL_MSGTYPE: all
 
   persistence:
-    usb:
+    dev:
       enabled: true
       type: hostPath
-      hostPath: /dev/bus/usb
+      hostPath: /dev
+    sys:
+      enabled: true
+      type: hostPath
+      hostPath: /sys
 
   serviceAccount:
     name: rtlamr2mqtt-sa
