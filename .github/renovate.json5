@@ -40,6 +40,19 @@
       ],
       "datasourceTemplate": "github-releases",
       "versioningTemplate": "semver"
+    },
+    {
+        - name: app-template.controllers.main.containers.main.image.repository
+          value: ghcr.io/onedr0p/tautulli
+        - name: app-template.controllers.main.containers.main.image.tag
+          value: 2.13.4
+      "description": "Process custom helm chart values",
+      "fileMatch": [".+\\.ya?ml$"],
+      "matchStrings": [
+        "- name: app-template.controllers.main.containers.main.image.repository$.*value: (?<depName>.+)$.*- name: app-template.controllers.main.containers.main.image.tag$.*value: (?<currentValue>[\\d\\.]+)$"
+      ],
+      "datasourceTemplate": "custom-docker",
+      "versioningTemplate": "semver"
     }
   ],
   "packageRules": [
