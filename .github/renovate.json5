@@ -38,7 +38,7 @@
         }
     ],
     "enabledManagers": [
-        "custom.docker-tag-in-yaml",
+        "docker-tag-in-yaml",
         "github-actions"
     ]
 }
