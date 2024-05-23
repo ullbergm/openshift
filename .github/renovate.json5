@@ -26,7 +26,7 @@
     "timezone": "America/New_York",
     "customManagers": [
         {
-            "customType": "docker-tag-in-yaml",
+            "customType": "regex",
             "datasourceTemplate": "docker",
             "description": "Update container versions in yaml",
             "fileMatch": [
@@ -38,7 +38,7 @@
         }
     ],
     "enabledManagers": [
-        "docker-tag-in-yaml",
+        "regex",
         "github-actions"
     ]
 }
