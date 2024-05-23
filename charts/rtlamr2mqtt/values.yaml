@@ -48,3 +48,5 @@ app-template:
       runAsUser: 0
       runAsGroup: 0
       fsGroup: 0
+    nodeSelector:
+      nesdr.feature.node.kubernetes.io/rtlamr: true
