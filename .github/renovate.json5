@@ -20,7 +20,7 @@
   "suppressNotifications": ["prIgnoreNotification"],
   "ignorePaths": ["**/archive/**"],
   "timezone": "America/New_York",
-  "helm-values": {
+  "docker": {
     "fileMatch": ["(^|/)(charts|roles|clusters)/.+\\.ya?ml(\\.j2)?$"]
   },
   "regexManagers": [
