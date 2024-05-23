@@ -1,4 +1,6 @@
 app-template:
+  securityContext:
+    privileged: true
   controllers:
     main:
       type: statefulset
@@ -28,4 +30,3 @@ app-template:
       runAsUser: 0
       runAsGroup: 0
       fsGroup: 0
-      privileged: true
