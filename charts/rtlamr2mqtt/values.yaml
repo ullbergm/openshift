@@ -25,20 +25,6 @@ app-template:
             LISTEN_ONLY: yes
             RTL_MSGTYPE: all
 
-  persistence:
-    dev:
-      enabled: true
-      type: hostPath
-      hostPath: /dev
-      globalMounts:
-      - path: /hostdev
-    sys:
-      enabled: true
-      type: hostPath
-      hostPath: /sys
-      globalMounts:
-      - path: /hostsys
-
   serviceAccount:
     name: rtlamr2mqtt-sa
 
