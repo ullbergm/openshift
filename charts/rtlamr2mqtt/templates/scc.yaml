@@ -4,6 +4,7 @@ apiVersion: security.openshift.io/v1
 metadata:
   name: rtlamr2mqtt-scc
 allowPrivilegedContainer: true
+allowHostDirVolumePlugin: true
 fsGroup:
   type: RunAsAny
 runAsUser:
