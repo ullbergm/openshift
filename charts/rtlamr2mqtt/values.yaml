@@ -25,10 +25,9 @@ app-template:
 
   persistence:
     usb:
-      type: hostpath
-      path: /dev/bus/usb
-      globalMounts:
-        - path: /dev/bus/usb
+      enabled: true
+      type: hostPath
+      hostPath: /dev/bus/usb
 
   serviceAccount:
     name: rtlamr2mqtt-sa
