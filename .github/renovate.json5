@@ -1,43 +1,55 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:base",
-    "docker:enableMajor",
-    ":disableRateLimiting",
-    ":dependencyDashboard",
-    ":semanticCommits",
-    ":automergeDigest",
-    ":automergeBranch",
-    "github>ullbergm/openshift//.github/renovate/allowedVersions.json5",
-    "github>ullbergm/openshift//.github/renovate/autoMerge.json5",
-    "github>ullbergm/openshift//.github/renovate/commitMessage.json5",
-    "github>ullbergm/openshift//.github/renovate/groups.json5",
-    "github>ullbergm/openshift//.github/renovate/labels.json5",
-    "github>ullbergm/openshift//.github/renovate/semanticCommits.json5",
-    "helpers:pinGitHubActionDigests"
-  ],
-  "dependencyDashboardTitle": "Renovate Dashboard",
-  "suppressNotifications": ["prIgnoreNotification"],
-  "ignorePaths": ["**/archive/**"],
-  "timezone": "America/New_York",
-  "customManagers": [
-  {
-    "customType": "regex",
-    "datasourceTemplate": "docker",
-    "description": "Update container versions in yaml",
-    "fileMatch": ["(^|/)[^\\.]*\\.ya?ml$"],
-    "matchStrings": [
-      "#\\s?renovate: image=(?<depName>.*?)\\s?value:\\s?\\\"?(?<currentValue>[\\w+\\.\\-]*)\""
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "extends": [
+        "config:base",
+        "docker:enableMajor",
+        ":disableRateLimiting",
+        ":dependencyDashboard",
+        ":semanticCommits",
+        ":automergeDigest",
+        ":automergeBranch",
+        "github>ullbergm/openshift//.github/renovate/allowedVersions.json5",
+        "github>ullbergm/openshift//.github/renovate/autoMerge.json5",
+        "github>ullbergm/openshift//.github/renovate/commitMessage.json5",
+        "github>ullbergm/openshift//.github/renovate/groups.json5",
+        "github>ullbergm/openshift//.github/renovate/labels.json5",
+        "github>ullbergm/openshift//.github/renovate/semanticCommits.json5",
+        "helpers:pinGitHubActionDigests"
+    ],
+    "dependencyDashboardTitle": "Renovate Dashboard",
+    "suppressNotifications": [
+        "prIgnoreNotification"
+    ],
+    "ignorePaths": [
+        "**/archive/**"
+    ],
+    "timezone": "America/New_York",
+    "customManagers": [
+        {
+            "customType": "regex",
+            "datasourceTemplate": "docker",
+            "description": "Update container versions in yaml",
+            "fileMatch": [
+                "(^|/)[^\\.]*\\.ya?ml$"
+            ],
+            "matchStrings": [
+                "#\\s?renovate: image=(?<depName>.*?)\\s?value:\\s?\\\"?(?<currentValue>[\\w+\\.\\-]*)\""
+            ]
+        }
+    ],
+    "packageRules": [
+        {
+            "matchPackagePatterns": [
+                "*"
+            ],
+            "enabled": false
+        },
+        {
+            "matchManagers": [
+                "github-actions",
+                "regex"
+            ],
+            "enabled": true
+        }
     ]
-  },
-  "packageRules": [
-    {
-      "matchPackagePatterns": ["*"],
-      "enabled": false
-    },
-    {
-      "matchManagers": ["github-actions", "regex"],
-      "enabled": true
-    }
-  ]
 }
