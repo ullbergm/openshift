@@ -23,17 +23,16 @@
   "docker": {
     "fileMatch": ["(^|/)(charts|roles|clusters)/.+\\.ya?ml(\\.j2)?$"]
   },
-  "regexManagers": [
-    {
-      "description": "Process raw GitHub URLs",
-      "fileMatch": ["kubernetes/.+\\.ya?ml$"],
-      "matchStrings": [
-        "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
-      ],
-      "datasourceTemplate": "github-releases",
-      "versioningTemplate": "semver"
-    }
-  ],
+  "customManagers": [
+  {
+    "customType": "regex",
+    "datasourceTemplate": "docker",
+    "description": "Update container versions in yaml",
+    "fileMatch": ["(^|/)[^\\.]*\\.ya?ml$"],
+    "matchStrings": [
+      "#\\s?renovate: image=(?<depName>.*?)\\s?value:\\s?\\\"?(?<currentValue>[\\w+\\.\\-]*)\""
+    ]
+  },
   "packageRules": [
     {
       "description": "Loose versioning for non-semver packages",
