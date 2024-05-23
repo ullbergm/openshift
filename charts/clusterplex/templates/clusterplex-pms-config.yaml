@@ -18,4 +18,4 @@ data:
   TRANSCODE_OPERATING_MODE: both
   LOCAL_RELAY_ENABLED: '1'
   LOCAL_RELAY_PORT: "32499"
-  PLEX_CLAIM: 'claim-QfcxgdtUdL-ivvsv1oLR'
+#  PLEX_CLAIM: 'claim-QfcxgdtUdL-ivvsv1oLR'

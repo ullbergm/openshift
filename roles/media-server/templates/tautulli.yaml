@@ -45,6 +45,7 @@ spec:
         - name: app-template.service.main.ports.http.port
           value: '8181'
 
+        # renovate: datasource=docker depName=ghcr.io/onedr0p/tautulli versioning=semver
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/onedr0p/tautulli
         - name: app-template.controllers.main.containers.main.image.tag
