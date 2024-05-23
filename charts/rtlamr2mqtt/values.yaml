@@ -11,6 +11,8 @@ app-template:
         kasten/backup: "true"
       containers:
         main:
+          securityContext:
+            privileged: true
           image:
             # renovate: docker-image versioning=loose
             repository: docker.io/allangood/rtlamr2mqtt
