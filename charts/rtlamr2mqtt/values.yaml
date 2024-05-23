@@ -1,7 +1,7 @@
 app-template:
   controllers:
     main:
-      type: StatefulSet
+      type: statefulset
       strategy: RollingUpdate
       annotations:
         reloader.stakater.com/auto: "true"
