@@ -21,15 +21,7 @@
   "ignorePaths": ["**/archive/**"],
   "timezone": "America/New_York",
   "helm-values": {
-    "fileMatch": ["(^|/)(charts|deploy)/.+\\.ya?ml(\\.j2)?$"]
-  },
-  "kubernetes": {
-    "fileMatch": [
-      "(^|/)\\.taskfiles/.+\\.ya?ml(\\.j2)?$",
-      "(^|/)ansible/.+\\.ya?ml(\\.j2)?$",
-      "(^|/)charts/.+\\.ya?ml(\\.j2)?$",
-      "(^|/)deploy/.+\\.ya?ml(\\.j2)?$"
-    ]
+    "fileMatch": ["(^|/)(charts|roles|clusters)/.+\\.ya?ml(\\.j2)?$"]
   },
   "regexManagers": [
     {
@@ -39,19 +31,6 @@
         "https:\\/\\/raw.githubusercontent.com\\/(?<depName>[\\w\\d\\-_]+\\/[\\w\\d\\-_]+)\\/(?<currentValue>[\\w\\d\\.\\-_]+)\\/.*"
       ],
       "datasourceTemplate": "github-releases",
-      "versioningTemplate": "semver"
-    },
-    {
-        - name: app-template.controllers.main.containers.main.image.repository
-          value: ghcr.io/onedr0p/tautulli
-        - name: app-template.controllers.main.containers.main.image.tag
-          value: 2.13.4
-      "description": "Process custom helm chart values",
-      "fileMatch": [".+\\.ya?ml$"],
-      "matchStrings": [
-        "- name: app-template.controllers.main.containers.main.image.repository$.*value: (?<depName>.+)$.*- name: app-template.controllers.main.containers.main.image.tag$.*value: (?<currentValue>[\\d\\.]+)$"
-      ],
-      "datasourceTemplate": "custom-docker",
       "versioningTemplate": "semver"
     }
   ],
