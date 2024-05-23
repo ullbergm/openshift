@@ -18,8 +18,8 @@ app-template:
             repository: hertzg/rtl_433
             tag: 22.11
             pullPolicy: Always
-            args:
-            - -A
+          args:
+          - -A
           env:
             TZ: TIMEZONE
             LISTEN_ONLY: yes
