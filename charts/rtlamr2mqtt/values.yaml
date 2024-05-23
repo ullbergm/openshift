@@ -1,0 +1,31 @@
+app-template:
+  controllers:
+    main:
+      type: StatefulSet
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+      containers:
+        main:
+          image:
+            # renovate: docker-image versioning=loose
+            repository: docker.io/allangood/rtlamr2mqtt
+            tag: 2.3.4
+            pullPolicy: Always
+          env:
+            TZ: TIMEZONE
+
+  serviceAccount:
+    name: rtlamr2mqtt-sa
+
+  defaultPodOptions:
+    labels:
+      app: rtlamr2mqtt
+      version: 1.0.0
+    securityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
+      privileged: true
