@@ -37,19 +37,7 @@
             ]
         }
     ],
-    "packageRules": [
-        {
-            "matchPackagePatterns": [
-                "*"
-            ],
-            "enabled": false
-        },
-        {
-            "matchManagers": [
-                "github-actions",
-                "regex"
-            ],
-            "enabled": true
-        }
+    "enabledManagers": [
+        "regex"
     ]
 }
