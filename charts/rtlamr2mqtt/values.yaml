@@ -28,12 +28,16 @@ app-template:
       enabled: true
       type: hostPath
       hostPath: /dev
-      path: /hostdev
+      globalMounts:
+      - enabled: true
+        path: /hostdev
     sys:
       enabled: true
       type: hostPath
       hostPath: /sys
-      path: /hostsys
+      globalMounts:
+      - enabled: true
+        path: /hostsys
 
   serviceAccount:
     name: rtlamr2mqtt-sa
