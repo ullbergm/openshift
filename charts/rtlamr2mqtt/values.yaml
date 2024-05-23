@@ -24,7 +24,7 @@ app-template:
             RTL_MSGTYPE: all
 
   persistence:
-    backup:
+    usb:
       type: hostpath
       path: /dev/bus/usb
       globalMounts:
