@@ -28,10 +28,12 @@ app-template:
       enabled: true
       type: hostPath
       hostPath: /dev
+      path: /hostdev
     sys:
       enabled: true
       type: hostPath
       hostPath: /sys
+      path: /hostsys
 
   serviceAccount:
     name: rtlamr2mqtt-sa
