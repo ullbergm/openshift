@@ -48,7 +48,7 @@ spec:
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/onedr0p/tautulli
         - name: app-template.controllers.main.containers.main.image.tag
-        # renovate docker repository=onedr0p/tautulli versioning=semver
+        # renovate datasource=docker depName=onedr0p/tautulli versioning=semver
           value: 2.13.4
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
