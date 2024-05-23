@@ -18,6 +18,8 @@ app-template:
             pullPolicy: Always
           env:
             TZ: TIMEZONE
+            LISTEN_ONLY: yes
+            RTL_MSGTYPE: all
 
   serviceAccount:
     name: rtlamr2mqtt-sa
