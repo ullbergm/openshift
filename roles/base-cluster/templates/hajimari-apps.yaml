@@ -93,3 +93,15 @@ spec:
   icon: material-symbols:switch
   url: http://poe-switch.{{ .Values.cluster.top_level_domain }}
   info: Manage switch
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Application
+metadata:
+  name: artifactory
+  namespace: hajimari
+spec:
+  name: Artifactory
+  group: Infrastructure
+  icon: simple-icons:jfrog
+  url: http://artifactory.{{ .Values.cluster.top_level_domain }}:8082
+  info: File/image repository
