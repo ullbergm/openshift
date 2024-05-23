@@ -36,5 +36,8 @@
                 "#\\s?renovate custom-docker\\s?(?: versioning=(?<versioning>[a-z-]+?))?\\s*- name:.*\\s*value:\\s?(?<depName>.*)\\s*- name:.*\\s*value:\\s?(?<currentValue>.*)"
             ]
         }
-    ]
+    ],
+    "enabledManagers":
+    ["github-actions",
+    "custom.regex"]
 }
