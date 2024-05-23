@@ -49,7 +49,7 @@ spec:
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/onedr0p/lidarr
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 2.2.5.4141
+          value: 2.3.3.4204
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
