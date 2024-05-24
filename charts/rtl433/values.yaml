@@ -2,7 +2,7 @@ app-template:
   securityContext:
     privileged: true
   controllers:
-    main:
+    main315:
       type: statefulset
       strategy: RollingUpdate
       annotations:
@@ -24,6 +24,14 @@ app-template:
            - -v
            - -M level
            - -f 315000000 
+    main433:
+      type: statefulset
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+      containers:
         main433:
           securityContext:
             privileged: true
