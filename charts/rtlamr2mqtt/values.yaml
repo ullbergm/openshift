@@ -19,6 +19,7 @@ app-template:
             tag: latest
             pullPolicy: Always
           args:
+           - -A
            - -M level
            - -f 315000000 
           env:
