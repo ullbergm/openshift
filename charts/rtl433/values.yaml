@@ -19,7 +19,7 @@ app-template:
             tag: latest
             pullPolicy: Always
           args:
-           - -d 0
+           - -d 5
            - -S all
            - -v
            - -M level
@@ -41,7 +41,7 @@ app-template:
             tag: latest
             pullPolicy: Always
           args:
-           - -d 1
+           - -d 6
            - -S all
            - -v
            - -M level
