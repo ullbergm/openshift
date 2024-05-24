@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
-description: A Helm chart to install rtlamr2mqtt.
-name: rtlamr2mqtt
+description: A Helm chart to install rtl433.
+name: rtl433
 version: 0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:

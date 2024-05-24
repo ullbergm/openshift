@@ -2,7 +2,7 @@
 kind: SecurityContextConstraints
 apiVersion: security.openshift.io/v1
 metadata:
-  name: rtlamr2mqtt-scc
+  name: rtl433-scc
 allowPrivilegedContainer: true
 allowHostDirVolumePlugin: true
 fsGroup:
@@ -14,4 +14,4 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:{{.Release.Namespace}}:rtlamr2mqtt-sa
+- system:serviceaccount:{{.Release.Namespace}}:rtl433-sa

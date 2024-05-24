@@ -19,20 +19,17 @@ app-template:
             tag: latest
             pullPolicy: Always
           args:
+           - -S all
            - -v
            - -M level
            - -f 315000000 
-          env:
-            TZ: TIMEZONE
-            LISTEN_ONLY: yes
-            RTL_MSGTYPE: all
 
   serviceAccount:
-    name: rtlamr2mqtt-sa
+    name: rtl433-sa
 
   defaultPodOptions:
     labels:
-      app: rtlamr2mqtt
+      app: rtl433
       version: 1.0.0
     securityContext:
       runAsUser: 0
