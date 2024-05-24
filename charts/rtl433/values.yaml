@@ -9,6 +9,8 @@ app-template:
         reloader.stakater.com/auto: "true"
       labels:
         kasten/backup: "true"
+        app: rtl315
+        version: 1.0.0
       containers:
         main315:
           securityContext:
@@ -19,6 +21,7 @@ app-template:
             tag: latest
             pullPolicy: Always
           args:
+           - -d 1
            - -S all
            - -v
            - -M level
@@ -30,6 +33,8 @@ app-template:
         reloader.stakater.com/auto: "true"
       labels:
         kasten/backup: "true"
+        app: rtl433
+        version: 1.0.0
       containers:
         main433:
           securityContext:
@@ -40,7 +45,7 @@ app-template:
             tag: latest
             pullPolicy: Always
           args:
-           - -d 6
+           - -d 0
            - -S all
            - -v
            - -M level
@@ -50,9 +55,6 @@ app-template:
     name: rtl433-sa
 
   defaultPodOptions:
-    labels:
-      app: rtl433
-      version: 1.0.0
     securityContext:
       runAsUser: 0
       runAsGroup: 0
