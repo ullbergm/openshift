@@ -22,7 +22,6 @@ app-template:
             pullPolicy: Always
           args:
 #           - -S all
-           - -v
            - -M level
            - -f 315000000 
     main433:
@@ -45,7 +44,6 @@ app-template:
             pullPolicy: Always
           args:
 #           - -S all
-           - -v
            - -M level
            - -f 433000000 
 
