@@ -10,7 +10,7 @@ app-template:
       labels:
         kasten/backup: "true"
       containers:
-        main:
+        main315:
           securityContext:
             privileged: true
           image:
@@ -23,6 +23,19 @@ app-template:
            - -v
            - -M level
            - -f 315000000 
+        main433:
+          securityContext:
+            privileged: true
+          image:
+            # renovate: docker-image versioning=loose
+            repository: hertzg/rtl_433
+            tag: latest
+            pullPolicy: Always
+          args:
+           - -S all
+           - -v
+           - -M level
+           - -f 433000000 
 
   serviceAccount:
     name: rtl433-sa
