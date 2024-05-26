@@ -30,7 +30,12 @@ democratic-csi:
         password: my-password
         username: my-username
       iscsi:
-        targetPortal: 'my-server[:port]'
+        targetPortal: "my-server[:port]"
+
+media:
+  nfs:
+    server: my-nas
+    path: /my-backups
 
 backup:
   nfs:

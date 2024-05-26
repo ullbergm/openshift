@@ -40,8 +40,9 @@
             ]
         }
     ],
-    "enabledManagers":
-    ["github-actions",
-    "custom.regex",
-    "helmv3"]
+    "enabledManagers": [
+        "github-actions",
+        "custom.regex",
+        "helmv3"
+    ]
 }
