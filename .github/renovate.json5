@@ -24,6 +24,9 @@
         "**/archive/**"
     ],
     "timezone": "America/New_York",
+    "registryAliases": {
+        "bjw-s": "https://bjw-s.github.io/helm-charts"
+    },
     "customManagers": [
         {
             "customType": "regex",
@@ -39,5 +42,6 @@
     ],
     "enabledManagers":
     ["github-actions",
-    "custom.regex"]
+    "custom.regex",
+    "helmv3"]
 }
