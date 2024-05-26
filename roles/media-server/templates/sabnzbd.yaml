@@ -47,7 +47,7 @@ spec:
 
         # renovate custom-docker versioning=semver
         - name: app-template.controllers.main.initContainers.config-fix.image.repository
-          value: registry.hub.docker.com/_/alpine
+          value: alpine
         - name: app-template.controllers.main.initContainers.config-fix.image.tag
           value: 3.20.0
         - name: app-template.controllers.main.initContainers.config-fix.command[0]
