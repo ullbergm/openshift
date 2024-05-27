@@ -26,6 +26,17 @@ monica:
     tag: 4.1.2-fpm-alpine
     pullPolicy: IfNotPresent
 
+  serviceAccount:
+    # -- Specifies whether a service account should be created
+    create: false
+
+    # -- Annotations to add to the service account
+    annotations: {}
+
+    # -- The name of the service account to use.
+    # If not set and create is true, a name is generated using the fullname template
+    name: "monica-sa"
+
   controller:
     # -- Set the controller upgrade strategy
     strategy: RollingUpdate
@@ -90,7 +101,16 @@ monica:
         enabled: true
         storageClass: "synology-iscsi"
         size: 16Gi
+    serviceAccount:
+      # -- Specifies whether a service account should be created
+      create: false
 
+      # -- Annotations to add to the service account
+      annotations: {}
+
+      # -- The name of the service account to use.
+      # If not set and create is true, a name is generated using the fullname template
+      name: "monica-sa"
   nginx:
     # -- Enable the Nginx sidecar.
     #    Disable this if you use an apache image.
