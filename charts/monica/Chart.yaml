@@ -10,4 +10,4 @@ maintainers:
 dependencies:
   - name: monica
     version: "0.9.0"
-    repository: "oci://ghcr.io/gabe565/charts/monica"
+    repository: "oci://ghcr.io/gabe565/charts"
