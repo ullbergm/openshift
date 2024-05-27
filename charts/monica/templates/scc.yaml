@@ -13,4 +13,3 @@ supplementalGroups:
   type: RunAsAny
 users:
 - system:serviceaccount:{{.Release.Namespace}}:monica-sa
-- system:serviceaccount:{{.Release.Namespace}}:monica-db-sa

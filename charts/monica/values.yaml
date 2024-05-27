@@ -102,10 +102,9 @@ monica:
         storageClass: "synology-iscsi"
         size: 16Gi
     serviceAccount:
-      create: true
+      create: false
       annotations: {}
-      name: "monica-db-sa"
-      rbac.create: true
+      name: "monica-sa"
 
   nginx:
     # -- Enable the Nginx sidecar.
