@@ -1,0 +1,105 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+
+application:
+  name: Monica
+  group: Utilities
+  icon: contacts
+  image: https://raw.githubusercontent.com/monicahq/monica/main/public/img/favicon.svg
+  description: "A tool for managing your life."
+  port: 80
+
+monica:
+  #
+  # IMPORTANT NOTE
+  #
+  # This chart inherits from our common library chart. You can check the default values/options here:
+  # https://github.com/bjw-s/helm-charts/blob/a081de5/charts/library/common/values.yaml
+  #
+
+  image:
+    # renovate docker
+    repository: monica
+    tag: 4.1.2-fpm-alpine
+    pullPolicy: IfNotPresent
+
+  controller:
+    # -- Set the controller upgrade strategy
+    strategy: RollingUpdate
+
+  # -- environment variables. [[ref]](https://raw.githubusercontent.com/monicahq/monica/master/.env.example)
+  # @default -- See [values.yaml](./values.yaml)
+  env:
+    # -- Set the container timezone
+    TZ: America/New_York
+    # -- The encryption key. Must be 32 characters long.
+    #    Use `php artisan key:generate` or `echo -n 'base64:'; openssl rand -base64 32` to generate a random key.
+    APP_KEY: ""
+
+  service:
+    # -- Configures service settings for the chart.
+    # @default -- See [values.yaml](./values.yaml)
+    main:
+      ports:
+        http:
+          port: 80
+        fastcgi:
+          port: 9000
+
+  ingress:
+    # -- Enable and configure ingress settings for the chart under this key.
+    # @default -- See [values.yaml](./values.yaml)
+    main:
+      enabled: false
+      # hosts:
+      #   - host: chart-example.local
+      #     paths:
+      #       - path: /
+      # tls:
+      #   - secretName: chart-example.local-tls
+      #     hosts:
+      #       - chart-example.local
+
+  persistence:
+    # -- Configure persistence settings for the chart under this key.
+    # @default -- See [values.yaml](./values.yaml)
+    storage:
+      enabled: true
+      mountPath: /var/www/html/storage
+      retain: true
+      storageClass: "synology-iscsi"
+      size: 16Gi
+
+  # -- Enable and configure mariadb database subchart under this key.
+  #    [[ref]](https://github.com/bitnami/charts/tree/master/bitnami/mariadb)
+  # @default -- See [values.yaml](./values.yaml)
+  mariadb:
+    enabled: true
+    architecture: standalone
+    auth:
+      database: monica
+      username: monica
+      password: changeme
+      rootPassword: changeme
+    primary:
+      persistence:
+        enabled: true
+        storageClass: "synology-iscsi"
+        size: 16Gi
+
+  nginx:
+    # -- Enable the Nginx sidecar.
+    #    Disable this if you use an apache image.
+    enabled: true
+    image:
+      # renovate docker
+      repository: nginx
+      tag: stable-alpine
+      pullPolicy: Always
+
+  podSecurityContext:
+    # -- Volume group permissions
+    fsGroup: 82
