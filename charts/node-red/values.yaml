@@ -62,3 +62,10 @@ app-template:
       existingClaim: nodered-config
       globalMounts:
         - path: /data
+    config-file:
+      type: configMap
+      name: nodered-config
+      globalMounts:
+        - path: /data/settings.js
+          subPath: settings.js
+          readOnly: true

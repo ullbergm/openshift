@@ -37,6 +37,7 @@ app-template:
             pullPolicy: IfNotPresent
           env:
             TZ: America/New_York
+            NODE_RED_CREDENTIAL_SECRET: secret
 
   serviceAccount:
     name: app-sa
