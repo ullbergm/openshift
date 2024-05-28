@@ -44,7 +44,7 @@ app-template:
       controller: main
       ports:
         http:
-          port: 3000
+          port: 1880
 
   defaultPodOptions:
     labels:
