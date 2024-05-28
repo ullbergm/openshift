@@ -1,0 +1,60 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+
+application:
+  name: Node-RED
+  group: Home Automation
+  icon: simple-icons:nodered
+  image: https://raw.githubusercontent.com/node-red/node-red.github.io/master/images/node-red.png
+  description: "A flow-based development tool for visual programming."
+  port: 1880
+
+app-template:
+  controllers:
+    main:
+      type: deployment
+      replicas: 3
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+      containers:
+        main:
+          image:
+            # renovate: docker-image versioning=loose
+            repository: docker.io/nodered/node-red
+            tag: 3.1.9
+            pullPolicy: Always
+          env:
+            TZ: TIMEZONE
+
+  serviceAccount:
+    name: nodered-sa
+
+  service:
+    main:
+      controller: main
+      ports:
+        http:
+          port: 3000
+
+  defaultPodOptions:
+    labels:
+      app: nodered
+      version: 1.0.0
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: "OnRootMismatch"
+
+  persistence:
+    config:
+      enabled: true
+      existingClaim: nodered-config
+      globalMounts:
+        - path: /data

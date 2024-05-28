@@ -1,0 +1,13 @@
+{{ $at := index .Values "app-template" }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ $at.persistence.config.existingClaim }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: {{ .Values.storage.config.storageClassName }}
+  resources:
+    requests:
+      storage: 15Gi
