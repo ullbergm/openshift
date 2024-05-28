@@ -12,6 +12,10 @@ application:
   description: "A flow-based development tool for visual programming."
   port: 1880
 
+storage:
+  config:
+    storageClassName: synology-iscsi
+
 app-template:
   controllers:
     main:
