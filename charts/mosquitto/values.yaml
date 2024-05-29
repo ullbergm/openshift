@@ -1,6 +1,4 @@
 app-template:
-  securityContext:
-    privileged: true
   controllers:
     main:
       type: statefulset
