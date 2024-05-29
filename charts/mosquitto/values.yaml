@@ -1,0 +1,49 @@
+app-template:
+  securityContext:
+    privileged: true
+  controllers:
+    main:
+      type: statefulset
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+        app: mosquitto
+        version: 1.0.0
+      containers:
+        main:
+          securityContext:
+            privileged: true
+          image:
+            # renovate: docker-image
+            repository: public.ecr.aws/docker/library/eclipse-mosquitto
+            tag: 2.0.18
+            pullPolicy: Always
+          probes:
+            liveness:
+              enabled: true
+            readiness:
+              enabled: true
+            startup:
+              enabled: true
+              spec:
+                failureThreshold: 30
+                periodSeconds: 5
+
+  service:
+    main:
+      controller: main
+      ports:
+        mqtt:
+          enabled: true
+          port: 1883
+
+  serviceAccount:
+    name: mosquitto-sa
+
+  defaultPodOptions:
+    securityContext:
+      runAsUser: 2000
+      runAsGroup: 2000
+      fsGroup: 2000
