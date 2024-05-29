@@ -11,8 +11,6 @@ app-template:
         version: 1.0.0
       containers:
         main:
-          securityContext:
-            privileged: true
           image:
             # renovate: docker-image
             repository: public.ecr.aws/docker/library/eclipse-mosquitto
