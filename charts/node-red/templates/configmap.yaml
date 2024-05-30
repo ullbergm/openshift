@@ -43,7 +43,7 @@ data:
         tours: false,
 
         projects: {
-          enabled: false,
+          enabled: true,
           workflow: {
             mode: "manual",
           },

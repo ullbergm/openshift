@@ -6,7 +6,7 @@ cluster:
 
 application:
   name: Node-RED
-  group: Home Automation
+  group: Automation
   icon: simple-icons:nodered
   image: https://raw.githubusercontent.com/node-red/node-red.github.io/master/images/node-red.png
   description: "A flow-based development tool for visual programming."
