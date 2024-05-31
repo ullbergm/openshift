@@ -1,0 +1,24 @@
+apiVersion: hajimari.io/v1alpha1
+kind: Application
+metadata:
+  name: openshift
+  namespace: hajimari
+spec:
+  name: OpenShift
+  group: Infrastructure
+  icon: simple-icons:redhatopenshift
+  url: http://console-openshift-console.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}/dashboards
+  info: OpenShift console
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Application
+metadata:
+  name: github
+  namespace: hajimari
+spec:
+  name: GitHub Repo
+  group: Infrastructure
+  icon: simple-icons:github
+  url: {{ .Values.spec.source.repoURL }}
+  info: GitHub Repo
+---
