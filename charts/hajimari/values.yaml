@@ -17,24 +17,13 @@ app-template:
             pullPolicy: Always
           env:
             TZ: TIMEZONE
-          startupProbe:
-            httpGet:
-              path: /
-              port: 3000
-            failureThreshold: 3
-            periodSeconds: 10
-          readinessProbe:
-            httpGet:
-              path: /
-              port: 3000
-            initialDelaySeconds: 5
-            timeoutSeconds: 5
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 3000
-            initialDelaySeconds: 5
-            timeoutSeconds: 10
+          probes:
+            startup:
+              enabled: true
+            readiness:
+              enabled: true
+            liveness:
+              enabled: true
 
   serviceAccount:
     name: hajimari-sa
