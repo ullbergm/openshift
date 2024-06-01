@@ -42,6 +42,11 @@ spec:
         - name: app-template.controllers.main.containers.main.env.TZ
           value: America/New_York
 
+        - name: app-template.defaultPodOptions.securityContext.runAsUser
+          value: "0"
+        - name: app-template.defaultPodOptions.securityContext.runAsGroup
+          value: "0"
+
   syncPolicy:
     automated:
       prune: true
