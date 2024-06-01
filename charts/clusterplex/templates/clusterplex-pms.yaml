@@ -6,6 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/name: clusterplex-pms
     app.kubernetes.io/part-of: clusterplex
+    kasten/backup: "true"
 spec:
   replicas: 1
   selector:
