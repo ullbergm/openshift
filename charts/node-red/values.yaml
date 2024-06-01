@@ -10,7 +10,7 @@ application:
   icon: simple-icons:nodered
   image: https://raw.githubusercontent.com/node-red/node-red.github.io/master/images/node-red.png
   description: "A flow-based development tool for visual programming."
-  port: 80
+  port: 1880
 
 storage:
   config:
@@ -44,16 +44,16 @@ app-template:
       controller: main
       ports:
         http:
-          port: 80
+          port: 1880
 
   defaultPodOptions:
     labels:
       app: node-red
       version: 1.0.0
     securityContext:
-      runAsUser: 1000
-      runAsGroup: 1000
-      fsGroup: 1000
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
       fsGroupChangePolicy: "OnRootMismatch"
 
   persistence:
