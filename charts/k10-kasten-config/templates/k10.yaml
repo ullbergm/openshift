@@ -29,6 +29,7 @@ spec:
     - kube-node-lease
     - kube-public
     - kube-system
+    - nvidia-gpu-operator
     - openshift
     - openshift-apiserver
     - openshift-apiserver-operator
@@ -70,6 +71,7 @@ spec:
     - openshift-kube-apiserver-operator
     - openshift-kube-controller-manager
     - openshift-kube-controller-manager-operator
+    - openshift-kube-descheduler-operator
     - openshift-kube-scheduler
     - openshift-kube-scheduler-operator
     - openshift-kube-storage-version-migrator
