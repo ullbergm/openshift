@@ -12,6 +12,10 @@ application:
   description: "A tool for managing your life."
   port: 80
 
+global:
+  labels:
+    kasten/backup: "true"
+
 monica:
   #
   # IMPORTANT NOTE
