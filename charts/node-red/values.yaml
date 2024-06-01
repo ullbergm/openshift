@@ -37,7 +37,7 @@ app-template:
             TZ: TIMEZONE
 
   serviceAccount:
-    name: nodered-sa
+    name: node-red-sa
 
   service:
     main:
@@ -48,7 +48,7 @@ app-template:
 
   defaultPodOptions:
     labels:
-      app: nodered
+      app: node-red
       version: 1.0.0
     securityContext:
       runAsUser: 1000
@@ -59,12 +59,12 @@ app-template:
   persistence:
     config:
       enabled: true
-      existingClaim: nodered-config
+      existingClaim: node-red-config
       globalMounts:
         - path: /data
     config-file:
       type: configMap
-      name: nodered-config
+      name: node-red-config
       globalMounts:
         - path: /data/settings.js
           subPath: settings.js

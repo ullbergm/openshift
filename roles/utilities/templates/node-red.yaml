@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: node-red
+  namespace: openshift-gitops
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: node-red
+    server: {{ .Values.spec.destination.server }}
+  project: default
+  source:
+    path: charts/node-red
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    helm:
+      parameters:
+        - name: cluster.top_level_domain
+          value: {{ .Values.cluster.top_level_domain }}
+        - name: cluster.name
+          value: {{ .Values.cluster.name }}
+        - name: cluster.admin_email
+          value: {{ .Values.cluster.admin_email }}
+        - name: cluster.timezone
+          value: {{ .Values.cluster.timezone }}
+          
+        - name: storage.storageClassName
+          value: {{ .Values.config.storageClassName }}
+        - name: storage.media.nfs.server
+          value: {{ .Values.media.nfs.server }}
+        - name: storage.media.nfs.path
+          value: {{ .Values.media.nfs.path }}
+
+        # renovate custom-docker versioning=semver
+        - name: app-template.controllers.main.containers.main.image.repository
+          value: ghcr.io/gchq/cyberchef
+        - name: app-template.controllers.main.containers.main.image.tag
+          value: 10.18.6
+        - name: app-template.controllers.main.containers.main.image.pullPolicy
+          value: IfNotPresent
+        - name: app-template.controllers.main.containers.main.env.TZ
+          value: America/New_York
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

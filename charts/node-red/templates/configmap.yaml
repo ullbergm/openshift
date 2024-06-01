@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: nodered-config
+  name: node-red-config
 data:
   settings.js: |-
     module.exports = {
@@ -43,7 +43,7 @@ data:
         tours: false,
 
         projects: {
-          enabled: true,
+          enabled: false,
           workflow: {
             mode: "manual",
           },

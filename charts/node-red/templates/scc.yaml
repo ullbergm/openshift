@@ -2,7 +2,7 @@
 kind: SecurityContextConstraints
 apiVersion: security.openshift.io/v1
 metadata:
-  name: nodered-scc
+  name: node-red-scc
 fsGroup:
   type: RunAsAny
 runAsUser:
@@ -12,4 +12,4 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:{{.Release.Namespace}}:nodered-sa
+- system:serviceaccount:{{.Release.Namespace}}:node-red-sa
