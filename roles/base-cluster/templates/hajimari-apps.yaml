@@ -22,3 +22,15 @@ spec:
   url: {{ .Values.spec.source.repoURL }}
   info: GitHub Repo
 ---
+apiVersion: hajimari.io/v1alpha1
+kind: Application
+metadata:
+  name: github
+  namespace: hajimari
+spec:
+  name: GitOps
+  group: Infrastructure
+  icon: simple-icons:argo
+  url: https://openshift-gitops-server-openshift-gitops.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  info: GitOps
+---

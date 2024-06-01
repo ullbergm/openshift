@@ -1,7 +1,7 @@
 ---
 apiVersion: v2
 description: A Helm chart to add my stuff.
-name: base-cluster
+name: ullberg-custom
 version: 0.1.0
 kubeVersion: ">=1.22.0-0"
 maintainers:
