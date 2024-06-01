@@ -6,7 +6,7 @@ cluster:
   timezone: America/New_York
 
 application:
-  name: App
+  name: Plex
   group: Media
   icon: plex
   image: https://upload.wikimedia.org/wikipedia/commons/7/7b/Plex_logo_2022.svg
