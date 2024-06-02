@@ -41,9 +41,6 @@ spec:
         - name: media.nfs.path
           value: {{ .Values.media.nfs.path }}
 
-        - name: applications.kavita
-          value: "false"
-
   syncPolicy:
     automated:
       selfHeal: true
