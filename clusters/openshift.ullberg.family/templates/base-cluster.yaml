@@ -60,6 +60,8 @@ spec:
         - name: backup.nfs.path
           value: {{ .Values.backup.nfs.path }}
 
+        - name: network.lan.defaultGW
+          value: {{ .Values.network.lan.defaultGW }}
         - name: network.node0.name
           value: {{ .Values.network.node0.name }}
         - name: network.node0.storageInterface.name

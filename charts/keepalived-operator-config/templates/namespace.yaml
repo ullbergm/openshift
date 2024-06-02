@@ -1,0 +1,11 @@
+kind: KeepalivedGroup
+apiVersion: redhatcop.redhat.io/v1alpha1
+metadata:
+  name: lan
+  namespace: keepalived-operator
+spec:
+  image: registry.redhat.io/openshift4/ose-keepalived-ipfailover
+  interface: eth0
+  interfaceFromIP: {{ .Values.network.lan.defaultGW }}
+  nodeSelector:
+    node-role.kubernetes.io/master: ''
