@@ -14,4 +14,4 @@ supplementalGroups:
 privileged: true
 allowPrivilegeEscalation: true
 users:
-- system:serviceaccount:{{.Release.Namespace}}:controller-manager
+- system:serviceaccount:{{.Release.Namespace}}:default
