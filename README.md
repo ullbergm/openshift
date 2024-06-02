@@ -83,3 +83,17 @@
 6. Update the synology-iscsi VolumeSnapshotClass to have this annotation:
 
        k10.kasten.io/is-snapshot-class: true
+
+7. Update network config to have the allowedCIDRs
+
+      spec:
+        clusterNetwork:
+          - cidr: 10.128.0.0/14
+            hostPrefix: 23
+        externalIP:
+          policy:
+            allowedCIDRs:
+              - 192.168.0.0/24
+        networkType: OVNKubernetes
+        serviceNetwork:
+          - 172.30.0.0/16

@@ -5,7 +5,7 @@ metadata:
   namespace: keepalived-operator
 spec:
   image: registry.redhat.io/openshift4/ose-keepalived-ipfailover
-  interface: eth0
+  interface: br-ex
   interfaceFromIP: {{ .Values.network.lan.defaultGW }}
   nodeSelector:
     node-role.kubernetes.io/master: ''
