@@ -11,9 +11,9 @@ app-template:
       containers:
         main:
           image:
-            # renovate: docker-image versioning=loose
+            # renovate: docker-image
             repository: ghcr.io/ullbergm/hajimari
-            tag: latest
+            tag: v0.3.9
             pullPolicy: Always
           env:
             TZ: TIMEZONE
