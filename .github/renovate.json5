@@ -43,6 +43,7 @@
     "enabledManagers": [
         "github-actions",
         "custom.regex",
-        "helmv3"
+        "helmv3",
+        "helm-values"
     ]
 }
