@@ -2,3 +2,5 @@ kind: Namespace
 apiVersion: v1
 metadata:
   name: openshift-kube-descheduler-operator
+  labels:
+    openshift.io/cluster-monitoring: 'true'
