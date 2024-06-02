@@ -11,5 +11,6 @@ seLinuxContext:
   type: RunAsAny
 supplementalGroups:
   type: RunAsAny
+privileged: true
 users:
 - system:serviceaccount:{{.Release.Namespace}}:controller-manager
