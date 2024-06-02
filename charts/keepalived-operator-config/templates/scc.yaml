@@ -12,6 +12,7 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 allowPrivilegedContainer: true
+allowHostNetwork: true
 allowHostDirVolumePlugin: true
 allowPrivilegeEscalation: true
 users:
