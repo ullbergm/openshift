@@ -11,6 +11,20 @@ cluster:
   admin_email: YOUR_EMAIL
   timezone: YOUR_TIMEZONE
 
+applications:
+  bazarr: true
+  gaps: true
+  kavita: true
+  lidarr: true
+  overseerr: true
+  plex: true
+  prowlarr: true
+  radarr: true
+  readarr: true
+  sabnzbd: true
+  sonarr: true
+  tautulli: true
+
 config:
   storageClassName: "synology-iscsi"
 
