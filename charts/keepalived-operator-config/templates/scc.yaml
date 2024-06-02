@@ -11,7 +11,8 @@ seLinuxContext:
   type: RunAsAny
 supplementalGroups:
   type: RunAsAny
-privileged: true
+allowPrivilegedContainer: true
+allowHostDirVolumePlugin: true
 allowPrivilegeEscalation: true
 users:
 - system:serviceaccount:keepalived-operator:default
