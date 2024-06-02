@@ -42,7 +42,7 @@ spec:
           value: {{ .Values.media.nfs.path }}
 
         - name: applications.kavita
-          value: false
+          value: "false"
 
   syncPolicy:
     automated:
