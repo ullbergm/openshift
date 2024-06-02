@@ -13,7 +13,7 @@ app-template:
           image:
             # renovate: docker-image
             repository: ghcr.io/ullbergm/hajimari
-            tag: v0.3.9
+            tag: v0.4.0
             pullPolicy: Always
           env:
             TZ: TIMEZONE
