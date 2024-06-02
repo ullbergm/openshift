@@ -12,5 +12,6 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 privileged: true
+allowPrivilegeEscalation: true
 users:
 - system:serviceaccount:{{.Release.Namespace}}:controller-manager
