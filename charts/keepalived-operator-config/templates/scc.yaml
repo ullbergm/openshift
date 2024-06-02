@@ -13,6 +13,7 @@ supplementalGroups:
   type: RunAsAny
 allowPrivilegedContainer: true
 allowHostNetwork: true
+allowHostPorts: true
 allowHostDirVolumePlugin: true
 allowPrivilegeEscalation: true
 users:
