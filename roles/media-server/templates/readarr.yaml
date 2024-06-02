@@ -1,3 +1,4 @@
+{{ if .Values.applications.readarr }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -75,3 +76,4 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
+{{ end }}
