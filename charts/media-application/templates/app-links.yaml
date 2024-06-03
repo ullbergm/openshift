@@ -8,7 +8,7 @@ spec:
   icon: "{{ .Values.application.icon }}"
   url: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   info: "{{ .Values.application.description }}"
-  location: "{{ .Values.application.location }}"
+  location: {{ .Values.application.location }}
 ---
 apiVersion: console.openshift.io/v1
 kind: ConsoleLink
