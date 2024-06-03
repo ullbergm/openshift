@@ -11,6 +11,7 @@ application:
   image: https://raw.githubusercontent.com/app/app/develop/Logo/400.png
   description: "A tool for managing stuff."
   port: 8080
+  location: 0
 
 storage:
   config:

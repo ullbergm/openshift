@@ -9,6 +9,7 @@ spec:
   icon: simple-icons:redhatopenshift
   url: http://console-openshift-console.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}/dashboards
   info: OpenShift console
+  location: 100
 ---
 apiVersion: hajimari.io/v1alpha1
 kind: Application
