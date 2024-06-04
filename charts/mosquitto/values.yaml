@@ -1,3 +1,7 @@
+storage:
+  config:
+    storageClassName: synology-iscsi
+
 app-template:
   controllers:
     main:
@@ -16,6 +20,10 @@ app-template:
             repository: public.ecr.aws/docker/library/eclipse-mosquitto
             tag: 2.0.18
             pullPolicy: Always
+          args:
+          - sh
+          - -c
+          - exec mosquitto -c "/config/$(hostname).conf"
           probes:
             liveness:
               enabled: true
@@ -30,6 +38,12 @@ app-template:
   service:
     main:
       controller: main
+      labels:
+        keepalived-operator.redhat-cop.io/keepalivedgroup: keepalived-operator/lan
+      annotations:
+        coredns.io/hostname: mqtt
+      externalIps:
+        - 192.168.0.100
       ports:
         mqtt:
           enabled: true
@@ -37,6 +51,18 @@ app-template:
 
   serviceAccount:
     name: mosquitto-sa
+
+  persistence:
+    data:
+      existingClaim: mosquitto-data
+      advancedMounts:
+        main:
+          main:
+            - path: /data
+
+    config:
+      name: mosquitto-config
+      type: configMap
 
   defaultPodOptions:
     securityContext:
