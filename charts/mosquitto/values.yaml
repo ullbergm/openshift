@@ -42,7 +42,7 @@ app-template:
         keepalived-operator.redhat-cop.io/keepalivedgroup: keepalived-operator/lan
       annotations:
         coredns.io/hostname: mqtt
-      externalIps:
+      externalIPs:
         - 192.168.0.100
       ports:
         mqtt:
