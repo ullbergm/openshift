@@ -6,14 +6,6 @@ app-template:
   controllers:
     main:
       type: statefulset
-      volumeClaimTemplates:
-      - name: data
-        labels: {}
-        annotations: {}
-        globalMounts:
-          - path: /data
-        accessMode: "ReadWriteOnce"
-        size: 10Gi
       replicas: 2
       strategy: RollingUpdate
       annotations:
@@ -22,6 +14,15 @@ app-template:
         kasten/backup: "true"
         app: mosquitto
         version: 1.0.0
+      statefulset:
+        volumeClaimTemplates:
+        - name: data
+          labels: {}
+          annotations: {}
+          globalMounts:
+            - path: /data
+          accessMode: "ReadWriteOnce"
+          size: 10Gi
       containers:
         main:
           image:
