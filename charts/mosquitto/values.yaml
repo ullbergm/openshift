@@ -6,6 +6,14 @@ app-template:
   controllers:
     main:
       type: statefulset
+      volumeClaimTemplates:
+      - name: data
+        labels: {}
+        annotations: {}
+        globalMounts:
+          - path: /data
+        accessMode: "ReadWriteOnce"
+        size: 10Gi
       replicas: 2
       strategy: RollingUpdate
       annotations:
@@ -35,16 +43,7 @@ app-template:
               spec:
                 failureThreshold: 30
                 periodSeconds: 5
-      statefulset:
-        template:
-          volumeClaimTemplates:
-          - name: data
-            labels: {}
-            annotations: {}
-            globalMounts:
-              - path: /data
-            accessMode: "ReadWriteOnce"
-            size: 10Gi
+
   service:
     main:
       controller: main
