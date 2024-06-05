@@ -5,6 +5,7 @@ storage:
 network:
   mqtt:
     externalIP: 192.168.0.100
+    keepalivegroup: lan
 
 app-template:
   controllers:
