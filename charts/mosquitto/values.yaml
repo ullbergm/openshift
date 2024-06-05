@@ -49,7 +49,7 @@ app-template:
       controller: main
       labels:
         keepalived-operator.redhat-cop.io/keepalivedgroup: >-
-          keepalived-operator/lan
+          "keepalived-operator/lan"
       annotations:
         coredns.io/hostname: mqtt
       externalIPs:
