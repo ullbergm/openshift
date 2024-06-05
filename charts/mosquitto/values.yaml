@@ -48,7 +48,7 @@ app-template:
     main:
       controller: main
       labels:
-        keepalived-operator.redhat-cop.io/keepalivedgroup: '''"keepalived-operator/lan"'''
+        keepalived-operator.redhat-cop.io/keepalivedgroup: "'\"ports\": {\"88\":\"sandbox-backendconfig\"}}'"
       annotations:
         coredns.io/hostname: mqtt
       externalIPs:
