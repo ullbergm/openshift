@@ -62,9 +62,8 @@ app-template:
 
 hajimari:
     defaultEnable: true
-    theme: null
-    lightTheme: gazette
-    darkTheme: blackboard
+    lightTheme: paper
+    darkTheme: espresso
     showGreeting: false
     showAppGroups: true
     showAppInfo: true
