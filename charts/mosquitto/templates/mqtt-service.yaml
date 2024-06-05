@@ -3,7 +3,7 @@ apiVersion: v1
 metadata:
   name: mqtt
   labels:
-    keepalived-operator.redhat-cop.io/keepalivedgroup: {{ "keepalived-operator/lan" | quote }}
+    keepalived-operator.redhat-cop.io/keepalivedgroup: {{ "keepalived-operator/lan" | squote }}
   annotations:
     coredns.io/hostname: mqtt
 spec:
