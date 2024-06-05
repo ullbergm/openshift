@@ -71,6 +71,7 @@ hajimari:
     showAppUrls: false
     showBookmarkGroups: true
     showGlobalBookmarks: true
+    showSearch: false
     alwaysTargetBlank: false
     targetBlank: false
     name: "friend"
