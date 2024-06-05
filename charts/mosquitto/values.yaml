@@ -2,6 +2,10 @@ storage:
   data:
     storageClassName: synology-iscsi
 
+network:
+  mqtt:
+    externalIP: 192.168.0.100
+
 app-template:
   controllers:
     main:
@@ -44,19 +48,6 @@ app-template:
               - path: /data
             accessMode: "ReadWriteOnce"
             size: 10Gi
-  service:
-    main:
-      controller: main
-      #labels:
-        #keepalived-operator.redhat-cop.io/keepalivedgroup: "keepalived-operator/lan"
-      annotations:
-        coredns.io/hostname: mqtt
-      externalIPs:
-        - 192.168.0.100
-      ports:
-        mqtt:
-          enabled: true
-          port: 1883
 
   serviceAccount:
     name: mosquitto-sa
