@@ -39,14 +39,15 @@ app-template:
           volumeMounts:
             - name: mosquitto-data
               mountPath: /data
-          volumeClaimTemplates:
-          - metadata:
-              name: mosquitto-data
-            spec:
-              accessModes: [ "ReadWriteOnce" ]
-              resources:
-                requests:
-                  storage: 10Gi
+          statefulset:
+            volumeClaimTemplates:
+            - name: data
+              labels: {}
+              annotations: {}
+              globalMounts:
+                - path: /data
+              accessMode: "ReadWriteOnce"
+              size: 10Gi
   service:
     main:
       controller: main
