@@ -35,10 +35,6 @@ app-template:
               spec:
                 failureThreshold: 30
                 periodSeconds: 5
-                
-          volumeMounts:
-            - name: mosquitto-data
-              mountPath: /data
           statefulset:
             volumeClaimTemplates:
             - name: data
