@@ -2,10 +2,9 @@ kind: Service
 apiVersion: v1
 metadata:
   name: mqtt
-  labels:
-    keepalived-operator.redhat-cop.io/keepalivedgroup: "keepalived-operator/{{ .Values.network.mqtt.keepalivegroup }}"
   annotations:
     coredns.io/hostname: mqtt
+    keepalived-operator.redhat-cop.io/keepalivedgroup: "keepalived-operator/{{ .Values.network.mqtt.keepalivegroup }}"
 spec:
   externalIPs:
     - {{ .Values.network.mqtt.externalIP }}
