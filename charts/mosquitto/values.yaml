@@ -48,6 +48,10 @@ app-template:
               - path: /data
             accessMode: "ReadWriteOnce"
             size: 10Gi
+  service:
+    main:
+      controller: main
+      enabled: false
 
   serviceAccount:
     name: mosquitto-sa
