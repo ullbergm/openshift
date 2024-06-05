@@ -35,7 +35,19 @@ app-template:
               spec:
                 failureThreshold: 30
                 periodSeconds: 5
-
+                
+          volumeMounts:
+            - name: mosquitto-data
+              mountPath: /data
+          volumeClaimTemplates:
+          - metadata:
+              name: mosquitto-data
+            spec:
+              accessModes: [ "ReadWriteOnce" ]
+              storageClassName: {{ .Values.storage.data.storageClassName }}
+              resources:
+                requests:
+                  storage: 10Gi
   service:
     main:
       controller: main
@@ -54,13 +66,6 @@ app-template:
     name: mosquitto-sa
 
   persistence:
-    data:
-      existingClaim: mosquitto-data
-      advancedMounts:
-        main:
-          main:
-            - path: /data
-
     config:
       name: mosquitto-config
       type: configMap
