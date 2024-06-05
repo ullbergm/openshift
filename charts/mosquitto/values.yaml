@@ -35,15 +35,15 @@ app-template:
               spec:
                 failureThreshold: 30
                 periodSeconds: 5
-          statefulset:
-            volumeClaimTemplates:
-            - name: data
-              labels: {}
-              annotations: {}
-              globalMounts:
-                - path: /data
-              accessMode: "ReadWriteOnce"
-              size: 10Gi
+      statefulset:
+        volumeClaimTemplates:
+        - name: data
+          labels: {}
+          annotations: {}
+          globalMounts:
+            - path: /data
+          accessMode: "ReadWriteOnce"
+          size: 10Gi
   service:
     main:
       controller: main
