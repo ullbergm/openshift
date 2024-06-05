@@ -6,6 +6,7 @@ app-template:
   controllers:
     main:
       type: statefulset
+      replicas: 2
       strategy: RollingUpdate
       annotations:
         reloader.stakater.com/auto: "true"

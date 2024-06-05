@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: mosquitto-config
 data:
-  mosquitto-0.yaml: |-
+  mosquitto-0.conf: |-
     per_listener_settings false
     listener 1883
     allow_anonymous true
@@ -12,7 +12,7 @@ data:
     autosave_interval 1800
     connection_messages false
     autosave_interval 60
-  mosquitto-1.yaml: |-
+  mosquitto-1.conf: |-
     per_listener_settings false
     listener 1883
     allow_anonymous true
