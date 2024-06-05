@@ -14,15 +14,6 @@ app-template:
         kasten/backup: "true"
         app: mosquitto
         version: 1.0.0
-      statefulset:
-        volumeClaimTemplates:
-        - name: data
-          labels: {}
-          annotations: {}
-          globalMounts:
-            - path: /data
-          accessMode: "ReadWriteOnce"
-          size: 10Gi
       containers:
         main:
           image:
@@ -44,7 +35,15 @@ app-template:
               spec:
                 failureThreshold: 30
                 periodSeconds: 5
-
+      statefulset:
+        volumeClaimTemplates:
+          - name: data
+            labels: {}
+            annotations: {}
+            globalMounts:
+              - path: /data
+            accessMode: "ReadWriteOnce"
+            size: 10Gi
   service:
     main:
       controller: main
