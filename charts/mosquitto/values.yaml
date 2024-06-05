@@ -44,7 +44,6 @@ app-template:
               name: mosquitto-data
             spec:
               accessModes: [ "ReadWriteOnce" ]
-              storageClassName: {{ .Values.storage.data.storageClassName }}
               resources:
                 requests:
                   storage: 10Gi
