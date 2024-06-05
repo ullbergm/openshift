@@ -8,7 +8,7 @@ metadata:
     coredns.io/hostname: mqtt
 spec:
   externalIPs:
-    - {{ .Values.mqtt.externalIP }}
+    - {{ .Values.network.mqtt.externalIP }}
   ports:
     - name: mqtt
       protocol: TCP
