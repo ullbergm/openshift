@@ -1,0 +1,43 @@
+app-template:
+  securityContext:
+    privileged: true
+  controllers:
+    main315:
+      type: daemonset
+      labels:
+        app: generic-device-plugin
+        version: 1.0.0
+      containers:
+        app:
+          securityContext:
+            privileged: true
+          image:
+            # renovate: docker-image
+            repository: ghcr.io/squat/generic-device-plugin
+            tag: latest@sha256:ba6f0b4cf6c858d6ad29ba4d32e4da11638abbc7d96436bf04f582a97b2b8821
+            pullPolicy: IfNotPresent
+          args:
+              - --log-level
+              - info
+              - --device
+              - |
+                name: zwave
+                groups:
+                  - paths:
+                      - path: /dev/serial/by-id/usb-0658_0200-if00
+              - --device
+              - |
+                name: rtlsdr
+                count: 1
+                groups:
+                  - usb:
+                    - vendor: 0bda
+                      product: 2838
+  serviceAccount:
+    name: generic-device-plugin-sa
+
+  defaultPodOptions:
+    securityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
