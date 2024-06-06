@@ -13,10 +13,10 @@ spec:
 apiVersion: hajimari.io/v1alpha1
 kind: Application
 metadata:
-  name: homeassistant
+  name: old-homeassistant
   namespace: hajimari
 spec:
-  name: HomeAssistant
+  name: old Home Assistant
   group: Home Automation
   icon: home-assistant
   url: http://homeassistant.{{ .Values.cluster.top_level_domain }}:8123
