@@ -13,7 +13,7 @@ spec:
     name: {{ .Release.Name }}
     weight: 100
   port:
-    targetPort: main
+    targetPort: http
   tls:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect
