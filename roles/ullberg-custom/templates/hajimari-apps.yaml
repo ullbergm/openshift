@@ -17,7 +17,7 @@ metadata:
   namespace: hajimari
 spec:
   name: old Home Assistant
-  group: Home Automation
+  group: Utilities
   icon: home-assistant
   url: http://homeassistant.{{ .Values.cluster.top_level_domain }}:8123
   info: Home automation
