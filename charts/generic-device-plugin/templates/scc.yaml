@@ -3,8 +3,6 @@ kind: SecurityContextConstraints
 apiVersion: security.openshift.io/v1
 metadata:
   name: generic-device-plugin-scc
-allowPrivilegedContainer: true
-allowHostDirVolumePlugin: true
 fsGroup:
   type: RunAsAny
 runAsUser:
@@ -13,5 +11,10 @@ seLinuxContext:
   type: RunAsAny
 supplementalGroups:
   type: RunAsAny
+allowPrivilegedContainer: true
+allowHostNetwork: true
+allowHostPorts: true
+allowHostDirVolumePlugin: true
+allowPrivilegeEscalation: true
 users:
 - system:serviceaccount:{{.Release.Namespace}}:generic-device-plugin-sa
