@@ -31,6 +31,9 @@ spec:
           value: {{ .Values.media.nfs.server }}
         - name: storage.media.nfs.path
           value: {{ .Values.media.nfs.path }}
+        
+        - name: application.group
+          value: Home Assistant
 
         # renovate custom-docker versioning=semver
         - name: app-template.controllers.main.containers.main.image.repository
