@@ -35,6 +35,10 @@ app-template:
             limits:
               squat.ai/zwave: 1
 
+          securityContext:
+            privileged: true
+
+
   serviceAccount:
     name: zwavejs2mqtt-sa
 
@@ -54,7 +58,6 @@ app-template:
       runAsGroup: 0
       fsGroup: 0
       fsGroupChangePolicy: "OnRootMismatch"
-      privileged: true
 
   persistence:
     config:
