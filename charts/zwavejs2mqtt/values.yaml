@@ -1,6 +1,6 @@
 storage:
   config:
-    storageClassName: local-path
+    storageClassName: synology-iscsi
 
 app-template:
   controllers:
