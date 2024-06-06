@@ -31,9 +31,9 @@ app-template:
 
           resources:
             requests:
-              squat.io/zwave: 1
+              squat.ai/zwave: 1
             limits:
-              squat.io/zwave: 1
+              squat.ai/zwave: 1
 
   serviceAccount:
     name: zwavejs2mqtt-sa
