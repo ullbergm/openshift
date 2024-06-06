@@ -43,7 +43,7 @@ spec:
         - name: application.description
           value: "Home Automation"
         - name: app-template.service.main.ports.http.port
-          value: '3000'
+          value: '8091'
 
         - name: app-template.serviceAccount.name
           value: zwavejs2mqtt-sa
