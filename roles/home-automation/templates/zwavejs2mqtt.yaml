@@ -44,6 +44,8 @@ spec:
           value: "Home Automation"
         - name: app-template.service.main.ports.http.port
           value: '8091'
+        - name: app-template.controllers.main.containers.main.env.TZ
+          value: America/New_York
 
         - name: app-template.serviceAccount.name
           value: zwavejs2mqtt-sa
