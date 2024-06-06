@@ -48,6 +48,11 @@ app-template:
       ports:
         http:
           port: 8091
+    ws:
+      controller: main
+      ports:
+        tcp:
+          port: 3000
 
   defaultPodOptions:
     labels:
