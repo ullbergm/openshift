@@ -45,27 +45,13 @@ spec:
         - name: app-template.service.main.ports.http.port
           value: '3000'
 
-        # renovate custom-docker
-        - name: app-template.controllers.main.containers.main.image.repository
-          value: ghcr.io/home-assistant/home-assistant
-        - name: app-template.controllers.main.containers.main.image.tag
-          value: 2024.6.0
-        - name: app-template.controllers.main.containers.main.image.pullPolicy
-          value: IfNotPresent
-        - name: app-template.controllers.main.containers.main.env.TZ
-          value: America/New_York
-
         - name: app-template.serviceAccount.name
-          value: homeassistant-sa
+          value: zwavejs2mqtt-sa
         - name: app-template.persistence.data.existingClaim
-          value: home-assistant-data-volume
+          value: zwavejs2mqtt-data-volume
         - name: app-template.persistence.config.existingClaim
           value: home-assistant-config
 
-        - name: app-template.defaultPodOptions.labels.app
-          value: home-assistant
-        - name: app-template.defaultPodOptions.labels.version
-          value: 0.45.22
 
   syncPolicy:
     automated:
