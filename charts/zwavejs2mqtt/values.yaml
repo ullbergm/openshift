@@ -56,6 +56,7 @@ app-template:
       existingClaim: zwavejs2mqtt-config-pvc
       globalMounts:
         - path: /usr/src/app/store
+      storageClassName: synology-iscsi
 
     dev:
       enabled: true
