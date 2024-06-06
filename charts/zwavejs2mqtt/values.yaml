@@ -1,0 +1,63 @@
+app-template:
+  controllers:
+    main:
+      type: statefulset
+      replicas: 1
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+      containers:
+        main:
+          image:
+            # renovate: docker-image
+            repository: ghcr.io/zwave-js/zwave-js-ui
+            tag: 9.13.4
+            pullPolicy: Always
+          env:
+            TZ: TIMEZONE
+          probes:
+            startup:
+              enabled: true
+            readiness:
+              enabled: true
+            liveness:
+              enabled: true
+
+            resources:
+              requests:
+                squat.io/zwave: 1
+              limits:
+                squat.io/zwave: 1
+
+  serviceAccount:
+    name: zwavejs2mqtt-sa
+
+  service:
+    main:
+      controller: main
+      ports:
+        http:
+          port: 3000
+
+  defaultPodOptions:
+    labels:
+      app: zwavejs2mqtt
+      version: 1.0.0
+    securityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
+      fsGroupChangePolicy: "OnRootMismatch"
+
+  persistence:
+    config:
+      existingClaim: zwavejs2mqtt-config-pvc
+      globalMounts:
+        - path: /usr/src/app/store
+
+    dev:
+      enabled: true
+      hostPath: /dev
+      type: hostPath

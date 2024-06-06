@@ -1,0 +1,23 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: "hajimari-application-menu-link"
+spec:
+  href: https://apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  location: ApplicationMenu
+  applicationMenu:
+    section: Infrastructure
+    imageURL: https://hajimari.io/assets/logo.png
+  text: "Hajimari"
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: "hajimari-namespace-dashboard-link"
+spec:
+  href: https://apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  location: NamespaceDashboard
+  namespaceDashboard:
+    namespaces:
+      - hajimari
+  text: 'Access Application'
