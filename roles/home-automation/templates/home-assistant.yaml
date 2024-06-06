@@ -45,11 +45,11 @@ spec:
         - name: app-template.service.main.ports.http.port
           value: '8123'
 
-        # renovate custom-docker versioning=loose
+        # renovate custom-docker
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/home-assistant/home-assistant
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 2024.7.0.dev202406060218
+          value: 2024.5.5@sha256:7c9514d573dddae6eaa0ec452e70f52a3e789cb6f348cb69d4fecc2bfa3dc10e
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
