@@ -2,7 +2,7 @@ app-template:
   securityContext:
     privileged: true
   controllers:
-    main315:
+    app:
       type: daemonset
       labels:
         app: generic-device-plugin
@@ -33,6 +33,7 @@ app-template:
                   - usb:
                     - vendor: 0bda
                       product: 2838
+
   serviceAccount:
     name: generic-device-plugin-sa
 
@@ -41,3 +42,14 @@ app-template:
       runAsUser: 0
       runAsGroup: 0
       fsGroup: 0
+
+  persistence:
+    dev:
+      enabled: true
+      hostPath: /dev
+      type: hostPath
+
+    device-plugin:
+      enabled: true
+      hostPath: /var/lib/kubelet/device-plugins
+      type: hostPath
