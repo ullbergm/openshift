@@ -35,7 +35,7 @@ spec:
         - name: application.name
           value: changedetection
         - name: application.group
-          value: Automation
+          value: Utilities
         - name: application.icon
           value: magnify
         - name: application.image
