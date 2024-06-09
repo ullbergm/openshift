@@ -8,7 +8,7 @@ rules:
   resources: ["ingresses", "namespaces", "endpointslices", "routes"]
   verbs: ["get", "list"]
 - apiGroups: ["hajimari.io"]
-  resources: ["applications"]
+  resources: ["applications", "bookmarks"]
   verbs: ["get", "list"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1

@@ -25,7 +25,7 @@ spec:
         - name: app-template.controllers.main.containers.main.env.TZ
           value: {{ .Values.cluster.timezone }}
         - name: app-template.controllers.main.containers.main.env.LOG_LEVEL
-          value: DEBUG
+          value: INFO
   syncPolicy:
     automated:
       prune: true
