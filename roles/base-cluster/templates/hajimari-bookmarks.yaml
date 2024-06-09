@@ -1,0 +1,89 @@
+# - name: hajimari.globalBookmarks[0].group
+#   value: "Communication"
+# - name: hajimari.globalBookmarks[0].bookmarks[0].name
+#   value: "Zoho Mail"
+# - name: hajimari.globalBookmarks[0].bookmarks[0].url
+#   value: "https://mail.zoho.com/"
+# - name: hajimari.globalBookmarks[0].bookmarks[1].name
+#   value: "Reddit"
+# - name: hajimari.globalBookmarks[0].bookmarks[1].url
+#   value: "https://old.reddit.com/"
+# - name: hajimari.globalBookmarks[1].group
+#   value: "Media"
+# - name: hajimari.globalBookmarks[1].bookmarks[0].name
+#   value: "Netflix"
+# - name: hajimari.globalBookmarks[1].bookmarks[0].url
+#   value: "https://netflix.com/"
+# - name: hajimari.globalBookmarks[1].bookmarks[1].name
+#   value: "Amazon Video"
+# - name: hajimari.globalBookmarks[1].bookmarks[1].url
+#   value: "https://www.amazon.com/gp/video/storefront/"
+# - name: hajimari.globalBookmarks[1].bookmarks[2].name
+#   value: "Youtube"
+# - name: hajimari.globalBookmarks[1].bookmarks[2].url
+#   value: "https://youtube.com/feed/subscriptions"
+# - name: hajimari.globalBookmarks[1].bookmarks[3].name
+#   value: "Spotify"
+# - name: hajimari.globalBookmarks[1].bookmarks[3].url
+#   value: "https://browse.spotify.com/"
+# - name: hajimari.globalBookmarks[2].group
+#   value: "3d Printing"
+# - name: hajimari.globalBookmarks[2].bookmarks[0].name
+#   value: "Makerworld"
+# - name: hajimari.globalBookmarks[2].bookmarks[0].url
+#   value: "https://makerworld.com/"
+# - name: hajimari.globalBookmarks[2].bookmarks[1].name
+#   value: "Printables"
+# - name: hajimari.globalBookmarks[2].bookmarks[1].url
+#   value: "https://printables.com/"
+# - name: hajimari.globalBookmarks[2].bookmarks[2].name
+#   value: "Thingiverse"
+# - name: hajimari.globalBookmarks[2].bookmarks[2].url
+#   value: "https://thingiverse.com/"
+# - name: hajimari.globalBookmarks[2].bookmarks[3].name
+#   value: "Thangs"
+# - name: hajimari.globalBookmarks[2].bookmarks[3].url
+#   value: "https://thangs.com/"
+# - name: hajimari.globalBookmarks[3].group
+#   value: "Business"
+# - name: hajimari.globalBookmarks[3].bookmarks[0].name
+#   value: "LinkedIn"
+# - name: hajimari.globalBookmarks[3].bookmarks[0].url
+#   value: "https://linkedin.com/"
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Bookmark
+metadata:
+  name: zoho
+  namespace: hajimari
+spec:
+  name: ZoHo Mail
+  group: Communication
+  icon: letter
+  url: https://mail.zoho.com/
+  info: ZoHo E-Mail
+  location: 100
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Bookmark
+metadata:
+  name: reddit
+  namespace: hajimari
+spec:
+  name: Reddit
+  group: Communication
+  icon: letter
+  url: https://old.reddit.com/
+  info: Social Media
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Bookmark
+metadata:
+  name: linkedin
+  namespace: hajimari
+spec:
+  name: LinkedIn
+  group: Business
+  icon: simple-icons:linkedin
+  url: https://linkedin.com/
+  info: Business Networking
