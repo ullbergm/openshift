@@ -7,7 +7,7 @@ metadata:
 spec:
   name: ZoHo Mail
   group: Communication
-  icon: mail
+  icon: mdi:mail
   url: https://mail.zoho.com/
   info: ZoHo E-Mail
   location: 100
@@ -92,7 +92,7 @@ metadata:
 spec:
   name: Makerworld
   group: 3D Printing
-  icon: printer-3d
+  icon: mdi:printer-3d
   url: https://makerworld.com/
   info: 3D Printing Community
 ---
