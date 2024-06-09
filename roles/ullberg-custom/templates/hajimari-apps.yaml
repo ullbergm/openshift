@@ -45,42 +45,42 @@ spec:
   icon: arcticons:unifi-network
   url: http://unifi.{{ .Values.cluster.top_level_domain }}:8443
   info: Manage WIFI 
----
-apiVersion: hajimari.io/v1alpha1
-kind: Application
-metadata:
-  name: firewall
-  namespace: hajimari
-spec:
-  name: Router
-  group: Infrastructure
-  icon: router-network
-  url: http://firewall.{{ .Values.cluster.top_level_domain }}
-  info: Manage firewall
----
-apiVersion: hajimari.io/v1alpha1
-kind: Application
-metadata:
-  name: switch
-  namespace: hajimari
-spec:
-  name: Main switch
-  group: Infrastructure
-  icon: material-symbols:switch
-  url: http://switch.{{ .Values.cluster.top_level_domain }}
-  info: Manage switch
----
-apiVersion: hajimari.io/v1alpha1
-kind: Application
-metadata:
-  name: poe-switch
-  namespace: hajimari
-spec:
-  name: PoE switch
-  group: Infrastructure
-  icon: material-symbols:switch
-  url: http://poe-switch.{{ .Values.cluster.top_level_domain }}
-  info: Manage switch
+# ---
+# apiVersion: hajimari.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: firewall
+#   namespace: hajimari
+# spec:
+#   name: Router
+#   group: Infrastructure
+#   icon: router-network
+#   url: http://firewall.{{ .Values.cluster.top_level_domain }}
+#   info: Manage firewall
+# ---
+# apiVersion: hajimari.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: switch
+#   namespace: hajimari
+# spec:
+#   name: Main switch
+#   group: Infrastructure
+#   icon: material-symbols:switch
+#   url: http://switch.{{ .Values.cluster.top_level_domain }}
+#   info: Manage switch
+# ---
+# apiVersion: hajimari.io/v1alpha1
+# kind: Application
+# metadata:
+#   name: poe-switch
+#   namespace: hajimari
+# spec:
+#   name: PoE switch
+#   group: Infrastructure
+#   icon: material-symbols:switch
+#   url: http://poe-switch.{{ .Values.cluster.top_level_domain }}
+#   info: Manage switch
 ---
 apiVersion: hajimari.io/v1alpha1
 kind: Application
