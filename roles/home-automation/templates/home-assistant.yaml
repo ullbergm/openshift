@@ -39,7 +39,7 @@ spec:
         - name: application.icon
           value: mdi:home-assistant
         - name: application.iconColor
-          value: blue
+          value: skyblue
         - name: application.image
           value: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Home_Assistant_Logo.svg'
         - name: application.description
