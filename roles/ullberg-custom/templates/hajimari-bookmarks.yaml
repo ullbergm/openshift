@@ -1,55 +1,3 @@
-# - name: hajimari.globalBookmarks[0].group
-#   value: "Communication"
-# - name: hajimari.globalBookmarks[0].bookmarks[0].name
-#   value: "Zoho Mail"
-# - name: hajimari.globalBookmarks[0].bookmarks[0].url
-#   value: "https://mail.zoho.com/"
-# - name: hajimari.globalBookmarks[0].bookmarks[1].name
-#   value: "Reddit"
-# - name: hajimari.globalBookmarks[0].bookmarks[1].url
-#   value: "https://old.reddit.com/"
-# - name: hajimari.globalBookmarks[1].group
-#   value: "Media"
-# - name: hajimari.globalBookmarks[1].bookmarks[0].name
-#   value: "Netflix"
-# - name: hajimari.globalBookmarks[1].bookmarks[0].url
-#   value: "https://netflix.com/"
-# - name: hajimari.globalBookmarks[1].bookmarks[1].name
-#   value: "Amazon Video"
-# - name: hajimari.globalBookmarks[1].bookmarks[1].url
-#   value: "https://www.amazon.com/gp/video/storefront/"
-# - name: hajimari.globalBookmarks[1].bookmarks[2].name
-#   value: "Youtube"
-# - name: hajimari.globalBookmarks[1].bookmarks[2].url
-#   value: "https://youtube.com/feed/subscriptions"
-# - name: hajimari.globalBookmarks[1].bookmarks[3].name
-#   value: "Spotify"
-# - name: hajimari.globalBookmarks[1].bookmarks[3].url
-#   value: "https://browse.spotify.com/"
-# - name: hajimari.globalBookmarks[2].group
-#   value: "3d Printing"
-# - name: hajimari.globalBookmarks[2].bookmarks[0].name
-#   value: "Makerworld"
-# - name: hajimari.globalBookmarks[2].bookmarks[0].url
-#   value: "https://makerworld.com/"
-# - name: hajimari.globalBookmarks[2].bookmarks[1].name
-#   value: "Printables"
-# - name: hajimari.globalBookmarks[2].bookmarks[1].url
-#   value: "https://printables.com/"
-# - name: hajimari.globalBookmarks[2].bookmarks[2].name
-#   value: "Thingiverse"
-# - name: hajimari.globalBookmarks[2].bookmarks[2].url
-#   value: "https://thingiverse.com/"
-# - name: hajimari.globalBookmarks[2].bookmarks[3].name
-#   value: "Thangs"
-# - name: hajimari.globalBookmarks[2].bookmarks[3].url
-#   value: "https://thangs.com/"
-# - name: hajimari.globalBookmarks[3].group
-#   value: "Business"
-# - name: hajimari.globalBookmarks[3].bookmarks[0].name
-#   value: "LinkedIn"
-# - name: hajimari.globalBookmarks[3].bookmarks[0].url
-#   value: "https://linkedin.com/"
 ---
 apiVersion: hajimari.io/v1alpha1
 kind: Bookmark
@@ -87,3 +35,87 @@ spec:
   icon: simple-icons:linkedin
   url: https://linkedin.com/
   info: Business Networking
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Bookmark
+metadata:
+  name: netflix
+  namespace: hajimari
+spec:
+  name: Netflix
+  group: Entertainment
+  icon: simple-icons:netflix
+  url: https://netflix.com/
+  info: Streaming
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Bookmark
+metadata:
+  name: amazon-video
+  namespace: hajimari
+spec:
+  name: Amazon Video
+  group: Entertainment
+  icon: simple-icons:amazonprimevideo
+  url: https://www.amazon.com/gp/video/storefront/
+  info: Streaming
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Bookmark
+metadata:
+  name: youtube
+  namespace: hajimari
+spec:
+  name: Youtube
+  group: Entertainment
+  icon: simple-icons:youtube
+  url: https://youtube.com/feed/subscriptions
+  info: Streaming
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Bookmark
+metadata:
+  name: spotify
+  namespace: hajimari
+spec:
+  name: Spotify
+  group: Entertainment
+  icon: simple-icons:spotify
+  url: https://browse.spotify.com/
+  info: Music Streaming
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Bookmark
+metadata:
+  name: makerworld
+  namespace: hajimari
+spec:
+  name: Makerworld
+  group: 3D Printing
+  icon: simple-icons:makerworld
+  url: https://makerworld.com/
+  info: 3D Printing Community
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Bookmark
+metadata:
+  name: printables
+  namespace: hajimari
+spec:
+  name: Printables
+  group: 3D Printing
+  icon: simple-icons:printables
+  url: https://printables.com/
+  info: 3D Printing Community
+---
+apiVersion: hajimari.io/v1alpha1
+kind: Bookmark
+metadata:
+  name: thingiverse
+  namespace: hajimari
+spec:
+  name: Thingiverse
+  group: 3D Printing
+  icon: simple-icons:thingiverse
+  url: https://thingiverse.com/
+  info: 3D Printing Community
