@@ -6,6 +6,7 @@ spec:
   name: {{ tpl .Values.application.name . }}
   group: "{{ .Values.application.group }}"
   icon: "{{ .Values.application.icon }}"
+  iconColor: "{{ .Values.application.iconColor }}"
   url: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   info: "{{ .Values.application.description }}"
   location: {{ .Values.application.location }}

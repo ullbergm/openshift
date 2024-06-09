@@ -7,6 +7,7 @@ spec:
   name: OpenShift
   group: Infrastructure
   icon: simple-icons:redhatopenshift
+  iconColor: "red"
   url: http://console-openshift-console.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}/dashboards
   info: OpenShift console
   location: 100

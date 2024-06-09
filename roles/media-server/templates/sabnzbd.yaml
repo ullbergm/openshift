@@ -39,6 +39,8 @@ spec:
           value: Media
         - name: application.icon
           value: download-box
+        - name: application.iconColor
+          value: orange
         - name: application.image
           value: 'https://raw.githubusercontent.com/sabnzbd/sabnzbd/develop/icons/logo-arrow.svg'
         - name: application.description
