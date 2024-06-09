@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/part-of: clusterplex
 spec:
   serviceName: clusterplex-worker-service
-  replicas: 2
+  replicas: 0
   selector:
     matchLabels:
       app.kubernetes.io/name: clusterplex-worker
@@ -76,11 +76,10 @@ spec:
           requests:
             cpu: 500m
             memory: 200Mi
-#            gpu.intel.com/i915: 1
+            gpu.intel.com/i915: 1
           limits:
             cpu: 3000m
             memory: 800Mi
-#            gpu.intel.com/i915: 1
       volumes:
       - name: data
         persistentVolumeClaim:
