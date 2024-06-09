@@ -7,7 +7,7 @@ metadata:
 spec:
   name: ZoHo Mail
   group: Communication
-  icon: letter
+  icon: email
   url: https://mail.zoho.com/
   info: ZoHo E-Mail
   location: 100
@@ -20,7 +20,7 @@ metadata:
 spec:
   name: Reddit
   group: Communication
-  icon: letter
+  icon: simple-icons:reddit
   url: https://old.reddit.com/
   info: Social Media
 ---
@@ -56,7 +56,7 @@ metadata:
 spec:
   name: Amazon Video
   group: Entertainment
-  icon: simple-icons:amazonprimevideo
+  icon: simple-icons:amazonprime
   url: https://www.amazon.com/gp/video/storefront/
   info: Streaming
 ---
@@ -92,7 +92,7 @@ metadata:
 spec:
   name: Makerworld
   group: 3D Printing
-  icon: simple-icons:makerworld
+  icon: printer-3d
   url: https://makerworld.com/
   info: 3D Printing Community
 ---
