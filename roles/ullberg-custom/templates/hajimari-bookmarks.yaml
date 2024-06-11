@@ -56,7 +56,7 @@ metadata:
 spec:
   name: Amazon Video
   group: Entertainment
-  icon: simple-icons:amazonprime
+  icon: simple-icons:amazon
   url: https://www.amazon.com/gp/video/storefront/
   info: Streaming
 ---
