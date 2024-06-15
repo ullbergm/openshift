@@ -28,7 +28,6 @@ spec:
               username: {{ index .Values "synology-csi" "clientInfoSecret" "username" }}  # the name of the dedicated CSI user
           # Whether to create the secret if the chart gets installed or not; ignored on updates.
           create: true
-          # Defaults to {{ include "synology-csi.fullname" $ }}-client-info if empty or not present:
           name: "client-info-secret"
         # Specifies affinity, nodeSelector and tolerations for the controller StatefulSet
         controller:
