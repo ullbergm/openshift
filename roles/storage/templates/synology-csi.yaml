@@ -93,6 +93,7 @@ spec:
               dsm: "{{ index .Values "synology-csi" "dsm" }}"
               fsType: {{ index .Values "synology-csi" "fstype" }}
               location: /{{ index .Values "synology-csi" "volume" }}
+              type: thin
           # synology-iscsi-storage-delete:
           #   reclaimPolicy: Delete
         volumeSnapshotClasses:
