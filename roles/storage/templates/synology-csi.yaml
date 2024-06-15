@@ -1,0 +1,117 @@
+{{- if ({{ index .Values "synology-csi" "enabled") }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: synology-csi
+  namespace: synology-csi
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: synology-csi
+    server: {{ .Values.spec.destination.server }}
+  project: default
+  source:
+    path: charts/synology-csi/deploy/helm
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    helm:
+      values: |
+        ---
+        clientInfoSecret:
+          # How to connect to your Synology Diskstation?
+          clients:
+            - host: {{ index .Values "synology-csi" "clientInfoSecret" "host" }}   # the IP address of the Diskstation
+              https: {{ index .Values "synology-csi" "clientInfoSecret" "https" }}        # whether the port expects HTTPS or not
+              password: {{ index .Values "synology-csi" "clientInfoSecret" "password" }}  # the password of the dedicated CSI user
+              port: {{ index .Values "synology-csi" "clientInfoSecret" "port" }}          # the port for connecting to the Diskstation Manager application
+              username: {{ index .Values "synology-csi" "clientInfoSecret" "username" }}  # the name of the dedicated CSI user
+          # Whether to create the secret if the chart gets installed or not; ignored on updates.
+          create: true
+          # Defaults to {{ include "synology-csi.fullname" $ }}-client-info if empty or not present:
+          name: "client-info-secret"
+        # Specifies affinity, nodeSelector and tolerations for the controller StatefulSet
+        controller:
+          affinity: { }
+          nodeSelector: { }
+          tolerations: [ ]
+        fullnameOverride: ""
+        images:
+          attacher:
+            image: registry.k8s.io/sig-storage/csi-attacher
+            pullPolicy: IfNotPresent
+            tag: v4.2.0
+          nodeDriverRegistrar:
+            image: registry.k8s.io/sig-storage/csi-node-driver-registrar
+            pullPolicy: IfNotPresent
+            tag: v2.6.3
+          plugin:
+            image: synology/synology-csi
+            pullPolicy: IfNotPresent
+            # Defaults to {{ $.Chart.AppVersion }} if empty or not present:
+            tag: ""
+          provisioner:
+            image: registry.k8s.io/sig-storage/csi-provisioner
+            pullPolicy: IfNotPresent
+            tag: v3.4.0
+          resizer:
+            image: registry.k8s.io/sig-storage/csi-resizer
+            pullPolicy: IfNotPresent
+            tag: v1.7.0
+          snapshotter:
+            image: registry.k8s.io/sig-storage/csi-snapshotter
+            pullPolicy: IfNotPresent
+            tag: v4.2.1
+        installCSIDriver: true
+        nameOverride: "synology-csi"
+        # Specifies affinity, nodeSelector and tolerations for the node DaemonSet
+        node:
+          affinity: { }
+          nodeSelector: { }
+          tolerations: [ ]
+          # If your kubelet path is not standard, specify it here :
+          ## example for miocrok8s distrib : /var/snap/microk8s/common/var/lib/kubelet
+          kubeletPath: /var/lib/kubelet
+        # Specifies affinity, nodeSelector and tolerations for the snapshotter StatefulSet
+        snapshotter:
+          affinity: { }
+          nodeSelector: { }
+          tolerations: [ ]
+        storageClasses:
+          synology-iscsi-storage:
+            # One of true or false (default):
+            disabled: false
+            # One of true or false (default):
+            isDefault: {{ index .Values "synology-csi" "default" }}
+            # One of "Retain" or "Delete" (default):
+            reclaimPolicy: Retain
+            # One of "WaitForFirstConsumer" or "Immediate" (default):
+            ##volumeBindingMode: Immediate
+
+            # If not present, some location will be chosen to create volumes with the filesystem type ext4.
+            # Note that these parameters cannot get updated once deployed - any subsequent changes get ignored!
+            parameters:
+              dsm: "{{ index .Values "synology-csi" "dsm" }}"
+              fsType: {{ index .Values "synology-csi" "fstype" }}
+              location: /{{ index .Values "synology-csi" "volume" }}
+          # synology-iscsi-storage-delete:
+          #   reclaimPolicy: Delete
+        volumeSnapshotClasses:
+          synology-snapshotclass:
+            # One of true or false (default):
+            disabled: false
+            # One of "Retain" or "Delete" (default):
+            deletionPolicy: Delete
+            # One of true or false (default):
+            isDefault: false
+
+            # Note that these parameters cannot get updated once deployed - any subsequent changes get ignored!
+            ##parameters:
+            ##  description: "Kubernetes CSI"
+            ##  is_locked: "false"
+  syncPolicy:
+    automated:
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+{{- end }}

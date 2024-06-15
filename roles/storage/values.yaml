@@ -1,0 +1,36 @@
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+  source:
+    repoURL: YOUR_REPO_URL
+    targetRevision: HEAD
+
+cluster:
+  top_level_domain: example.com
+  name: my-cluster
+  admin_email: YOUR_EMAIL
+  timezone: YOUR_TIMEZONE
+
+democratic-csi:
+  enabled: false
+  driver:
+    config:
+      httpConnection:
+        host: my-nas
+        password: my-password
+        username: my-username
+      iscsi:
+        targetPortal: 'my-server[:port]'
+
+synology-csi:
+  enabled: true
+  default: false
+  dsm: 10.0.0.10
+  volume: volume1
+  fstype: ext4
+  clientInfoSecret:
+    host: my-nas
+    https: false
+    password: my-password
+    port: 5000
+    username: my-username

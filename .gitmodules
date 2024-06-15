@@ -1,0 +1,3 @@
+[submodule "charts/synology-csi"]
+	path = charts/synology-csi
+	url = https://github.com/SynologyOpenSource/synology-csi
