@@ -35,7 +35,7 @@ spec:
           affinity: { }
           nodeSelector: { }
           tolerations: [ ]
-        fullnameOverride: ""
+        fullnameOverride: "synology-csi"
         images:
           attacher:
             image: registry.k8s.io/sig-storage/csi-attacher
