@@ -17,6 +17,8 @@ allowHostNetwork: true
 allowHostPorts: true
 allowHostDirVolumePlugin: true
 allowPrivilegeEscalation: true
+allowedCapabilities:
+- SYS_ADMIN
 users:
 - system:serviceaccount:synology-csi:synology-csi-controller
 - system:serviceaccount:synology-csi:synology-csi-snapshotter
