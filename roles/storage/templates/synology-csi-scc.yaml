@@ -22,4 +22,5 @@ allowedCapabilities:
 users:
 - system:serviceaccount:synology-csi:synology-csi-controller
 - system:serviceaccount:synology-csi:synology-csi-snapshotter
+- system:serviceaccount:synology-csi:synology-csi-node
 {{- end }}
