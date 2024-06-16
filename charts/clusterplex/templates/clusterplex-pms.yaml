@@ -40,7 +40,8 @@ spec:
         runAsGroup: 0
       containers:
       - name: plex
-        image: lscr.io/linuxserver/plex:latest
+        # renovate: docker-image
+        image: lscr.io/linuxserver/plex:1.40.3
         startupProbe:
           httpGet:
             path: /identity

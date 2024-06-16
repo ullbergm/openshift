@@ -20,7 +20,8 @@ spec:
     spec:
       containers:
       - name: plex
-        image: ghcr.io/pabloromeo/clusterplex_orchestrator:latest
+        # renovate: docker-image
+        image: ghcr.io/pabloromeo/clusterplex_orchestrator:1.4.11
         startupProbe:
           httpGet:
             path: /health
