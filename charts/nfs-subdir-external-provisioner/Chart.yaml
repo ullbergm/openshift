@@ -1,0 +1,13 @@
+---
+apiVersion: v2
+description: A Helm chart to install the nfs-subdir-external-provisioner.
+name: nfs-subdir-external-provisioner
+version: 0.1.0
+kubeVersion: ">=1.22.0-0"
+maintainers:
+  - name: Magnus Ullberg
+    email: magnus@ullberg.us
+dependencies:
+- name: nfs-subdir-external-provisioner
+  version: "4.0.18"
+  repository: "https://kubernetes-sigs.github.io/nfs-subdir-external-provisioner/"

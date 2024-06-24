@@ -29,6 +29,11 @@ democratic-csi:
       iscsi:
         targetPortal: 'my-server[:port]'
 
+nfs-subdir-external-provisioner:
+  nfs:
+    server: my-nas
+    path: /my/pvcs
+
 backup:
   nfs:
     server: my-nas

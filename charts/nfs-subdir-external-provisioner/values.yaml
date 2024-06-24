@@ -1,0 +1,24 @@
+nfs-subdir-external-provisioner:
+  image:
+    repository: registry.k8s.io/sig-storage/nfs-subdir-external-provisioner
+    tag: v4.0.2
+    pullPolicy: IfNotPresent
+
+  nfs:
+    server: my-nfs
+    path: /nfs/pvc
+    mountOptions:
+      - noatime
+      - nodiratime
+      - nfsvers=4.2
+      - rsize=1048576
+      - wsize=1048576
+      - hard
+      - tcp
+      - nconnect=8
+  storageClass:
+    reclaimPolicy: Delete
+    accessModes: ReadWriteMany
+    defaultClass: false
+    name: nfs-storage
+    pathPattern: "${.PVC.namespace}-${.PVC.name}"
