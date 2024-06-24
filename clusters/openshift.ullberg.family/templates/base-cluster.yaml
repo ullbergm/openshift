@@ -59,6 +59,12 @@ spec:
           value: {{ .Values.backup.nfs.server }}
         - name: backup.nfs.path
           value: {{ .Values.backup.nfs.path }}
+          
+        {{ $nfs := index .Values "nfs-subdir-external-provisioner" }}
+        - name: $nfs.nfs.server
+          value: {{ .Values.backup.nfs.server }}
+        - name: $nfs.nfs.path
+          value: {{ .Values.backup.nfs.path }}
 
         - name: network.lan.defaultGW
           value: {{ .Values.network.lan.defaultGW }}
