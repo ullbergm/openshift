@@ -2,7 +2,7 @@ apiVersion: hajimari.io/v1alpha1
 kind: Application
 metadata:
   name: openshift
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: OpenShift
   group: Infrastructure
@@ -16,7 +16,7 @@ apiVersion: hajimari.io/v1alpha1
 kind: Application
 metadata:
   name: github
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: GitHub Repo
   group: Infrastructure
@@ -28,7 +28,7 @@ apiVersion: hajimari.io/v1alpha1
 kind: Application
 metadata:
   name: gitops
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: GitOps
   group: Infrastructure
