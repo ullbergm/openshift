@@ -1,4 +1,4 @@
-apiVersion: hajimari.io/v1alpha1
+apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Application
 metadata:
   name: nas
@@ -10,7 +10,7 @@ spec:
   url: http://nas.{{ .Values.cluster.top_level_domain }}
   info: Storage
 ---
-apiVersion: hajimari.io/v1alpha1
+apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Application
 metadata:
   name: old-homeassistant
@@ -22,7 +22,7 @@ spec:
   url: http://homeassistant.{{ .Values.cluster.top_level_domain }}:8123
   info: Home automation
 ---
-apiVersion: hajimari.io/v1alpha1
+apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Application
 metadata:
   name: valetudo
@@ -34,7 +34,7 @@ spec:
   url: http://valetudo.{{ .Values.cluster.top_level_domain }}
   info: Home automation
 ---
-apiVersion: hajimari.io/v1alpha1
+apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Application
 metadata:
   name: unifi
@@ -46,7 +46,7 @@ spec:
   url: http://unifi.{{ .Values.cluster.top_level_domain }}:8443
   info: Manage WIFI 
 # ---
-# apiVersion: hajimari.io/v1alpha1
+# apiVersion: startpunkt.ullberg.us/v1alpha1
 # kind: Application
 # metadata:
 #   name: firewall
@@ -58,7 +58,7 @@ spec:
 #   url: http://firewall.{{ .Values.cluster.top_level_domain }}
 #   info: Manage firewall
 # ---
-# apiVersion: hajimari.io/v1alpha1
+# apiVersion: startpunkt.ullberg.us/v1alpha1
 # kind: Application
 # metadata:
 #   name: switch
@@ -70,7 +70,7 @@ spec:
 #   url: http://switch.{{ .Values.cluster.top_level_domain }}
 #   info: Manage switch
 # ---
-# apiVersion: hajimari.io/v1alpha1
+# apiVersion: startpunkt.ullberg.us/v1alpha1
 # kind: Application
 # metadata:
 #   name: poe-switch
@@ -82,7 +82,7 @@ spec:
 #   url: http://poe-switch.{{ .Values.cluster.top_level_domain }}
 #   info: Manage switch
 ---
-apiVersion: hajimari.io/v1alpha1
+apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Application
 metadata:
   name: artifactory

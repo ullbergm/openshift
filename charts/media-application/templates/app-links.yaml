@@ -1,4 +1,4 @@
-apiVersion: hajimari.io/v1alpha1
+apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Application
 metadata:
   name: {{ .Release.Name }}

@@ -1,5 +1,5 @@
 ---
-apiVersion: hajimari.io/v1alpha1
+apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: zoho
@@ -12,7 +12,7 @@ spec:
   info: ZoHo E-Mail
   location: 100
 ---
-apiVersion: hajimari.io/v1alpha1
+apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: reddit
@@ -24,7 +24,7 @@ spec:
   url: https://old.reddit.com/
   info: Social Media
 ---
-apiVersion: hajimari.io/v1alpha1
+apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: linkedin
@@ -36,7 +36,7 @@ spec:
   url: https://linkedin.com/
   info: Business Networking
 ---
-apiVersion: hajimari.io/v1alpha1
+apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: netflix
@@ -48,7 +48,7 @@ spec:
   url: https://netflix.com/
   info: Streaming
 ---
-apiVersion: hajimari.io/v1alpha1
+apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: amazon-video
@@ -60,7 +60,7 @@ spec:
   url: https://www.amazon.com/gp/video/storefront/
   info: Streaming
 ---
-apiVersion: hajimari.io/v1alpha1
+apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: youtube
@@ -72,7 +72,7 @@ spec:
   url: https://youtube.com/feed/subscriptions
   info: Streaming
 ---
-apiVersion: hajimari.io/v1alpha1
+apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: spotify
@@ -84,7 +84,7 @@ spec:
   url: https://browse.spotify.com/
   info: Music Streaming
 ---
-apiVersion: hajimari.io/v1alpha1
+apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: makerworld
@@ -96,7 +96,7 @@ spec:
   url: https://makerworld.com/
   info: 3D Printing Community
 ---
-apiVersion: hajimari.io/v1alpha1
+apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: printables
@@ -108,7 +108,7 @@ spec:
   url: https://printables.com/
   info: 3D Printing Community
 ---
-apiVersion: hajimari.io/v1alpha1
+apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: thingiverse
