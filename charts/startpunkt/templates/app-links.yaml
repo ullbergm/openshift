@@ -1,0 +1,23 @@
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: "startpunkt-application-menu-link"
+spec:
+  href: https://apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  location: ApplicationMenu
+  applicationMenu:
+    section: Infrastructure
+    imageURL: https://hajimari.io/assets/logo.png
+  text: "Startpunkt"
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: "startpunkt-namespace-dashboard-link"
+spec:
+  href: https://apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  location: NamespaceDashboard
+  namespaceDashboard:
+    namespaces:
+      - startpunkt
+  text: 'Access Application'

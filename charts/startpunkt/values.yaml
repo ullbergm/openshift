@@ -1,0 +1,51 @@
+app-template:
+  controllers:
+    main:
+      type: deployment
+      replicas: 3
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+      containers:
+        main:
+          image:
+            # renovate: docker-image
+            repository: ghcr.io/ullbergm/startpunkt
+            tag: v0.4.1
+            pullPolicy: Always
+          env:
+            TZ: TIMEZONE
+          probes:
+            startup:
+              enabled: true
+            readiness:
+              enabled: true
+            liveness:
+              enabled: true
+
+  serviceAccount:
+    name: startpunkt-sa
+
+  service:
+    main:
+      controller: main
+      ports:
+        http:
+          port: 8080
+
+  defaultPodOptions:
+    labels:
+      app: startpunkt
+      version: 1.0.0
+    securityContext:
+      runAsUser: 568
+      runAsGroup: 568
+      fsGroup: 568
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 44
+        - 109
+        - 100
+        - 65535
