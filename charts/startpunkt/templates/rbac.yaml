@@ -7,7 +7,7 @@ rules:
 - apiGroups: ["", "extensions", "networking.k8s.io", "discovery.k8s.io"]
   resources: ["ingresses", "namespaces", "endpointslices", "routes"]
   verbs: ["get", "list"]
-- apiGroups: ["startpunkt.io"]
+- apiGroups: ["hajimari.io"]
   resources: ["applications", "bookmarks"]
   verbs: ["get", "list"]
 ---
