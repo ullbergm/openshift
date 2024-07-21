@@ -49,3 +49,30 @@ app-template:
         - 109
         - 100
         - 65535
+
+  persistence:
+    config:
+      enabled: true
+      type: configMap
+      name: startpunkt-config
+      globalMounts:
+        - path: /work/application.yaml
+          subPath: application.yaml
+          readOnly: true
+
+startpunkt:
+  namespaceSelector:
+    any: true  # If true, look for resources in all namespaces
+
+  ingress:
+    enabled: false  # If true, enable the reading of ingress resources
+
+  openshift:
+    enabled: false  # If true, enable the reading of OpenShift Route resources
+
+  hajimari:
+    enabled: false  # If true, enable the reading of Hajimari Applications and Bookmarks
+
+  istio:
+    virtualservice:
+      enabled: false  # If true, enable the reading of Hajimari Applications and Bookmarks

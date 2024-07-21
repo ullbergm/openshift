@@ -26,6 +26,14 @@ spec:
           value: {{ .Values.cluster.timezone }}
         - name: app-template.controllers.main.containers.main.env.LOG_LEVEL
           value: INFO
+        - name: startpunkt.ingress.enabled
+          value: "false"
+        - name: startpunkt.openshift.enabled
+          value: "false"
+        - name: startpunkt.hajimari.enabled
+          value: "false"
+        - name: startpunkt.istio.virtualservice.enabled
+          value: "false"        
   syncPolicy:
     automated:
       prune: true
