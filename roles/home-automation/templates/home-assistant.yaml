@@ -51,7 +51,7 @@ spec:
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/home-assistant/home-assistant
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 2024.8.0
+          value: 2024.8.1
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
