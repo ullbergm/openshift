@@ -13,7 +13,7 @@ app-template:
           image:
             # renovate: docker-image
             repository: ghcr.io/ullbergm/startpunkt
-            tag: 1.0.0
+            tag: 1.0.1
             pullPolicy: Always
           env:
             TZ: TIMEZONE
