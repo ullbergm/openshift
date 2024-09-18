@@ -10,4 +10,4 @@ spec:
   storageClassName: {{ .Values.storage.data.storageClassName }}
   resources:
     requests:
-      storage: 15Gi
+      storage: 45Gi
