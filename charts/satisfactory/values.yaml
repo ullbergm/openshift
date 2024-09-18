@@ -1,0 +1,64 @@
+storage:
+  data:
+    storageClassName: synology-iscsi
+
+network:
+  satisfactory:
+    externalIP: 192.168.0.101
+    keepalivegroup: lan
+
+app-template:
+  controllers:
+    main:
+      type: statefulset
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+        app: satisfactory
+        version: 1.0.0
+      containers:
+        main:
+          image:
+            # renovate: docker-image
+            repository: wolveix/satisfactory-server
+            tag: v1.8.5
+            pullPolicy: Always
+          env:
+            TZ: TIMEZONE
+            MAXPLAYERS: 4
+            PGID: 1000
+            PUID: 1000
+            ROOTLESS: false
+            STEAMBETA: false
+          probes:
+            liveness:
+              enabled: true
+            readiness:
+              enabled: true
+            startup:
+              enabled: true
+              spec:
+                failureThreshold: 30
+                periodSeconds: 5
+  service:
+    main:
+      controller: main
+      enabled: false
+
+  serviceAccount:
+    name: satisfactory-sa
+
+  persistence:
+    data:
+      enabled: true
+      existingClaim: satisfactory-data-volume
+      globalMounts:
+        - path: /config
+
+  defaultPodOptions:
+    securityContext:
+      runAsUser: 2000
+      runAsGroup: 2000
+      fsGroup: 2000
