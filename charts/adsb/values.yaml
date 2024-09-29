@@ -34,6 +34,8 @@ app-template:
             READSB_STATS_RANGE: 'true'
             ULTRAFEEDER_CONFIG: |
               adsb,adsb-dump978-raw-output,30978,uat_in;
+              mlathub,adsb-flightaware-mlat-beast-output,30105,beast_in;
+              mlathub,adsb-planewatch-mlat-beast-output,30105,beast_in;
             # adsb,feed.adsb.fi,30004,beast_reduce_plus_out;
             # adsb,in.adsb.lol,30004,beast_reduce_plus_out;
             # adsb,feed.airplanes.live,30004,beast_reduce_plus_out;
@@ -53,10 +55,8 @@ app-template:
             # mlat,feed.radarplane.com,31090,39006;
             # mlat,dati.flyitalyadsb.com,30100,39007;
             # mlat,feed.adsbexchange.com,31090,39008;
-            # mlathub,piaware,30105,beast_in;
             # mlathub,rbfeeder,30105,beast_in;
             # mlathub,radarvirtuel,30105,beast_in;
-            # mlathub,planewatch,30105,beast_in;
             UUID: 'ULTRAFEEDER_UUID'
             MLAT_USER: 'FEEDER_NAME'
             READSB_FORWARD_MLAT_SBS: 'true'
@@ -143,24 +143,29 @@ app-template:
             TZ: America/New_York
             API_KEY: 'APIKEY'
 
-    # flightaware:
-    #   type: statefulset
-    #   strategy: RollingUpdate
-    #   annotations:
-    #     reloader.stakater.com/auto: "true"
-    #   labels:
-    #     kasten/backup: "true"
-    #     app: adsb
-    #     version: 1.0.0
-    #   containers:
-    #     flightaware:
-    #       securityContext:
-    #         privileged: true
-    #       image:
-    #         # renovate: docker-image versioning=loose
-    #         repository: ghcr.io/sdr-enthusiasts/docker-piaware
-    #         tag: v9.0.1
-    #         pullPolicy: Always
+    flightaware:
+      type: statefulset
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+        app: adsb
+        version: 1.0.0
+      containers:
+        flightaware:
+          securityContext:
+            privileged: true
+          image:
+            # renovate: docker-image versioning=loose
+            repository: ghcr.io/sdr-enthusiasts/docker-piaware
+            tag: v9.0.1
+            pullPolicy: Always
+          env:
+            BEASTHOST: 'adsb-ultrafeeder-beast-output'
+            FEEDER_ID: 'FEEDER_ID'
+            UAT_RECEIVER_TYPE: 'relay'
+            UAT_RECEIVER_HOST: 'adsb-dump978-raw-output'
 
     # flightradar24:
     #   type: statefulset
@@ -375,3 +380,15 @@ app-template:
       ports:
         beast-output:
           port: 37982
+
+    planewatch-mlat-beast-output:
+      controller: planewatch
+      ports:
+        mlat-beast-output:
+          port: 31005
+
+    flightaware-mlat-beast-output:
+      controller: flightaware
+      ports:
+        mlat-beast-output:
+          port: 31005
