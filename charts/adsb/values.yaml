@@ -82,6 +82,7 @@ app-template:
                squat.ai/adsb1090: '1'
             limits:
                squat.ai/adsb1090: '1'
+
     dump978:
       type: statefulset
       strategy: RollingUpdate
@@ -116,24 +117,31 @@ app-template:
             limits:
                squat.ai/adsb978: '1'
 
-    # planewatch:
-    #   type: statefulset
-    #   strategy: RollingUpdate
-    #   annotations:
-    #     reloader.stakater.com/auto: "true"
-    #   labels:
-    #     kasten/backup: "true"
-    #     app: adsb
-    #     version: 1.0.0
-    #   containers:
-    #     planewatch:
-    #       securityContext:
-    #         privileged: true
-    #       image:
-    #         # renovate: docker-image versioning=loose
-    #         repository: ghcr.io/plane-watch/docker-plane-watch
-    #         tag: v0.0.4
-    #         pullPolicy: Always
+    planewatch:
+      type: statefulset
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+        app: adsb
+        version: 1.0.0
+      containers:
+        planewatch:
+          securityContext:
+            privileged: true
+          image:
+            # renovate: docker-image versioning=loose
+            repository: ghcr.io/plane-watch/docker-plane-watch
+            tag: v0.0.4
+            pullPolicy: Always
+          env:
+          BEASTHOST: 'ultrafeeder'
+          LAT: '35'
+          LONG: '70'
+          ALT: '38m'
+          TZ: America/New_York
+          API_KEY: 'APIKEY'
 
     # flightaware:
     #   type: statefulset
