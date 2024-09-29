@@ -2,30 +2,7 @@ app-template:
   securityContext:
     privileged: true
   controllers:
-    ultrafeeder:
-      type: statefulset
-      strategy: RollingUpdate
-      annotations:
-        reloader.stakater.com/auto: "true"
-      labels:
-        kasten/backup: "true"
-        app: adsb
-        version: 1.0.0
-      containers:
-        ultrafeeder:
-          securityContext:
-            privileged: true
-          image:
-            repository: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder
-            tag: latest
-            pullPolicy: Always
-          resources:
-            requests:
-               squat.ai/adsb1090: '1'
-            limits:
-               squat.ai/adsb1090: '1'
-
-    # dump978:
+    # ultrafeeder:
     #   type: statefulset
     #   strategy: RollingUpdate
     #   annotations:
@@ -35,22 +12,60 @@ app-template:
     #     app: adsb
     #     version: 1.0.0
     #   containers:
-    #     dump978:
+    #     ultrafeeder:
     #       securityContext:
     #         privileged: true
     #       image:
-    #         repository: ghcr.io/sdr-enthusiasts/docker-dump978
+    #         repository: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder
     #         tag: latest
     #         pullPolicy: Always
     #       env:
-    #         UAT_SDR_SERIAL: '978'
-    #         UAT_SDR_GAIN: 'autogain'
+    #         LOGLEVEL: error
     #         TZ: America/New_York
+    #         READSB_DEVICE_TYPE: rtlsdr
+    #         READSB_RTLSDR_DEVICE: '1090'
+    #         READSB_RTLSDR_PPM: '10'
+    #         READSB_LAT: '35'
+    #         READSB_LON: '70'
+    #         READSB_ALT: 42m
+    #         READSB_GAIN: 'autogain'
+    #         READSB_RX_LOCATION_ACCURACY: '2'
+    #         READSB_STATS_RANGE: 'true'
     #       resources:
     #         requests:
-    #            squat.ai/adsb978: '1'
+    #            squat.ai/adsb1090: '1'
     #         limits:
-    #            squat.ai/adsb978: '1'
+    #            squat.ai/adsb1090: '1'
+
+    dump978:
+      type: statefulset
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+        app: adsb
+        version: 1.0.0
+      containers:
+        dump978:
+          securityContext:
+            privileged: true
+          image:
+            repository: ghcr.io/sdr-enthusiasts/docker-dump978
+            tag: latest
+            pullPolicy: Always
+          env:
+            DUMP978_RTLSDR_DEVICE: '978'
+            DUMP978_SDR_GAIN: 'autogain'
+            DUMP978_SDR_PPM: '14'
+            TZ: America/New_York
+            LAT: '35'
+            LON: '70'
+          resources:
+            requests:
+               squat.ai/adsb978: '1'
+            limits:
+               squat.ai/adsb978: '1'
 
     # planewatch:
     #   type: statefulset
