@@ -36,6 +36,7 @@ app-template:
               adsb,adsb-dump978-raw-output,30978,uat_in;
               mlathub,adsb-flightaware-mlat-beast-output,30105,beast_in;
               mlathub,adsb-planewatch-mlat-beast-output,30105,beast_in;
+              mlathub,adsb-rbfeeder-mlat-beast-output,30105,beast_in;
             # adsb,feed.adsb.fi,30004,beast_reduce_plus_out;
             # adsb,in.adsb.lol,30004,beast_reduce_plus_out;
             # adsb,feed.airplanes.live,30004,beast_reduce_plus_out;
@@ -55,7 +56,6 @@ app-template:
             # mlat,feed.radarplane.com,31090,39006;
             # mlat,dati.flyitalyadsb.com,30100,39007;
             # mlat,feed.adsbexchange.com,31090,39008;
-            # mlathub,rbfeeder,30105,beast_in;
             # mlathub,radarvirtuel,30105,beast_in;
             UUID: 'ULTRAFEEDER_UUID'
             MLAT_USER: 'FEEDER_NAME'
@@ -191,24 +191,32 @@ app-template:
             FR24KEY: 'FR24KEY'
             TZ: America/New_York
 
-    # radarbox:
-    #   type: statefulset
-    #   strategy: RollingUpdate
-    #   annotations:
-    #     reloader.stakater.com/auto: "true"
-    #   labels:
-    #     kasten/backup: "true"
-    #     app: adsb
-    #     version: 1.0.0
-    #   containers:
-    #     radarbox:
-    #       securityContext:
-    #         privileged: true
-    #       image:
-    #         # renovate: docker-image versioning=loose
-    #         repository: ghcr.io/sdr-enthusiasts/docker-radarbox
-    #         tag: v1.0.10-20231120150000
-    #         pullPolicy: Always
+    radarbox:
+      type: statefulset
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+        app: adsb
+        version: 1.0.0
+      containers:
+        radarbox:
+          securityContext:
+            privileged: true
+          image:
+            # renovate: docker-image versioning=loose
+            repository: ghcr.io/sdr-enthusiasts/docker-radarbox
+            tag: v1.0.10-20231120150000
+            pullPolicy: Always
+          env:
+            BEASTHOST: 'adsb-ultrafeeder-beast-output'
+            LAT: '35'
+            LONG: '70'
+            ALT: '38m'
+            TZ: America/New_York
+            SHARING_KEY: RADARBOX_SHARING_KEY
+            UAT_RECEIVER_HOST: adsb-dump978-raw-output
 
     # adsbhub:
     #   type: statefulset
@@ -394,6 +402,12 @@ app-template:
 
     flightaware-mlat-beast-output:
       controller: flightaware
+      ports:
+        mlat-beast-output:
+          port: 31005
+
+    rbfeeder-mlat-beast-output:
+      controller: rbfeeder
       ports:
         mlat-beast-output:
           port: 31005
