@@ -136,12 +136,12 @@ app-template:
             tag: v0.0.4
             pullPolicy: Always
           env:
-          BEASTHOST: 'ultrafeeder'
-          LAT: '35'
-          LONG: '70'
-          ALT: '38m'
-          TZ: America/New_York
-          API_KEY: 'APIKEY'
+            BEASTHOST: 'ultrafeeder'
+            LAT: '35'
+            LONG: '70'
+            ALT: '38m'
+            TZ: America/New_York
+            API_KEY: 'APIKEY'
 
     # flightaware:
     #   type: statefulset
