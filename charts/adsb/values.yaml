@@ -158,23 +158,23 @@ app-template:
             tag: 2.1.7-1
             pullPolicy: Always
 
-    #  radarvirtuel:
-    #   type: statefulset
-    #   strategy: RollingUpdate
-    #   annotations:
-    #     reloader.stakater.com/auto: "true"
-    #   labels:
-    #     kasten/backup: "true"
-    #     app: adsb
-    #     version: 1.0.0
-    #   containers:
-    #     radarvirtuel:
-    #       securityContext:
-    #         privileged: true
-    #       image:
-    #         repository:  ghcr.io/sdr-enthusiasts/docker-radarvirtuel
-    #         tag: latest
-    #         pullPolicy: Always
+    radarvirtuel:
+      type: statefulset
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+        app: adsb
+        version: 1.0.0
+      containers:
+        radarvirtuel:
+          securityContext:
+            privileged: true
+          image:
+            repository:  ghcr.io/sdr-enthusiasts/docker-radarvirtuel
+            tag: latest
+            pullPolicy: Always
 
   serviceAccount:
     name: adsb-sa
