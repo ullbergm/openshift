@@ -36,7 +36,7 @@ app-template:
               adsb,adsb-dump978-raw-output,30978,uat_in;
               mlathub,adsb-flightaware-mlat-beast-output,30105,beast_in;
               mlathub,adsb-planewatch-mlat-beast-output,30105,beast_in;
-              mlathub,adsb-radarbox-mlat-beast-output,30105,beast_in;
+            # mlathub,adsb-radarbox-mlat-beast-output,30105,beast_in;
             # adsb,feed.adsb.fi,30004,beast_reduce_plus_out;
             # adsb,in.adsb.lol,30004,beast_reduce_plus_out;
             # adsb,feed.airplanes.live,30004,beast_reduce_plus_out;
@@ -191,32 +191,33 @@ app-template:
             FR24KEY: 'FR24KEY'
             TZ: America/New_York
 
-    radarbox:
-      type: statefulset
-      strategy: RollingUpdate
-      annotations:
-        reloader.stakater.com/auto: "true"
-      labels:
-        kasten/backup: "true"
-        app: adsb
-        version: 1.0.0
-      containers:
-        radarbox:
-          securityContext:
-            privileged: true
-          image:
-            # renovate: docker-image versioning=loose
-            repository: ghcr.io/sdr-enthusiasts/docker-radarbox
-            tag: v1.0.10-20231120150000
-            pullPolicy: Always
-          env:
-            BEASTHOST: 'adsb-ultrafeeder-beast-output'
-            LAT: '35'
-            LONG: '70'
-            ALT: '38m'
-            TZ: America/New_York
-            SHARING_KEY: RADARBOX_SHARING_KEY
-            UAT_RECEIVER_HOST: adsb-dump978-raw-output
+    # Doesn't work, segfaults due to not being a RPI host
+    # radarbox:
+    #   type: statefulset
+    #   strategy: RollingUpdate
+    #   annotations:
+    #     reloader.stakater.com/auto: "true"
+    #   labels:
+    #     kasten/backup: "true"
+    #     app: adsb
+    #     version: 1.0.0
+    #   containers:
+    #     radarbox:
+    #       securityContext:
+    #         privileged: true
+    #       image:
+    #         # renovate: docker-image versioning=loose
+    #         repository: ghcr.io/sdr-enthusiasts/docker-radarbox
+    #         tag: v1.0.10-20231120150000
+    #         pullPolicy: Always
+    #       env:
+    #         BEASTHOST: 'adsb-ultrafeeder-beast-output'
+    #         LAT: '35'
+    #         LONG: '70'
+    #         ALT: '38m'
+    #         TZ: America/New_York
+    #         SHARING_KEY: RADARBOX_SHARING_KEY
+    #         UAT_RECEIVER_HOST: adsb-dump978-raw-output
 
     # adsbhub:
     #   type: statefulset
@@ -284,25 +285,6 @@ app-template:
       fsGroup: 0
     # nodeSelector:
     #   nesdr.feature.node.kubernetes.io/rtlamr: "true"
-
-  persistence:
-    cpuinfo:
-      enabled: true
-      type: configMap
-      name: cpuinfo-config
-      globalMounts:
-        - path: /proc/cpuinfo
-          subPath: cpuinfo
-          readOnly: true
-
-    # temp:
-    #   enabled: true
-    #   type: configMap
-    #   name: temp-config
-    #   globalMounts:
-    #     - path: /sys/class/thermal/temp
-    #       subPath: temp
-    #       readOnly: true
 
   service:
     ultrafeeder:
