@@ -274,33 +274,78 @@ app-template:
       ports:
         http:
           port: 80
+    raw-input:
+      controller: ultrafeeder
+      ports:
         raw-input:
           port: 30001
+    raw-output:
+      controller: ultrafeeder
+      ports:
         raw-output:
           port: 30002
+    sbs-input:
+      controller: ultrafeeder
+      ports:
         sbs-input:
           port: 30003
+    sbs-output:
+      controller: ultrafeeder
+      ports:
         sbs-output:
           port: 32006
+    beast-input:
+      controller: ultrafeeder
+      ports:
         beast-input:
           port: 30004
+    beast-input2:
+      controller: ultrafeeder
+      ports:
         beast-input2:
           port: 30104
+    beast-output:
+      controller: ultrafeeder
+      ports:
         beast-output:
           port: 30005
+    beast-reduce-output:
+      controller: ultrafeeder
+      ports:
         beast-reduce-output:
           port: 30006
+    json-output:
+      controller: ultrafeeder
+      ports:
         json-output:
           port: 30047
+    mlat-sbs-output:
+      controller: ultrafeeder
+      ports:
         mlat-sbs-output:
           port: 31003
+    mlat-beast-input:
+      controller: ultrafeeder
+      ports:
         mlat-beast-input:
           port: 31004
+    mlat-beast-output:
+      controller: ultrafeeder
+      ports:
         mlat-beast-output:
           port: 31005
+    mlat-beast-reduce-output:
+      controller: ultrafeeder
+      ports:
         mlat-beast-reduce-output:
           port: 31006
+    ultrafeeder-prometheus:
+      controller: ultrafeeder
+      ports:
         prometheus:
           port: 9273
+    ultrafeeder-telegraf:
+      controller: ultrafeeder
+      ports:
         telegraf:
           port: 9274
