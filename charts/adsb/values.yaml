@@ -49,11 +49,10 @@ app-template:
       containers:
         dump978:
           securityContext:
-            allowPrivilegeEscalation: true
             privileged: true
+            allowPrivilegeEscalation: true
             runAsUser: 0
             runAsGroup: 0
-            privileged: true
           image:
             repository: ghcr.io/sdr-enthusiasts/docker-dump978
             tag: latest
