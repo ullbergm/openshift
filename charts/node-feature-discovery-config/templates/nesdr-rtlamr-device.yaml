@@ -11,4 +11,23 @@ spec:
         - feature: usb.device
           matchExpressions:
             vendor: { op: In, value: ["0bda", "2838"] }
+            serial: { op: NotIn, value: ["1090", "978"] }
       name: nesdr.rtlamr
+    - # 1090 ADSB
+      labels:
+        nesdr.feature.node.kubernetes.io/adsb1090: "true"
+      matchFeatures:
+        - feature: usb.device
+          matchExpressions:
+            vendor: { op: In, value: ["0bda", "2838"] }
+            serial: { op: In, value: ["1090"] }
+      name: nesdr.adsb1090
+    - # 978 ADSB
+      labels:
+        nesdr.feature.node.kubernetes.io/adsb978: "true"
+      matchFeatures:
+        - feature: usb.device
+          matchExpressions:
+            vendor: { op: In, value: ["0bda", "2838"] }
+            serial: { op: In, value: ["978"] }
+      name: nesdr.adsb978
