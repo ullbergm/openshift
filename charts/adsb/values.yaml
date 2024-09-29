@@ -63,118 +63,118 @@ app-template:
             tag: v0.0.4
             pullPolicy: Always
 
-    flightaware:
-      type: statefulset
-      strategy: RollingUpdate
-      annotations:
-        reloader.stakater.com/auto: "true"
-      labels:
-        kasten/backup: "true"
-        app: adsb
-        version: 1.0.0
-      containers:
-        flightaware:
-          securityContext:
-            privileged: true
-          image:
-            # renovate: docker-image versioning=loose
-            repository: ghcr.io/sdr-enthusiasts/docker-piaware
-            tag: v9.0.1
-            pullPolicy: Always
+    # flightaware:
+    #   type: statefulset
+    #   strategy: RollingUpdate
+    #   annotations:
+    #     reloader.stakater.com/auto: "true"
+    #   labels:
+    #     kasten/backup: "true"
+    #     app: adsb
+    #     version: 1.0.0
+    #   containers:
+    #     flightaware:
+    #       securityContext:
+    #         privileged: true
+    #       image:
+    #         # renovate: docker-image versioning=loose
+    #         repository: ghcr.io/sdr-enthusiasts/docker-piaware
+    #         tag: v9.0.1
+    #         pullPolicy: Always
 
-    flightradar24:
-      type: statefulset
-      strategy: RollingUpdate
-      annotations:
-        reloader.stakater.com/auto: "true"
-      labels:
-        kasten/backup: "true"
-        app: adsb
-        version: 1.0.0
-      containers:
-        flightradar24:
-          securityContext:
-            privileged: true
-          image:
-            # renovate: docker-image versioning=loose
-            repository: ghcr.io/sdr-enthusiasts/docker-flightradar24
-            tag: 1.0.48-0
-            pullPolicy: Always
+    # flightradar24:
+    #   type: statefulset
+    #   strategy: RollingUpdate
+    #   annotations:
+    #     reloader.stakater.com/auto: "true"
+    #   labels:
+    #     kasten/backup: "true"
+    #     app: adsb
+    #     version: 1.0.0
+    #   containers:
+    #     flightradar24:
+    #       securityContext:
+    #         privileged: true
+    #       image:
+    #         # renovate: docker-image versioning=loose
+    #         repository: ghcr.io/sdr-enthusiasts/docker-flightradar24
+    #         tag: 1.0.48-0
+    #         pullPolicy: Always
 
-    radarbox:
-      type: statefulset
-      strategy: RollingUpdate
-      annotations:
-        reloader.stakater.com/auto: "true"
-      labels:
-        kasten/backup: "true"
-        app: adsb
-        version: 1.0.0
-      containers:
-        radarbox:
-          securityContext:
-            privileged: true
-          image:
-            # renovate: docker-image versioning=loose
-            repository: ghcr.io/sdr-enthusiasts/docker-radarbox
-            tag: v1.0.10-20231120150000
-            pullPolicy: Always
+    # radarbox:
+    #   type: statefulset
+    #   strategy: RollingUpdate
+    #   annotations:
+    #     reloader.stakater.com/auto: "true"
+    #   labels:
+    #     kasten/backup: "true"
+    #     app: adsb
+    #     version: 1.0.0
+    #   containers:
+    #     radarbox:
+    #       securityContext:
+    #         privileged: true
+    #       image:
+    #         # renovate: docker-image versioning=loose
+    #         repository: ghcr.io/sdr-enthusiasts/docker-radarbox
+    #         tag: v1.0.10-20231120150000
+    #         pullPolicy: Always
 
-    adsbhub:
-      type: statefulset
-      strategy: RollingUpdate
-      annotations:
-        reloader.stakater.com/auto: "true"
-      labels:
-        kasten/backup: "true"
-        app: adsb
-        version: 1.0.0
-      containers:
-        adsbhub:
-          securityContext:
-            privileged: true
-          image:
-            # renovate: docker-image versioning=loose
-            repository: ghcr.io/sdr-enthusiasts/docker-adsbhub
-            tag: 1.06
-            pullPolicy: Always
+    # adsbhub:
+    #   type: statefulset
+    #   strategy: RollingUpdate
+    #   annotations:
+    #     reloader.stakater.com/auto: "true"
+    #   labels:
+    #     kasten/backup: "true"
+    #     app: adsb
+    #     version: 1.0.0
+    #   containers:
+    #     adsbhub:
+    #       securityContext:
+    #         privileged: true
+    #       image:
+    #         # renovate: docker-image versioning=loose
+    #         repository: ghcr.io/sdr-enthusiasts/docker-adsbhub
+    #         tag: 1.06
+    #         pullPolicy: Always
 
-    opensky:
-      type: statefulset
-      strategy: RollingUpdate
-      annotations:
-        reloader.stakater.com/auto: "true"
-      labels:
-        kasten/backup: "true"
-        app: adsb
-        version: 1.0.0
-      containers:
-        opensky:
-          securityContext:
-            privileged: true
-          image:
-            # renovate: docker-image versioning=loose
-            repository: ghcr.io/sdr-enthusiasts/docker-opensky-network
-            tag: 2.1.7-1
-            pullPolicy: Always
+    # opensky:
+    #   type: statefulset
+    #   strategy: RollingUpdate
+    #   annotations:
+    #     reloader.stakater.com/auto: "true"
+    #   labels:
+    #     kasten/backup: "true"
+    #     app: adsb
+    #     version: 1.0.0
+    #   containers:
+    #     opensky:
+    #       securityContext:
+    #         privileged: true
+    #       image:
+    #         # renovate: docker-image versioning=loose
+    #         repository: ghcr.io/sdr-enthusiasts/docker-opensky-network
+    #         tag: 2.1.7-1
+    #         pullPolicy: Always
 
-     radarvirtuel:
-      type: statefulset
-      strategy: RollingUpdate
-      annotations:
-        reloader.stakater.com/auto: "true"
-      labels:
-        kasten/backup: "true"
-        app: adsb
-        version: 1.0.0
-      containers:
-        radarvirtuel:
-          securityContext:
-            privileged: true
-          image:
-            repository:  ghcr.io/sdr-enthusiasts/docker-radarvirtuel
-            tag: latest
-            pullPolicy: Always
+    #  radarvirtuel:
+    #   type: statefulset
+    #   strategy: RollingUpdate
+    #   annotations:
+    #     reloader.stakater.com/auto: "true"
+    #   labels:
+    #     kasten/backup: "true"
+    #     app: adsb
+    #     version: 1.0.0
+    #   containers:
+    #     radarvirtuel:
+    #       securityContext:
+    #         privileged: true
+    #       image:
+    #         repository:  ghcr.io/sdr-enthusiasts/docker-radarvirtuel
+    #         tag: latest
+    #         pullPolicy: Always
 
   serviceAccount:
     name: adsb-sa
