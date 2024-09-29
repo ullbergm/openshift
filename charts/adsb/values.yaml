@@ -191,52 +191,28 @@ app-template:
             FR24KEY: 'FR24KEY'
             TZ: America/New_York
 
-    # Doesn't work, segfaults due to not being a RPI host
-    # radarbox:
-    #   type: statefulset
-    #   strategy: RollingUpdate
-    #   annotations:
-    #     reloader.stakater.com/auto: "true"
-    #   labels:
-    #     kasten/backup: "true"
-    #     app: adsb
-    #     version: 1.0.0
-    #   containers:
-    #     radarbox:
-    #       securityContext:
-    #         privileged: true
-    #       image:
-    #         # renovate: docker-image versioning=loose
-    #         repository: ghcr.io/sdr-enthusiasts/docker-radarbox
-    #         tag: v1.0.10-20231120150000
-    #         pullPolicy: Always
-    #       env:
-    #         BEASTHOST: 'adsb-ultrafeeder-beast-output'
-    #         LAT: '35'
-    #         LONG: '70'
-    #         ALT: '38m'
-    #         TZ: America/New_York
-    #         SHARING_KEY: RADARBOX_SHARING_KEY
-    #         UAT_RECEIVER_HOST: adsb-dump978-raw-output
-
-    # adsbhub:
-    #   type: statefulset
-    #   strategy: RollingUpdate
-    #   annotations:
-    #     reloader.stakater.com/auto: "true"
-    #   labels:
-    #     kasten/backup: "true"
-    #     app: adsb
-    #     version: 1.0.0
-    #   containers:
-    #     adsbhub:
-    #       securityContext:
-    #         privileged: true
-    #       image:
-    #         # renovate: docker-image versioning=loose
-    #         repository: ghcr.io/sdr-enthusiasts/docker-adsbhub
-    #         tag: 1.06
-    #         pullPolicy: Always
+    adsbhub:
+      type: statefulset
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+        app: adsb
+        version: 1.0.0
+      containers:
+        adsbhub:
+          securityContext:
+            privileged: true
+          image:
+            # renovate: docker-image versioning=loose
+            repository: ghcr.io/sdr-enthusiasts/docker-adsbhub
+            tag: 1.06
+            pullPolicy: Always
+          env:
+            SBSHOST: 'adsb-ultrafeeder-sbs-output'
+            CLIENTKEY: 'CLIENTKEY'
+            TZ: America/New_York
 
     # opensky:
     #   type: statefulset
@@ -274,6 +250,34 @@ app-template:
     #         repository:  ghcr.io/sdr-enthusiasts/docker-radarvirtuel
     #         tag: latest
     #         pullPolicy: Always
+
+    # Doesn't work, segfaults due to not being a RPI host
+    # radarbox:
+    #   type: statefulset
+    #   strategy: RollingUpdate
+    #   annotations:
+    #     reloader.stakater.com/auto: "true"
+    #   labels:
+    #     kasten/backup: "true"
+    #     app: adsb
+    #     version: 1.0.0
+    #   containers:
+    #     radarbox:
+    #       securityContext:
+    #         privileged: true
+    #       image:
+    #         # renovate: docker-image versioning=loose
+    #         repository: ghcr.io/sdr-enthusiasts/docker-radarbox
+    #         tag: v1.0.10-20231120150000
+    #         pullPolicy: Always
+    #       env:
+    #         BEASTHOST: 'adsb-ultrafeeder-beast-output'
+    #         LAT: '35'
+    #         LONG: '70'
+    #         ALT: '38m'
+    #         TZ: America/New_York
+    #         SHARING_KEY: RADARBOX_SHARING_KEY
+    #         UAT_RECEIVER_HOST: adsb-dump978-raw-output
 
   serviceAccount:
     name: adsb-sa
