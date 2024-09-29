@@ -101,43 +101,43 @@ app-template:
             tag: 1.0.48-0
             pullPolicy: Always
 
-    # radarbox:
-    #   type: statefulset
-    #   strategy: RollingUpdate
-    #   annotations:
-    #     reloader.stakater.com/auto: "true"
-    #   labels:
-    #     kasten/backup: "true"
-    #     app: adsb
-    #     version: 1.0.0
-    #   containers:
-    #     radarbox:
-    #       securityContext:
-    #         privileged: true
-    #       image:
-    #         # renovate: docker-image versioning=loose
-    #         repository: ghcr.io/sdr-enthusiasts/docker-radarbox
-    #         tag: v1.0.10-20231120150000
-    #         pullPolicy: Always
+    radarbox:
+      type: statefulset
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+        app: adsb
+        version: 1.0.0
+      containers:
+        radarbox:
+          securityContext:
+            privileged: true
+          image:
+            # renovate: docker-image versioning=loose
+            repository: ghcr.io/sdr-enthusiasts/docker-radarbox
+            tag: v1.0.10-20231120150000
+            pullPolicy: Always
 
-    # adsbhub:
-    #   type: statefulset
-    #   strategy: RollingUpdate
-    #   annotations:
-    #     reloader.stakater.com/auto: "true"
-    #   labels:
-    #     kasten/backup: "true"
-    #     app: adsb
-    #     version: 1.0.0
-    #   containers:
-    #     adsbhub:
-    #       securityContext:
-    #         privileged: true
-    #       image:
-    #         # renovate: docker-image versioning=loose
-    #         repository: ghcr.io/sdr-enthusiasts/docker-adsbhub
-    #         tag: 1.06
-    #         pullPolicy: Always
+    adsbhub:
+      type: statefulset
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+        app: adsb
+        version: 1.0.0
+      containers:
+        adsbhub:
+          securityContext:
+            privileged: true
+          image:
+            # renovate: docker-image versioning=loose
+            repository: ghcr.io/sdr-enthusiasts/docker-adsbhub
+            tag: 1.06
+            pullPolicy: Always
 
     # opensky:
     #   type: statefulset
