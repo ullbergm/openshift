@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cpuinfo-config
+  namespace: adsb
+data:
+  cpuinfo: |-
+    serial          : bbdcfd8b7ac196ab

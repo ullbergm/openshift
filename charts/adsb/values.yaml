@@ -285,6 +285,15 @@ app-template:
     # nodeSelector:
     #   nesdr.feature.node.kubernetes.io/rtlamr: "true"
 
+  persistence:
+    cpuinfo:
+      enabled: true
+      type: configMap
+      name: cpuinfo-config
+      globalMounts:
+        - path: /proc/cpuinfo
+          subPath: cpuinfo
+          readOnly: true
 
   service:
     ultrafeeder:
