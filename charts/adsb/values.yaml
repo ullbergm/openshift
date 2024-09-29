@@ -210,13 +210,9 @@ app-template:
             tag: 1.06
             pullPolicy: Always
           env:
-            BEASTHOST: 'adsb-ultrafeeder-beast-output'
-            OPENSKY_USERNAME: 'OPENSKY_USERNAME'
-            OPENSKY_SERIAL: 'OPENSKY_SERIAL'
+            SBSHOST: 'adsb-ultrafeeder-sbs-output'
+            CLIENTKEY: 'CLIENTKEY'
             TZ: America/New_York
-            LAT: '35'
-            LONG: '70'
-            ALT: '38m'
 
     opensky:
       type: statefulset
@@ -238,8 +234,12 @@ app-template:
             pullPolicy: Always
           env:
             BEASTHOST: 'adsb-ultrafeeder-beast-output'
-            FR24KEY: 'FR24KEY'
+            LAT: '35'
+            LONG: '70'
+            ALT: '38m'
             TZ: America/New_York
+            OPENSKY_USERNAME: 'OPENSKY_USERNAME'
+            OPENSKY_SERIAL: 'OPENSKY_SERIAL'
 
     # radarvirtuel:
     #   type: statefulset
