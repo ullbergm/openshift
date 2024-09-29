@@ -210,28 +210,36 @@ app-template:
             tag: 1.06
             pullPolicy: Always
           env:
-            SBSHOST: 'adsb-ultrafeeder-sbs-output'
-            CLIENTKEY: 'CLIENTKEY'
+            BEASTHOST: 'adsb-ultrafeeder-beast-output'
+            OPENSKY_USERNAME: 'OPENSKY_USERNAME'
+            OPENSKY_SERIAL: 'OPENSKY_SERIAL'
             TZ: America/New_York
+            LAT: '35'
+            LONG: '70'
+            ALT: '38m'
 
-    # opensky:
-    #   type: statefulset
-    #   strategy: RollingUpdate
-    #   annotations:
-    #     reloader.stakater.com/auto: "true"
-    #   labels:
-    #     kasten/backup: "true"
-    #     app: adsb
-    #     version: 1.0.0
-    #   containers:
-    #     opensky:
-    #       securityContext:
-    #         privileged: true
-    #       image:
-    #         # renovate: docker-image versioning=loose
-    #         repository: ghcr.io/sdr-enthusiasts/docker-opensky-network
-    #         tag: 2.1.7-1
-    #         pullPolicy: Always
+    opensky:
+      type: statefulset
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+        app: adsb
+        version: 1.0.0
+      containers:
+        opensky:
+          securityContext:
+            privileged: true
+          image:
+            # renovate: docker-image versioning=loose
+            repository: ghcr.io/sdr-enthusiasts/docker-opensky-network
+            tag: 2.1.7-1
+            pullPolicy: Always
+          env:
+            BEASTHOST: 'adsb-ultrafeeder-beast-output'
+            FR24KEY: 'FR24KEY'
+            TZ: America/New_York
 
     # radarvirtuel:
     #   type: statefulset
