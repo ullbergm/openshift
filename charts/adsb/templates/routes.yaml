@@ -6,7 +6,6 @@ metadata:
   name: ultrafeeder
   namespace: adsb
 spec:
-#  host: ultrafeeder.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   path: /
   to:
     kind: Service
