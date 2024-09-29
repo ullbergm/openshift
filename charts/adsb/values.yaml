@@ -22,7 +22,7 @@ app-template:
         # podOptions: ????
           # nodeSelector:
           #   nesdr.feature.node.kubernetes.io/rtlamr: "true"
-          
+
     dump978:
       type: statefulset
       strategy: RollingUpdate
@@ -33,7 +33,7 @@ app-template:
         app: adsb
         version: 1.0.0
       containers:
-        ultrafeeder:
+        dump978:
           securityContext:
             privileged: true
           image:
@@ -54,7 +54,7 @@ app-template:
         app: adsb
         version: 1.0.0
       containers:
-        ultrafeeder:
+        planewatch:
           securityContext:
             privileged: true
           image:
@@ -73,7 +73,7 @@ app-template:
         app: adsb
         version: 1.0.0
       containers:
-        ultrafeeder:
+        flightaware:
           securityContext:
             privileged: true
           image:
@@ -92,7 +92,7 @@ app-template:
         app: adsb
         version: 1.0.0
       containers:
-        ultrafeeder:
+        flightradar24:
           securityContext:
             privileged: true
           image:
@@ -111,7 +111,7 @@ app-template:
         app: adsb
         version: 1.0.0
       containers:
-        ultrafeeder:
+        radarbox:
           securityContext:
             privileged: true
           image:
@@ -130,7 +130,7 @@ app-template:
         app: adsb
         version: 1.0.0
       containers:
-        ultrafeeder:
+        adsbhub:
           securityContext:
             privileged: true
           image:
@@ -149,7 +149,7 @@ app-template:
         app: adsb
         version: 1.0.0
       containers:
-        ultrafeeder:
+        opensky:
           securityContext:
             privileged: true
           image:
@@ -168,7 +168,7 @@ app-template:
         app: adsb
         version: 1.0.0
       containers:
-        ultrafeeder:
+        radarvirtuel:
           securityContext:
             privileged: true
           image:
