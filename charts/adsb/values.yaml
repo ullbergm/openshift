@@ -239,7 +239,7 @@ app-template:
             ALT: '38m'
             TZ: America/New_York
             OPENSKY_USERNAME: 'OPENSKY_USERNAME'
-            OPENSKY_SERIAL: 'OPENSKY_SERIAL'
+            OPENSKY_SERIAL: '-1408232939'
 
     # radarvirtuel:
     #   type: statefulset
