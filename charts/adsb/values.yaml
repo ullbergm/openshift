@@ -300,7 +300,7 @@ app-template:
       type: configMap
       name: temp-config
       globalMounts:
-        - path: /sys/class/thermal/thermal_zone0/temp
+        - path: /sys/class/thermal
           subPath: temp
           readOnly: true
 
