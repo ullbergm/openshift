@@ -136,7 +136,7 @@ app-template:
             tag: v0.0.4
             pullPolicy: Always
           env:
-            BEASTHOST: 'ultrafeeder-adsb-beast-output'
+            BEASTHOST: 'adsb-ultrafeeder-beast-output'
             LAT: '35'
             LONG: '70'
             ALT: '38m'
