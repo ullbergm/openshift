@@ -309,12 +309,12 @@ app-template:
     ultrafeeder-sbs-output:
       controller: ultrafeeder
       ports:
-        sbs-input:
+        sbs-output:
           port: 30003
     ultrafeeder-sbs-input:
       controller: ultrafeeder
       ports:
-        sbs-output:
+        sbs-input:
           port: 32006
     ultrafeeder-beast-input:
       controller: ultrafeeder
