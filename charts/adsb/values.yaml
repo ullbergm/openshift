@@ -295,6 +295,15 @@ app-template:
           subPath: cpuinfo
           readOnly: true
 
+    temp:
+      enabled: true
+      type: configMap
+      name: temp-config
+      globalMounts:
+        - path: /sys/class/thermal/thermal_zone0/temp
+          subPath: temp
+          readOnly: true
+
   service:
     ultrafeeder:
       controller: ultrafeeder
