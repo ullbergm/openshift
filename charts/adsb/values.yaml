@@ -62,8 +62,6 @@ app-template:
             LAT: '35'
             LON: '70'
             READSB_DEVICE_TYPE: rtlsdr
-            READSB_RTLSDR_DEVICE: '978'
-            DUMP978_RTLSDR_DEVICE: '978'
             DUMP978_SDR_GAIN: 'autogain'
             DUMP978_SDR_PPM: '14'
           resources:
