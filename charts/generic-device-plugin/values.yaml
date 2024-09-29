@@ -50,7 +50,7 @@ app-template:
                 groups:
                   - usb:
                     - vendor: 0bda
-                      product: 2838
+                      product: 00000001
 
   serviceAccount:
     name: generic-device-plugin-sa
