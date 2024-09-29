@@ -33,7 +33,7 @@ app-template:
                   - usb:
                     - vendor: 0bda
                       product: 2838
-                      serial: 978
+                      serial: 1090
               - --device
               - |
                 name: adsb1090
