@@ -19,8 +19,9 @@ app-template:
             repository: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder
             tag: latest
             pullPolicy: Always
-          nodeSelector:
-            nesdr.feature.node.kubernetes.io/adsb1090: "true"
+          resources:
+            requests:
+               squat.ai/adsb1090: '1'
 
     dump978:
       type: statefulset
@@ -39,8 +40,9 @@ app-template:
             repository: ghcr.io/sdr-enthusiasts/docker-dump978
             tag: latest
             pullPolicy: Always
-          nodeSelector:
-            nesdr.feature.node.kubernetes.io/adsb978: "true"
+          resources:
+            requests:
+               squat.ai/adsb978: '1'
 
     # planewatch:
     #   type: statefulset
