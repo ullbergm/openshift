@@ -218,6 +218,15 @@ app-template:
             SHARING_KEY: RADARBOX_SHARING_KEY
             UAT_RECEIVER_HOST: adsb-dump978-raw-output
 
+      persistence:
+        cpuinfo:
+          enabled: true
+          type: configMap
+          name: cpuinfo-config
+          globalMounts:
+            - path: /proc/cpuinfo
+              subPath: cpuinfo
+              readOnly: true
     # adsbhub:
     #   type: statefulset
     #   strategy: RollingUpdate
@@ -284,16 +293,6 @@ app-template:
       fsGroup: 0
     # nodeSelector:
     #   nesdr.feature.node.kubernetes.io/rtlamr: "true"
-
-  persistence:
-    cpuinfo:
-      enabled: true
-      type: configMap
-      name: cpuinfo-config
-      globalMounts:
-        - path: /proc/cpuinfo
-          subPath: cpuinfo
-          readOnly: true
 
   service:
     ultrafeeder:
