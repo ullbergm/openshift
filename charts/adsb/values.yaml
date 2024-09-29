@@ -406,8 +406,8 @@ app-template:
         mlat-beast-output:
           port: 31005
 
-    radarbox-mlat-beast-output:
-      controller: radarbox
-      ports:
-        mlat-beast-output:
-          port: 31005
+    # radarbox-mlat-beast-output:
+    #   controller: radarbox
+    #   ports:
+    #     mlat-beast-output:
+    #       port: 31005
