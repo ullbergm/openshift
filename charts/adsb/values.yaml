@@ -295,14 +295,14 @@ app-template:
           subPath: cpuinfo
           readOnly: true
 
-    temp:
-      enabled: true
-      type: configMap
-      name: temp-config
-      globalMounts:
-        - path: /sys/class/thermal/temp
-          subPath: temp
-          readOnly: true
+    # temp:
+    #   enabled: true
+    #   type: configMap
+    #   name: temp-config
+    #   globalMounts:
+    #     - path: /sys/class/thermal/temp
+    #       subPath: temp
+    #       readOnly: true
 
   service:
     ultrafeeder:
