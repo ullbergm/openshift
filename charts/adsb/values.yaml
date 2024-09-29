@@ -33,7 +33,7 @@ app-template:
             READSB_RX_LOCATION_ACCURACY: '2'
             READSB_STATS_RANGE: 'true'
             ULTRAFEEDER_CONFIG: |
-              adsb,dump978-raw-output,30978,uat_in;
+              adsb,adsb-dump978-raw-output,30978,uat_in;
             # adsb,feed.adsb.fi,30004,beast_reduce_plus_out;
             # adsb,in.adsb.lol,30004,beast_reduce_plus_out;
             # adsb,feed.airplanes.live,30004,beast_reduce_plus_out;
