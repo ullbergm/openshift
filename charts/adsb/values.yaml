@@ -418,6 +418,12 @@ app-template:
         mlat-beast-output:
           port: 31005
 
+    flightaware:
+      controller: flightaware
+      ports:
+        http:
+          port: 80
+
     # radarbox-mlat-beast-output:
     #   controller: radarbox
     #   ports:
