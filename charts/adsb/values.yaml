@@ -49,12 +49,18 @@ app-template:
       containers:
         dump978:
           securityContext:
+            allowPrivilegeEscalation: true
             privileged: true
+            runAsUser: 0
+            runAsGroup: 0
           image:
             repository: ghcr.io/sdr-enthusiasts/docker-dump978
             tag: latest
             pullPolicy: Always
           env:
+            TZ: America/New_York
+            READSB_DEVICE_TYPE: rtlsdr
+            READSB_RTLSDR_DEVICE: '978'
             DUMP978_RTLSDR_DEVICE: '978'
             DUMP978_SDR_GAIN: 'autogain'
             DUMP978_SDR_PPM: '14'
