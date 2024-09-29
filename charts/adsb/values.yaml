@@ -266,3 +266,41 @@ app-template:
       fsGroup: 0
     # nodeSelector:
     #   nesdr.feature.node.kubernetes.io/rtlamr: "true"
+
+
+  service:
+    ultrafeeder:
+      controller: ultrafeeder
+      ports:
+        http:
+          port: 80
+        raw-input:
+          port: 30001
+        raw-output:
+          port: 30002
+        sbs-input:
+          port: 30003
+        sbs-output:
+          port: 32006
+        beast-input:
+          port: 30004
+        beast-input2:
+          port: 30104
+        beast-output:
+          port: 30005
+        beast-reduce-output:
+          port: 30006
+        json-output:
+          port: 30047
+        mlat-sbs-output:
+          port: 31003
+        mlat-beast-input:
+          port: 31004
+        mlat-beast-output:
+          port: 31005
+        mlat-beast-reduce-output:
+          port: 31006
+        prometheus:
+          port: 9273
+        telegraf:
+          port: 9274
