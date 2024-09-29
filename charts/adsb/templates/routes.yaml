@@ -9,7 +9,7 @@ spec:
   path: /
   to:
     kind: Service
-    name: ultrafeeder
+    name: adsb-ultrafeeder
     weight: 100
   port:
     targetPort: http
