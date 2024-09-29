@@ -211,7 +211,6 @@ app-template:
             pullPolicy: Always
           env:
             SBSHOST: 'adsb-ultrafeeder-raw-output'
-            SBSPORT: '30002'
             CLIENTKEY: 'CLIENTKEY'
             TZ: America/New_York
 
