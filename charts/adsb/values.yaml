@@ -44,6 +44,7 @@ app-template:
             pullPolicy: Always
           env:
             UAT_SDR_SERIAL: '978'
+            TZ: America/New_York
           resources:
             requests:
                squat.ai/adsb978: '1'
