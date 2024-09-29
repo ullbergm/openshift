@@ -22,7 +22,7 @@ app-template:
           resources:
             requests:
                squat.ai/adsb1090: '1'
-            limit:
+            limits:
                squat.ai/adsb1090: '1'
 
     dump978:
@@ -45,7 +45,7 @@ app-template:
           resources:
             requests:
                squat.ai/adsb978: '1'
-            limit:
+            limits:
                squat.ai/adsb978: '1'
 
     # planewatch:
