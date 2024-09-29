@@ -36,7 +36,7 @@ app-template:
                       serial: 1090
               - --device
               - |
-                name: adsb1090
+                name: adsb978
                 count: 1
                 groups:
                   - usb:
