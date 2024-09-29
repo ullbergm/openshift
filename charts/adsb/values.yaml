@@ -210,7 +210,7 @@ app-template:
             tag: 1.06
             pullPolicy: Always
           env:
-            SBSHOST: 'adsb-ultrafeeder-raw-output'
+            SBSHOST: 'adsb-ultrafeeder-sbs-output'
             CLIENTKEY: 'CLIENTKEY'
             TZ: America/New_York
 
