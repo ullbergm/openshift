@@ -17,3 +17,23 @@ spec:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect
   wildcardPolicy: None
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  annotations:
+    route.openshift.io/termination: "edge"
+  name: dump978
+  namespace: adsb
+spec:
+  path: /
+  to:
+    kind: Service
+    name: adsb-dump978
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
