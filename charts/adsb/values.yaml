@@ -42,6 +42,8 @@ app-template:
             repository: ghcr.io/sdr-enthusiasts/docker-dump978
             tag: latest
             pullPolicy: Always
+          env:
+            - UAT_SDR_SERIAL: '978'
           resources:
             requests:
                squat.ai/adsb978: '1'
