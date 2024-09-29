@@ -3,6 +3,10 @@ kind: SecurityContextConstraints
 apiVersion: security.openshift.io/v1
 metadata:
   name: adsb-scc
+requiredDropCapabilities:
+- KILL
+- MKNOD
+- SYS_CHROOT
 allowPrivilegedContainer: true
 allowHostDirVolumePlugin: true
 fsGroup:
