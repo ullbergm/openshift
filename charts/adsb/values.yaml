@@ -43,7 +43,7 @@ app-template:
             tag: latest
             pullPolicy: Always
           env:
-            - UAT_SDR_SERIAL: '978'
+            UAT_SDR_SERIAL: '978'
           resources:
             requests:
                squat.ai/adsb978: '1'
