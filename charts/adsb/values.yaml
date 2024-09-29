@@ -306,12 +306,12 @@ app-template:
       ports:
         raw-output:
           port: 30002
-    ultrafeeder-sbs-input:
+    ultrafeeder-sbs-output:
       controller: ultrafeeder
       ports:
         sbs-input:
           port: 30003
-    ultrafeeder-sbs-output:
+    ultrafeeder-sbs-input:
       controller: ultrafeeder
       ports:
         sbs-output:
