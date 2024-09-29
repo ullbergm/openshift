@@ -54,13 +54,14 @@ app-template:
             runAsUser: 0
             runAsGroup: 0
           image:
-            repository: ghcr.io/sdr-enthusiasts/docker-dump978
+            repository: ghcr.io/ullbergm/docker-dump978
             tag: latest
             pullPolicy: Always
           env:
             TZ: America/New_York
             LAT: '35'
             LON: '70'
+            HTTP_PORT: '8080'
             READSB_DEVICE_TYPE: rtlsdr
             DUMP978_SDR_GAIN: 'autogain'
             DUMP978_SDR_PPM: '14'
