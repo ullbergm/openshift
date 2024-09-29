@@ -33,7 +33,7 @@ app-template:
             READSB_RX_LOCATION_ACCURACY: '2'
             READSB_STATS_RANGE: 'true'
             ULTRAFEEDER_CONFIG: |
-              adsb,dump978,30978,uat_in;
+              adsb,dump978-raw-output,30978,uat_in;
             # adsb,feed.adsb.fi,30004,beast_reduce_plus_out;
             # adsb,in.adsb.lol,30004,beast_reduce_plus_out;
             # adsb,feed.airplanes.live,30004,beast_reduce_plus_out;
@@ -136,7 +136,7 @@ app-template:
             tag: v0.0.4
             pullPolicy: Always
           env:
-            BEASTHOST: 'adsb-beast-output'
+            BEASTHOST: 'ultrafeeder-adsb-beast-output'
             LAT: '35'
             LONG: '70'
             ALT: '38m'
@@ -274,67 +274,67 @@ app-template:
       ports:
         http:
           port: 80
-    raw-input:
+    ultrafeeder-raw-input:
       controller: ultrafeeder
       ports:
         raw-input:
           port: 30001
-    raw-output:
+    ultrafeeder-raw-output:
       controller: ultrafeeder
       ports:
         raw-output:
           port: 30002
-    sbs-input:
+    ultrafeeder-sbs-input:
       controller: ultrafeeder
       ports:
         sbs-input:
           port: 30003
-    sbs-output:
+    ultrafeeder-sbs-output:
       controller: ultrafeeder
       ports:
         sbs-output:
           port: 32006
-    beast-input:
+    ultrafeeder-beast-input:
       controller: ultrafeeder
       ports:
         beast-input:
           port: 30004
-    beast-input2:
+    ultrafeeder-beast-input2:
       controller: ultrafeeder
       ports:
         beast-input2:
           port: 30104
-    beast-output:
+    ultrafeeder-beast-output:
       controller: ultrafeeder
       ports:
         beast-output:
           port: 30005
-    beast-reduce-output:
+    ultrafeeder-beast-reduce-output:
       controller: ultrafeeder
       ports:
         beast-reduce-output:
           port: 30006
-    json-output:
+    ultrafeeder-json-output:
       controller: ultrafeeder
       ports:
         json-output:
           port: 30047
-    mlat-sbs-output:
+    ultrafeeder-mlat-sbs-output:
       controller: ultrafeeder
       ports:
         mlat-sbs-output:
           port: 31003
-    mlat-beast-input:
+    ultrafeeder-mlat-beast-input:
       controller: ultrafeeder
       ports:
         mlat-beast-input:
           port: 31004
-    mlat-beast-output:
+    ultrafeeder-mlat-beast-output:
       controller: ultrafeeder
       ports:
         mlat-beast-output:
           port: 31005
-    mlat-beast-reduce-output:
+    ultrafeeder-mlat-beast-reduce-output:
       controller: ultrafeeder
       ports:
         mlat-beast-reduce-output:
@@ -349,3 +349,29 @@ app-template:
       ports:
         telegraf:
           port: 9274
+
+    dump978:
+      controller: dump978
+      ports:
+        http:
+          port: 8080
+    dump978-json-output:
+      controller: dump978
+      ports:
+        json-output:
+          port: 30979
+    dump978-raw-output:
+      controller: dump978
+      ports:
+        raw-output:
+          port: 30978
+    dump978-readsb-output:
+      controller: dump978
+      ports:
+        readsb-output:
+          port: 37981
+    dump978-beast-output:
+      controller: dump978
+      ports:
+        beast-output:
+          port: 37982
