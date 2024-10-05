@@ -50,7 +50,7 @@ spec:
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/onedr0p/tautulli
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 2.13.4
+          value: 2.14.5
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
