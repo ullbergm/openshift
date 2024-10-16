@@ -23,7 +23,7 @@ app-template:
           image:
             # renovate: docker-image
             repository: wolveix/satisfactory-server
-            tag: v1.8.7
+            tag: v1.8.8
             pullPolicy: Always
           env:
             TZ: TIMEZONE
