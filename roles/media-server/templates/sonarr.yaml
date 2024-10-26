@@ -50,7 +50,7 @@ spec:
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/onedr0p/sonarr
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 4.0.9.2244
+          value: 4.0.10.2544
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
