@@ -17,7 +17,7 @@ app-template:
           image:
             # renovate: docker-image
             repository: ghcr.io/zwave-js/zwave-js-ui
-            tag: 9.27.1
+            tag: 9.27.2
             pullPolicy: Always
           env:
             TZ: TIMEZONE
