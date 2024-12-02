@@ -9,5 +9,5 @@ maintainers:
     email: magnus@ullberg.us
 dependencies:
   - name: monica
-    version: "0.9.0"
+    version: "0.10.0"
     repository: "oci://ghcr.io/gabe565/charts"
