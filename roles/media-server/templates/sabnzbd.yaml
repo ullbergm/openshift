@@ -54,7 +54,7 @@ spec:
         - name: app-template.controllers.main.initContainers.config-fix.image.repository
           value: alpine
         - name: app-template.controllers.main.initContainers.config-fix.image.tag
-          value: 3.20.3
+          value: 3.21.0
         - name: app-template.controllers.main.initContainers.config-fix.command[0]
           value: "sh"
         - name: app-template.controllers.main.initContainers.config-fix.command[1]
