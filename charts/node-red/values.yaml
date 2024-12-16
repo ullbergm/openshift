@@ -31,7 +31,7 @@ app-template:
           image:
             # renovate: docker-image
             repository: docker.io/nodered/node-red
-            tag: 4.0.5
+            tag: 4.0.6
             pullPolicy: Always
           env:
             TZ: TIMEZONE
