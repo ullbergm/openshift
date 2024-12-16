@@ -50,7 +50,7 @@ spec:
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/onedr0p/radarr
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 5.15.1.9463
+          value: 5.16.3.9541
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
