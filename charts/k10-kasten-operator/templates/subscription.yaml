@@ -11,4 +11,4 @@ spec:
   name: k10-kasten-operator-rhmp
   source: redhat-marketplace
   sourceNamespace: openshift-marketplace
-  startingCSV: k10-kasten-operator-rhmp.v6.5.11
+  startingCSV: k10-kasten-operator-rhmp.v7.5.1
