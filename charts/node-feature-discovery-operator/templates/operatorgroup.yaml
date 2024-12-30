@@ -3,7 +3,7 @@ kind: OperatorGroup
 metadata:
   generateName: openshift-nfd-
   annotations:
-    olm.providedAPIs: 'NodeFeature.v1alpha1.nfd.openshift.io,NodeFeatureDiscovery.v1.nfd.openshift.io,NodeFeatureRule.v1alpha1.nfd.openshift.io,NodeResourceTopology.v1alpha1.topology.node.k8s.io,NodeResourceTopology.v1alpha2.topology.node.k8s.io'
+    olm.providedAPIs: 'NodeFeature.v1alpha1.nfd.openshift.io,NodeFeatureDiscovery.v1.nfd.openshift.io,NodeFeatureGroup.v1alpha1.nfd.openshift.io,NodeFeatureRule.v1alpha1.nfd.openshift.io,NodeResourceTopology.v1alpha1.topology.node.k8s.io,NodeResourceTopology.v1alpha2.topology.node.k8s.io'
   name: openshift-nfd-cluster
   namespace: openshift-nfd
 spec:
