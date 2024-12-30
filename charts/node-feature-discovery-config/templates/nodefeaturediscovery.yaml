@@ -5,7 +5,7 @@ metadata:
   namespace: openshift-nfd
 spec:
   operand:
-    image: 'registry.redhat.io/openshift4/ose-node-feature-discovery-rhel9@sha256:0f7b6eff43ff938a9cb84ca37c75fcefd8c9460d410963085fac5fafd3a6143b'
+    image: 'registry.redhat.io/openshift4/ose-node-feature-discovery-rhel9@sha256:b2c67faebc94b5fea1c2df64e475d3ede1c0e3f58b5c711ebcd00a51b6069d97'
     servicePort: 12000
   workerConfig:
     configData: |
