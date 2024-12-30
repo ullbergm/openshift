@@ -11,4 +11,4 @@ spec:
   name: kernel-module-management
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: kernel-module-management.v2.1.0
+  startingCSV: kernel-module-management.v2.2.0
