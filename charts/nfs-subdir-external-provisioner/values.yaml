@@ -21,4 +21,5 @@ nfs-subdir-external-provisioner:
     accessModes: ReadWriteMany
     defaultClass: false
     name: nfs-storage
-    pathPattern: "${.PVC.namespace}-${.PVC.name}"
+    pathPattern: "${.PVC.namespace}/${.PVC.name}"
+    
