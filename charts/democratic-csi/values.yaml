@@ -108,8 +108,8 @@ democratic-csi:
             enable: 0
           # - dev_attrib: emulate_caw
           #   enable: 1
-          # - dev_attrib: emulate_3pc
-          #   enable: 1
+          - dev_attrib: emulate_3pc
+            enable: 1
           - dev_attrib: emulate_tpu
             enable: 1
           # - dev_attrib: can_snapshot
