@@ -70,7 +70,7 @@ spec:
           value: 0.45.22
 
         - name: app-template.controllers.main.containers.main.env.WEBDRIVER_URL
-          value: ws://browserless:3000
+          value: http://browserless:3000
 
   syncPolicy:
     automated:
