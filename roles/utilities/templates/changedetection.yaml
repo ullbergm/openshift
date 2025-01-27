@@ -69,8 +69,11 @@ spec:
         - name: app-template.defaultPodOptions.labels.version
           value: 0.45.22
 
-        - name: app-template.controllers.main.containers.main.env.WEBDRIVER_URL
-          value: wss://browserless/?stealth=true
+        # - name: app-template.controllers.main.containers.main.env.WEBDRIVER_URL
+        #   value: wss://browserless/?stealth=true
+
+        - name: app-template.controllers.main.containers.main.env.PLAYWRIGHT_DRIVER_URL
+          value: ws://playwright-chrome:3000/?stealth=1&--disable-web-security=true
 
   syncPolicy:
     automated:
