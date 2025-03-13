@@ -81,7 +81,7 @@ spec:
             # One of true or false (default):
             disabled: false
             # One of true or false (default):
-            isDefault: true 
+            isDefault: false 
             # {{ index .Values "synology-csi" "default" }}
             # One of "Retain" or "Delete" (default):
             reclaimPolicy: Retain
