@@ -25,7 +25,7 @@ democratic-csi:
   # add note here about volume expansion requirements
   storageClasses:
     - name: synology-iscsi
-      defaultClass: false
+      defaultClass: true
       reclaimPolicy: Delete
       volumeBindingMode: Immediate
       allowVolumeExpansion: true
