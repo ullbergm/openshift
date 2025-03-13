@@ -24,7 +24,7 @@ democratic-csi:
 
 synology-csi:
   enabled: true
-  default: false
+  default: true
   dsm: 10.0.0.10
   volume: volume1
   fstype: ext4
