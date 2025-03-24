@@ -48,7 +48,7 @@ spec:
 
         # renovate custom-docker versioning=loose
         - name: app-template.controllers.main.containers.main.image.repository
-          value: ghcr.io/onedr0p/radarr
+          value: ghcr.io/home-operations/radarr
         - name: app-template.controllers.main.containers.main.image.tag
           value: 5.20.1.9773
         - name: app-template.controllers.main.containers.main.image.pullPolicy

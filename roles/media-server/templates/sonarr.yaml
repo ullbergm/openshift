@@ -48,7 +48,7 @@ spec:
 
         # renovate custom-docker versioning=loose
         - name: app-template.controllers.main.containers.main.image.repository
-          value: ghcr.io/onedr0p/sonarr
+          value: ghcr.io/home-operations/sonarr
         - name: app-template.controllers.main.containers.main.image.tag
           value: 4.0.14.2938
         - name: app-template.controllers.main.containers.main.image.pullPolicy

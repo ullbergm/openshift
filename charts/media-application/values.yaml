@@ -34,7 +34,7 @@ app-template:
         main:
           image:
             # renovate: docker-image versioning=loose
-            repository: ghcr.io/onedr0p/app
+            repository: ghcr.io/home-operations/app
             tag: 1.0.0.0000
             pullPolicy: IfNotPresent
           env:

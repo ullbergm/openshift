@@ -13,7 +13,7 @@ app-template:
         main:
           image:
             # renovate: docker-image versioning=loose
-            repository: ghcr.io/onedr0p/plex
+            repository: ghcr.io/home-operations/plex
             tag: 1.40.2.8395-c67dce28e
             pullPolicy: IfNotPresent
           env:
