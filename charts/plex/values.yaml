@@ -13,8 +13,8 @@ app-template:
         main:
           image:
             # renovate: docker-image versioning=loose
-            repository: ghcr.io/home-operations/plex
-            tag: 1.40.2.8395-c67dce28e
+            repository: lscr.io/linuxserver/plex
+            tag: 1.41.5
             pullPolicy: IfNotPresent
           env:
             TZ: TIMEZONE
