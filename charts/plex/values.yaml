@@ -22,6 +22,8 @@ app-template:
           resources: 
             requests:
               gpu.intel.com/i915: 1
+            limits:
+              gpu.intel.com/i915: 1
 
   serviceAccount:
     name: plex-sa
