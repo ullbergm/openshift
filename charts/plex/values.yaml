@@ -18,6 +18,10 @@ app-template:
             pullPolicy: IfNotPresent
           env:
             TZ: TIMEZONE
+            
+          resources: 
+            requests:
+              gpu.intel.com/i915: 1
 
   serviceAccount:
     name: plex-sa
