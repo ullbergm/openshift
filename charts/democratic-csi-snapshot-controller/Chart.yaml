@@ -9,5 +9,5 @@ maintainers:
     email: magnus@ullberg.us
 dependencies:
 - name: snapshot-controller
-  version: "0.2.4"
+  version: "0.3.0"
   repository: "https://democratic-csi.github.io/charts"
