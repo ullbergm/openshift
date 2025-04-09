@@ -19,12 +19,12 @@ app-template:
           args:
               - --log-level
               - info
-              - --device
-              - |
-                name: zwave
-                groups:
-                  - paths:
-                      - path: /dev/serial/by-id/usb-0658_0200-if00
+              # - --device
+              # - |
+              #   name: zwave
+              #   groups:
+              #     - paths:
+              #         - path: /dev/serial/by-id/usb-0658_0200-if00
               - --device
               - |
                 name: adsb1090
