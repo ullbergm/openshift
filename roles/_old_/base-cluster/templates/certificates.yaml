@@ -1,0 +1,37 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: certificates
+  namespace: openshift-gitops
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: default
+    server: {{ .Values.spec.destination.server }}
+  project: default
+  source:
+    path: charts/certificates
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    helm:
+      parameters:
+        - name: cluster.top_level_domain
+          value: {{ .Values.cluster.top_level_domain }}
+        - name: cluster.name
+          value: {{ .Values.cluster.name }}
+        - name: cluster.admin_email
+          value: {{ .Values.cluster.admin_email }}
+        - name: issuer
+          value: {{ .Values.certificates.issuer }}
+        - name: aws.region
+          value: {{ .Values.certificates.aws.region }}
+        - name: aws.hosted_zone_id
+          value: {{ .Values.certificates.aws.hosted_zone_id }}
+        - name: aws.access_key_id
+          value: {{ .Values.certificates.aws.access_key_id }}
+        - name: aws.secret_access_key
+          value: {{ .Values.certificates.aws.secret_access_key }}
+  syncPolicy:
+    automated:
+      selfHeal: true

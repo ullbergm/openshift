@@ -1,9 +1,0 @@
----
-apiVersion: v2
-description: A Helm chart to install various utilities to the cluster.
-name: media
-version: 0.1.0
-kubeVersion: ">=1.22.0-0"
-maintainers:
-  - name: Magnus Ullberg
-    email: magnus@ullberg.us

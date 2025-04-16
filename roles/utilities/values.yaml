@@ -10,11 +10,3 @@ cluster:
   name: my-cluster
   admin_email: YOUR_EMAIL
   timezone: YOUR_TIMEZONE
-
-config:
-  storageClassName: "synology-iscsi"
-
-media:
-  nfs:
-    server: my-nas
-    path: /mnt/nfs

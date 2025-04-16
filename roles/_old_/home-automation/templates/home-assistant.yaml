@@ -1,0 +1,77 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: home-assistant
+  namespace: openshift-gitops
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: home-assistant
+    server: {{ .Values.spec.destination.server }}
+  project: default
+  source:
+    path: charts/media-application
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    helm:
+      parameters:
+        - name: cluster.top_level_domain
+          value: {{ .Values.cluster.top_level_domain }}
+        - name: cluster.name
+          value: {{ .Values.cluster.name }}
+        - name: cluster.admin_email
+          value: {{ .Values.cluster.admin_email }}
+        - name: cluster.timezone
+          value: {{ .Values.cluster.timezone }}
+          
+        - name: storage.storageClassName
+          value: {{ .Values.config.storageClassName }}
+        - name: storage.media.nfs.server
+          value: {{ .Values.media.nfs.server }}
+        - name: storage.media.nfs.path
+          value: {{ .Values.media.nfs.path }}
+
+        - name: application.name
+          value: Home Assistant
+        - name: application.group
+          value: Home Automation
+        - name: application.icon
+          value: mdi:home-assistant
+        - name: application.iconColor
+          value: skyblue
+        - name: application.image
+          value: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Home_Assistant_Logo.svg'
+        - name: application.description
+          value: "Home Automation"
+        - name: app-template.service.main.ports.http.port
+          value: '8123'
+
+        # renovate custom-docker
+        - name: app-template.controllers.main.containers.main.image.repository
+          value: ghcr.io/home-assistant/home-assistant
+        - name: app-template.controllers.main.containers.main.image.tag
+          value: 2025.4.2
+        - name: app-template.controllers.main.containers.main.image.pullPolicy
+          value: IfNotPresent
+        - name: app-template.controllers.main.containers.main.env.TZ
+          value: America/New_York
+
+        - name: app-template.serviceAccount.name
+          value: homeassistant-sa
+        - name: app-template.persistence.data.existingClaim
+          value: home-assistant-data-volume
+        - name: app-template.persistence.config.existingClaim
+          value: home-assistant-config
+
+        - name: app-template.defaultPodOptions.labels.app
+          value: home-assistant
+        - name: app-template.defaultPodOptions.labels.version
+          value: 0.45.22
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
