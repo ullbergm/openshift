@@ -59,7 +59,7 @@ spec:
         #   value: home-assistant-data-volume
           
         - name: app-template.persistence.config.enabled
-          value: true
+          value: "true"
         - name: app-template.persistence.config.existingClaim
           value: home-assistant-config
 

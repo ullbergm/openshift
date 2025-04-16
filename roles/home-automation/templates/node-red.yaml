@@ -26,7 +26,7 @@ spec:
           value: {{ .Values.cluster.timezone }}
           
         - name: app-template.persistence.config.enabled
-          value: true
+          value: "true"
         
         - name: application.group
           value: Home Automation
