@@ -11,6 +11,6 @@ metadata:
 spec:
   claimPropertySets:
     - accessModes:
-      - ReadWriteMany
+      - ReadWriteOnce
       volumeMode: 
         Filesystem
