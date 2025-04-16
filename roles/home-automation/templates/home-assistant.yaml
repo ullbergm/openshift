@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: zwavejs2mqtt
+  name: home-assistant
   namespace: openshift-gitops
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: zwavejs2mqtt
+    namespace: home-assistant
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
-    path: charts/zwavejs2mqtt
+    path: charts/media-application
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:
@@ -24,34 +24,49 @@ spec:
           value: {{ .Values.cluster.admin_email }}
         - name: cluster.timezone
           value: {{ .Values.cluster.timezone }}
-          
-        - name: storage.storageClassName
-          value: {{ .Values.config.storageClassName }}
-        - name: storage.media.nfs.server
-          value: {{ .Values.media.nfs.server }}
-        - name: storage.media.nfs.path
-          value: {{ .Values.media.nfs.path }}
 
         - name: application.name
-          value: Z-Wave JS to MQTT
+          value: Home Assistant
         - name: application.group
           value: Home Automation
         - name: application.icon
-          value: mdi:zwave
+          value: mdi:home-assistant
+        - name: application.iconColor
+          value: skyblue
         - name: application.image
           value: 'https://upload.wikimedia.org/wikipedia/commons/6/6e/Home_Assistant_Logo.svg'
         - name: application.description
           value: "Home Automation"
         - name: app-template.service.main.ports.http.port
-          value: '8091'
+          value: '8123'
+
+        # renovate custom-docker
+        - name: app-template.controllers.main.containers.main.image.repository
+          value: ghcr.io/home-assistant/home-assistant
+        - name: app-template.controllers.main.containers.main.image.tag
+          value: 2025.4.2
+        - name: app-template.controllers.main.containers.main.image.pullPolicy
+          value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
           value: America/New_York
 
         - name: app-template.serviceAccount.name
-          value: zwavejs2mqtt-sa
+          value: homeassistant-sa
+          
+        # - name: app-template.persistence.data.enabled
+        #   value: true
+        # - name: app-template.persistence.data.existingClaim
+        #   value: home-assistant-data-volume
+          
+        - name: app-template.persistence.config.enabled
+          value: true
         - name: app-template.persistence.config.existingClaim
-          value: zwavejs2mqtt-config
+          value: home-assistant-config
 
+        - name: app-template.defaultPodOptions.labels.app
+          value: home-assistant
+        - name: app-template.defaultPodOptions.labels.version
+          value: 0.45.22
 
   syncPolicy:
     automated:
