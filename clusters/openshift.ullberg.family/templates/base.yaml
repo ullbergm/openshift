@@ -36,6 +36,3 @@ spec:
 
         - name: network.lan.defaultGW
           value: {{ .Values.network.lan.defaultGW }}
-  syncPolicy:
-    automated:
-      selfHeal: true
