@@ -1,14 +1,14 @@
-{{ if .Values.applications.bazarr }}
+{{ if .Values.applications.lidarr }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: bazarr
+  name: lidarr
   namespace: openshift-gitops
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: bazarr
+    namespace: lidarr
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
@@ -26,49 +26,51 @@ spec:
         - name: cluster.timezone
           value: {{ .Values.cluster.timezone }}
           
-        - name: storage.storageClassName
-          value: {{ .Values.config.storageClassName }}
         - name: storage.media.nfs.server
           value: {{ .Values.media.nfs.server }}
         - name: storage.media.nfs.path
           value: {{ .Values.media.nfs.path }}
 
         - name: application.name
-          value: bazarr
+          value: lidarr
         - name: application.group
           value: Media
         - name: application.icon
-          value: subtitles
+          value: music-box
         - name: application.image
-          value: 'https://www.bazarr.media/assets/img/logo.png'
+          value: 'https://raw.githubusercontent.com/Lidarr/Lidarr/develop/Logo/400.png'
         - name: application.description
-          value: "Manages subtitles"
+          value: "Manages your music library"
         - name: app-template.service.main.ports.http.port
-          value: '6767'
+          value: '8686'
 
-        # renovate custom-docker versioning=semver
+        # renovate custom-docker versioning=loose
         - name: app-template.controllers.main.containers.main.image.repository
-          value: ghcr.io/home-operations/bazarr
+          value: ghcr.io/home-operations/lidarr
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 1.5.1
+          value: 2.11.1.4621
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
           value: America/New_York
 
         - name: app-template.serviceAccount.name
-          value: bazarr-sa
+          value: lidarr-sa
+        - name: app-template.persistence.data.enabled
+          value: "true"
         - name: app-template.persistence.data.existingClaim
-          value: bazarr-data-volume
+          value: lidarr-data-volume
+        - name: app-template.persistence.config.enabled
+          value: "true"
         - name: app-template.persistence.config.existingClaim
-          value: bazarr-config
+          value: lidarr-config
         - name: app-template.persistence.config.globalMounts[0].path
           value: /config
 
         - name: app-template.defaultPodOptions.labels.app
-          value: bazarr
+          value: lidarr
         - name: app-template.defaultPodOptions.labels.version
-          value: 1.4.2
+          value: 2.2.5.4141
 
   syncPolicy:
     automated:

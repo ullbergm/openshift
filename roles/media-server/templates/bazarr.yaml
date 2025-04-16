@@ -1,14 +1,14 @@
-{{ if .Values.applications.gaps }}
+{{ if .Values.applications.bazarr }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: gaps
+  name: bazarr
   namespace: openshift-gitops
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: gaps
+    namespace: bazarr
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
@@ -26,49 +26,51 @@ spec:
         - name: cluster.timezone
           value: {{ .Values.cluster.timezone }}
           
-        - name: storage.storageClassName
-          value: {{ .Values.config.storageClassName }}
         - name: storage.media.nfs.server
           value: {{ .Values.media.nfs.server }}
         - name: storage.media.nfs.path
           value: {{ .Values.media.nfs.path }}
 
         - name: application.name
-          value: Gaps
+          value: bazarr
         - name: application.group
           value: Media
         - name: application.icon
-          value: movie-open
+          value: subtitles
         - name: application.image
-          value: 'https://raw.githubusercontent.com/JasonHHouse/gaps/master/images/Final-Black.png'
+          value: 'https://www.bazarr.media/assets/img/logo.png'
         - name: application.description
-          value: "Helps find missing movies in a series"
+          value: "Manages subtitles"
         - name: app-template.service.main.ports.http.port
-          value: '8484'
+          value: '6767'
 
-        # renovate custom-docker versioning=loose
+        # renovate custom-docker versioning=semver
         - name: app-template.controllers.main.containers.main.image.repository
-          value: housewrecker/gaps
+          value: ghcr.io/home-operations/bazarr
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 'x64-v0.10.4'
+          value: 1.5.1
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
           value: America/New_York
 
         - name: app-template.serviceAccount.name
-          value: gaps-sa
+          value: bazarr-sa
+        - name: app-template.persistence.data.enabled
+          value: "true"
         - name: app-template.persistence.data.existingClaim
-          value: gaps-data-volume
+          value: bazarr-data-volume
+        - name: app-template.persistence.config.enabled
+          value: "true"
         - name: app-template.persistence.config.existingClaim
-          value: gaps-config
+          value: bazarr-config
         - name: app-template.persistence.config.globalMounts[0].path
-          value: /usr/data
+          value: /config
 
         - name: app-template.defaultPodOptions.labels.app
-          value: gaps
+          value: bazarr
         - name: app-template.defaultPodOptions.labels.version
-          value: '0.10.4'
+          value: 1.4.2
 
   syncPolicy:
     automated:

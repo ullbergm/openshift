@@ -1,14 +1,14 @@
-{{ if .Values.applications.readarr }}
+{{ if .Values.applications.kavita }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: readarr
+  name: kavita
   namespace: openshift-gitops
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: readarr
+    namespace: kavita
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
@@ -26,49 +26,51 @@ spec:
         - name: cluster.timezone
           value: {{ .Values.cluster.timezone }}
           
-        - name: storage.storageClassName
-          value: {{ .Values.config.storageClassName }}
         - name: storage.media.nfs.server
           value: {{ .Values.media.nfs.server }}
         - name: storage.media.nfs.path
           value: {{ .Values.media.nfs.path }}
 
         - name: application.name
-          value: readarr
+          value: kavita
         - name: application.group
           value: Media
         - name: application.icon
-          value: book-open
+          value: book
         - name: application.image
-          value: 'https://raw.githubusercontent.com/Readarr/Readarr/develop/Logo/400.png'
+          value: 'https://raw.githubusercontent.com/Kareadita/Kavita/develop/Logo/kavita.svg'
         - name: application.description
-          value: "Manages your eBook library"
+          value: "Manga reader"
         - name: app-template.service.main.ports.http.port
-          value: '8787'
+          value: '5000'
 
-        # renovate custom-docker versioning=loose
+        # renovate custom-docker versioning=semver
         - name: app-template.controllers.main.containers.main.image.repository
-          value: ghcr.io/k8s-at-home/readarr
+          value: jvmilazz0/kavita
         - name: app-template.controllers.main.containers.main.image.tag
-          value: v0.1.1.1352
+          value: 0.8.6
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
           value: America/New_York
 
         - name: app-template.serviceAccount.name
-          value: readarr-sa
+          value: kavita-sa
+        - name: app-template.persistence.data.enabled
+          value: "true"
         - name: app-template.persistence.data.existingClaim
-          value: readarr-data-volume
+          value: kavita-data-volume
+        - name: app-template.persistence.config.enabled
+          value: "true"
         - name: app-template.persistence.config.existingClaim
-          value: readarr-config
+          value: kavita-config
         - name: app-template.persistence.config.globalMounts[0].path
-          value: /config
+          value: /kavita/config
 
         - name: app-template.defaultPodOptions.labels.app
-          value: readarr
+          value: kavita
         - name: app-template.defaultPodOptions.labels.version
-          value: v0.1.1.1352
+          value: 0.8.1
 
   syncPolicy:
     automated:

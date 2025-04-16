@@ -25,9 +25,6 @@ applications:
   sonarr: true
   tautulli: true
 
-config:
-  storageClassName: "synology-iscsi"
-
 media:
   nfs:
     server: my-nas

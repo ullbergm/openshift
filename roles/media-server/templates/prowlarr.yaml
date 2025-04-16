@@ -1,14 +1,14 @@
-{{ if .Values.applications.lidarr }}
+{{ if .Values.applications.prowlarr }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: lidarr
+  name: prowlarr
   namespace: openshift-gitops
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: lidarr
+    namespace: prowlarr
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
@@ -26,49 +26,51 @@ spec:
         - name: cluster.timezone
           value: {{ .Values.cluster.timezone }}
           
-        - name: storage.storageClassName
-          value: {{ .Values.config.storageClassName }}
         - name: storage.media.nfs.server
           value: {{ .Values.media.nfs.server }}
         - name: storage.media.nfs.path
           value: {{ .Values.media.nfs.path }}
 
         - name: application.name
-          value: lidarr
+          value: prowlarr
         - name: application.group
           value: Media
         - name: application.icon
-          value: music-box
+          value: cloud-search
         - name: application.image
-          value: 'https://raw.githubusercontent.com/Lidarr/Lidarr/develop/Logo/400.png'
+          value: 'https://raw.githubusercontent.com/Prowlarr/Prowlarr/develop/Logo/400.png'
         - name: application.description
-          value: "Manages your music library"
+          value: "Indexer manager/proxy"
         - name: app-template.service.main.ports.http.port
-          value: '8686'
+          value: '9696'
 
         # renovate custom-docker versioning=loose
         - name: app-template.controllers.main.containers.main.image.repository
-          value: ghcr.io/home-operations/lidarr
+          value: ghcr.io/home-operations/prowlarr
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 2.11.1.4621
+          value: 1.34.0.5016
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
           value: America/New_York
 
         - name: app-template.serviceAccount.name
-          value: lidarr-sa
+          value: prowlarr-sa
+        - name: app-template.persistence.data.enabled
+          value: "true"
         - name: app-template.persistence.data.existingClaim
-          value: lidarr-data-volume
+          value: prowlarr-data-volume
+        - name: app-template.persistence.config.enabled
+          value: "true"
         - name: app-template.persistence.config.existingClaim
-          value: lidarr-config
+          value: prowlarr-config
         - name: app-template.persistence.config.globalMounts[0].path
           value: /config
 
         - name: app-template.defaultPodOptions.labels.app
-          value: lidarr
+          value: prowlarr
         - name: app-template.defaultPodOptions.labels.version
-          value: 2.2.5.4141
+          value: 1.16.2.4435
 
   syncPolicy:
     automated:

@@ -26,8 +26,6 @@ spec:
         - name: cluster.timezone
           value: {{ .Values.cluster.timezone }}
           
-        - name: storage.storageClassName
-          value: {{ .Values.config.storageClassName }}
         - name: storage.media.nfs.server
           value: {{ .Values.media.nfs.server }}
         - name: storage.media.nfs.path

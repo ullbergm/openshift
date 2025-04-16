@@ -1,14 +1,14 @@
-{{ if .Values.applications.tautulli }}
+{{ if .Values.applications.sonarr }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tautulli
+  name: sonarr
   namespace: openshift-gitops
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: tautulli
+    namespace: sonarr
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
@@ -26,49 +26,51 @@ spec:
         - name: cluster.timezone
           value: {{ .Values.cluster.timezone }}
           
-        - name: storage.storageClassName
-          value: {{ .Values.config.storageClassName }}
         - name: storage.media.nfs.server
           value: {{ .Values.media.nfs.server }}
         - name: storage.media.nfs.path
           value: {{ .Values.media.nfs.path }}
 
         - name: application.name
-          value: Tautulli
+          value: sonarr
         - name: application.group
           value: Media
         - name: application.icon
-          value: chart-bar
+          value: television-box
         - name: application.image
-          value: 'https://tautulli.com/images/logo.svg'
+          value: 'https://raw.githubusercontent.com/Sonarr/Sonarr/develop/Logo/400.png'
         - name: application.description
-          value: "Statistics for Plex"
+          value: "Manages your TV show library"
         - name: app-template.service.main.ports.http.port
-          value: '8181'
+          value: '8989'
 
-        # renovate custom-docker versioning=semver
+        # renovate custom-docker versioning=loose
         - name: app-template.controllers.main.containers.main.image.repository
-          value: ghcr.io/home-operations/tautulli
+          value: ghcr.io/home-operations/sonarr
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 2.15.2
+          value: 4.0.14.2938
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
           value: America/New_York
 
         - name: app-template.serviceAccount.name
-          value: tautulli-sa
+          value: sonarr-sa
+        - name: app-template.persistence.data.enabled
+          value: "true"
         - name: app-template.persistence.data.existingClaim
-          value: tautulli-data-volume
+          value: sonarr-data-volume
+        - name: app-template.persistence.config.enabled
+          value: "true"
         - name: app-template.persistence.config.existingClaim
-          value: tautulli-config
+          value: sonarr-config
         - name: app-template.persistence.config.globalMounts[0].path
           value: /config
 
         - name: app-template.defaultPodOptions.labels.app
-          value: tautulli
+          value: sonarr
         - name: app-template.defaultPodOptions.labels.version
-          value: 2.13.4
+          value: 4.0.4.1491
 
   syncPolicy:
     automated:

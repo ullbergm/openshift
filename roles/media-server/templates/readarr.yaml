@@ -1,14 +1,14 @@
-{{ if .Values.applications.sabnzbd }}
+{{ if .Values.applications.readarr }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: sabnzbd
+  name: readarr
   namespace: openshift-gitops
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: sabnzbd
+    namespace: readarr
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
@@ -26,71 +26,51 @@ spec:
         - name: cluster.timezone
           value: {{ .Values.cluster.timezone }}
           
-        - name: storage.storageClassName
-          value: {{ .Values.config.storageClassName }}
         - name: storage.media.nfs.server
           value: {{ .Values.media.nfs.server }}
         - name: storage.media.nfs.path
           value: {{ .Values.media.nfs.path }}
 
         - name: application.name
-          value: sabnzbd
+          value: readarr
         - name: application.group
           value: Media
         - name: application.icon
-          value: download-box
-        - name: application.iconColor
-          value: orange
+          value: book-open
         - name: application.image
-          value: 'https://raw.githubusercontent.com/sabnzbd/sabnzbd/develop/icons/logo-arrow.svg'
+          value: 'https://raw.githubusercontent.com/Readarr/Readarr/develop/Logo/400.png'
         - name: application.description
-          value: "Efficient Usenet downloader"
-        - name: application.location
-          value: '100'
+          value: "Manages your eBook library"
         - name: app-template.service.main.ports.http.port
-          value: '8080'
+          value: '8787'
 
-        # renovate custom-docker versioning=semver
-        - name: app-template.controllers.main.initContainers.config-fix.image.repository
-          value: alpine
-        - name: app-template.controllers.main.initContainers.config-fix.image.tag
-          value: 3.21.3
-        - name: app-template.controllers.main.initContainers.config-fix.command[0]
-          value: "sh"
-        - name: app-template.controllers.main.initContainers.config-fix.command[1]
-          value: "-c"
-        - name: app-template.controllers.main.initContainers.config-fix.command[2]
-          value: 'if test -f /config/sabnzbd.ini; then sed -i "s/^host_whitelist.*/host_whitelist = sabnzbd.sabnzbd,sabnzbd.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}/" /config/sabnzbd.ini; fi'
-        - name: app-template.controllers.main.initContainers.config-fix.securityContext.readOnlyRootFilesystem
-          value: 'true'
-        - name: app-template.controllers.main.initContainers.config-fix.securityContext.runAsUser
-          value: '0'
-        - name: app-template.controllers.main.initContainers.config-fix.securityContext.runAsNonRoot
-          value: 'false'
-
-        # renovate custom-docker versioning=semver
+        # renovate custom-docker versioning=loose
         - name: app-template.controllers.main.containers.main.image.repository
-          value: ghcr.io/home-operations/sabnzbd
+          value: ghcr.io/k8s-at-home/readarr
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 4.5.1
+          value: v0.1.1.1352
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
           value: America/New_York
 
         - name: app-template.serviceAccount.name
-          value: sabnzbd-sa
+          value: readarr-sa
+        - name: app-template.persistence.data.enabled
+          value: "true"
         - name: app-template.persistence.data.existingClaim
-          value: sabnzbd-data-volume
+          value: readarr-data-volume
+        - name: app-template.persistence.config.enabled
+          value: "true"
         - name: app-template.persistence.config.existingClaim
-          value: sabnzbd-config
+          value: readarr-config
         - name: app-template.persistence.config.globalMounts[0].path
           value: /config
 
         - name: app-template.defaultPodOptions.labels.app
-          value: sabnzbd
+          value: readarr
         - name: app-template.defaultPodOptions.labels.version
-          value: 4.3.1
+          value: v0.1.1.1352
 
   syncPolicy:
     automated:

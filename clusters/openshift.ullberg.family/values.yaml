@@ -24,3 +24,8 @@ democratic-csi:
         username: my-username
       iscsi:
         targetPortal: "my-server[:port]"
+
+media:
+  nfs:
+    server: my-nas
+    path: /mnt/nfs

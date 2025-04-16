@@ -1,14 +1,14 @@
-{{ if .Values.applications.kavita }}
+{{ if .Values.applications.gaps }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: kavita
+  name: gaps
   namespace: openshift-gitops
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: kavita
+    namespace: gaps
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
@@ -26,49 +26,51 @@ spec:
         - name: cluster.timezone
           value: {{ .Values.cluster.timezone }}
           
-        - name: storage.storageClassName
-          value: {{ .Values.config.storageClassName }}
         - name: storage.media.nfs.server
           value: {{ .Values.media.nfs.server }}
         - name: storage.media.nfs.path
           value: {{ .Values.media.nfs.path }}
 
         - name: application.name
-          value: kavita
+          value: Gaps
         - name: application.group
           value: Media
         - name: application.icon
-          value: book
+          value: movie-open
         - name: application.image
-          value: 'https://raw.githubusercontent.com/Kareadita/Kavita/develop/Logo/kavita.svg'
+          value: 'https://raw.githubusercontent.com/JasonHHouse/gaps/master/images/Final-Black.png'
         - name: application.description
-          value: "Manga reader"
+          value: "Helps find missing movies in a series"
         - name: app-template.service.main.ports.http.port
-          value: '5000'
+          value: '8484'
 
-        # renovate custom-docker versioning=semver
+        # renovate custom-docker versioning=loose
         - name: app-template.controllers.main.containers.main.image.repository
-          value: jvmilazz0/kavita
+          value: housewrecker/gaps
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 0.8.6
+          value: 'x64-v0.10.4'
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
           value: America/New_York
 
         - name: app-template.serviceAccount.name
-          value: kavita-sa
+          value: gaps-sa
+        - name: app-template.persistence.data.enabled
+          value: "true"
         - name: app-template.persistence.data.existingClaim
-          value: kavita-data-volume
+          value: gaps-data-volume
+        - name: app-template.persistence.config.enabled
+          value: "true"
         - name: app-template.persistence.config.existingClaim
-          value: kavita-config
+          value: gaps-config
         - name: app-template.persistence.config.globalMounts[0].path
-          value: /kavita/config
+          value: /usr/data
 
         - name: app-template.defaultPodOptions.labels.app
-          value: kavita
+          value: gaps
         - name: app-template.defaultPodOptions.labels.version
-          value: 0.8.1
+          value: '0.10.4'
 
   syncPolicy:
     automated:
