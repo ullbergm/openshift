@@ -12,3 +12,5 @@ spec:
     - CompactAndScale
   deschedulingIntervalSeconds: 3600
   managementState: Managed
+  profileCustomizations:
+    devEnableEvictionsInBackground: true
