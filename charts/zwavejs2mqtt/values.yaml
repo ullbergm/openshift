@@ -23,11 +23,11 @@ app-template:
             TZ: TIMEZONE
           probes:
             startup:
-              enabled: true
+              enabled: false
             readiness:
-              enabled: true
+              enabled: false
             liveness:
-              enabled: true
+              enabled: false
 
           resources:
             requests:
