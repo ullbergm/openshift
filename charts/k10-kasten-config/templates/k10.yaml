@@ -9,6 +9,9 @@ spec:
       enabled: false
     tokenAuth:
       enabled: true
+  global:
+    persistence:
+      storageClass: synology-iscsi
   metering:
     mode: airgap
   route:
