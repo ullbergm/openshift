@@ -53,11 +53,11 @@ app-template:
 
   persistence:
     config:
-      enabled: true
+      enabled: false
       existingClaim: app-config
 
     data:
-      enabled: true
+      enabled: false
       existingClaim: app-data-volume
       globalMounts:
         - path: /data

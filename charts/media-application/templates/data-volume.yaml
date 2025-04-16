@@ -1,4 +1,5 @@
 {{ $at := index .Values "app-template" }}
+{{ if $at.persistence.data.enabled }}
 ---
 apiVersion: v1
 kind: PersistentVolume
