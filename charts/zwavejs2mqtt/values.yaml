@@ -74,3 +74,5 @@ app-template:
       enabled: true
       hostPath: /dev/serial/by-id/usb-0658_0200-if00
       type: hostPath
+      globalMounts:
+        - path: /dev/zwave
