@@ -3,6 +3,8 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   name: applications.hajimari.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
 spec:
   conversion:
     strategy: None
@@ -58,6 +60,8 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   name: bookmarks.hajimari.io
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
 spec:
   conversion:
     strategy: None
@@ -112,6 +116,8 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   name: applications.startpunkt.ullberg.us
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
 spec:
   group: startpunkt.ullberg.us
   names:
@@ -170,6 +176,8 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   name: bookmarks.startpunkt.ullberg.us
+  annotations:
+    argocd.argoproj.io/sync-wave: "-2"
 spec:
   group: startpunkt.ullberg.us
   names:
