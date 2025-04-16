@@ -105,15 +105,15 @@ democratic-csi:
           # can_snapshot = Snapshot
           dev_attribs:
           - dev_attrib: emulate_tpws
-            enable: 0
-          # - dev_attrib: emulate_caw
-          #   enable: 1
+            enable: 1
+          - dev_attrib: emulate_caw
+            enable: 1
           - dev_attrib: emulate_3pc
             enable: 1
           - dev_attrib: emulate_tpu
             enable: 1
-          # - dev_attrib: can_snapshot
-          #   enable: 1
+          - dev_attrib: can_snapshot
+            enable: 1
 
           # btfs thick provisioning
           # only zeroing and locking supported
