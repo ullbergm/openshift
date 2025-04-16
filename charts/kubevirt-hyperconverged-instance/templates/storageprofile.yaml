@@ -14,3 +14,4 @@ spec:
       - ReadWriteOnce
       volumeMode: 
         Block
+  cloneStrategy: csi-clone
