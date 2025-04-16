@@ -3,7 +3,7 @@ apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: zoho
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: ZoHo Mail
   group: Communication
@@ -16,7 +16,7 @@ apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: reddit
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: Reddit
   group: Communication
@@ -28,7 +28,7 @@ apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: linkedin
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: LinkedIn
   group: Business
@@ -40,7 +40,7 @@ apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: netflix
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: Netflix
   group: Entertainment
@@ -52,7 +52,7 @@ apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: amazon-video
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: Amazon Video
   group: Entertainment
@@ -64,7 +64,7 @@ apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: youtube
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: Youtube
   group: Entertainment
@@ -76,7 +76,7 @@ apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: spotify
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: Spotify
   group: Entertainment
@@ -88,7 +88,7 @@ apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: makerworld
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: Makerworld
   group: 3D Printing
@@ -100,7 +100,7 @@ apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: printables
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: Printables
   group: 3D Printing
@@ -112,7 +112,7 @@ apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Bookmark
 metadata:
   name: thingiverse
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: Thingiverse
   group: 3D Printing

@@ -2,7 +2,7 @@ apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Application
 metadata:
   name: nas
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: Synology
   group: Infrastructure
@@ -14,7 +14,7 @@ apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Application
 metadata:
   name: old-homeassistant
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: old Home Assistant
   group: Utilities
@@ -26,7 +26,7 @@ apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Application
 metadata:
   name: valetudo
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: Vacuum
   group: Home Automation
@@ -38,7 +38,7 @@ apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Application
 metadata:
   name: unifi
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: UniFi
   group: Infrastructure
@@ -50,7 +50,7 @@ spec:
 # kind: Application
 # metadata:
 #   name: firewall
-#   namespace: hajimari
+#   namespace: startpunkt
 # spec:
 #   name: Router
 #   group: Infrastructure
@@ -62,7 +62,7 @@ spec:
 # kind: Application
 # metadata:
 #   name: switch
-#   namespace: hajimari
+#   namespace: startpunkt
 # spec:
 #   name: Main switch
 #   group: Infrastructure
@@ -74,7 +74,7 @@ spec:
 # kind: Application
 # metadata:
 #   name: poe-switch
-#   namespace: hajimari
+#   namespace: startpunkt
 # spec:
 #   name: PoE switch
 #   group: Infrastructure
@@ -86,7 +86,7 @@ apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Application
 metadata:
   name: artifactory
-  namespace: hajimari
+  namespace: startpunkt
 spec:
   name: Artifactory
   group: Infrastructure
