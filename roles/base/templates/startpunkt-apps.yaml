@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: openshift
   namespace: startpunkt
-  annotations:
-    argocd.argoproj.io/sync-wave: "2"
 spec:
   name: OpenShift
   group: Infrastructure
