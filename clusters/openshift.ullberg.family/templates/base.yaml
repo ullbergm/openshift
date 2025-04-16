@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: base-cluster
+  name: base
   namespace: openshift-gitops
   finalizers:
   - resources-finalizer.argocd.argoproj.io
