@@ -84,7 +84,12 @@
 
        k10.kasten.io/is-snapshot-class: true
 
-7. Update network config to have the allowedCIDRs
+7. Customize ingress controller
+
+      oc patch -n openshift-ingress-operator ingresscontroller/default --patch '{"spec":{"httpErrorCodePages":{"name":"custom-error-code-pages"}}}' --type=merge
+
+
+8. Update network config to have the allowedCIDRs
 
       spec:
         clusterNetwork:

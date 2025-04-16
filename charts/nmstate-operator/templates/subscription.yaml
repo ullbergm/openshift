@@ -7,8 +7,8 @@ metadata:
   namespace: openshift-nmstate
 spec:
   channel: stable
-  installPlanApproval: Manual
+  installPlanApproval: Automatic
   name: kubernetes-nmstate-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: kubernetes-nmstate-operator.4.17.0-202412110234
+  startingCSV: kubernetes-nmstate-operator.4.18.0-202504021503
