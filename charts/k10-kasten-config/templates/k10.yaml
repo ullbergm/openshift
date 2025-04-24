@@ -36,6 +36,7 @@ spec:
     - openshift-apiserver-operator
     - openshift-authentication
     - openshift-authentication-operator
+    - openshift-catalogd
     - openshift-cloud-controller-manager
     - openshift-cloud-controller-manager-operator
     - openshift-cloud-network-config-controller
@@ -43,6 +44,7 @@ spec:
     - openshift-cluster-csi-drivers
     - openshift-cluster-machine-approver
     - openshift-cluster-node-tuning-operator
+    - openshift-cluster-olm-operator
     - openshift-cluster-samples-operator
     - openshift-cluster-storage-operator
     - openshift-cluster-version
@@ -84,6 +86,7 @@ spec:
     - openshift-marketplace
     - openshift-monitoring
     - openshift-multus
+    - openshift-network-console
     - openshift-network-diagnostics
     - openshift-network-node-identity
     - openshift-network-operator
@@ -93,6 +96,7 @@ spec:
     - openshift-nutanix-infra
     - openshift-oauth-apiserver
     - openshift-openstack-infra
+    - openshift-operator-controller
     - openshift-operator-lifecycle-manager
     - openshift-operators
     - openshift-ovirt-infra
