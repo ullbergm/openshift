@@ -6,7 +6,7 @@ spec:
     targetRevision: HEAD
   syncPolicy:
     automated:
-      enabled: true
+      enabled: 'true'
 
 cluster:
   top_level_domain: example.com

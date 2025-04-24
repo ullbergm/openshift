@@ -25,11 +25,7 @@ spec:
         - name: spec.source.targetRevision
           value: {{ .Values.spec.source.targetRevision }}
         - name: spec.syncPolicy.automated.enabled
-          value: {{ .Values.spec.syncPolicy.automated.enabled }}
-        - name: spec.syncPolicy.automated.prune
-          value: {{ .Values.spec.syncPolicy.automated.prune }}
-        - name: spec.syncPolicy.automated.selfHeal
-          value: {{ .Values.spec.syncPolicy.automated.selfHeal }}
+          value: '{{ .Values.spec.syncPolicy.automated.enabled }}'
 
         - name: cluster.top_level_domain
           value: {{ .Values.cluster.top_level_domain }}
