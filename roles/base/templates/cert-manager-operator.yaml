@@ -20,6 +20,6 @@ spec:
   syncPolicy:
 {{ if .Values.spec.syncPolicy.automated.enabled }}
     automated:
-      prune: {{ .Values.spec.syncPolicy.automated.prune }}
-      selfHeal: {{ .Values.spec.syncPolicy.automated.selfHeal }}
+      prune: '{{ .Values.spec.syncPolicy.automated.prune }}'
+      selfHeal: '{{ .Values.spec.syncPolicy.automated.selfHeal }}'
 {{ end }}
