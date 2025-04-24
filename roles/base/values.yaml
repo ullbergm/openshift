@@ -6,9 +6,7 @@ spec:
     targetRevision: HEAD
   syncPolicy:
     automated:
-      enabled: 'true'
-      prune: 'true'
-      selfHeal: 'true'
+      enabled: true
 
 cluster:
   top_level_domain: example.com
