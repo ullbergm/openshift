@@ -4,6 +4,9 @@ spec:
   source:
     repoURL: YOUR_REPO_URL
     targetRevision: HEAD
+  syncPolicy:
+    automated:
+      enabled: 'true'
 
 cluster:
   top_level_domain: example.com

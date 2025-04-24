@@ -25,7 +25,8 @@ spec:
         - name: democratic-csi.driver.config.iscsi.targetPortal
           value: {{ index .Values "democratic-csi" "driver" "config" "iscsi" "targetPortal" }}
   syncPolicy:
-    automated:
-      selfHeal: true
+{{ if .Values.spec.syncPolicy.automated.enabled }}
+    automated: {}
+{{ end }}
     syncOptions:
       - CreateNamespace=true

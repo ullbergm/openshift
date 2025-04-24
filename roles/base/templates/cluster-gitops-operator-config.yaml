@@ -18,7 +18,8 @@ spec:
     targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:
   syncPolicy:
-    automated:
-      selfHeal: true
+{{ if .Values.spec.syncPolicy.automated.enabled }}
+    automated: {}
+{{ end }}
     syncOptions:
       - CreateNamespace=true

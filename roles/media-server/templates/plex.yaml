@@ -32,9 +32,9 @@ spec:
           value: {{ .Values.media.nfs.path }}
 
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+{{ if .Values.spec.syncPolicy.automated.enabled }}
+    automated: {}
+{{ end }}
     syncOptions:
       - CreateNamespace=true
 {{ end }}

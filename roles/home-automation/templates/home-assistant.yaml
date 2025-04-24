@@ -69,8 +69,8 @@ spec:
           value: 0.45.22
 
   syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
+{{ if .Values.spec.syncPolicy.automated.enabled }}
+    automated: {}
+{{ end }}
     syncOptions:
       - CreateNamespace=true

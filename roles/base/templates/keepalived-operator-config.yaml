@@ -21,5 +21,6 @@ spec:
         - name: network.lan.defaultGW
           value: {{ .Values.network.lan.defaultGW }}
   syncPolicy:
-    automated:
-      selfHeal: true
+{{ if .Values.spec.syncPolicy.automated.enabled }}
+    automated: {}
+{{ end }}
