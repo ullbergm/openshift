@@ -56,16 +56,6 @@
                   value: main
                 - name: spec.destination.server
                   value: 'https://kubernetes.default.svc'
-                - name: backup.nfs.path
-                  value: /volume1/backup
-                - name: backup.nfs.server
-                  value: nas.my.domain
-                - name: network.node0.storageIp.ip
-                  value: 10.0.0.20
-                - name: network.node1.storageIp.ip
-                  value: 10.0.0.21
-                - name: network.node2.storageIp.ip
-                  value: 10.0.0.22
             path: deploy/cluster
             repoURL: 'https://github.com/ullbergm/openshift.git'
             targetRevision: HEAD
@@ -74,20 +64,30 @@
                 prune: true
                 selfHeal: true
 
-5. Once the certificates are working, update the IngressController object with:
+5. Add Argo cluster-admin
 
-        spec:
-            defaultCertificate:
-                name: apps-wildcard-cert-tls
-
-6. Update the synology-iscsi VolumeSnapshotClass to have this annotation:
-
-       k10.kasten.io/is-snapshot-class: true
+        kind: ClusterRoleBinding
+        apiVersion: rbac.authorization.k8s.io/v1
+        metadata:
+          name: openshift-gitops-argocd-application-controller-cluster-admin
+        subjects:
+          - kind: ServiceAccount
+            name: openshift-gitops-argocd-application-controller
+            namespace: openshift-gitops
+        roleRef:
+          apiGroup: rbac.authorization.k8s.io
+          kind: ClusterRole
+          name: cluster-admin
 
 7. Customize ingress controller
 
       oc patch -n openshift-ingress-operator ingresscontroller/default --patch '{"spec":{"httpErrorCodePages":{"name":"custom-error-code-pages"}}}' --type=merge
 
+6. Once the certificates are working, update the IngressController object with:
+
+        spec:
+            defaultCertificate:
+                name: apps-wildcard-cert-tls
 
 8. Update network config to have the allowedCIDRs
 
