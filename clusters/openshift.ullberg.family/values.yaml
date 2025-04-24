@@ -4,6 +4,11 @@ spec:
   source:
     repoURL: YOUR_REPO_URL
     targetRevision: HEAD
+  syncPolicy:
+    automated:
+      enabled: true
+      prune: true
+      selfHeal: true
 
 cluster:
   top_level_domain: example.com

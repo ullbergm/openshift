@@ -18,5 +18,8 @@ spec:
     targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:
   syncPolicy:
+{{ if .Values.spec.syncPolicy.automated.enabled }}
     automated:
-      selfHeal: true
+      prune: {{ .Values.spec.syncPolicy.automated.prune }}
+      selfHeal: {{ .Values.spec.syncPolicy.automated.selfHeal }}
+{{ end }}
