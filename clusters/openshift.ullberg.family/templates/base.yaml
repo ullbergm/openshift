@@ -43,3 +43,9 @@ spec:
 
         - name: cluster.top_level_domain
           value: {{ .Values.cluster.top_level_domain }}
+        - name: cluster.name
+          value: {{ .Values.cluster.name }}
+        - name: cluster.admin_email
+          value: {{ .Values.cluster.admin_email }}
+        - name: cluster.timezone
+          value: {{ .Values.cluster.timezone }}
