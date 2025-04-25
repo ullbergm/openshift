@@ -33,5 +33,6 @@ spec:
         - name: aws.secret_access_key
           value: {{ .Values.certificates.aws.secret_access_key }}
   syncPolicy:
-    automated:
-      selfHeal: true
+{{ if .Values.spec.syncPolicy.automated.enabled }}
+    automated: {}
+{{ end }}

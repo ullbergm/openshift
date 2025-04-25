@@ -17,3 +17,11 @@ cluster:
 network:
   lan:
     defaultGW: 192.168.0.1
+
+certificates:
+  issuer: staging # or production
+  aws:
+    region: YOUR_REGION
+    hosted_zone_id: YOUR_HOSTED_ZONE_ID
+    access_key_id: YOUR_ACCESS_KEY_ID
+    secret_access_key: YOUR_SECRET_ACCESS_KEY
