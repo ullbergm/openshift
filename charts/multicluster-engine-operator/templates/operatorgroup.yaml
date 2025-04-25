@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  generateName: multicluster-engine-
+  name: multicluster-engine
+  namespace: multicluster-engine
+spec:
+  targetNamespaces:
+    - multicluster-engine
+  upgradeStrategy: Default
