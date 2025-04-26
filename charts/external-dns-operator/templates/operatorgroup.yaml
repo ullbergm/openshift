@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  generateName: external-dns-operator-
+  annotations:
+    olm.providedAPIs: 'ExternalDNS.v1alpha1.externaldns.olm.openshift.io,ExternalDNS.v1beta1.externaldns.olm.openshift.io'
+  name: external-dns-operator
+  namespace: external-dns-operator
+spec:
+  targetNamespaces:
+    - external-dns-operator
+  upgradeStrategy: Default
