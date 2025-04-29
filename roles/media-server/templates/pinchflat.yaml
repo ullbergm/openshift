@@ -84,7 +84,7 @@ spec:
 
         - name: app-template.persistence.yt-dlp.type
           value: emptyDir
-        - name: app-template.persistence.yt-dlp.globalMounts.path
+        - name: app-template.persistence.yt-dlp.globalMounts[0].path
           value: /etc/yt-dlp
 
         - name: app-template.defaultPodOptions.securityContext.runAsUser
