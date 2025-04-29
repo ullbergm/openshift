@@ -60,6 +60,11 @@ spec:
           value: "true"
         - name: app-template.persistence.data.existingClaim
           value: pinchflat-data-volume
+        - name: app-template.persistence.data.advancedMounts.app[0].path
+          value: /downloads
+        - name: app-template.persistence.data.advancedMounts.app[0].subPath
+          value: /media/youtube
+          
         - name: app-template.persistence.config.enabled
           value: "true"
         - name: app-template.persistence.config.existingClaim
