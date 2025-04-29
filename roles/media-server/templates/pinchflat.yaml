@@ -1,0 +1,81 @@
+{{ if .Values.applications.pinchflat }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pinchflat
+  namespace: openshift-gitops
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: pinchflat
+    server: {{ .Values.spec.destination.server }}
+  project: default
+  source:
+    path: charts/media-application
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    helm:
+      parameters:
+        - name: cluster.top_level_domain
+          value: {{ .Values.cluster.top_level_domain }}
+        - name: cluster.name
+          value: {{ .Values.cluster.name }}
+        - name: cluster.admin_email
+          value: {{ .Values.cluster.admin_email }}
+        - name: cluster.timezone
+          value: {{ .Values.cluster.timezone }}
+          
+        - name: storage.media.nfs.server
+          value: {{ .Values.media.nfs.server }}
+        - name: storage.media.nfs.path
+          value: {{ .Values.media.nfs.path }}
+
+        - name: application.name
+          value: pinchflat
+        - name: application.group
+          value: Media
+        - name: application.icon
+          value: television-box
+        # - name: application.image
+        #   value: 'https://raw.githubusercontent.com/pinchflat/pinchflat/develop/Logo/400.png'
+        - name: application.description
+          value: "Your next YouTube media manager"
+        - name: app-template.service.main.ports.http.port
+          value: '8945'
+
+        # renovate custom-docker versioning=loose
+        - name: app-template.controllers.main.containers.main.image.repository
+          value: ghcr.io/kieraneglin/pinchflat
+        - name: app-template.controllers.main.containers.main.image.tag
+          value: v2025.3.17 
+        - name: app-template.controllers.main.containers.main.image.pullPolicy
+          value: IfNotPresent
+        - name: app-template.controllers.main.containers.main.env.TZ
+          value: America/New_York
+
+        - name: app-template.serviceAccount.name
+          value: pinchflat-sa
+        - name: app-template.persistence.data.enabled
+          value: "true"
+        - name: app-template.persistence.data.existingClaim
+          value: pinchflat-data-volume
+        - name: app-template.persistence.config.enabled
+          value: "true"
+        - name: app-template.persistence.config.existingClaim
+          value: pinchflat-config
+        - name: app-template.persistence.config.globalMounts[0].path
+          value: /config
+
+        - name: app-template.defaultPodOptions.labels.app
+          value: pinchflat
+        - name: app-template.defaultPodOptions.labels.version
+          value: 4.0.4.1491
+
+  syncPolicy:
+{{ if .Values.spec.syncPolicy.automated.enabled }}
+    automated: {}
+{{ end }}
+    syncOptions:
+      - CreateNamespace=true
+{{ end }}
