@@ -81,9 +81,9 @@ spec:
           value: /etc/yt-dlp
 
         - name: app-template.defaultPodOptions.securityContext.runAsUser
-          value: "99"
+          value: "0"
         - name: app-template.defaultPodOptions.securityContext.runAsGroup
-          value: "100"
+          value: "0"
 
   syncPolicy:
 {{ if .Values.spec.syncPolicy.automated.enabled }}
