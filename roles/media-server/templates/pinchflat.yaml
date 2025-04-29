@@ -72,6 +72,14 @@ spec:
         - name: app-template.defaultPodOptions.labels.version
           value: 4.0.4.1491
 
+        - name: app-template.persistence.tmp.type
+          value: emptyDir
+
+        - name: app-template.persistence.yt-dlp.type
+          value: emptyDir
+        - name: app-template.persistence.yt-dlp.globalMounts.path
+          value: /etc/yt-dlp
+
   syncPolicy:
 {{ if .Values.spec.syncPolicy.automated.enabled }}
     automated: {}
