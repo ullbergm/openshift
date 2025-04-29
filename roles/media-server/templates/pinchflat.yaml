@@ -80,6 +80,11 @@ spec:
         - name: app-template.persistence.yt-dlp.globalMounts.path
           value: /etc/yt-dlp
 
+        - name: app-template.defaultPodOptions.securityContext.runAsUser
+          value: "99"
+        - name: app-template.defaultPodOptions.securityContext.runAsGroup
+          value: "100"
+
   syncPolicy:
 {{ if .Values.spec.syncPolicy.automated.enabled }}
     automated: {}
