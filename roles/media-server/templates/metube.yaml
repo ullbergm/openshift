@@ -1,0 +1,88 @@
+{{ if .Values.applications.metube }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: metube
+  namespace: openshift-gitops
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: metube
+    server: {{ .Values.spec.destination.server }}
+  project: default
+  source:
+    path: charts/media-application
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    helm:
+      parameters:
+        - name: cluster.top_level_domain
+          value: {{ .Values.cluster.top_level_domain }}
+        - name: cluster.name
+          value: {{ .Values.cluster.name }}
+        - name: cluster.admin_email
+          value: {{ .Values.cluster.admin_email }}
+        - name: cluster.timezone
+          value: {{ .Values.cluster.timezone }}
+          
+        - name: storage.media.nfs.server
+          value: {{ .Values.media.nfs.server }}
+        - name: storage.media.nfs.path
+          value: {{ .Values.media.nfs.path }}
+
+        - name: application.name
+          value: metube
+        - name: application.group
+          value: Media
+        - name: application.icon
+          value: television-box
+        # - name: application.image
+        #   value: 'https://raw.githubusercontent.com/metube/metube/develop/Logo/400.png'
+        - name: application.description
+          value: "Web GUI for youtube-dl "
+        - name: app-template.service.main.ports.http.port
+          value: '8081'
+
+        # renovate custom-docker versioning=loose
+        - name: app-template.controllers.main.containers.main.image.repository
+          value: ghcr.io/alexta69/metube
+        - name: app-template.controllers.main.containers.main.image.tag
+          value: 2025-04-16
+        - name: app-template.controllers.main.containers.main.image.pullPolicy
+          value: IfNotPresent
+        - name: app-template.controllers.main.containers.main.env.TZ
+          value: America/New_York
+          
+        - name: app-template.controllers.main.containers.main.env.DOWNLOAD_DIR
+          value: "/data/media/metube"
+        - name: app-template.controllers.main.containers.main.env.STATE_DIR
+          value: "/config"
+        - name: app-template.controllers.main.containers.main.env.YTDL_OPTIONS
+          value: '{"http_headers":{"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"}}'
+
+        - name: app-template.serviceAccount.name
+          value: metube-sa
+        - name: app-template.persistence.data.enabled
+          value: "true"
+        - name: app-template.persistence.data.existingClaim
+          value: metube-data-volume
+        - name: app-template.persistence.config.enabled
+          value: "true"
+        - name: app-template.persistence.config.existingClaim
+          value: metube-config
+        - name: app-template.persistence.config.globalMounts[0].path
+          value: /config
+
+        - name: app-template.defaultPodOptions.labels.app
+          value: metube
+        - name: app-template.defaultPodOptions.labels.version
+          value: 4.0.4.1491
+
+  syncPolicy:
+{{ if .Values.spec.syncPolicy.automated.enabled }}
+    automated: {}
+{{ end }}
+    syncOptions:
+      - CreateNamespace=true
+{{ end }}

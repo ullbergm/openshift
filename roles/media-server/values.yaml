@@ -19,6 +19,7 @@ applications:
   gaps: true
   kavita: true
   lidarr: true
+  metube: true
   overseerr: true
   pinchflat: true
   plex: true
