@@ -29,8 +29,11 @@ spec:
     - kube-node-lease
     - kube-public
     - kube-system
+    - metallb-system
     - nfs-subdir-external-provisioner
     - nvidia-gpu-operator
+    - open-cluster-management-global-set
+    - open-cluster-management-hub
     - openshift
     - openshift-apiserver
     - openshift-apiserver-operator
@@ -62,6 +65,7 @@ spec:
     - openshift-dns-operator
     - openshift-etcd
     - openshift-etcd-operator
+    - openshift-gatekeeper-system
     - openshift-gitops
     - openshift-gitops-operator
     - openshift-host-network
