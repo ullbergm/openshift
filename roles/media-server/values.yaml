@@ -27,6 +27,7 @@ applications:
   prowlarr: true
   radarr: true
   readarr: true
+  recommendarr: true
   sabnzbd: true
   sonarr: true
   tautulli: true
