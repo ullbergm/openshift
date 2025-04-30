@@ -59,7 +59,7 @@ spec:
         - name: app-template.controllers.main.containers.main.env.STATE_DIR
           value: "/config"
         - name: app-template.controllers.main.containers.main.env.YTDL_OPTIONS
-          value: '{"http_headers":{"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0"}}'
+          value: '{\"http_headers\":{\"User-Agent\": \"Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:123.0) Gecko/20100101 Firefox/123.0\"}}'
 
         - name: app-template.serviceAccount.name
           value: metube-sa
