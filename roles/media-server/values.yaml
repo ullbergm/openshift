@@ -17,6 +17,7 @@ cluster:
 applications:
   bazarr: true
   gaps: true
+  kapowarr: true
   kavita: true
   lidarr: true
   metube: true
