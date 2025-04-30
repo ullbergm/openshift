@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: hajimari-config
-  namespace: hajimari
-data:
-  config.yaml: |-
-{{ toYaml .Values.hajimari | indent 4 }}
