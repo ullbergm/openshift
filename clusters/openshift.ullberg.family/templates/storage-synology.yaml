@@ -46,7 +46,7 @@ spec:
         - name: democratic-csi.driver.config.iscsi.targetPortal
           value: {{ $csi.driver.config.iscsi.targetPortal }}
           
-        {{ $nfs := index .Values "democratic-csi" }}
+        {{ $nfs := index .Values "nfs-subdir-external-provisioner" }}
         - name: nfs-subdir-external-provisioner.nfs.server
           value: {{ $nfs.nfs.server }}
         - name: nfs-subdir-external-provisioner.nfs.path
