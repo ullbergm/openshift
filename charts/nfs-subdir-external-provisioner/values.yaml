@@ -20,6 +20,6 @@ nfs-subdir-external-provisioner:
     reclaimPolicy: Delete
     accessModes: ReadWriteMany
     defaultClass: false
-    name: nfs-storage
+    name: synology-nfs
     pathPattern: "${.PVC.namespace}/${.PVC.name}"
     
