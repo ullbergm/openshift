@@ -23,3 +23,8 @@ democratic-csi:
         username: my-username
       iscsi:
         targetPortal: 'my-server[:port]'
+
+nfs-subdir-external-provisioner:
+  nfs:
+    server: my-nfs
+    path: /nfs/pvc
