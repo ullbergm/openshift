@@ -59,8 +59,8 @@ spec:
           value: music-assistant-data-volume
         - name: app-template.persistence.data.globalMounts[0].path
           value: '/media'
-        - name: app-template.persistence.data.globalMounts[0].subPath
-          value: 'media'
+        # - name: app-template.persistence.data.globalMounts[0].subPath
+        #   value: 'data/media'
           
         - name: app-template.persistence.config.enabled
           value: "true"
