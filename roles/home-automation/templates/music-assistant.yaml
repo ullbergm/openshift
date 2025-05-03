@@ -38,7 +38,7 @@ spec:
         - name: application.description
           value: "Music Automation"
         - name: app-template.service.main.ports.http.port
-          value: '8095'
+          value: '443'
 
         # renovate custom-docker
         - name: app-template.controllers.main.containers.main.image.repository
