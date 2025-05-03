@@ -36,3 +36,7 @@ spec:
         - name: cluster.timezone
           value: {{ .Values.cluster.timezone }}
 
+        - name: media.nfs.server
+          value: {{ .Values.media.nfs.server }}
+        - name: media.nfs.path
+          value: {{ .Values.media.nfs.path }}
