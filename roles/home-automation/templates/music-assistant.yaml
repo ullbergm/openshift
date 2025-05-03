@@ -53,6 +53,13 @@ spec:
         - name: app-template.serviceAccount.name
           value: musicassistant-sa
           
+          
+        - name: storage.media.nfs.server
+          value: {{ .Values.media.nfs.server }}
+        - name: storage.media.nfs.path
+          value: {{ .Values.media.nfs.path }}
+
+
         - name: app-template.persistence.data.enabled
           value: "true"
         - name: app-template.persistence.data.existingClaim
