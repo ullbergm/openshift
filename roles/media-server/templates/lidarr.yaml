@@ -48,7 +48,7 @@ spec:
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/home-operations/lidarr
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 2.11.2.4629
+          value: 2.12.0.4633
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
