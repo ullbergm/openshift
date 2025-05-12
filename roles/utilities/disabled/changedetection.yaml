@@ -49,7 +49,7 @@ spec:
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/dgtlmoon/changedetection.io
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 0.49.16
+          value: 0.49.17
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
