@@ -48,7 +48,7 @@ spec:
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/home-operations/prowlarr
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 1.36.2.5059
+          value: 1.36.3.5071
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
