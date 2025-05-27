@@ -48,7 +48,7 @@ spec:
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/alexta69/metube
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 2025-05-23
+          value: 2025-05-27
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
