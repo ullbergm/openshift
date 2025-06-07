@@ -48,7 +48,7 @@ spec:
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/kieraneglin/pinchflat
         - name: app-template.controllers.main.containers.main.image.tag
-          value: v2025.3.17 
+          value: v2025.6.6 
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
