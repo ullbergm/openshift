@@ -32,8 +32,8 @@
             customType: 'regex',
             datasourceTemplate: 'docker',
             description: 'Update container versions in yaml',
-            fileMatch: [
-                '(^|/)[^\\.]*\\.ya?ml$',
+            managerFilePatterns: [
+                '/(^|/)[^\\.]*\\.ya?ml$/',
             ],
             matchStrings: [
                 '#\\s?renovate custom-docker\\s?(?: versioning=(?<versioning>[a-z-]+?))?\\s*- name:.*\\s*value:\\s?(?<depName>[.\\w\\d-/]+)\\s*- name:.*\\s*value:\\s?(?<currentValue>[.\\w\\d-]+)',
