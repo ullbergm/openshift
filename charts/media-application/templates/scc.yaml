@@ -13,4 +13,4 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 users:
-- system:serviceaccount:{{ .Release.Namespace }}:{{ $at.serviceAccount.name }}
+- system:serviceaccount:{{ .Release.Namespace }}:{{ $at.controllers.main.serviceAccount.name }}
