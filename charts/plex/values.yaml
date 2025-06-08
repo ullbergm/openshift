@@ -14,8 +14,8 @@ app-template:
           image:
             # renovate: docker-image versioning=loose
             repository: lscr.io/linuxserver/plex
-            tag: 1.41.7.9823-59f304c16
-            pullPolicy: IfNotPresent
+            tag: 1.41.7
+            pullPolicy: Always
           env:
             TZ: TIMEZONE
             
