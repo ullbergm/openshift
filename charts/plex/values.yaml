@@ -15,7 +15,7 @@ app-template:
             # renovate: docker-image versioning=loose
             repository: lscr.io/linuxserver/plex
             tag: 1.41.7
-            pullPolicy: IfNotPresent
+            pullPolicy: Always
           env:
             TZ: TIMEZONE
             
@@ -25,8 +25,8 @@ app-template:
             limits:
               gpu.intel.com/i915: 1
 
-  serviceAccount:
-    name: plex-sa
+      serviceAccount:
+        name: plex-sa
 
   service:
     main:
