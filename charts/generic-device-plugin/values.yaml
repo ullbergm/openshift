@@ -52,8 +52,8 @@ app-template:
                     - vendor: 0bda
                       product: 00000001
 
-  serviceAccount:
-    name: generic-device-plugin-sa
+      serviceAccount:
+        name: generic-device-plugin-sa
 
   defaultPodOptions:
     securityContext:
