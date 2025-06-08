@@ -82,6 +82,8 @@ app-template:
                squat.ai/adsb1090: '1'
             limits:
                squat.ai/adsb1090: '1'
+      serviceAccount:
+        name: adsb-sa
 
     dump978:
       type: statefulset
@@ -116,6 +118,8 @@ app-template:
                squat.ai/adsb978: '1'
             limits:
                squat.ai/adsb978: '1'
+      serviceAccount:
+        name: adsb-sa
 
     planewatch:
       type: statefulset
@@ -142,6 +146,8 @@ app-template:
             ALT: '38m'
             TZ: America/New_York
             API_KEY: 'APIKEY'
+      serviceAccount:
+        name: adsb-sa
 
     flightaware:
       type: statefulset
@@ -167,6 +173,8 @@ app-template:
             TZ: America/New_York
             UAT_RECEIVER_TYPE: 'relay'
             UAT_RECEIVER_HOST: 'adsb-dump978-raw-output'
+      serviceAccount:
+        name: adsb-sa
 
     flightradar24:
       type: statefulset
@@ -190,6 +198,8 @@ app-template:
             BEASTHOST: 'adsb-ultrafeeder-beast-output'
             FR24KEY: 'FR24KEY'
             TZ: America/New_York
+      serviceAccount:
+        name: adsb-sa
 
     adsbhub:
       type: statefulset
@@ -213,6 +223,8 @@ app-template:
             SBSHOST: 'adsb-ultrafeeder-sbs-output'
             CLIENTKEY: 'CLIENTKEY'
             TZ: America/New_York
+      serviceAccount:
+        name: adsb-sa
 
     opensky:
       type: statefulset
@@ -240,6 +252,8 @@ app-template:
             TZ: America/New_York
             OPENSKY_USERNAME: 'OPENSKY_USERNAME'
             OPENSKY_SERIAL: '-1408232939'
+      serviceAccount:
+        name: adsb-sa
 
     # radarvirtuel:
     #   type: statefulset
@@ -287,8 +301,6 @@ app-template:
     #         SHARING_KEY: RADARBOX_SHARING_KEY
     #         UAT_RECEIVER_HOST: adsb-dump978-raw-output
 
-  serviceAccount:
-    name: adsb-sa
 
   defaultPodOptions:
     securityContext:
