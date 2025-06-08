@@ -24,6 +24,9 @@ app-template:
 #           - -S all
            - -M level
            - -f 315000000 
+      serviceAccount:
+        name: rtl433-sa
+        
     main433:
       type: statefulset
       strategy: RollingUpdate
@@ -47,8 +50,8 @@ app-template:
            - -M level
            - -f 433000000 
 
-  serviceAccount:
-    name: rtl433-sa
+      serviceAccount:
+        name: rtl433-sa
 
   defaultPodOptions:
     securityContext:

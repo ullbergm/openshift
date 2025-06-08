@@ -25,8 +25,8 @@ app-template:
             liveness:
               enabled: true
 
-  serviceAccount:
-    name: startpunkt-sa
+      serviceAccount:
+        name: startpunkt-sa
 
   service:
     main:

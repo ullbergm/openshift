@@ -48,7 +48,7 @@ spec:
         - name: app-template.controllers.main.containers.main.env.TZ
           value: America/New_York
 
-        - name: app-template.serviceAccount.name
+        - name: app-template.controllers.main.serviceAccount.name
           value: cyberchef-sa
 
         - name: app-template.defaultPodOptions.labels.app

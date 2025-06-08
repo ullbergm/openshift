@@ -36,8 +36,8 @@ app-template:
           env:
             TZ: TIMEZONE
 
-  serviceAccount:
-    name: node-red-sa
+      serviceAccount:
+        name: node-red-sa
 
   service:
     main:

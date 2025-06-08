@@ -42,13 +42,15 @@ app-template:
               spec:
                 failureThreshold: 30
                 periodSeconds: 5
+
+      serviceAccount:
+        name: satisfactory-sa
+
   service:
     main:
       controller: main
       enabled: false
 
-  serviceAccount:
-    name: satisfactory-sa
 
   persistence:
     data:
