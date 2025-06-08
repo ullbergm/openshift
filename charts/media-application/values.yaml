@@ -41,8 +41,8 @@ app-template:
             TZ: America/New_York
             NODE_RED_CREDENTIAL_SECRET: secret
 
-  serviceAccount:
-    name: app-sa
+      serviceAccount:
+        name: app-sa
 
   service:
     main:

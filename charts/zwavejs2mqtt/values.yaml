@@ -39,8 +39,8 @@ app-template:
             privileged: true
 
 
-  serviceAccount:
-    name: zwavejs2mqtt-sa
+      serviceAccount:
+        name: zwavejs2mqtt-sa
 
   service:
     main:
