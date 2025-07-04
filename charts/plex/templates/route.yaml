@@ -2,10 +2,6 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   annotations:
-    forecastle.stakater.com/expose: "true"
-    forecastle.stakater.com/icon: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Plex_logo_2022.svg"
-    forecastle.stakater.com/appName: "Plex"
-    forecastle.stakater.com/group: "Media"
     route.openshift.io/termination: "edge"
   name: plex
   namespace: plex

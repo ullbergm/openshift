@@ -2,10 +2,6 @@ kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   annotations:
-    forecastle.stakater.com/expose: "true"
-    forecastle.stakater.com/icon: "{{ tpl .Values.application.image . }}"
-    forecastle.stakater.com/appName: "{{ tpl .Values.application.name . }}"
-    forecastle.stakater.com/group: "{{ tpl .Values.application.group . }}"
     route.openshift.io/termination: "edge"
   name: {{ .Release.Name }}
   namespace: {{ .Release.Name }}
