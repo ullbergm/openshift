@@ -86,15 +86,15 @@ app-template:
               spec:
                 failureThreshold: 30
                 periodSeconds: 5
+        
+            persistence:
+              data:
+                enabled: true
+                existingClaim: data-volume
+                globalMounts:
+                  - path: /data
       serviceAccount:
         name: paperless-ngx-sa
-        
-      persistence:
-        data:
-          enabled: true
-          existingClaim: data-volume
-          globalMounts:
-            - path: /data
 
     gotenberg:
       type: deployment
