@@ -9,6 +9,6 @@ spec:
   channel: v5
   installPlanApproval: Automatic
   name: crunchy-postgres-operator
-  source: redhat-operators
-  sourceNamespace: openshift-operators
+  source: certified-operators
+  sourceNamespace: openshift-marketplace
   startingCSV: postgresoperator.v5.8.2
