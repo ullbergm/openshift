@@ -6,9 +6,9 @@ metadata:
   name: crunchy-postgres-operator
   namespace: openshift-operators
 spec:
-  channel: stable
+  channel: v5
   installPlanApproval: Automatic
   name: crunchy-postgres-operator
-  source: redhat-operators
+  source: redhat-marketplace
   sourceNamespace: openshift-marketplace
   startingCSV: postgresoperator.v5.8.2
