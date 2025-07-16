@@ -107,7 +107,7 @@ app-template:
           port: 8000
 
     redis:
-      controller: main
+      controller: redis
       ports:
         redis:
           port: 6379
