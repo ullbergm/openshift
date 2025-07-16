@@ -4,7 +4,6 @@ metadata:
   annotations:
     route.openshift.io/termination: "edge"
   name: {{ .Release.Name }}
-  namespace: {{ .Release.Name }}
 spec:
   host: {{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   path: /

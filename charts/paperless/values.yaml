@@ -43,6 +43,15 @@ app-template:
             # PAPERLESS_DBUSER: valueFrom: { secretKeyRef: { name: paperless-db-pguser-paperless, key: user } }
             # PAPERLESS_DBPASS: valueFrom: { secretKeyRef: { name: paperless-db-pguser-paperless, key: password } }
             #PAPERLESS_REDIS: redis://paperless-ngx-redis-master:6379
+    gotenburg:
+      type: deployment
+      replicas: 1
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+      containers:
         gotenburg:
           image:
             repository: thecodingmachine/gotenberg
@@ -50,11 +59,31 @@ app-template:
             pullPolicy: IfNotPresent
           env:
             - {name: DISABLE_GOOGLE_CHROME, value: '1'}
+
+    redis:
+      type: deployment
+      replicas: 1
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+      containers:
         redis:
           image:
             repository: public.ecr.aws/docker/library/redis
             tag: 8.0.3
             pullPolicy: IfNotPresent
+
+    tika:
+      type: deployment
+      replicas: 1
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+      containers:
         tika:
           image:
             repository: ghcr.io/paperless-ngx/tika
