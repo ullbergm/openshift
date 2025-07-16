@@ -25,7 +25,7 @@ app-template:
     main:
       type: deployment
       replicas: 1
-      strategy: RollingUpdate
+      strategy: Recreate
       annotations:
         reloader.stakater.com/auto: "true"
       labels:
@@ -92,7 +92,7 @@ app-template:
     gotenberg:
       type: deployment
       replicas: 1
-      strategy: RollingUpdate
+      strategy: Recreate
       annotations:
         reloader.stakater.com/auto: "true"
       labels:
@@ -111,7 +111,7 @@ app-template:
     redis:
       type: deployment
       replicas: 1
-      strategy: RollingUpdate
+      strategy: Recreate
       annotations:
         reloader.stakater.com/auto: "true"
       labels:
@@ -128,7 +128,7 @@ app-template:
     tika:
       type: deployment
       replicas: 1
-      strategy: RollingUpdate
+      strategy: Recreate
       annotations:
         reloader.stakater.com/auto: "true"
       labels:
