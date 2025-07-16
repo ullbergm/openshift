@@ -1,0 +1,13 @@
+---
+apiVersion: v2
+description: A Helm chart to install node-red.
+name: node-red
+version: 0.1.0
+kubeVersion: ">=1.22.0-0"
+maintainers:
+  - name: Magnus Ullberg
+    email: magnus@ullberg.us
+dependencies:
+  - name: app-template
+    version: "4.1.1"
+    repository: "@bjw-s"

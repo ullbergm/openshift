@@ -1,0 +1,94 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+
+application:
+  name: Paperless-NGX
+  group: Automation
+  icon: simple-icons:paperless
+  description: "A self-hosted document management system that allows you to scan, index, and archive your documents."
+  port: 8000
+
+storage:
+  config:
+    storageClassName: synology-iscsi
+
+app-template:
+  controllers:
+    main:
+      type: deployment
+      replicas: 1
+      strategy: RollingUpdate
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+      containers:
+        main:
+          image:
+            # renovate: docker-image
+            repository: ghcr.io/paperless-ngx/paperless-ngx
+            tag: 2.17.1
+            pullPolicy: Always
+          env:
+            TZ: TIMEZONE
+            COMPOSE_PROJECT_NAME: paperless-ngx
+            PAPERLESS_TIME_ZONE: America/New_York
+            #PAPERLESS_URL: http{{if ne ( len .Values.ingress.main.tls ) 0 }}s{{end}}://{{ (first .Values.ingress.main.hosts).host }}
+            PAPERLESS_DBHOST: valueFrom: { secretKeyRef: { name: paperless-db-pguser-paperless, key: host } }
+            PAPERLESS_DBNAME: valueFrom: { secretKeyRef: { name: paperless-db-pguser-paperless, key: dbname } }
+            PAPERLESS_DBUSER: valueFrom: { secretKeyRef: { name: paperless-db-pguser-paperless, key: user } }
+            PAPERLESS_DBPASS: valueFrom: { secretKeyRef: { name: paperless-db-pguser-paperless, key: password } }
+            #PAPERLESS_REDIS: redis://paperless-ngx-redis-master:6379
+        gotenburg:
+          image:
+            repository: thecodingmachine/gotenberg
+            tag: 8.21.1
+            pullPolicy: IfNotPresent
+          env:
+            - {name: DISABLE_GOOGLE_CHROME, value: '1'}
+        redis:
+          image:
+            repository: public.ecr.aws/docker/library/redis
+            tag: 8.0.2
+            pullPolicy: IfNotPresent
+        tika:
+          image:
+            repository: ghcr.io/paperless-ngx/tika
+            tag: 2.9.1-full
+            pullPolicy: IfNotPresent
+      serviceAccount:
+        name: paperless-ngx-sa
+
+  service:
+    main:
+      controller: main
+      ports:
+        http:
+          port: 8000
+
+  defaultPodOptions:
+    labels:
+      app: paperless-ngx
+      version: 1.0.0
+    securityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
+      fsGroupChangePolicy: "OnRootMismatch"
+
+  # persistence:
+  #   config:
+  #     enabled: true
+  #     existingClaim: paperless-ngx-config
+  #     globalMounts:
+  #       - path: /data
+  #   config-file:
+  #     type: configMap
+  #     name: paperless-ngx-config
+  #     globalMounts:
+  #       - path: /data/settings.js
+  #         subPath: settings.js
+  #         readOnly: true
