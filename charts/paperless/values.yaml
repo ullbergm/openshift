@@ -147,9 +147,9 @@ app-template:
         name: paperless-ngx-sa
 
   persistence:
-    data-volume:
+    data:
       enabled: true
-      existingClaim: data-volume
+      existingClaim: paperless-data-volume
       advancedMounts:
         main:
           main:
@@ -202,3 +202,4 @@ app-template:
   #       - path: /data/settings.js
   #         subPath: settings.js
   #         readOnly: true
+  
