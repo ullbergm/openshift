@@ -59,10 +59,33 @@ app-template:
                   name: paperless-db-pguser-paperless
                   key: password
             PAPERLESS_REDIS: redis://paperless-ngx-redis.paperless.svc.cluster.local:6379
+            PAPERLESS_CONSUMPTION_DIR: /data/media/paperless/consume
+            PAPERLESS_DATA_DIR: /data/media/paperless/data
+            PAPERLESS_MEDIA_ROOT: /data/media/paperless/media
+            PAPERLESS_FILENAME_FORMAT: "{created_year}/{correspondent}/{title}"
+            PAPERLESS_FILENAME_FORMAT_REMOVE_NONE: true
+            PAPERLESS_CONSUMER_POLLING: 60
+            PAPERLESS_CONSUMER_DELETE_DUPLICATES: true
+            PAPERLESS_CONSUMER_RECURSIVE: true
+            PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: true
+            PAPERLESS_OCR_LANGUAGE: eng
+            PAPERLESS_TIKA_ENABLED: true
+            PAPERLESS_TIKA_ENDPOINT: http://paperless-ngx-tika.paperless.svc.cluster.local:9998 
+            PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-ngx-gotenberg.paperless.svc.cluster.local:3000
+          probes:
+            liveness:
+              enabled: true
+            readiness:
+              enabled: true
+            startup:
+              enabled: true
+              spec:
+                failureThreshold: 30
+                periodSeconds: 5
       serviceAccount:
         name: paperless-ngx-sa
 
-    gotenburg:
+    gotenberg:
       type: deployment
       replicas: 1
       strategy: RollingUpdate
@@ -112,6 +135,10 @@ app-template:
             repository: ghcr.io/paperless-ngx/tika
             tag: 2.9.1-full
             pullPolicy: IfNotPresent
+          env:
+            PAPERLESS_TIKA_ENABLED: true
+            PAPERLESS_TIKA_ENDPOINT: http://paperless-ngx-tika.paperless.svc.cluster.local:9998
+            PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-ngx-gotenberg.paperless.svc.cluster.local:3000
       serviceAccount:
         name: paperless-ngx-sa
 
@@ -127,6 +154,17 @@ app-template:
       ports:
         redis:
           port: 6379
+    tika:
+      controller: tika
+      ports:
+        tika:
+          port: 9998
+
+    gotenberg:
+      controller: gotenberg
+      ports:
+        gotenberg:
+          port: 3000
 
   defaultPodOptions:
     # labels:
