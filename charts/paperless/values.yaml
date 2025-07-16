@@ -74,6 +74,8 @@ app-template:
             PAPERLESS_CONSUMER_SUBDIRS_AS_TAGS: true
             PAPERLESS_OCR_LANGUAGE: eng
             PAPERLESS_TIKA_ENABLED: true
+            USERMAP_UID: 0
+            USERMAP_GID: 0
             PAPERLESS_TIKA_ENDPOINT: http://paperless-ngx-tika.paperless.svc.cluster.local:9998 
             PAPERLESS_TIKA_GOTENBERG_ENDPOINT: http://paperless-ngx-gotenberg.paperless.svc.cluster.local:3000
           probes:
