@@ -150,6 +150,7 @@ app-template:
     data:
       enabled: true
       server: nas
+      accessMode: ReadWriteMany
       path: /data
       globalMounts:
         - path: /data
