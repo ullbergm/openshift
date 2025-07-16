@@ -88,6 +88,13 @@ app-template:
                 periodSeconds: 5
       serviceAccount:
         name: paperless-ngx-sa
+        
+      persistence:
+        data:
+          enabled: true
+          existingClaim: data-volume
+          globalMounts:
+            - path: /data
 
     gotenberg:
       type: deployment
@@ -146,12 +153,6 @@ app-template:
       serviceAccount:
         name: paperless-ngx-sa
 
-  persistence:
-    data:
-      enabled: true
-      existingClaim: data-volume
-      globalMounts:
-        - path: /data
 
   service:
     main:
