@@ -9,7 +9,7 @@ spec:
   path: /
   to:
     kind: Service
-    name: {{ .Release.Name }}
+    name: {{ .Release.Name }}-main
     weight: 100
   port:
     targetPort: http
