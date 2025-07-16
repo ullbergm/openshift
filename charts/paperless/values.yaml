@@ -43,6 +43,9 @@ app-template:
             # PAPERLESS_DBUSER: valueFrom: { secretKeyRef: { name: paperless-db-pguser-paperless, key: user } }
             # PAPERLESS_DBPASS: valueFrom: { secretKeyRef: { name: paperless-db-pguser-paperless, key: password } }
             #PAPERLESS_REDIS: redis://paperless-ngx-redis-master:6379
+      serviceAccount:
+        name: paperless-ngx-sa
+        
     gotenburg:
       type: deployment
       replicas: 1
@@ -59,6 +62,8 @@ app-template:
             pullPolicy: IfNotPresent
           env:
             - {name: DISABLE_GOOGLE_CHROME, value: '1'}
+      serviceAccount:
+        name: paperless-ngx-sa
 
     redis:
       type: deployment
@@ -74,6 +79,8 @@ app-template:
             repository: public.ecr.aws/docker/library/redis
             tag: 8.0.3
             pullPolicy: IfNotPresent
+      serviceAccount:
+        name: paperless-ngx-sa
 
     tika:
       type: deployment
@@ -100,9 +107,9 @@ app-template:
           port: 8000
 
   defaultPodOptions:
-    labels:
-      app: paperless-ngx
-      version: 1.0.0
+    # labels:
+    #   app: paperless-ngx
+    #   version: 1.0.0
     securityContext:
       runAsUser: 0
       runAsGroup: 0
