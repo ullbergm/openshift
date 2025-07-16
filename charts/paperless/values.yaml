@@ -42,10 +42,10 @@ app-template:
             # PAPERLESS_DBNAME: valueFrom: { secretKeyRef: { name: paperless-db-pguser-paperless, key: dbname } }
             # PAPERLESS_DBUSER: valueFrom: { secretKeyRef: { name: paperless-db-pguser-paperless, key: user } }
             # PAPERLESS_DBPASS: valueFrom: { secretKeyRef: { name: paperless-db-pguser-paperless, key: password } }
-            #PAPERLESS_REDIS: redis://paperless-ngx-redis-master:6379
+            PAPERLESS_REDIS: redis://redis.paperless.svc.cluster.local:6379
       serviceAccount:
         name: paperless-ngx-sa
-        
+
     gotenburg:
       type: deployment
       replicas: 1
@@ -105,6 +105,12 @@ app-template:
       ports:
         http:
           port: 8000
+
+    redis:
+      controller: main
+      ports:
+        redis:
+          port: 6379
 
   defaultPodOptions:
     # labels:
