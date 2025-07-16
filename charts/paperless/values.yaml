@@ -9,7 +9,7 @@ application:
   group: Utilities
   icon: simple-icons:paperless
   image: https://raw.githubusercontent.com/paperless-ngx/paperless-ngx/main/docs/logo.png
-  description: "A self-hosted document management system that allows you to scan, index, and archive your documents."
+  description: "A document management system"
   port: 8000
 
 storage:
