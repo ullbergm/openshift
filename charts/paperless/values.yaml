@@ -8,6 +8,7 @@ application:
   name: Paperless-NGX
   group: Automation
   icon: simple-icons:paperless
+  image: https://raw.githubusercontent.com/paperless-ngx/paperless-ngx/main/docs/logo.png
   description: "A self-hosted document management system that allows you to scan, index, and archive your documents."
   port: 8000
 
