@@ -42,7 +42,7 @@ app-template:
             # PAPERLESS_DBNAME: valueFrom: { secretKeyRef: { name: paperless-db-pguser-paperless, key: dbname } }
             # PAPERLESS_DBUSER: valueFrom: { secretKeyRef: { name: paperless-db-pguser-paperless, key: user } }
             # PAPERLESS_DBPASS: valueFrom: { secretKeyRef: { name: paperless-db-pguser-paperless, key: password } }
-            PAPERLESS_REDIS: redis://redis.paperless.svc.cluster.local:6379
+            PAPERLESS_REDIS: redis://paperless-ngx-redis.paperless.svc.cluster.local:6379
       serviceAccount:
         name: paperless-ngx-sa
 
