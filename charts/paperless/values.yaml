@@ -37,7 +37,7 @@ app-template:
             TZ: TIMEZONE
             COMPOSE_PROJECT_NAME: paperless-ngx
             PAPERLESS_TIME_ZONE: America/New_York
-            # #PAPERLESS_URL: http{{if ne ( len .Values.ingress.main.tls ) 0 }}s{{end}}://{{ (first .Values.ingress.main.hosts).host }}
+            PAPERLESS_URL: https://hostname.example.com
             # PAPERLESS_DBHOST: valueFrom: { secretKeyRef: { name: paperless-db-pguser-paperless, key: host } }
             # PAPERLESS_DBNAME: valueFrom: { secretKeyRef: { name: paperless-db-pguser-paperless, key: dbname } }
             # PAPERLESS_DBUSER: valueFrom: { secretKeyRef: { name: paperless-db-pguser-paperless, key: user } }
