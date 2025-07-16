@@ -86,13 +86,6 @@ app-template:
               spec:
                 failureThreshold: 30
                 periodSeconds: 5
-        
-            persistence:
-              data:
-                enabled: true
-                existingClaim: data-volume
-                globalMounts:
-                  - path: /data
       serviceAccount:
         name: paperless-ngx-sa
 
@@ -153,6 +146,13 @@ app-template:
       serviceAccount:
         name: paperless-ngx-sa
 
+  persistence:
+    data:
+      enabled: true
+      server: nas
+      path: /data
+      globalMounts:
+        - path: /data
 
   service:
     main:
