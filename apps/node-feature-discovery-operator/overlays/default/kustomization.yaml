@@ -1,0 +1,9 @@
+---
+apiVerison: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+# no namespace specified
+
+resources:
+  - ../../base
+...

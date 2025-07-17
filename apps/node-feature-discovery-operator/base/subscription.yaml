@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: node-feature-discovery-subscription
+  namespace: node-feature-discovery
+spec:
+  channel: stable
+  name: node-feature-discovery-operator
+  source: operatorhubio-catalog
+  sourceNamespace: olm

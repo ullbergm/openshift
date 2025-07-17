@@ -1,0 +1,11 @@
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: node-feature-discovery-operatorgroup
+  namespace: node-feature-discovery
+spec:
+  targetNamespaces:
+    - node-feature-discovery
+  upgradeStrategy: Default
+...
