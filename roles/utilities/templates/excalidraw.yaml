@@ -34,7 +34,7 @@ spec:
         - name: application.image
           value: 'https://raw.githubusercontent.com/excalidraw/excalidraw/refs/heads/master/dev-docs/static/img/logo.svg'
         - name: application.description
-          value: "Collaborative whiteboard tool that lets you easily sketch diagrams and share them with others"
+          value: "Whiteboard tool to easily sketch diagrams"
         - name: app-template.service.main.ports.http.port
           value: '8080'
 
