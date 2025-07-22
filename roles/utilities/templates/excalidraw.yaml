@@ -36,7 +36,7 @@ spec:
         - name: application.description
           value: "Collaborative whiteboard tool that lets you easily sketch diagrams and share them with others"
         - name: app-template.service.main.ports.http.port
-          value: '80'
+          value: '8080'
 
         # renovate custom-docker versioning=loose
         - name: app-template.controllers.main.containers.main.image.repository
