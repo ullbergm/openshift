@@ -11,7 +11,13 @@ metadata:
 spec:
   claimPropertySets:
     - accessModes:
-      - ReadWriteOnce
-      volumeMode: 
-        Block
+        - ReadWriteMany
+      volumeMode: Block
+    - accessModes:
+        - ReadWriteOnce
+      volumeMode: Block
+    - accessModes:
+        - ReadWriteOnce
+      volumeMode: Filesystem
   cloneStrategy: csi-clone
+  dataImportCronSourceFormat: pvc
