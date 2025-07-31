@@ -1,0 +1,36 @@
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 50-disable-enp2s-interfaces
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.4.0
+    storage:
+      files:
+        - contents:
+            source: 'data:text/plain;base64,W21haW5dCnBsdWdpbnM9a2V5ZmlsZQoKW2tleWZpbGVdCnVubWFuYWdlZC1kZXZpY2VzPWludGVyZmFjZS1uYW1lOmVucDJzKgo='
+          mode: 420
+          overwrite: true
+          path: /etc/NetworkManager/conf.d/50-disable-enp2s-interfaces.conf
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 50-disable-enp4s-interfaces
+  labels:
+    machineconfiguration.openshift.io/role: worker
+spec:
+  config:
+    ignition:
+      version: 3.4.0
+    storage:
+      files:
+        - contents:
+            source: 'data:text/plain;base64,W21haW5dCnBsdWdpbnM9a2V5ZmlsZQoKW2tleWZpbGVdCnVubWFuYWdlZC1kZXZpY2VzPWludGVyZmFjZS1uYW1lOmVucDRzKgo='
+          mode: 420
+          overwrite: true
+          path: /etc/NetworkManager/conf.d/50-disable-enp4s-interfaces.conf

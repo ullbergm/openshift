@@ -42,7 +42,7 @@ spec:
         - name: app-template.controllers.main.containers.main.image.repository
           value: ghcr.io/wipash/excalidraw-collab
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 0.17.3
+          value: 0.18.0
         - name: app-template.controllers.main.containers.main.image.pullPolicy
           value: IfNotPresent
         - name: app-template.controllers.main.containers.main.env.TZ
