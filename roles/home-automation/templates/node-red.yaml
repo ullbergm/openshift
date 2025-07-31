@@ -35,7 +35,7 @@ spec:
         - name: app-template.controllers.main.containers.main.image.repository
           value: docker.io/nodered/node-red
         - name: app-template.controllers.main.containers.main.image.tag
-          value: 4.0.9
+          value: 4.1.0
 
   syncPolicy:
 {{ if .Values.spec.syncPolicy.automated.enabled }}
