@@ -1,0 +1,81 @@
+config:
+  storageClassName: "synology-iscsi"
+  
+app-template:
+  controllers:
+    main:
+      type: statefulset
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+      containers:
+        main:
+          image:
+            # renovate: docker-image versioning=loose
+            repository: intelanalytics/ipex-llm-inference-cpp-xpu
+            tag: 2.3.0-SNAPSHOT
+          command:
+            - /bin/sh
+            - -c
+            - mkdir -p /llm/ollama && cd /llm/ollama && init-ollama && exec ./ollama serve
+          env:
+            TZ: TIMEZONE
+              OLLAMA_MODELS: &modelPath /models
+              # ONEAPI_DEVICE_SELECTOR: level_zero:0
+              # IPEX_LLM_NUM_CTX: 16384
+              no_proxy: localhost,127.0.0.1
+              OLLAMA_HOST: 0.0.0.0
+              DEVICE: Arc
+              OLLAMA_INTEL_GPU: true
+              OLLAMA_NUM_GPU: 999
+              ZES_ENABLE_SYSMAN: 1
+            
+          resources: 
+            requests:
+              gpu.intel.com/i915: 1
+            limits:
+              memory: 8Gi
+              gpu.intel.com/i915: 1
+
+      serviceAccount:
+        name: ollama-sa
+
+  service:
+    main:
+      controller: main
+      ports:
+        http:
+          port: 11434
+
+  persistence:
+    config:
+      enabled: true
+      existingClaim: ollama-config
+      globalMounts:
+        - path: /root/.ollama
+
+    models:
+      enabled: true
+      existingClaim: ollama-models
+      globalMounts:
+        - path: *modelPath
+
+    dri:
+      type: hostPath
+      hostPath: /dev/dri
+
+  defaultPodOptions:
+    labels:
+      app: ollama
+      version: 1.0.0
+    securityContext:
+      runAsUser: 0
+      runAsGroup: 0
+      fsGroup: 0
+      fsGroupChangePolicy: "OnRootMismatch"
+      supplementalGroups:
+        - 44
+        - 109
+        - 100
+        - 65535
