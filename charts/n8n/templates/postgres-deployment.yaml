@@ -39,8 +39,6 @@ spec:
               mountPath: /docker-entrypoint-initdb.d/init-n8n-user.sh
               subPath: init-data.sh
           env:
-            - name: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
-              value: "true"
             - name: PGDATA
               value: /var/lib/postgresql/data/pgdata      
             - name: POSTGRES_USER

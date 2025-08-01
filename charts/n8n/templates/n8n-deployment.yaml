@@ -31,6 +31,10 @@ spec:
             - -c
             - sleep 5; n8n start
           env:
+            - name: VUE_APP_URL_BASE_API
+              value: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}/
+            - name: N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS
+              value: "true"
             - name: DB_TYPE
               value: postgresdb
             - name: DB_POSTGRESDB_HOST
