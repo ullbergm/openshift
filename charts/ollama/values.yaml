@@ -21,7 +21,7 @@ app-template:
             - mkdir -p /llm/ollama && cd /llm/ollama && init-ollama && exec ./ollama serve
           env:
             TZ: TIMEZONE
-              OLLAMA_MODELS: &modelPath /models
+              OLLAMA_MODELS: /models
               # ONEAPI_DEVICE_SELECTOR: level_zero:0
               # IPEX_LLM_NUM_CTX: 16384
               no_proxy: localhost,127.0.0.1
@@ -59,7 +59,7 @@ app-template:
       enabled: true
       existingClaim: ollama-models
       globalMounts:
-        - path: *modelPath
+        - path: /models
 
     dri:
       type: hostPath
