@@ -33,7 +33,7 @@ app-template:
             no_proxy: localhost,127.0.0.1
             OLLAMA_HOST: 0.0.0.0
             DEVICE: Arc
-            OLLAMA_INTEL_GPU: true
+            OLLAMA_INTEL_GPU: false
             OLLAMA_NUM_GPU: 1
             OLLAMA_FLASH_ATTENTION: false
             ZES_ENABLE_SYSMAN: 1
