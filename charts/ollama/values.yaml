@@ -34,8 +34,11 @@ app-template:
             OLLAMA_HOST: 0.0.0.0
             DEVICE: Arc
             OLLAMA_INTEL_GPU: true
-            OLLAMA_NUM_GPU: 999
+            OLLAMA_NUM_GPU: 1
+            OLLAMA_FLASH_ATTENTION: false
             ZES_ENABLE_SYSMAN: 1
+            GGML_SYCL_DISABLE_OPT: 1
+            GGML_SYCL_DISABLE_GRAPH: 1
             
           resources: 
             requests:
