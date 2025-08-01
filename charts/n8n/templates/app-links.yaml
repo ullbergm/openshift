@@ -1,0 +1,36 @@
+apiVersion: startpunkt.ullberg.us/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  name: {{ tpl .Values.application.name . }}
+  group: "{{ .Values.application.group }}"
+  icon: "{{ .Values.application.icon }}"
+  iconColor: "{{ .Values.application.iconColor }}"
+  url: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  info: "{{ .Values.application.description }}"
+  location: {{ .Values.application.location }}
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: "{{ .Release.Name }}-application-menu-link"
+spec:
+  href: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  location: ApplicationMenu
+  applicationMenu:
+    section: "{{ .Values.application.group }}"
+    imageURL: {{ tpl .Values.application.image . }}
+  text: "{{ tpl .Values.application.name . }}"
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: "{{ .Release.Name }}-namespace-dashboard-link"
+spec:
+  href: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  location: NamespaceDashboard
+  namespaceDashboard:
+    namespaces:
+      - {{ .Release.Name }}
+  text: 'Access Application'
