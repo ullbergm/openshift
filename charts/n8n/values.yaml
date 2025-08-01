@@ -9,6 +9,6 @@ application:
   group: AI/ML
   icon: simple-icons:createreactapp
   iconColor: ""
-  image:https://docs.n8n.io/_images/n8n-docs-icon.svg
+  image: https://docs.n8n.io/_images/n8n-docs-icon.svg
   description: "A tool for automating tasks and workflows."
   location: 0
