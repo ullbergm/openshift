@@ -61,9 +61,9 @@ spec:
             requests:
               memory: "250Mi"
             limits:
-              memory: "500Mi"
+              memory: "1Gi"
           volumeMounts:
-            - mountPath: /home/root/.n8n
+            - mountPath: /root/.n8n
               name: n8n-claim0
       serviceAccountName: n8n-sa
       securityContext:
