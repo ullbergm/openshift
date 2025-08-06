@@ -1,0 +1,9 @@
+apiVersion: v2
+description: A Helm chart for Bazarr
+name: bazarr
+version: 0.1.0
+kubeVersion: ">=1.22.0-0"
+
+maintainers:
+  - name: Magnus Ullberg
+    email: magnus@ullberg.us
