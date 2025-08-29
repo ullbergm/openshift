@@ -43,7 +43,7 @@ app-template:
               cpu: 1000m
 
       serviceAccount:
-        name: litellm-sa
+        name: litellm
 
   service:
     main:
