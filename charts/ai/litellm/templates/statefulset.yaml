@@ -49,6 +49,8 @@ spec:
           - mountPath: /app/config.yaml
             name: config
             subPath: config.yaml
+          - mountPath: /.cache
+            name: cache
           resources:
             requests:
               cpu: '2'
@@ -60,3 +62,5 @@ spec:
         - name: config
           configMap:
             name: {{ .Release.Name }}-config
+        - name: cache
+          emptyDir: {}
