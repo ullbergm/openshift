@@ -1,0 +1,34 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+
+application:
+  name: Ollama
+  group: AI/ML
+  icon: robot
+  iconColor: ""
+  image: 'https://ollama.ai/public/apple-touch-icon.png'
+  description: "Run large language models locally"
+  port: 11434
+  location: 0
+
+pods:
+  main:
+    image:
+      # renovate custom-docker versioning=semver
+      repository: ollama/ollama
+      tag: "0.3.14"
+    env: {}
+    resources:
+      requests:
+        cpu: "1"
+        memory: "2Gi"
+      limits:
+        cpu: "4"
+        memory: "8Gi"
+    # Enable GPU support if available
+    gpu:
+      enabled: false
+      count: 1

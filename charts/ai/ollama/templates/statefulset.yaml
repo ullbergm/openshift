@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    kasten/backup: "true"
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  revisionHistoryLimit: 1
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/controller: main
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  serviceName: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/controller: main
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+    spec:
+      enableServiceLinks: false
+      serviceAccountName: {{ .Release.Name }}
+      automountServiceAccountToken: true
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 150
+        runAsNonRoot: true
+        fsGroup: 150
+      containers:
+        - env:
+          - name: TZ
+            value: {{ .Values.cluster.timezone }}
+          - name: OLLAMA_HOST
+            value: "0.0.0.0:11434"
+          - name: OLLAMA_DATA
+            value: "/root/.ollama"
+          {{ range $key, $value := .Values.pods.main.env }}- name: {{ $key }}
+            value: {{ $value | quote }}
+          {{ end }}
+          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
+          imagePullPolicy: IfNotPresent
+          name: main
+          ports:
+          - containerPort: {{ .Values.application.port }}
+            name: http
+            protocol: TCP
+          volumeMounts:
+          - mountPath: /root/.ollama
+            name: data
+          {{- if .Values.pods.main.gpu.enabled }}
+          resources:
+            requests:
+              cpu: {{ .Values.pods.main.resources.requests.cpu }}
+              memory: {{ .Values.pods.main.resources.requests.memory }}
+              nvidia.com/gpu: {{ .Values.pods.main.gpu.count }}
+            limits:
+              cpu: {{ .Values.pods.main.resources.limits.cpu }}
+              memory: {{ .Values.pods.main.resources.limits.memory }}
+              nvidia.com/gpu: {{ .Values.pods.main.gpu.count }}
+          {{- else }}
+          resources:
+            requests:
+              cpu: {{ .Values.pods.main.resources.requests.cpu }}
+              memory: {{ .Values.pods.main.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.pods.main.resources.limits.cpu }}
+              memory: {{ .Values.pods.main.resources.limits.memory }}
+          {{- end }}
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 30
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 50Gi
