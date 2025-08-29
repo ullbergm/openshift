@@ -32,9 +32,6 @@ spec:
         runAsUser: 1000
         runAsGroup: 150
         runAsNonRoot: true
-        privileged: false
-        allowPrivilegeEscalation: false
-        readOnlyRootFilesystem: false
       containers:
         - env:
           - name: TZ
@@ -54,10 +51,10 @@ spec:
             subPath: config.yaml
           resources:
             requests:
-              cpu: 2
+              cpu: '2'
               memory: 830Mi
             limits:
-              cpu: 4
+              cpu: '4'
               memory: 1Gi
       volumes:
         - name: config
