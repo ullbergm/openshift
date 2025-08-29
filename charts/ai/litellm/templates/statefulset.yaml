@@ -36,6 +36,8 @@ spec:
         - env:
           - name: TZ
             value: {{ .Values.cluster.timezone }}
+          - name: DATABASE_URL
+            value: postgresql://litellm:litellm@db.litellm.svc.cluster.local/litellm
           {{ range $key, $value := .Values.pods.main.env }}- name: {{ $key }}
             value: {{ $value }}
           {{ end }}

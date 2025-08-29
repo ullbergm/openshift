@@ -18,10 +18,8 @@ pods:
   main:
     image:
       # renovate custom-docker versioning=semver
-      repository: ghcr.io/berriai/litellm
+      repository: ghcr.io/berriai/litellm-non_root
       tag: v1.75.8-stable
     env:
-      LITELLM_DISABLE_DATABASE: "true"
       LITELLM_MASTER_KEY: "sk-secret"
       LITELLM_SALT_KEY: "sk-salt"
-      STORE_MODEL_IN_DB: "False"
