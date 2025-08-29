@@ -24,3 +24,5 @@ pods:
       LITELLM_DISABLE_DATABASE: "true"
       LITELLM_MASTER_KEY: "sk-secret"
       LITELLM_SALT_KEY: "sk-salt"
+      DATABASE_URL: "postgres://..."
+      STORE_MODEL_IN_DB: "False"
