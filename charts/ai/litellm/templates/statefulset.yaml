@@ -38,6 +38,10 @@ spec:
             value: {{ .Values.cluster.timezone }}
           - name: DATABASE_URL
             value: postgresql://litellm:litellm@db.litellm.svc.cluster.local/litellm
+          - name: REDIS_HOST
+            value: {{ .Release.Name }}-redis
+          - name: REDIS_PORT
+            value: "6379"
           {{ range $key, $value := .Values.pods.main.env }}- name: {{ $key }}
             value: {{ $value }}
           {{ end }}
