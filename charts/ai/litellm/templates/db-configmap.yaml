@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: init-data
-  namespace: n8n
+  namespace: litellm
 data:
   init-data.sh: |
     #!/bin/bash
