@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    kasten/backup: "true"
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  revisionHistoryLimit: 1
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/controller: main
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  serviceName: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/controller: main
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+    spec:
+      enableServiceLinks: false
+      serviceAccountName: {{ .Release.Name }}
+      automountServiceAccountToken: true
+      securityContext:
+        runAsUser: 0
+        runAsGroup: 0
+        runAsNonRoot: false
+        fsGroup: 0
+      containers:
+        - env:
+          - name: TZ
+            value: {{ .Values.cluster.timezone }}
+          - name: WEBUI_NAME
+            value: {{ .Values.pods.main.env.WEBUI_NAME | quote }}
+          - name: ENABLE_SIGNUP
+            value: {{ .Values.pods.main.env.ENABLE_SIGNUP | quote }}
+          - name: DEFAULT_USER_ROLE
+            value: {{ .Values.pods.main.env.DEFAULT_USER_ROLE | quote }}
+          - name: ENABLE_COMMUNITY_SHARING
+            value: {{ .Values.pods.main.env.ENABLE_COMMUNITY_SHARING | quote }}
+          {{ if .Values.pods.main.env.WEBUI_URL }}- name: WEBUI_URL
+            value: {{ .Values.pods.main.env.WEBUI_URL | quote }}
+          {{ end }}
+          {{ if .Values.pods.main.env.OPENAI_API_BASE_URL }}- name: OPENAI_API_BASE_URL
+            value: {{ .Values.pods.main.env.OPENAI_API_BASE_URL | quote }}
+          {{ end }}
+          {{ if .Values.pods.main.env.OPENAI_API_KEY }}- name: OPENAI_API_KEY
+            value: {{ .Values.pods.main.env.OPENAI_API_KEY | quote }}
+          {{ end }}
+          {{ range $key, $value := .Values.pods.main.env }}
+          {{- if not (has $key (list "WEBUI_NAME" "WEBUI_URL" "OPENAI_API_BASE_URL" "OPENAI_API_KEY" "ENABLE_SIGNUP" "DEFAULT_USER_ROLE" "ENABLE_COMMUNITY_SHARING")) }}- name: {{ $key }}
+            value: {{ $value | quote }}
+          {{ end }}
+          {{ end }}
+          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
+          imagePullPolicy: IfNotPresent
+          name: main
+          ports:
+          - containerPort: {{ .Values.application.port }}
+            name: http
+            protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
+            successThreshold: 1
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 6
+            successThreshold: 1
+          resources: {{ toYaml .Values.pods.main.resources | nindent 12 }}
+          volumeMounts:
+          - name: data
+            mountPath: /app/backend/data
+          - name: temp
+            mountPath: /tmp
+      volumes:
+      - name: temp
+        emptyDir: {}
+  volumeClaimTemplates:
+  - metadata:
+      name: data
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: {{ .Values.openwebui.persistence.size }}
+      storageClassName: "synology-iscsi"

@@ -1,0 +1,62 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+
+application:
+  name: Open WebUI
+  group: AI/ML
+  icon: robot
+  iconColor: ""
+  image: 'https://openwebui.com/favicon.png'
+  description: "User-friendly WebUI for LLMs"
+  port: 8080
+  location: 0
+
+openwebui:
+  # OpenWebUI specific configuration
+  environment: "production"
+
+  # OAuth configuration (optional)
+  oauth:
+    enabled: false
+    provider: ""
+    client_id: ""
+    client_secret: ""
+
+  # Default models configuration
+  models:
+    # List of default models to show in the UI
+    default: []
+
+  # Data persistence
+  persistence:
+    enabled: true
+    size: "10Gi"
+
+pods:
+  main:
+    image:
+      # renovate custom-docker versioning=semver
+      repository: ghcr.io/open-webui/open-webui
+      tag: "v0.3.35"
+    env:
+      # OpenWebUI environment variables
+      WEBUI_NAME: "Open WebUI"
+      WEBUI_URL: ""
+      OPENAI_API_BASE_URL: ""
+      OPENAI_API_KEY: ""
+      # Enable user registration
+      ENABLE_SIGNUP: "true"
+      # Default user role for new signups
+      DEFAULT_USER_ROLE: "user"
+      # Enable community features
+      ENABLE_COMMUNITY_SHARING: "true"
+    resources:
+      requests:
+        cpu: "100m"
+        memory: "256Mi"
+      limits:
+        cpu: "1"
+        memory: "2Gi"
