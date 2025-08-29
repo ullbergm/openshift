@@ -1,0 +1,108 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+
+config:
+  storageClassName: "synology-iscsi"
+  
+app-template:
+  controllers:
+    main:
+      type: deployment
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+      containers:
+        main:
+          image:
+            # renovate: docker-image
+            repository: ghcr.io/berriai/litellm
+            tag: "main-latest"
+          env:
+            TZ: "{{ .Values.cluster.timezone }}"
+            # LiteLLM configuration
+            LITELLM_LOG_LEVEL: INFO
+            LITELLM_PORT: "8000"
+            LITELLM_HOST: "0.0.0.0"
+            # Store config in persistent volume
+            LITELLM_CONFIG_PATH: /app/config/litellm_config.yaml
+            # Enable database for usage tracking
+            DATABASE_URL: sqlite:///app/data/litellm.db
+            # Connect to local Ollama service
+            OLLAMA_BASE_URL: "http://ollama.ollama.svc.cluster.local:11434"
+            
+          resources: 
+            requests:
+              memory: 512Mi
+              cpu: 250m
+            limits:
+              memory: 2Gi
+              cpu: 1000m
+
+      serviceAccount:
+        name: litellm-sa
+
+  service:
+    main:
+      controller: main
+      ports:
+        http:
+          port: 8000
+
+  persistence:
+    config:
+      enabled: true
+      existingClaim: litellm-config
+      globalMounts:
+        - path: /app/config
+
+    data:
+      enabled: true
+      existingClaim: litellm-data
+      globalMounts:
+        - path: /app/data
+
+  defaultPodOptions:
+    labels:
+      app: litellm
+      version: 1.0.0
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: "OnRootMismatch"
+
+  configMaps:
+    config:
+      enabled: true
+      data:
+        litellm_config.yaml: |
+          model_list:
+            # Ollama models (connect to local ollama service)
+            - model_name: "ollama/llama3.2"
+              litellm_params:
+                model: "ollama/llama3.2"
+                api_base: "http://ollama.ollama.svc.cluster.local:11434"
+            
+            - model_name: "ollama/mistral"
+              litellm_params:
+                model: "ollama/mistral"
+                api_base: "http://ollama.ollama.svc.cluster.local:11434"
+          
+          # Uncomment and configure these for external providers
+          # - model_name: "gpt-4"
+          #   litellm_params:
+          #     model: "gpt-4"
+          #     api_key: "os.environ/OPENAI_API_KEY"
+          
+          # - model_name: "claude-3-sonnet"
+          #   litellm_params:
+          #     model: "claude-3-sonnet-20240229"
+          #     api_key: "os.environ/ANTHROPIC_API_KEY"
+          
+          general_settings:
+            master_key: "sk-1234"  # Change this to a secure key
+            database_url: "sqlite:///app/data/litellm.db"

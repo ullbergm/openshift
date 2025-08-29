@@ -1,0 +1,110 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+
+config:
+  storageClassName: "synology-iscsi"
+  
+app-template:
+  controllers:
+    main:
+      type: deployment
+      annotations:
+        reloader.stakater.com/auto: "true"
+      labels:
+        kasten/backup: "true"
+      containers:
+        main:
+          image:
+            # renovate: docker-image
+            repository: ghcr.io/open-webui/open-webui
+            tag: "main"
+          env:
+            TZ: "{{ .Values.cluster.timezone }}"
+            # Open WebUI configuration
+            WEBUI_NAME: "Open WebUI"
+            
+            # Connect to LiteLLM proxy
+            OPENAI_API_BASE_URL: "http://litellm.litellm.svc.cluster.local:8000/v1"
+            OPENAI_API_KEY: "sk-1234"  # Should match LiteLLM master_key
+            
+            # Also connect directly to Ollama for model management
+            OLLAMA_BASE_URL: "http://ollama.ollama.svc.cluster.local:11434"
+            
+            # Database configuration
+            DATABASE_URL: "sqlite:///app/backend/data/webui.db"
+            
+            # File upload settings
+            ENABLE_RAG_HYBRID_SEARCH: "true"
+            ENABLE_RAG_WEB_LOADER_SSL_VERIFICATION: "false"
+            
+            # Security settings
+            WEBUI_SECRET_KEY: "your-secret-key-change-this"
+            
+            # Features
+            ENABLE_SIGNUP: "true"
+            ENABLE_LOGIN_FORM: "true"
+            ENABLE_COMMUNITY_SHARING: "false"
+            
+          resources: 
+            requests:
+              memory: 1Gi
+              cpu: 500m
+            limits:
+              memory: 4Gi
+              cpu: 2000m
+
+      serviceAccount:
+        name: openwebui-sa
+
+  service:
+    main:
+      controller: main
+      ports:
+        http:
+          port: 8080
+
+  persistence:
+    data:
+      enabled: true
+      existingClaim: openwebui-data
+      globalMounts:
+        - path: /app/backend/data
+
+    uploads:
+      enabled: true
+      existingClaim: openwebui-uploads
+      globalMounts:
+        - path: /app/backend/uploads
+
+  defaultPodOptions:
+    labels:
+      app: openwebui
+      version: 1.0.0
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: "OnRootMismatch"
+
+  # Ingress configuration (uncomment and modify as needed)
+  # ingress:
+  #   main:
+  #     enabled: true
+  #     className: "nginx"
+  #     annotations:
+  #       cert-manager.io/cluster-issuer: "letsencrypt-prod"
+  #     hosts:
+  #       - host: "openwebui.{{ .Values.cluster.top_level_domain }}"
+  #         paths:
+  #           - path: /
+  #             pathType: Prefix
+  #             service:
+  #               identifier: main
+  #               port: http
+  #     tls:
+  #       - secretName: openwebui-tls
+  #         hosts:
+  #           - "openwebui.{{ .Values.cluster.top_level_domain }}"

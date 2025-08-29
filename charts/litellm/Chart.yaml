@@ -1,0 +1,13 @@
+---
+apiVersion: v2
+description: A Helm chart to install LiteLLM - A unified API gateway for 100+ LLM providers.
+name: litellm
+version: 0.1.0
+kubeVersion: ">=1.22.0-0"
+maintainers:
+  - name: Magnus Ullberg
+    email: magnus@ullberg.us
+dependencies:
+  - name: app-template
+    version: "4.1.2"
+    repository: "@bjw-s"
