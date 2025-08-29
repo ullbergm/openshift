@@ -19,6 +19,7 @@ spec:
         service: redis
     spec:
       automountServiceAccountToken: false
+      serviceAccountName: {{ .Release.Name }}
       securityContext:
         runAsUser: 999
         runAsGroup: 999
