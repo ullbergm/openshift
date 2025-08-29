@@ -29,10 +29,9 @@ spec:
       serviceAccountName: {{ .Release.Name }}
       automountServiceAccountToken: true
       securityContext:
-        runAsUser: 0
-        runAsGroup: 0
-        runAsNonRoot: false
         fsGroup: 0
+        runAsGroup: 0
+        runAsUser: 0
       containers:
         - env:
           - name: TZ
