@@ -23,4 +23,4 @@ pods:
     env:
       LITELLM_DISABLE_DATABASE: "true"
       LITELLM_MASTER_KEY: "sk-secret"
-      LITELLM_SALT_KEY="sk-salt"
+      LITELLM_SALT_KEY: "sk-salt"
