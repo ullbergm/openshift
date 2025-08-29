@@ -22,7 +22,7 @@ app-template:
             repository: ghcr.io/berriai/litellm
             tag: "main-latest"
           env:
-            TZ: "{{ .Values.cluster.timezone }}"
+            TZ: America/New_York
             # LiteLLM configuration
             LITELLM_LOG_LEVEL: INFO
             LITELLM_PORT: "8000"
