@@ -1,0 +1,34 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+
+application:
+  name: Bazarr
+  group: Media
+  icon: subtitles
+  iconColor: ""
+  image: 'https://www.bazarr.media/assets/img/logo.png'
+  description: "Manages subtitles"
+  port: 6767
+  location: 0
+
+storage:
+  config:
+    storageClassName: synology-iscsi
+  media:
+    nfs:
+      server: nas
+      path: /volume1/media
+
+pods:
+  main:
+    image:
+      # renovate custom-docker versioning=semver
+      repository: ghcr.io/home-operations/bazarr
+      tag: 1.5.2
+      pullPolicy: IfNotPresent
+    env:
+      TZ: America/New_York
+      test: two

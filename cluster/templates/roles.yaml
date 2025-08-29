@@ -1,0 +1,30 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: cluster-roles
+spec:
+  ignoreApplicationDifferences:
+    - jsonPointers:
+        - /spec/syncPolicy
+  goTemplate: true
+  generators:
+    - list:
+        elements:
+{{- range .values.roles }}
+        - name: {{ . }}
+{{- end }}
+  template:
+    metadata:
+      name: "openshift-gitops"
+    spec:
+      project: default
+      destination:
+        server: {{ .values.spec.destination.server }}
+        namespace: "openshift-gitops"
+      source:
+        repoURL: {{ .values.spec.source.repoURL }}
+        path: "cluster/{{.name}}"
+        targetRevision: {{ .values.spec.source.targetRevision }}
+        helm:
+          valuesObject:
+          {{-toYaml .values.config | nindent 10 }}

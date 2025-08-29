@@ -1,0 +1,34 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+
+application:
+  name: Gaps
+  group: Media
+  icon: movie-open
+  iconColor: ""
+  image: 'https://raw.githubusercontent.com/JasonHHouse/gaps/master/images/Final-Black.png'
+  description: "Helps find missing movies in a series"
+  port: 8484
+  location: 0
+
+storage:
+  config:
+    storageClassName: synology-iscsi
+    path: /usr/data
+  media:
+    nfs:
+      server: nas
+      path: /volume1/media
+
+pods:
+  main:
+    image:
+      # renovate custom-docker versioning=loose
+      repository: housewrecker/gaps
+      tag: x64-v0.10.4
+      pullPolicy: IfNotPresent
+    env:
+      TZ: America/New_York

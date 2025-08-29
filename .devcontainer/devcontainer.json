@@ -1,0 +1,25 @@
+{
+  "name": "DevContainer",
+  "build": { "dockerfile": "Dockerfile" },
+  "postAttachCommand": ["/bin/bash", ".devcontainer/post-install.sh"],
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "bash",
+        "terminal.integrated.profiles.linux": {
+          "bash": {
+            "path": "/bin/bash"
+          }
+        }
+      },
+      "extensions": [
+        "bpruitt-goddard.mermaid-markdown-syntax-highlighting",
+        "DavidAnson.vscode-markdownlint",
+        "esbenp.prettier-vscode",
+        "mhutchie.git-graph",
+        "redhat.vscode-yaml",
+        "ltex-plus.vscode-ltex-plus"
+      ]
+    }
+  }
+}
