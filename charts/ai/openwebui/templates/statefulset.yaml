@@ -28,10 +28,10 @@ spec:
       enableServiceLinks: false
       serviceAccountName: {{ .Release.Name }}
       automountServiceAccountToken: true
-      securityContext:
-        fsGroup: 0
-        runAsGroup: 0
-        runAsUser: 0
+      # securityContext:
+      #   fsGroup: 0
+      #   runAsGroup: 0
+      #   runAsUser: 0
       containers:
         - env:
           - name: TZ
