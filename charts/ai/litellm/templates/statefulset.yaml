@@ -61,5 +61,5 @@ spec:
               memory: 1Gi
       volumes:
         - name: config
-          secret:
-            secretName: {{ .Release.Name }}-config
+          configMap:
+            name: {{ .Release.Name }}-config
