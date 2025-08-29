@@ -40,7 +40,7 @@ pods:
     image:
       # renovate custom-docker versioning=semver
       repository: ghcr.io/open-webui/open-webui
-      tag: "v0.3.35"
+      tag: "v0.6.26-slim"
     env:
       # OpenWebUI environment variables
       WEBUI_NAME: "Open WebUI"
