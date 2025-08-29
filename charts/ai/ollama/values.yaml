@@ -47,6 +47,11 @@ ollama:
   # -- Override ollama-data volume mount path, default: "/root/.ollama"
   mountPath: ""
 
+  # Data persistence
+  persistence:
+    enabled: true
+    size: "50Gi"
+
 pods:
   main:
     image:

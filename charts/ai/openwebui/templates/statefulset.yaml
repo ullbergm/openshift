@@ -92,12 +92,6 @@ spec:
       volumes:
       - name: temp
         emptyDir: {}
-  volumeClaimTemplates:
-  - metadata:
-      name: data
-    spec:
-      accessModes: [ "ReadWriteOnce" ]
-      resources:
-        requests:
-          storage: {{ .Values.openwebui.persistence.size }}
-      storageClassName: "synology-iscsi"
+      - name: data
+        persistentVolumeClaim:
+          claimName: {{ .Release.Name }}-data
