@@ -52,7 +52,7 @@ spec:
             name: http
             protocol: TCP
           volumeMounts:
-          - mountPath: /root/.ollama
+          - mountPath: /.ollama
             name: data
           {{- if .Values.pods.main.gpu.enabled }}
           resources:
