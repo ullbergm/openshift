@@ -41,6 +41,12 @@ ollama:
     # -- Automatically remove models present on the disk but not specified in the values file
     clean: false
 
+  # -- Add insecure flag for pulling at container startup
+  insecure: true
+
+  # -- Override ollama-data volume mount path, default: "/root/.ollama"
+  mountPath: ""
+
 pods:
   main:
     image:
