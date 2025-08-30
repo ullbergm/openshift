@@ -7,12 +7,14 @@ spec:
 
 roles:
   - ai
+  - utilities
 
-cluster:
-  top_level_domain: example.com
-  name: cluster
-  admin_email: YOUR_EMAIL
-  timezone: YOUR_TIMEZONE
-  storage:
-    config:
-      storageClassName: synology-iscsi
+config:
+  cluster:
+    top_level_domain: example.com
+    name: cluster
+    admin_email: YOUR_EMAIL
+    timezone: YOUR_TIMEZONE
+    storage:
+      config:
+        storageClassName: synology-iscsi
