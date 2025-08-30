@@ -7,7 +7,6 @@ spec:
 
 roles:
   - ai
-  - utilities
 
 cluster:
   top_level_domain: example.com
