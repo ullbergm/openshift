@@ -28,4 +28,4 @@ spec:
         targetRevision: {{ .Values.spec.source.targetRevision }}
         helm:
           valuesObject:
-          {{ .Values.config | toYaml | nindent 10 }}
+          {{ .Values.config | toYaml | nindent 12 }}
