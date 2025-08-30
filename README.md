@@ -6,20 +6,11 @@ This repository implements an Argo CD-based GitOps deployment model for OpenShif
 
 The deployment model follows a three-tier architecture:
 
+![Hierarchy](docs/images/chart-hierarchy.png)
+
 1. **Cluster Definition** (`/cluster`) - Bootstrap configuration and role management
 2. **Roles** (`/roles`) - Functional groupings that define which applications to deploy
 3. **Charts** (`/charts`) - Individual Helm charts for each application
-
-```mermaid
-graph TB
-    A[Cluster Bootstrap] --> B[Role: AI/ML]
-    A --> C[Role: Media]
-    B --> D[LiteLLM]
-    B --> E[Ollama]
-    B --> F[Open WebUI]
-    C --> G[Bazarr]
-    C --> H[Gaps]
-```
 
 ## Repository Structure
 
