@@ -10,7 +10,7 @@ spec:
   generators:
     - list:
         elements:
-{{- range .values.roles }}
+{{- range .Values.roles }}
         - name: {{ . }}
 {{- end }}
   template:
@@ -20,12 +20,12 @@ spec:
     spec:
       project: default
       destination:
-        server: {{ .values.spec.destination.server }}
+        server: {{ .Values.spec.destination.server }}
         namespace: "openshift-gitops"
       source:
-        repoURL: {{ .values.spec.source.repoURL }}
+        repoURL: {{ .Values.spec.source.repoURL }}
         path: "cluster/{{.name}}"
-        targetRevision: {{ .values.spec.source.targetRevision }}
+        targetRevision: {{ .Values.spec.source.targetRevision }}
         helm:
           valuesObject:
-          {{ .values.config | toYaml | nindent 10 }}
+          {{ .Values.config | toYaml | nindent 10 }}
