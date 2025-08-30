@@ -9,7 +9,11 @@ roles:
   - ai
   - utilities
 
-configSecret:
-  name: cluster-config
-  namespace: openshift-gitops
-  valuesKey: config.yaml
+cluster:
+  top_level_domain: example.com
+  name: cluster
+  admin_email: YOUR_EMAIL
+  timezone: YOUR_TIMEZONE
+  storage:
+    config:
+      storageClassName: synology-iscsi
