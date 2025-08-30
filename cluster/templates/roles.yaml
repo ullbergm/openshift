@@ -15,7 +15,7 @@ spec:
 {{- end }}
   template:
     metadata:
-      name: {{ .name }}-apps
+      name: {{ "{{" }} .name {{ "}}" }}-apps
       namespace: "openshift-gitops"
     spec:
       project: default
@@ -24,7 +24,7 @@ spec:
         namespace: "openshift-gitops"
       source:
         repoURL: {{ .Values.spec.source.repoURL }}
-        path: "cluster/{{.name}}"
+        path: cluster/{{ "{{" }} .name {{ "}}" }}
         targetRevision: {{ .Values.spec.source.targetRevision }}
         helm:
           valuesObject:
