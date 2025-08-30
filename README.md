@@ -87,38 +87,45 @@ Each application in the `/charts` directory is a complete Helm chart with:
 
 ### Utilities Role
 
-- **System utilities**: General purpose tools and utilities for cluster management
-- **Development tools**: IDEs, code quality tools, and development utilities
-- **Monitoring utilities**: Lightweight monitoring and diagnostic tools
+- **Excalidraw**: Whiteboard tool
 
 ## Configuration
 
 ### Cluster Configuration
 
-Edit `cluster/values.yaml` to configure:
+Override parameters as needed during deployment:
 
 ```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: cluster
+  namespace: openshift-gitops
 spec:
   destination:
-    server: https://kubernetes.default.svc
+    namespace: openshift-gitops
+    server: "https://kubernetes.default.svc"
+  project: default
   source:
-    repoURL: YOUR_REPO_URL
-    targetRevision: HEAD
-
-roles:
-  - ai
-  - media
-  - utilities
-
-config:
-  cluster:
-    top_level_domain: example.com
-    name: cluster
-    admin_email: admin@example.com
-    timezone: America/New_York
-    storage:
-      config:
-        storageClassName: your-storage-class
+    helm:
+      parameters:
+        - name: config.cluster.admin_email
+          value: magnus@ullberg.us
+        - name: config.cluster.name
+          value: openshift
+        - name: config.cluster.timezone
+          value: America/New_York
+        - name: config.cluster.top_level_domain
+          value: ullberg.local
+        - name: spec.source.repoURL
+          value: "https://github.com/ullbergm/openshift/"
+        - name: spec.source.targetRevision
+          value: v2
+        - name: roles.utilities.enabled
+          value: "false"
+    path: cluster
+    repoURL: "https://github.com/ullbergm/openshift/"
+    targetRevision: v2
 ```
 
 ## OpenShift Integration Features
