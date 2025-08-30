@@ -16,7 +16,7 @@ spec:
     targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:
       valuesObject:
-{{- with .Values.config }}
+{{- with .Values }}
   {{. | toYaml | nindent 10 }}
 {{- end }}
   syncPolicy:
