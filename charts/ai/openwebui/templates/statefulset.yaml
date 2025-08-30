@@ -44,8 +44,6 @@ spec:
             value: {{ .Values.pods.main.env.DEFAULT_USER_ROLE | quote }}
           - name: ENABLE_COMMUNITY_SHARING
             value: {{ .Values.pods.main.env.ENABLE_COMMUNITY_SHARING | quote }}
-          - name: OLLAMA_BASE_URL
-            value: ollama.ollama.svc.cluster.local:11434
           {{ if .Values.pods.main.env.WEBUI_URL }}- name: WEBUI_URL
             value: {{ .Values.pods.main.env.WEBUI_URL | quote }}
           {{ end }}
