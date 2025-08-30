@@ -15,7 +15,7 @@ spec:
 {{- end }}
   template:
     metadata:
-      name: {{ "{{" }} .name {{ "}}" }}-apps
+      name: '{{ "{{" }} .name {{ "}}" }}-apps'
       namespace: "openshift-gitops"
     spec:
       project: default
