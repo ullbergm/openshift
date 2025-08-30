@@ -27,11 +27,14 @@ The deployment model follows a three-tier architecture:
 │   │       ├── litellm.yaml   # LiteLLM application definition
 │   │       ├── ollama.yaml    # Ollama application definition
 │   │       └── openwebui.yaml # Open WebUI application definition
-│   └── media/                 # Media applications role
+│   ├── media/                 # Media applications role
+│   │   ├── Chart.yaml
+│   │   └── templates/
+│   │       ├── bazarr.yaml    # Bazarr application definition
+│   │       └── gaps.yaml      # Gaps application definition
+│   └── utilities/             # Utilities and system tools role
 │       ├── Chart.yaml
-│       └── templates/
-│           ├── bazarr.yaml    # Bazarr application definition
-│           └── gaps.yaml      # Gaps application definition
+│       └── templates/         # Utility application definitions
 └── charts/                    # Individual application Helm charts
     ├── ai/
     │   ├── litellm/          # LiteLLM proxy for LLM management
@@ -82,6 +85,12 @@ Each application in the `/charts` directory is a complete Helm chart with:
 - **Bazarr**: Subtitle management for media files
 - **Gaps**: Tool for finding missing movies in series
 
+### Utilities Role
+
+- **System utilities**: General purpose tools and utilities for cluster management
+- **Development tools**: IDEs, code quality tools, and development utilities
+- **Monitoring utilities**: Lightweight monitoring and diagnostic tools
+
 ## Configuration
 
 ### Cluster Configuration
@@ -99,6 +108,7 @@ spec:
 roles:
   - ai
   - media
+  - utilities
 
 config:
   cluster:

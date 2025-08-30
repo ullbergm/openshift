@@ -1,0 +1,32 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Excalidraw
+  group: utilities
+  icon: mdi:draw-pen
+  iconColor: ""
+  image: "https://avatars.githubusercontent.com/u/59452120"
+  description: "Collaborative whiteboard tool"
+  port: 8080
+  location: 0
+
+pods:
+  main:
+    image:
+      # renovate custom-docker versioning=semver
+      repository: ghcr.io/wipash/excalidraw-collab
+      tag: 0.18.0
+      pullPolicy: IfNotPresent
+    env:
+      TZ: America/New_York

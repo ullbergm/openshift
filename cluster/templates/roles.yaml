@@ -30,4 +30,8 @@ spec:
           valuesObject:
             spec:
               {{ .Values.spec | toYaml | nindent 14 }}
-          {{ .Values.config | toYaml | nindent 12 }}
+          valuesFrom:
+            - kind: Secret
+              name: {{ default (printf "%s-config" .Release.Name) .Values.configSecret.name }}
+              valuesKey: {{ default "config.yaml" .Values.configSecret.valuesKey }}
+              targetPath: config
