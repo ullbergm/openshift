@@ -15,7 +15,8 @@ spec:
 {{- end }}
   template:
     metadata:
-      name: "openshift-gitops"
+      name: {{ .name }}-apps
+      namespace: "openshift-gitops"
     spec:
       project: default
       destination:
@@ -27,4 +28,4 @@ spec:
         targetRevision: {{ .values.spec.source.targetRevision }}
         helm:
           valuesObject:
-          {{-toYaml .values.config | nindent 10 }}
+          {{ .values.config | toYaml | nindent 10 }}
