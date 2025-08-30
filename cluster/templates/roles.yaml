@@ -24,7 +24,7 @@ spec:
         namespace: "openshift-gitops"
       source:
         repoURL: {{ .Values.spec.source.repoURL }}
-        path: cluster/app
+        path: cluster/{{ "{{" }} .name {{ "}}" }}
         targetRevision: {{ .Values.spec.source.targetRevision }}
         helm:
           valuesObject:
