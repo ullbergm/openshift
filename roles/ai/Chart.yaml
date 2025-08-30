@@ -1,6 +1,6 @@
 apiVersion: v2
 description: A Helm chart for the ai role
-name: cluster
+name: ai
 version: 1.0.0
 kubeVersion: ">=1.22.0-0"
 
