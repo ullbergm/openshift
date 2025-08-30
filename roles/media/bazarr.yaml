@@ -8,15 +8,17 @@ metadata:
 spec:
   destination:
     namespace: bazarr
-    server: { { .Values.spec.destination.server } }
+    server: {{ .Values.spec.destination.server }}
   project: default
   source:
     path: charts/media/bazarr
-    repoURL: { { .Values.spec.source.repoURL } }
-    targetRevision: { { .Values.spec.source.targetRevision } }
+    repoURL: {{ .Values.spec.source.repoURL }}
+    targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:
       valuesObject:
-        {{-toYaml .values.config | nindent 8 }}
+{{- with .Values.config }}
+        {{. | toYaml | nindent 8 }}
+{{- end }}
   syncPolicy:
     syncOptions:
       - CreateNamespace=true
