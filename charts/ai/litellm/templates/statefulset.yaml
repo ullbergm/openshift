@@ -32,19 +32,6 @@ spec:
         runAsUser: 1000
         runAsGroup: 150
         runAsNonRoot: true
-      initContainers:
-        - name: config-setup
-          image: busybox:1.35
-          command: ['sh', '-c', 'cp /tmp/config/config.yaml /app/config.yaml && chown 1000:150 /app/config.yaml']
-          volumeMounts:
-          - mountPath: /tmp/config
-            name: config-source
-          - mountPath: /app
-            name: config-writable
-          securityContext:
-            runAsUser: 0
-            runAsGroup: 0
-            runAsNonRoot: false
       containers:
         - env:
           - name: TZ
@@ -66,7 +53,7 @@ spec:
           name: main
           volumeMounts:
           - mountPath: /app/config.yaml
-            name: config-writable
+            name: config
             subPath: config.yaml
           - mountPath: /.cache
             name: cache
@@ -82,14 +69,13 @@ spec:
               cpu: '4'
               memory: 1Gi
       volumes:
-        - name: config-source
+        - name: config
           configMap:
             name: {{ .Release.Name }}-config
-        - name: config-writable
-          emptyDir: {}
         - name: cache
           emptyDir: {}
         - name: npm
           emptyDir: {}
         - name: app-config
-          emptyDir: {}
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-app-config
