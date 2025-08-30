@@ -10,10 +10,12 @@ spec:
   generators:
     - list:
         elements:
-        - name: ai
+{{- range .Values.roles }}
+        - name: {{ . }}
+{{- end }}
   template:
     metadata:
-      name: {{ "{{" }} .name {{ "}}" }}-apps
+      name: app
       namespace: "openshift-gitops"
     spec:
       project: default
@@ -22,7 +24,7 @@ spec:
         namespace: "openshift-gitops"
       source:
         repoURL: {{ .Values.spec.source.repoURL }}
-        path: cluster/{{ "{{" }} .name {{ "}}" }}
+        path: cluster/app
         targetRevision: {{ .Values.spec.source.targetRevision }}
         helm:
           valuesObject:
