@@ -22,10 +22,10 @@ data:
         litellm_params:
           model: github_copilot/gpt-5
         headers: &copilot_headers
-          editor-version: "vscode/1.85.1"
-          editor-plugin-version: "copilot/1.155.0"
+          Editor-Version: "vscode/1.85.1"
+          Editor-Plugin-Version: "copilot/1.155.0"
           Copilot-Integration-Id: "vscode-chat"
-          user-agent: "GithubCopilot/1.155.0"
+          User-Agent: "GithubCopilot/1.155.0"
       - model_name: github_copilot/gpt-5-mini
         litellm_params:
           model: github_copilot/gpt-5-mini
