@@ -32,6 +32,17 @@ spec:
         runAsUser: 1000
         runAsGroup: 150
         runAsNonRoot: true
+      initContainers:
+        - name: config-setup
+          image: busybox:1.35
+          command: ['sh', '-c', 'chown 1000:150 /app/.config']
+          volumeMounts:
+          - mountPath: /app
+            name: app-config
+          securityContext:
+            runAsUser: 0
+            runAsGroup: 0
+            runAsNonRoot: false
       containers:
         - env:
           - name: TZ
