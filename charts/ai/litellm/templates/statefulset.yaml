@@ -72,6 +72,8 @@ spec:
             name: cache
           - mountPath: /.npm
             name: npm
+          - mountPath: /app/.config
+            name: app-config
           resources:
             requests:
               cpu: '2'
@@ -88,4 +90,6 @@ spec:
         - name: cache
           emptyDir: {}
         - name: npm
+          emptyDir: {}
+        - name: app-config
           emptyDir: {}
