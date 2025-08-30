@@ -6,8 +6,10 @@ spec:
     targetRevision: HEAD
 
 roles:
-  - ai
-  - utilities
+  ai:
+    enabled: true
+  utilities:
+    enabled: true
 
 config:
   cluster:

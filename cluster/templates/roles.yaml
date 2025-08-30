@@ -10,8 +10,10 @@ spec:
   generators:
     - list:
         elements:
-{{- range .Values.roles }}
-        - name: {{ . }}
+{{- range $name, $config := .Values.roles }}
+{{- if $config.enabled }}
+        - name: {{ $name }}
+{{- end }}
 {{- end }}
   template:
     metadata:
