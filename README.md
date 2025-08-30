@@ -15,34 +15,35 @@ The deployment model follows a three-tier architecture:
 ## Repository Structure
 
 ```text
-├── cluster/                    # Cluster bootstrap configuration
-│   ├── Chart.yaml             # Main cluster Helm chart
+├── cluster/                   # Cluster bootstrap configuration
+│   ├── Chart.yaml
 │   ├── values.yaml            # Cluster-wide configuration
 │   └── templates/
-│       └── roles.yaml         # ApplicationSet for role deployment
+│       └── roles.yaml
 ├── roles/                     # Functional role definitions
 │   ├── ai/                    # AI/ML applications role
 │   │   ├── Chart.yaml
 │   │   └── templates/
-│   │       ├── litellm.yaml   # LiteLLM application definition
-│   │       ├── ollama.yaml    # Ollama application definition
-│   │       └── openwebui.yaml # Open WebUI application definition
+│   │       ├── litellm.yaml
+│   │       ├── ollama.yaml
+│   │       └── openwebui.yaml
 │   ├── media/                 # Media applications role
 │   │   ├── Chart.yaml
 │   │   └── templates/
-│   │       ├── bazarr.yaml    # Bazarr application definition
-│   │       └── gaps.yaml      # Gaps application definition
+│   │       ├── bazarr.yaml
+│   │       └── gaps.yaml
 │   └── utilities/             # Utilities and system tools role
 │       ├── Chart.yaml
-│       └── templates/         # Utility application definitions
+│       └── templates/
+│   │       └── gaps.yaml
 └── charts/                    # Individual application Helm charts
     ├── ai/
-    │   ├── litellm/          # LiteLLM proxy for LLM management
-    │   ├── ollama/           # Local LLM runtime
-    │   └── openwebui/        # Web UI for LLMs
+    │   ├── litellm/           # LiteLLM proxy for LLM management
+    │   ├── ollama/            # Local LLM runtime
+    │   └── openwebui/         # Web UI for LLMs
     └── media/
-        ├── bazarr/           # Subtitle management
-        └── gaps/             # Media gap detection
+        ├── bazarr/            # Subtitle management
+        └── gaps/              # Media gap detection
 ```
 
 ## How It Works
