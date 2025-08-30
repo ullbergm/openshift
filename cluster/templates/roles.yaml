@@ -10,9 +10,7 @@ spec:
   generators:
     - list:
         elements:
-{{- range .Values.roles }}
-        - name: {{ . }}
-{{- end }}
+        - name: ai
   template:
     metadata:
       name: {{ "{{" }} .name {{ "}}" }}-apps
@@ -26,3 +24,6 @@ spec:
         repoURL: {{ .Values.spec.source.repoURL }}
         path: cluster/{{ "{{" }} .name {{ "}}" }}
         targetRevision: {{ .Values.spec.source.targetRevision }}
+        helm:
+          valuesObject:
+          {{ .Values.config | toYaml | nindent 12 }}
