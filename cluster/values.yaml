@@ -14,3 +14,6 @@ config:
     name: cluster
     admin_email: YOUR_EMAIL
     timezone: YOUR_TIMEZONE
+    storage:
+      config:
+        storageClassName: synology-iscsi

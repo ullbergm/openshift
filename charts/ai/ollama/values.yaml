@@ -3,13 +3,16 @@ cluster:
   name: openshift
   admin_email: admin@example.com
   timezone: America/New_York
+  #storage:
+  #  config:
+  #    storageClassName: synology-iscsi
 
 application:
   name: Ollama
   group: AI/ML
   icon: robot
   iconColor: ""
-  image: 'https://ollama.ai/public/apple-touch-icon.png'
+  image: "https://ollama.ai/public/apple-touch-icon.png"
   description: "Run large language models locally"
   port: 11434
   location: 0

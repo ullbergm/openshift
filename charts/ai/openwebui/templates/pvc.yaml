@@ -3,8 +3,6 @@ kind: PersistentVolumeClaim
 metadata:
   name: {{ .Release.Name }}-data
   labels:
-    app.kubernetes.io/name: {{ .Release.Name }}
-    app.kubernetes.io/instance: {{ .Release.Name }}
     kasten/backup: "true"
 spec:
   accessModes:
@@ -12,4 +10,6 @@ spec:
   resources:
     requests:
       storage: {{ .Values.openwebui.persistence.size }}
-  storageClassName: "synology-iscsi"
+{{- if .Values.cluster.storage.config.storageClass }}
+  storageClassName: {{ .Values.cluster.storage.config.storageClass }}
+{{- end }}

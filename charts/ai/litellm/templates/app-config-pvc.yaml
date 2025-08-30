@@ -11,4 +11,6 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: {{ .Values.cluster.storageClass | default "synology-iscsi" }}
+{{- if .Values.cluster.storage.config.storageClass }}
+  storageClassName: {{ .Values.cluster.storage.config.storageClass }}
+{{- end }}

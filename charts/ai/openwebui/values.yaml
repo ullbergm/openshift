@@ -4,12 +4,16 @@ cluster:
   admin_email: admin@example.com
   timezone: America/New_York
 
+#  storage:
+#    config:
+#      storageClassName: synology-iscsi
+
 application:
   name: Open WebUI
   group: AI/ML
   icon: robot
   iconColor: ""
-  image: 'https://openwebui.com/favicon.png'
+  image: "https://openwebui.com/favicon.png"
   description: "User-friendly WebUI for LLMs"
   port: 8080
   location: 0

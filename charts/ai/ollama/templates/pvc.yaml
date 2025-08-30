@@ -12,4 +12,6 @@ spec:
   resources:
     requests:
       storage: {{ .Values.ollama.persistence.size }}
-  storageClassName: "synology-iscsi"
+{{- if .Values.cluster.storage.config.storageClass }}
+  storageClassName: {{ .Values.cluster.storage.config.storageClass }}
+{{- end }}

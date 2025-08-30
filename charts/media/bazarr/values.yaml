@@ -3,24 +3,23 @@ cluster:
   name: openshift
   admin_email: admin@example.com
   timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
 
 application:
   name: Bazarr
   group: Media
   icon: subtitles
   iconColor: ""
-  image: 'https://www.bazarr.media/assets/img/logo.png'
+  image: "https://www.bazarr.media/assets/img/logo.png"
   description: "Manages subtitles"
   port: 6767
   location: 0
-
-storage:
-  config:
-    storageClassName: synology-iscsi
-  media:
-    nfs:
-      server: nas
-      path: /volume1/media
 
 pods:
   main:
