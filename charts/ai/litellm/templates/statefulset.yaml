@@ -37,7 +37,7 @@ spec:
           image: busybox:1.35
           command: ['sh', '-c', 'chown 1000:150 /app/.config']
           volumeMounts:
-          - mountPath: /app
+          - mountPath: /app/.config
             name: app-config
           securityContext:
             runAsUser: 0
