@@ -1,19 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: bazarr
+  name: sonarr
   namespace: openshift-gitops
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: bazarr
-    server: {{ .Values.spec.destination.server }}
+    namespace: sonarr
+    server: "{{ .Values.spec.destination.server }}"
   project: default
   source:
-    path: charts/media/bazarr
-    repoURL: {{ .Values.spec.source.repoURL }}
-    targetRevision: {{ .Values.spec.source.targetRevision }}
+    path: charts/media/sonarr
+    repoURL: "{{ .Values.spec.source.repoURL }}"
+    targetRevision: "{{ .Values.spec.source.targetRevision }}"
     helm:
       valuesObject:
 {{- with .Values }}

@@ -25,9 +25,13 @@
     "python3": true,
     "find": true,
     "git commit": false,
-    "git": true
+    "git": true,
+    "wc": true
   },
   "yaml.schemas": {
-    "https://www.schemastore.org/yamllint.json": "file:///workspaces/openshift-v2.0/cluster.yaml"
+    "https://www.schemastore.org/yamllint.json": [
+      "file:///workspaces/openshift-v2.0/cluster.yaml",
+      "file:///workspaces/openshift/charts/media/sonarr/templates/service.yaml"
+    ]
   }
 }

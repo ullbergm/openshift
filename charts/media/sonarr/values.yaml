@@ -1,0 +1,37 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Sonarr
+  group: Media
+  icon: television
+  iconColor: ""
+  image: "https://raw.githubusercontent.com/Sonarr/Sonarr/v5-develop/Logo/256.png"
+  description: "TV Series management"
+  port: 8989
+  location: 0
+
+pods:
+  main:
+    image:
+      # renovate custom-docker versioning=semver
+      repository: ghcr.io/home-operations/sonarr
+      tag: 4.0.15
+      pullPolicy: IfNotPresent
+    env:
+      TZ: "{{ .Values.cluster.timezone }}"
+      COMPlus_EnableDiagnostics: "0"
+      SONARR__APP__INSTANCENAME: Sonarr
+      SONARR__AUTH__METHOD: External
+      SONARR__AUTH__REQUIRED: DisabledForLocalAddresses
+      SONARR__LOG__LEVEL: info
