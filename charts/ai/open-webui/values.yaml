@@ -18,7 +18,7 @@ application:
   port: 8080
   location: 0
 
-openWebUI:
+openwebui:
   # OpenWebUI specific configuration
   environment: "production"
 
