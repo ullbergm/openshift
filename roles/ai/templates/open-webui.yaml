@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: openwebui
+  name: open-webui
   namespace: openshift-gitops
   finalizers:
     - resources-finalizer.argocd.argoproj.io
 spec:
   destination:
-    namespace: openwebui
+    namespace: open-webui
     server: {{ .Values.spec.destination.server }}
   project: default
   source:
-    path: charts/ai/openwebui
+    path: charts/ai/open-webui
     repoURL: {{ .Values.spec.source.repoURL }}
     targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:

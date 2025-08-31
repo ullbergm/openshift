@@ -26,7 +26,7 @@ The deployment model follows a three-tier architecture:
 │   │   └── templates/
 │   │       ├── litellm.yaml
 │   │       ├── ollama.yaml
-│   │       └── openwebui.yaml
+│   │       └── open-webui.yaml
 │   ├── media/                 # Media applications role
 │   │   ├── Chart.yaml
 │   │   └── templates/
@@ -40,7 +40,7 @@ The deployment model follows a three-tier architecture:
     ├── ai/
     │   ├── litellm/           # LiteLLM proxy for LLM management
     │   ├── ollama/            # Local LLM runtime
-    │   └── openwebui/         # Web UI for LLMs
+    │   └── open-webui/        # Web UI for LLMs
     └── media/
         ├── bazarr/            # Subtitle management
         └── gaps/              # Media gap detection

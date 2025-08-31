@@ -14,11 +14,11 @@
     "rmdir": false,
     "del": false,
     "kill": false,
-    "curl": false,
-    "wget": false,
-    "eval": false,
-    "chmod": false,
-    "chown": false,
+    "curl": true,
+    "wget": true,
+    "eval": true,
+    "chmod": true,
+    "chown": true,
     "/^Remove-Item\\b/i": false,
     "cd": true,
     "make": true,
@@ -26,7 +26,8 @@
     "find": true,
     "git commit": false,
     "git": true,
-    "wc": true
+    "wc": true,
+    "mv": true
   },
   "yaml.schemas": {
     "https://www.schemastore.org/yamllint.json": [

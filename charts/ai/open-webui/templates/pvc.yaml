@@ -9,7 +9,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: {{ .Values.openwebui.persistence.size }}
+      storage: {{ .Values.openWebUI.persistence.size }}
 {{- if .Values.cluster.storage.config.storageClass }}
   storageClassName: {{ .Values.cluster.storage.config.storageClass }}
 {{- end }}
