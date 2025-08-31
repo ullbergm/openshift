@@ -20,5 +20,8 @@ spec:
   {{. | toYaml | nindent 10 }}
 {{- end }}
   syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
     syncOptions:
       - CreateNamespace=true

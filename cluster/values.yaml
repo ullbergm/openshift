@@ -8,6 +8,8 @@ spec:
 roles:
   ai:
     enabled: true
+  media:
+    enabled: true
   utilities:
     enabled: true
 
