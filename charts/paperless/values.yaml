@@ -35,7 +35,7 @@ app-template:
           image:
             # renovate: docker-image
             repository: ghcr.io/paperless-ngx/paperless-ngx
-            tag: 2.18.2
+            tag: 2.18.4
             pullPolicy: Always
           env:
             TZ: TIMEZONE
