@@ -8,6 +8,8 @@ This document lists applications that could be considered for addition to the ho
 - 🔄 **Planned** - Identified for future deployment
 - ⚠️ **Under Review** - Requires further evaluation
 - ❌ **Not Suitable** - Determined to be incompatible or unnecessary
+- 🚧 **In Progress** - Currently being implemented
+- ⏸️ **Blocked** - Implementation blocked by dependencies or issues
 
 ## Priority Levels
 
@@ -15,21 +17,27 @@ This document lists applications that could be considered for addition to the ho
 - **Medium** - Useful functionality, moderate impact, implement when resources allow
 - **Low** - Nice to have, low impact, implement if time permits
 
+## Work Estimation Guide
+
+- **Hours**: Estimated implementation time (research + development + testing + documentation)
+- **Complexity**: Technical complexity (High/Medium/Low)
+- **Dependencies**: Prerequisites that must be completed first
+
 ---
 
 ## AI & Machine Learning
 
-| Application                | Status      | Priority | Notes                                                                  |
-| -------------------------- | ----------- | -------- | ---------------------------------------------------------------------- |
-| **LiteLLM**                | ✅ Deployed | -        | LLM proxy for managing multiple LLM APIs                               |
-| **Ollama**                 | ✅ Deployed | -        | Local LLM runtime                                                      |
-| **Open-WebUI**             | ✅ Deployed | -        | Web interface for LLMs                                                 |
-| **Stable Diffusion WebUI** | 🔄 Planned  | High     | Text-to-image generation interface, requires significant GPU resources |
-| **ComfyUI**                | 🔄 Planned  | Medium   | Node-based stable diffusion workflow interface, alternative to WebUI   |
-| **Text Generation WebUI**  | 🔄 Planned  | Medium   | Advanced web interface for text generation models                      |
-| **Jupyter Notebooks**      | 🔄 Planned  | High     | Interactive development environment for ML/data science                |
-| **MLflow**                 | 🔄 Planned  | Low      | ML lifecycle management platform                                       |
-| **Weights & Biases**       | 🔄 Planned  | Low      | ML experiment tracking and collaboration                               |
+| Application                | Status      | Priority | Est Hours | Complexity | Dependencies | Notes                                                                  |
+| -------------------------- | ----------- | -------- | --------- | ---------- | ------------ | ---------------------------------------------------------------------- |
+| **LiteLLM**                | ✅ Deployed | -        | -         | -          | -            | LLM proxy for managing multiple LLM APIs                               |
+| **Ollama**                 | ✅ Deployed | -        | -         | -          | -            | Local LLM runtime                                                      |
+| **Open-WebUI**             | ✅ Deployed | -        | -         | -          | -            | Web interface for LLMs                                                 |
+| **Stable Diffusion WebUI** | 🔄 Planned  | High     | 10        | High       | GPU, Storage | Text-to-image generation interface, requires significant GPU resources |
+| **ComfyUI**                | 🔄 Planned  | Medium   | 6         | Medium     | GPU, Storage | Node-based stable diffusion workflow interface, alternative to WebUI   |
+| **Text Generation WebUI**  | 🔄 Planned  | Medium   | 6         | Medium     | GPU          | Advanced web interface for text generation models                      |
+| **Jupyter Notebooks**      | 🔄 Planned  | High     | 10        | Medium     | Storage      | Interactive development environment for ML/data science                |
+| **MLflow**                 | 🔄 Planned  | Low      | 4         | Medium     | PostgreSQL   | ML lifecycle management platform                                       |
+| **Weights & Biases**       | 🔄 Planned  | Low      | 4         | Low        | None         | ML experiment tracking and collaboration                               |
 
 ## Media & Entertainment
 
@@ -39,18 +47,25 @@ This document lists applications that could be considered for addition to the ho
 | **Gaps**           | ✅ Deployed | -        | Media gap detection                                                      |
 | **Radarr**         | ✅ Deployed | -        | Movie collection manager                                                 |
 | **Sonarr**         | ✅ Deployed | -        | TV series collection manager                                             |
+| **SABnzbd**        | 🔄 Planned  | High     | Efficient Usenet downloader                                              |
+| **Kapowarr**       | 🔄 Planned  | High     | Software to build and manage a comic book library                        |
+| **Kavita**         | 🔄 Planned  | High     | Manga reader                                                             |
+| **MeTube**         | 🔄 Planned  | High     | Web GUI for youtube-dl                                                   |
+| **Pinchflat**      | 🔄 Planned  | High     | Your next YouTube media manager                                          |
+| **Recommendarr**   | 🔄 Planned  | High     | Generates personalized TV show and movie recommendations                 |
+| **Stash**          | 🔄 Planned  | High     | Manages your 'stuff'                                                     |
 | **Recyclarr**      | 🔄 Planned  | High     | TRaSH guides automation for \*arr apps, essential for quality management |
 | **Plex**           | 🔄 Planned  | High     | Media server, industry standard with excellent client support            |
 | **Jellyfin**       | 🔄 Planned  | High     | Open-source media server alternative to Plex                             |
 | **Overseerr**      | 🔄 Planned  | High     | Request management for Plex/Jellyfin, improves user experience           |
 | **Prowlarr**       | 🔄 Planned  | High     | Indexer manager for \*arr applications                                   |
-| **Tautulli**       | 🔄 Planned  | Medium   | Plex monitoring and analytics                                            |
-| **Lidarr**         | 🔄 Planned  | Medium   | Music collection manager                                                 |
+| **Tautulli**       | 🔄 Planned  | High     | Plex monitoring and analytics                                            |
+| **Lidarr**         | 🔄 Planned  | High     | Music collection manager                                                 |
+| **Readarr**        | 🔄 Planned  | High     | Book collection manager                                                  |
 | **PhotoPrism**     | 🔄 Planned  | High     | Photo management and organization with AI features                       |
 | **Immich**         | 🔄 Planned  | High     | Modern photo and video backup solution, Google Photos alternative        |
 | **Audiobookshelf** | 🔄 Planned  | Medium   | Audiobook and podcast server                                             |
 | **Navidrome**      | 🔄 Planned  | Medium   | Music streaming server (subsonic-compatible)                             |
-| **Readarr**        | 🔄 Planned  | Low      | Book collection manager                                                  |
 | **Komga**          | 🔄 Planned  | Medium   | Comic/manga server                                                       |
 | **YouTube-DL**     | 🔄 Planned  | Medium   | Video downloading service                                                |
 | **Emby**           | 🔄 Planned  | Medium   | Media server with premium features                                       |
@@ -109,16 +124,21 @@ This document lists applications that could be considered for addition to the ho
 
 ## Utilities & Tools
 
-| Application     | Status      | Priority | Notes                                      |
-| --------------- | ----------- | -------- | ------------------------------------------ |
-| **Excalidraw**  | ✅ Deployed | -        | Virtual whiteboard for sketching           |
-| **Homepage**    | 🔄 Planned  | High     | Customizable application dashboard         |
-| **Uptime Kuma** | 🔄 Planned  | High     | Service monitoring and status pages        |
-| **FreshRSS**    | 🔄 Planned  | Medium   | RSS feed aggregator                        |
-| **Linkding**    | 🔄 Planned  | Medium   | Bookmark manager                           |
-| **Gotify**      | 🔄 Planned  | Medium   | Push notification server                   |
-| **Searx**       | 🔄 Planned  | Medium   | Privacy-respecting metasearch engine       |
-| **Wallabag**    | 🔄 Planned  | Low      | Read-it-later service (Pocket alternative) |
+| Application       | Status      | Priority | Notes                                               |
+| ----------------- | ----------- | -------- | --------------------------------------------------- |
+| **Excalidraw**    | ✅ Deployed | -        | Virtual whiteboard for sketching                    |
+| **CyberChef**     | 🔄 Planned  | High     | The Cyber Swiss Army Knife                          |
+| **IT-Tools**      | 🔄 Planned  | High     | Useful tools for developer and people working in IT |
+| **Monica**        | 🔄 Planned  | High     | A tool for managing your life                       |
+| **N8N**           | 🔄 Planned  | High     | A tool for automating tasks and workflows           |
+| **Paperless-NGX** | 🔄 Planned  | High     | A document management system                        |
+| **Homepage**      | 🔄 Planned  | High     | Customizable application dashboard                  |
+| **Uptime Kuma**   | 🔄 Planned  | High     | Service monitoring and status pages                 |
+| **FreshRSS**      | 🔄 Planned  | Medium   | RSS feed aggregator                                 |
+| **Linkding**      | 🔄 Planned  | Medium   | Bookmark manager                                    |
+| **Gotify**        | 🔄 Planned  | Medium   | Push notification server                            |
+| **Searx**         | 🔄 Planned  | Medium   | Privacy-respecting metasearch engine                |
+| **Wallabag**      | 🔄 Planned  | Low      | Read-it-later service (Pocket alternative)          |
 
 ## Security & Privacy
 
