@@ -20,11 +20,10 @@ application:
 pods:
   main:
     image:
-      # renovate custom-docker versioning=semver
       repository: ghcr.io/berriai/litellm-non_root
+      # renovate: datasource=docker depName=ghcr.io/berriai/litellm-non_root versioning=semver
       tag: main-v1.75.8-stable
     env:
-      TZ: "{{ .Values.cluster.timezone }}"
       LITELLM_MASTER_KEY: "sk-secret"
       LITELLM_SALT_KEY: "sk-salt"
 

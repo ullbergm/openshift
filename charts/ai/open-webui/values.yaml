@@ -42,11 +42,10 @@ openwebui:
 pods:
   main:
     image:
-      # renovate custom-docker versioning=semver
       repository: ghcr.io/open-webui/open-webui
+      # renovate: datasource=docker depName=ghcr.io/open-webui/open-webui versioning=semver
       tag: "main"
     env:
-      TZ: "{{ .Values.cluster.timezone }}"
       # OpenWebUI environment variables
       WEBUI_NAME: "Open WebUI"
       WEBUI_URL: ""
