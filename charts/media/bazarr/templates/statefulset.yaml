@@ -19,16 +19,16 @@ spec:
   serviceName: {{ .Release.Name }}
   template:
     metadata:
-      labels: 
+      labels:
         app: {{ .Release.Name }}
         app.kubernetes.io/controller: main
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/name: {{ .Release.Name }}
-    spec: 
+    spec:
       enableServiceLinks: false
       serviceAccountName: {{ .Release.Name }}
       automountServiceAccountToken: true
-      securityContext: 
+      securityContext:
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
         runAsGroup: 568
@@ -38,7 +38,7 @@ spec:
         - 109
         - 100
         - 65535
-      containers: 
+      containers:
         - env:
           {{ range $key, $value := .Values.pods.main.env }}- name: {{ $key }}
             value: {{ $value }}
@@ -51,7 +51,7 @@ spec:
             name: config
           - mountPath: /data
             name: data
-      volumes: 
+      volumes:
         - name: config
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-config

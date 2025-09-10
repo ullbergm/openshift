@@ -1,7 +1,12 @@
 {
   "name": "DevContainer",
-  "build": { "dockerfile": "Dockerfile" },
-  "postAttachCommand": ["/bin/bash", ".devcontainer/post-install.sh"],
+  "build": {
+    "dockerfile": "Dockerfile"
+  },
+  "postAttachCommand": [
+    "/bin/bash",
+    ".devcontainer/post-install.sh"
+  ],
   "customizations": {
     "vscode": {
       "settings": {
@@ -18,7 +23,11 @@
         "esbenp.prettier-vscode",
         "mhutchie.git-graph",
         "redhat.vscode-yaml",
-        "ltex-plus.vscode-ltex-plus"
+        "ltex-plus.vscode-ltex-plus",
+        "gaspardruan.taboutx",
+        "fcrespo82.markdown-table-formatter",
+        "mikestead.dotenv",
+        "editorconfig.editorconfig"
       ]
     }
   }
