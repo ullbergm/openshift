@@ -1,0 +1,6 @@
+applications:
+  kapowarr: false
+  sonarr: false
+  radarr: false
+  bazarr: false
+  gaps: false
