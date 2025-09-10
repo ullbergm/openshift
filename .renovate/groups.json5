@@ -1,0 +1,18 @@
+{
+  $schema: "https://docs.renovatebot.com/renovate-schema.json",
+  packageRules: [
+    {
+      description: "AI/ML Group",
+      groupName: "AI/ML Applications",
+      matchDatasources: ["docker"],
+      matchPackageNames: [
+        "/litellm-non_root/",
+        "/ollama/",
+        "/open-webui/",
+      ],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+    },
+  ],
+}

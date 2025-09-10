@@ -1,4 +1,17 @@
 {
+  "json.schemas": [
+    {
+      "fileMatch": [
+        "renovate.json5"
+      ],
+      "url": "https://docs.renovatebot.com/renovate-schema.json"
+    }
+  ],
+  "eslint.validate": [
+    "json",
+    "jsonc",
+    "json5"
+  ],
   "editor.formatOnSave": true,
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "files.encoding": "utf8",
@@ -34,5 +47,8 @@
       "file:///workspaces/openshift-v2.0/cluster.yaml",
       "file:///workspaces/openshift/charts/media/sonarr/templates/service.yaml"
     ]
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "vscode.json-language-features"
   }
 }
