@@ -22,3 +22,7 @@ config:
     storage:
       config:
         storageClassName: synology-iscsi
+      media:
+        nfs:
+          server: nas
+          path: /volume1/media
