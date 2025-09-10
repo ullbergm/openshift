@@ -36,6 +36,7 @@
     "cd": true,
     "make": true,
     "python3": true,
+    "python": true,
     "find": true,
     "git commit": false,
     "git": true,
