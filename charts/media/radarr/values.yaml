@@ -24,8 +24,8 @@ application:
 pods:
   main:
     image:
-      # renovate custom-docker versioning=semver
       repository: ghcr.io/home-operations/radarr
+      # renovate: datasource=docker depName=ghcr.io/home-operations/radarr versioning=semver
       tag: 5.18.0
       pullPolicy: IfNotPresent
     env:

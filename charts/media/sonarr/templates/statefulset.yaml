@@ -50,8 +50,12 @@ spec:
           volumeMounts:
           - mountPath: /config
             name: config
-          - mountPath: /data
+          - mountPath: /data/media/tv
             name: data
+            subPath: media/tv
+          - mountPath: /data/usenet/complete
+            name: data
+            subPath: usenet/complete
       volumes:
         - name: config
           persistentVolumeClaim:

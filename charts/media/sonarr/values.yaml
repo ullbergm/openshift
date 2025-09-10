@@ -24,8 +24,8 @@ application:
 pods:
   main:
     image:
-      # renovate custom-docker versioning=semver
       repository: ghcr.io/home-operations/sonarr
+      # renovate: datasource=docker depName=ghcr.io/home-operations/sonarr versioning=semver
       tag: 4.0.15
       pullPolicy: IfNotPresent
     env:
