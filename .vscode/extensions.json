@@ -1,9 +1,11 @@
 {
-    "recommendations": [
-        "davidanson.vscode-markdownlint",
-        "gaspardruan.taboutx",
-        "fcrespo82.markdown-table-formatter",
-        "mikestead.dotenv",
-        "editorconfig.editorconfig",
-    ]
+  "recommendations": [
+    "davidanson.vscode-markdownlint",
+    "gaspardruan.taboutx",
+    "fcrespo82.markdown-table-formatter",
+    "mikestead.dotenv",
+    "editorconfig.editorconfig",
+    "ms-kubernetes-tools.vscode-kubernetes-tools",
+    "tim-koehler.helm-intellisense"
+  ]
 }

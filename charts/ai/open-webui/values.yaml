@@ -46,6 +46,7 @@ pods:
       repository: ghcr.io/open-webui/open-webui
       tag: "main"
     env:
+      TZ: "{{ .Values.cluster.timezone }}"
       # OpenWebUI environment variables
       WEBUI_NAME: "Open WebUI"
       WEBUI_URL: ""

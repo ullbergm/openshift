@@ -9,6 +9,6 @@ spec:
   resources:
     requests:
       storage: 15Gi
-{{- if .Values.cluster.storage.config.storageClass }}
-  storageClassName: "{{ .Values.cluster.storage.config.storageClass }}"
+{{- if .Values.cluster.storage.config.storageClassName }}
+  storageClassName: "{{ .Values.cluster.storage.config.storageClassName }}"
 {{- end }}

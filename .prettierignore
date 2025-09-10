@@ -1,0 +1,8 @@
+# Ignore Helm template files to prevent breaking {{ }} syntax
+charts/**/templates/*.yaml
+roles/**/templates/*.yaml
+
+# Ignore other sensitive files
+*.env
+*.env.*
+.envrc

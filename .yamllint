@@ -1,0 +1,23 @@
+extends: default
+
+ignore: |
+  charts/**/templates/
+  roles/**/templates/
+
+rules:
+  # Allow longer lines for complex Kubernetes manifests
+  line-length:
+    max: 120
+
+  # Allow document separators
+  document-start: disable
+
+  # More lenient indentation rules for complex YAML
+  indentation:
+    spaces: 2
+    indent-sequences: true
+    check-multi-line-strings: false
+
+  # Don't enforce truthy values for Kubernetes boolean fields
+  truthy:
+    allowed-values: ['true', 'false', 'yes', 'no']

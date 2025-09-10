@@ -61,7 +61,8 @@ pods:
       # renovate custom-docker versioning=semver
       repository: ollama/ollama
       tag: "0.3.14"
-    env: {}
+    env:
+      TZ: "{{ .Values.cluster.timezone }}"
     resources:
       requests:
         cpu: "1"

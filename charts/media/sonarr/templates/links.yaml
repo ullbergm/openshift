@@ -8,7 +8,7 @@ spec:
   location: NamespaceDashboard
   namespaceDashboard:
     namespaces:
-      - { { .Release.Namespace } }
+      - {{ .Release.Namespace }}
   text: "Access Application"
 ---
 apiVersion: console.openshift.io/v1
@@ -19,19 +19,19 @@ spec:
   href: "https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
   location: ApplicationMenu
   applicationMenu:
-    section: { { .Values.application.group | quote } }
-    imageURL: { { .Values.application.image | quote } }
-  text: { { .Values.application.name | quote } }
+    section: {{ .Values.application.group | quote }}
+    imageURL: {{ .Values.application.image | quote }}
+  text: {{ .Values.application.name | quote }}
 ---
 apiVersion: startpunkt.ullberg.us/v1alpha1
 kind: Application
 metadata:
-  name: { { .Release.Name } }
+  name: {{ .Release.Name }}
 spec:
-  name: { { .Values.application.name | quote } }
-  group: { { .Values.application.group | quote } }
-  icon: { { .Values.application.icon | quote } }
-  iconColor: { { .Values.application.iconColor | quote } }
+  name: {{ .Values.application.name | quote }}
+  group: {{ .Values.application.group | quote }}
+  icon: {{ .Values.application.icon | quote }}
+  iconColor: {{ .Values.application.iconColor | quote }}
   url: "https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
-  info: { { .Values.application.description | quote } }
-  location: { { .Values.application.location } }
+  info: {{ .Values.application.description | quote }}
+  location: {{ .Values.application.location }}

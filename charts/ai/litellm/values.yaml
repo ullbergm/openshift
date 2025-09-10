@@ -24,6 +24,7 @@ pods:
       repository: ghcr.io/berriai/litellm-non_root
       tag: main-v1.75.8-stable
     env:
+      TZ: "{{ .Values.cluster.timezone }}"
       LITELLM_MASTER_KEY: "sk-secret"
       LITELLM_SALT_KEY: "sk-salt"
 

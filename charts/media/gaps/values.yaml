@@ -29,4 +29,4 @@ pods:
       tag: x64-v0.10.4
       pullPolicy: IfNotPresent
     env:
-      TZ: America/New_York
+      TZ: "{{ .Values.cluster.timezone }}"

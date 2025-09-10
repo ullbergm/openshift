@@ -19,6 +19,29 @@
   "files.insertFinalNewline": true,
   "files.trimFinalNewlines": true,
   "files.trimTrailingWhitespace": true,
+  // Disable auto-formatting for Helm template files to prevent breaking {{ }} syntax
+  "files.associations": {
+    "**/charts/**/templates/*.yaml": "helm",
+    "**/roles/**/templates/*.yaml": "helm"
+  },
+  "[helm]": {
+    "editor.formatOnSave": false,
+    "editor.defaultFormatter": null,
+    "editor.autoIndent": "keep",
+    "editor.suggest.showSnippets": false
+  },
+  "[yaml]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 2,
+    "editor.autoIndent": "keep",
+    // Only format YAML files that are NOT Helm templates
+    "editor.formatOnSave": false
+  },
+  // Prevent Prettier from formatting Helm templates
+  "prettier.ignorePath": ".prettierignore",
+  // Configure yamllint
+  "yaml.validate": true,
+  "yaml.format.enable": false,
   "[markdown]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
