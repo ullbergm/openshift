@@ -1,4 +1,4 @@
-{{ if ! .Values.applications.kapowarr }}
+{{ if not .Values.applications.kapowarr }}
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
