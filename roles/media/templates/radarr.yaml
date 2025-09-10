@@ -1,0 +1,27 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: radarr
+  namespace: openshift-gitops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: radarr
+    server: "{{ .Values.spec.destination.server }}"
+  project: default
+  source:
+    path: charts/media/radarr
+    repoURL: "{{ .Values.spec.source.repoURL }}"
+    targetRevision: "{{ .Values.spec.source.targetRevision }}"
+    helm:
+      valuesObject:
+{{- with .Values }}
+  {{. | toYaml | nindent 10 }}
+{{- end }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
