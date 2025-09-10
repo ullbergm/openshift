@@ -1,0 +1,30 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Kapowarr
+  group: Media
+  icon: mdi:book-open-page-variant
+  iconColor: ""
+  image: "https://casvt.github.io/Kapowarr/assets/img/favicon.svg"
+  description: "Comic book management"
+  port: 5656
+  location: 0
+
+pods:
+  main:
+    image:
+      repository: mrcas/kapowarr
+      # renovate: datasource=docker depName=mrcas/kapowarr
+      tag: v1.2.0
+      pullPolicy: IfNotPresent

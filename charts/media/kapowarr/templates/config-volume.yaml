@@ -1,0 +1,14 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: "{{ .Release.Name }}-config"
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 15Gi
+{{- if .Values.cluster.storage.config.storageClassName }}
+  storageClassName: "{{ .Values.cluster.storage.config.storageClassName }}"
+{{- end }}
