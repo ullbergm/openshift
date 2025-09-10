@@ -50,7 +50,7 @@ spec:
           volumeMounts:
           - mountPath: /app/db
             name: config
-          - mountPath: /data/media/books
+          - mountPath: /data/media/books/comics
             name: data
             subPath: media/books
           - mountPath: /data/downloads/comics
