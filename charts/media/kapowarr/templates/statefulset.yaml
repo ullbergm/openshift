@@ -55,7 +55,7 @@ spec:
             subPath: media/books
           - mountPath: /data/downloads/comics
             name: data
-            subPath: usenet/complete
+            subPath: downloads/comics
       volumes:
         - name: config
           persistentVolumeClaim:
