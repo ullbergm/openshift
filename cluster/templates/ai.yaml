@@ -10,9 +10,9 @@ spec:
   generators:
     - list:
         elements:
-        # - name: litellm
-        # - name: ollama
-        # - name: open-webui
+        - name: litellm
+        - name: ollama
+        - name: open-webui
 
   template:
     metadata:
