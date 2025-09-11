@@ -1,0 +1,30 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Pinchflat
+  group: Media
+  icon: television-box
+  iconColor: ""
+  image: ""
+  description: "Your next YouTube media manager"
+  port: 8945
+  location: 0
+
+pods:
+  main:
+    image:
+      repository: ghcr.io/kieraneglin/pinchflat
+      # renovate: datasource=docker depName=ghcr.io/kieraneglin/pinchflat versioning=semver
+      tag: v2025.6.6
+      pullPolicy: IfNotPresent

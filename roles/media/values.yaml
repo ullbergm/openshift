@@ -1,4 +1,5 @@
 applications:
+  pinchflat: false
   overseerr: false
   metube: false
   lidarr: false

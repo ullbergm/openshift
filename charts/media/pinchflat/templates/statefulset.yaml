@@ -31,8 +31,8 @@ spec:
       securityContext:
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 0
-        runAsUser: 0
+        runAsGroup: 568
+        runAsUser: 568
         supplementalGroups:
         - 44
         - 109
@@ -50,12 +50,10 @@ spec:
           image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
           imagePullPolicy: IfNotPresent
           volumeMounts:
-          - mountPath: /app/config
+          - mountPath: /config
             name: config
-          - mountPath: /downloads
+          - mountPath: /data
             name: data
-          - mountPath: /etc/yt-dlp
-            name: yt-dlp-config
       volumes:
         - name: config
           persistentVolumeClaim:
@@ -63,5 +61,3 @@ spec:
         - name: data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-data-volume
-        - name: yt-dlp-config
-          emptyDir: {}
