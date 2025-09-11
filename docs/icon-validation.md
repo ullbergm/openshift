@@ -43,8 +43,8 @@ icon: heroicons:academic-cap
 1. **Generic Collections**: Most icon collections (mdi, lucide, tabler, heroicons, etc.) must contain only lowercase letters, numbers, and hyphens
 2. **Simple Icons**: Must follow the format `simple-icons:iconname` with lowercase letters, numbers, hyphens, and dots only
 3. **Collection Detection**: Icons with `collection:name` format are parsed automatically; icons without a prefix default to `mdi`
-4. **Missing Icons**: The validator will suggest appropriate defaults based on the application name and category
-5. **Empty Icons**: Will trigger a warning with suggested defaults
+4. **Missing Icons**: The validator will suggest intelligent defaults using online API search when available
+5. **Empty Icons**: Will trigger a warning with dynamically generated or fallback suggestions
 
 ### Online Validation (Optional)
 
@@ -52,13 +52,14 @@ When `--online` flag is used, the validator will also:
 
 1. **Verify Icon Existence**: Check if icons actually exist in the Iconify database
 2. **Collection Validation**: Verify that the icon collection (mdi, simple-icons) is available
-3. **Network Handling**: Gracefully handle network timeouts and API failures
-4. **Caching**: Cache API responses to avoid repeated requests for the same icons
+3. **Dynamic Suggestions**: Search Simple Icons API for exact and partial matches when suggesting defaults
+4. **Network Handling**: Gracefully handle network timeouts and API failures
+5. **Caching**: Cache API responses to avoid repeated requests for the same icons and collections
 
 ### Validation Modes
 
-- **Offline Mode**: Fast format validation only, no network requests
-- **Online Mode**: Format validation + Iconify database verification
+- **Offline Mode**: Fast format validation with hardcoded fallback suggestions, no network requests
+- **Online Mode**: Format validation + Iconify database verification + dynamic icon suggestions
 
 ## Running Icon Validation
 
@@ -140,6 +141,40 @@ For example:
 
 — Icon validation summary —
 ❌ Icon validation failed - fix the errors above
+```
+
+## Smart Icon Suggestions
+
+The validation system includes intelligent icon suggestions for applications missing icon definitions:
+
+### Online Suggestion Mode (Default with --online)
+
+When online validation is enabled, the system:
+
+1. **API Search**: Queries the Simple Icons API for exact matches with the application name
+2. **Partial Matching**: Falls back to partial string matching if no exact match is found
+3. **Collection Priority**: Prioritizes Simple Icons for brand/application icons, MDI for generic icons
+4. **Caching**: Caches Simple Icons collection data to minimize API calls
+
+```bash
+# Examples of online suggestions
+⚠️  metube: No icon field found, suggested: simple-icons:youtube
+⚠️  plex: No icon field found, suggested: simple-icons:plex
+⚠️  grafana: No icon field found, suggested: simple-icons:grafana
+```
+
+### Offline Suggestion Mode (Fallback)
+
+When network is unavailable or API calls fail:
+
+1. **Hardcoded Mapping**: Uses predefined application-to-icon mappings
+2. **Category Defaults**: Falls back to category-based defaults (e.g., `play-circle` for media apps)
+3. **Generic Fallback**: Provides `application` icon as last resort
+
+```bash
+# Examples of offline suggestions
+⚠️  unknown-app: No icon field found, suggested: play-circle
+⚠️  media-app: No icon field found, suggested: movie
 ```
 
 ## Dependencies

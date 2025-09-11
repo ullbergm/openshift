@@ -132,11 +132,67 @@ check_api_connectivity() {
     curl -s --max-time 3 "https://api.iconify.design/collections" >/dev/null 2>&1
 }
 
+# Function to search for simple-icons by name online
+search_simple_icons() {
+    local search_term="$1"
+    local cache_file="$CACHE_DIR/simple-icons-search.json"
+
+    # Get simple-icons collection data if not cached
+    if [ ! -f "$cache_file" ]; then
+        if ! curl -s --max-time "$API_TIMEOUT" "https://api.iconify.design/simple-icons.json" > "$cache_file" 2>/dev/null; then
+            return 1  # Network error or API unavailable
+        fi
+    fi
+
+    # Search for icons that match the search term
+    # Look for exact matches first, then partial matches
+    local matches
+    matches=$(jq -r ".icons | keys[] | select(test(\"^${search_term}$\"; \"i\"))" "$cache_file" 2>/dev/null | head -1)
+
+    if [ -n "$matches" ]; then
+        echo "simple-icons:$matches"
+        return 0
+    fi
+
+    # If no exact match, try partial match
+    matches=$(jq -r ".icons | keys[] | select(test(\"${search_term}\"; \"i\"))" "$cache_file" 2>/dev/null | head -1)
+
+    if [ -n "$matches" ]; then
+        echo "simple-icons:$matches"
+        return 0
+    fi
+
+    return 1  # No matches found
+}
+
 # Function to suggest default icon based on app name and category
 suggest_default_icon() {
     local app_name="$1"
     local category="$2"
 
+    # First try to find a simple-icons match online if available
+    if [ "$ONLINE_VALIDATION" = true ] || check_api_connectivity 2>/dev/null; then
+        # Try searching for the app name directly
+        local online_suggestion
+        online_suggestion=$(search_simple_icons "$app_name" 2>/dev/null)
+        if [ $? -eq 0 ] && [ -n "$online_suggestion" ]; then
+            echo "$online_suggestion"
+            return
+        fi
+
+        # Try common brand variations for media apps
+        case "$app_name" in
+            *tube*)
+                online_suggestion=$(search_simple_icons "youtube" 2>/dev/null)
+                if [ $? -eq 0 ] && [ -n "$online_suggestion" ]; then
+                    echo "$online_suggestion"
+                    return
+                fi
+                ;;
+        esac
+    fi
+
+    # Fallback to hardcoded suggestions when online search fails or is unavailable
     case "$category" in
         "ai")
             case "$app_name" in
