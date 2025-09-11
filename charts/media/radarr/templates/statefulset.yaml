@@ -52,12 +52,8 @@ spec:
           volumeMounts:
           - mountPath: /config
             name: config
-          - mountPath: /data/media/movies
+          - mountPath: /data
             name: data
-            subPath: media/movies
-          - mountPath: /data/usenet/complete
-            name: data
-            subPath: usenet/complete
       volumes:
         - name: config
           persistentVolumeClaim:

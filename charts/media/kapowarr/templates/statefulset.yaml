@@ -52,12 +52,8 @@ spec:
           volumeMounts:
           - mountPath: /app/db
             name: config
-          - mountPath: /data/media/books/comics
+          - mountPath: /data
             name: data
-            subPath: media/books
-          - mountPath: /data/downloads/comics
-            name: data
-            subPath: downloads/comics
       volumes:
         - name: config
           persistentVolumeClaim:
