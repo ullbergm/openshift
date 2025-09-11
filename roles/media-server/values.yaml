@@ -27,7 +27,7 @@ applications:
   prowlarr: false
   radarr: false
   readarr: false
-  recommendarr: true
+  recommendarr: false
   sabnzbd: false
   sonarr: false
   tautulli: false
