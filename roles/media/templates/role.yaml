@@ -1,0 +1,42 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: {{ .Release.Name }}-apps
+spec:
+  ignoreApplicationDifferences:
+    - jsonPointers:
+        - /spec/syncPolicy
+  goTemplate: true
+  generators:
+    - list:
+        elements:
+        - name: kapowarr
+  template:
+    metadata:
+      name: '{{ .Release.Name }}-apps-{{ "{{" }} .name {{ "}}" }}'
+      namespace: "openshift-gitops"
+    spec:
+      ignoreDifferences:
+      - kind: Application
+        group: argoproj.io
+        jsonPointers:
+        - /spec/syncPolicy
+      project: default
+      destination:
+        server: {{ .Values.spec.destination.server }}
+        namespace: "openshift-gitops"
+      source:
+        repoURL: {{ .Values.spec.source.repoURL }}
+        path: charts/media/{{ "{{" }} .name {{ "}}" }}
+        targetRevision: {{ .Values.spec.source.targetRevision }}
+        helm:
+          valuesObject:
+            spec:
+{{ .Values.spec | toYaml | nindent 14 }}
+{{ .Values.config | toYaml | nindent 12 }}
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
