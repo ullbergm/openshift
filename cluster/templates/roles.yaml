@@ -23,7 +23,6 @@ spec:
       ignoreDifferences:
       - kind: Application
         group: argoproj.io
-        version: v1alpha1
         jsonPointers:
         - /spec/syncPolicy
       project: default
