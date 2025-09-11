@@ -21,10 +21,10 @@ applications:
   kavita: false
   lidarr: false
   metube: false
-  overseerr: true
-  pinchflat: true
+  overseerr: false
+  pinchflat: false
   plex: true
-  prowlarr: true
+  prowlarr: false
   radarr: true
   readarr: true
   recommendarr: true
