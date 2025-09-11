@@ -98,7 +98,7 @@ app-template:
       annotations:
         reloader.stakater.com/auto: "true"
       labels:
-        kasten/backup: "true"
+        kasten/backup: "false"
       containers:
         gotenburg:
           image:
@@ -117,7 +117,7 @@ app-template:
       annotations:
         reloader.stakater.com/auto: "true"
       labels:
-        kasten/backup: "true"
+        kasten/backup: "false"
       containers:
         redis:
           image:
@@ -134,7 +134,7 @@ app-template:
       annotations:
         reloader.stakater.com/auto: "true"
       labels:
-        kasten/backup: "true"
+        kasten/backup: "false"
       containers:
         tika:
           image:
