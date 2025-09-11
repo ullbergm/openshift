@@ -24,9 +24,9 @@ spec:
     imageURL: {{ .Values.application.image | quote }}
   text: {{ .Values.application.name | quote }}
 {{- end }}
-{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha1" }}
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha2" }}
 ---
-apiVersion: startpunkt.ullberg.us/v1alpha1
+apiVersion: startpunkt.ullberg.us/v1alpha2
 kind: Application
 metadata:
   name: {{ .Release.Name }}
