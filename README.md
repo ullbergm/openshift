@@ -1,14 +1,13 @@
 # OpenShift Argo CD Cluster Deployment Model
 
-This repository implements an Argo CD-based GitOps deployment model for OpenShift/OKD clusters. It provides a structured approach to deploying and managing applications across different functional domains through a hierarchical role-based system.
+This repository implements an Argo CD-based GitOps deployment model for OpenShift/OKD clusters. It provides a structured approach to deploying and managing applications across different functional domains through a simplified template-based system.
 
 ## Architecture Overview
 
-The deployment model follows a three-tier architecture:
+The deployment model follows a two-tier architecture:
 
-1. **Cluster Definition** (`/cluster`) - Bootstrap configuration and role management
-2. **Roles** (`/roles`) - Functional groupings that define which applications to deploy
-3. **Charts** (`/charts`) - Individual Helm charts for each application
+1. **Cluster Definition** (`/cluster`) - Bootstrap configuration and role templates
+2. **Charts** (`/charts`) - Individual Helm charts for each application organized by functional groups
 
 ![Hierarchy](docs/images/chart-hierarchy.png)
 
@@ -19,50 +18,42 @@ The deployment model follows a three-tier architecture:
 │   ├── Chart.yaml
 │   ├── values.yaml            # Cluster-wide configuration
 │   └── templates/
-│       └── roles.yaml
-├── roles/                     # Functional role definitions
-│   ├── ai/                    # AI/ML applications role
-│   │   ├── Chart.yaml
-│   │   └── templates/
-│   │       ├── litellm.yaml
-│   │       ├── ollama.yaml
-│   │       └── open-webui.yaml
-│   ├── media/                 # Media applications role
-│   │   ├── Chart.yaml
-│   │   └── templates/
-│   │       ├── bazarr.yaml
-│   │       └── gaps.yaml
-│   └── utilities/             # Utilities and system tools role
-│       ├── Chart.yaml
-│       └── templates/
-│   │       └── gaps.yaml
+│       ├── media.yaml         # Media applications ApplicationSet
+│       ├── ai.yaml            # AI/ML applications ApplicationSet
+│       └── utilities.yaml     # Utilities ApplicationSet
 └── charts/                    # Individual application Helm charts
     ├── ai/
     │   ├── litellm/           # LiteLLM proxy for LLM management
     │   ├── ollama/            # Local LLM runtime
     │   └── open-webui/        # Web UI for LLMs
-    └── media/
-        ├── bazarr/            # Subtitle management
-        └── gaps/              # Media gap detection
+    ├── media/
+    │   ├── bazarr/            # Subtitle management
+    │   ├── gaps/              # Media gap detection
+    │   └── kapowarr/          # Comic book management
+    └── utilities/
+        └── excalidraw/        # Whiteboard tool
 ```
 
 ## How It Works
 
 ### 1. Cluster Bootstrap
 
-The cluster bootstrap process starts by deploying the main cluster chart, which creates an Argo CD ApplicationSet that manages all defined roles.
+The cluster bootstrap process starts by deploying the main cluster chart, which creates Argo CD ApplicationSets for different functional domains.
 
 **Key file**: `cluster/values.yaml`
 
-- Iterates through roles defined and creates individual Argo CD Application for each role
-- All configuration values come from the `values.yaml` file
+- Contains cluster-wide configuration values
+- All applications inherit configuration through Helm value passthrough
 
-### 2. Role-Based Application Management
+### 2. Template-Based Application Management
 
-Each role represents a functional domain (AI/ML, Media, etc.) and contains:
+Each functional domain (AI/ML, Media, etc.) is managed by an ApplicationSet template in `cluster/templates/`:
 
-- **Chart.yaml**: Helm chart metadata for the role
-- **Templates**: Individual Argo CD Application definitions for each app in the role
+- **media.yaml**: ApplicationSet that manages media applications
+- **ai.yaml**: ApplicationSet that manages AI/ML applications
+- **utilities.yaml**: ApplicationSet that manages utility applications
+
+Each ApplicationSet template defines which applications to deploy from the corresponding `/charts` subdirectory.
 
 ### 3. Application Deployment
 
@@ -122,8 +113,8 @@ spec:
           value: "https://github.com/ullbergm/openshift/"
         - name: spec.source.targetRevision
           value: v2
-        - name: roles.utilities.enabled
-          value: "false"
+        - name: config.cluster.storage.config.storageClassName
+          value: "local-path"
     path: cluster
     repoURL: "https://github.com/ullbergm/openshift/"
     targetRevision: v2
@@ -151,15 +142,15 @@ spec:
 
 ### Adding a New Application
 
-1. Create a new Helm chart in the appropriate `/charts` subdirectory
-2. Add an Application definition in the corresponding role's templates
+1. Create a new Helm chart in the appropriate `/charts` subdirectory (e.g., `/charts/media/myapp/`)
+2. Add the application name to the corresponding ApplicationSet template in `/cluster/templates/`
 3. The application will be automatically deployed by Argo CD
 
-### Adding a New Role
+### Adding a New Functional Group
 
-1. Create a new directory in `/roles`
-2. Add the role to `cluster/values.yaml` roles list
-3. Create Application templates for the apps in that role
+1. Create a new ApplicationSet template in `/cluster/templates/` (e.g., `monitoring.yaml`)
+2. Define the list of applications for that functional group in the template
+3. Create the corresponding subdirectory in `/charts/` (e.g., `/charts/monitoring/`)
 
 ## Maintenance
 

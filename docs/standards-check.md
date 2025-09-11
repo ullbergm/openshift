@@ -15,8 +15,8 @@ This report analyzes the OpenShift cluster repository against the documented sta
 ### 1. Repository Structure Standards
 
 - **Charts Directory**: All applications properly organized under `charts/{group}/{app}/`
-- **Roles Directory**: Proper role-based grouping with ai, media, and utilities roles
-- **Cluster Configuration**: Well-structured cluster definition with role enablement
+- **Template Structure**: Proper functional group management via ApplicationSet templates in `cluster/templates/`
+- **Cluster Configuration**: Well-structured cluster definition with global configuration
 - **Documentation**: Comprehensive documentation in `docs/` and `.github/`
 
 ### 2. Application Structure Standards

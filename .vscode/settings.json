@@ -22,7 +22,7 @@
   // Disable auto-formatting for Helm template files to prevent breaking {{ }} syntax
   "files.associations": {
     "**/charts/**/templates/*.yaml": "helm",
-    "**/roles/**/templates/*.yaml": "helm"
+    "**/cluster/templates/*.yaml": "helm"
   },
   "[helm]": {
     "editor.formatOnSave": false,

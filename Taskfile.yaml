@@ -27,7 +27,7 @@ tasks:
     summary: |
       Interactively prompts for chart details (name, image repo/tag, description,
       port, icon, group, iconColor, etc.) and creates a new chart under charts/media/.
-      Also creates a roles/media Application template and updates roles/media/values.yaml.
+      Also updates cluster/templates/media.yaml ApplicationSet with the new application.
     silent: true
     cmds:
       - bash scripts/scaffold-media-app.sh

@@ -7,7 +7,7 @@ This workspace is configured to properly handle Helm template files without brea
 ### 1. File Associations
 
 - Files in `charts/**/templates/*.yaml` are treated as `helm` files
-- Files in `roles/**/templates/*.yaml` are treated as `helm` files
+- Files in `cluster/templates/*.yaml` are treated as `helm` files
 
 ### 2. Helm File Settings
 

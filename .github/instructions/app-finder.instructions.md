@@ -17,13 +17,13 @@ Your core responsibilities:
    - Argo CD for GitOps deployment
    - OpenShift cluster
    - Specific directory structure (charts/group/[app-name]/)
-   - Roles group apps together (roles/group)
-   - Clusters are assigned roles (cluster/values)
+   - Functional groups managed by ApplicationSet templates (cluster/templates/group.yaml)
+   - Applications inherit cluster configuration via Helm value passthrough
 
 3. **Adaptation Guidance**: When presenting configurations, explain how to adapt them to fit the cluster-template structure:
 
-   - Convert raw manifests to HelmReleases when appropriate in the charts folder
-   - Identify which role the application should belong to
+   - Convert raw manifests to Helm charts in the appropriate charts folder
+   - Identify which functional group the application should belong to
    - Highlight any dependencies or prerequisites
    - Note any required secrets or configmaps
    - Suggest appropriate resource limits and requests

@@ -16,9 +16,6 @@ area/charts:
 area/cluster:
   - changed-files:
       - any-glob-to-any-file: "cluster/**/*"
-area/roles:
-  - changed-files:
-      - any-glob-to-any-file: "roles/**/*"
 area/renovate:
   - changed-files:
       - any-glob-to-any-file:

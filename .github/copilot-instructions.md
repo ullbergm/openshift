@@ -8,18 +8,17 @@ This is a GitOps-managed Kubernetes home cluster running on OpenShift with Argo 
 
 ### Core Directories
 
-- **`charts/`** - Kubernetes helm charts for all the applications
-- **`roles/`** - Role definitions for deploying groups of applications to the cluster
-- **`cluster/`** - Cluster definition, roles setting in the `values.yaml` file defines which roles are imported from the `roles/` folder
+- **`charts/`** - Kubernetes helm charts for all the applications organized by functional groups
+- **`cluster/`** - Cluster definition and ApplicationSet templates for functional groups
 - **`docs/`** - Documentation
 - **`.taskfiles/`** - Task file definitions
 
 ## Key Patterns
 
-### Role-Based Application Management
+### Template-Based Application Management
 
-- Each role in `roles/` contains templates with Argo CD Application definitions
-- Role enablement controlled via `cluster/values.yaml` (e.g., `roles.ai.enabled: true`)
+- Each functional group is managed by an ApplicationSet template in `cluster/templates/` (e.g., `media.yaml`, `ai.yaml`)
+- ApplicationSets define which applications to deploy from the corresponding `/charts` subdirectory
 - Applications automatically inherit cluster-wide configuration via Helm value passthrough
 
 ### Application Structure Standards
@@ -37,12 +36,12 @@ Every application chart follows these conventions:
 Applications receive cluster config through values passthrough:
 
 ```yaml
-# In role templates (e.g., roles/ai/templates/ollama.yaml)
+# In ApplicationSet templates (e.g., cluster/templates/ai.yaml)
 helm:
   valuesObject:
-{{- with .Values }}
-  {{. | toYaml | nindent 10 }}
-{{- end }}
+    spec:
+{{ .Values.spec | toYaml | nindent 14 }}
+{{ .Values.config | toYaml | nindent 12 }}
 ```
 
 ### Storage Patterns
@@ -69,7 +68,7 @@ helm:
 
 1. Create namespace directory under `/charts/<group>/<app>/`
 2. Create application helm chart
-3. Add Application definition in `roles/[role]/templates/[app-name].yaml`
+3. Add Application definition in `cluster/templates/[group].yaml` ApplicationSet
 
 ## OpenShift-Specific Requirements
 
@@ -141,9 +140,8 @@ serviceAccountName: { { .Release.Name } }
 
 ## Critical Files
 
-- `cluster/values.yaml` - Global configuration and role enablement
-- `cluster/templates/roles.yaml` - ApplicationSet that manages all roles
-- `roles/*/templates/*.yaml` - Individual Application definitions
+- `cluster/values.yaml` - Global configuration
+- `cluster/templates/<group>.yaml` - ApplicationSet templates for each functional group
 - `charts/*/templates/` - Kubernetes manifests for each application
 
 ## Important Notes
@@ -152,7 +150,7 @@ serviceAccountName: { { .Release.Name } }
 - Never commit unencrypted secrets.
 - Follow the documented directory and naming conventions to ensure consistency.
 - Validate Helm charts and manifests locally before pushing changes.
-- Use role enablement flags in `cluster/values.yaml` to control application deployment.
+- Applications are managed through ApplicationSet templates in `cluster/templates/`.
 - Backup critical cluster state and application data using the integrated Kasten solution.
 - Review and update SecurityContextConstraints and Routes when upgrading OpenShift versions.
 - Document any manual interventions or exceptions in the `docs/` directory.
