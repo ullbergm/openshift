@@ -1,0 +1,30 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Kavita
+  group: Media
+  icon: book
+  iconColor: ""
+  image: "https://raw.githubusercontent.com/Kareadita/Kavita/develop/Logo/kavita.svg"
+  description: "Manga reader"
+  port: 5000
+  location: 0
+
+pods:
+  main:
+    image:
+      repository: jvmilazz0/kavita
+      # renovate: datasource=docker depName=jvmilazz0/kavita versioning=semver
+      tag: 0.8.7
+      pullPolicy: IfNotPresent
