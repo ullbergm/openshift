@@ -1,4 +1,5 @@
 applications:
+  lidarr: false
   kavita: false
   readarr: false
   kapowarr: false

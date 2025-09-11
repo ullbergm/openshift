@@ -1,0 +1,30 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Lidarr
+  group: Media
+  icon: music-box
+  iconColor: ""
+  image: "https://raw.githubusercontent.com/Lidarr/Lidarr/develop/Logo/400.png"
+  description: "Music collection manager"
+  port: 8686
+  location: 0
+
+pods:
+  main:
+    image:
+      repository: ghcr.io/home-operations/lidarr
+      # renovate: datasource=docker depName=ghcr.io/home-operations/lidarr versioning=semver
+      tag: 2.14.1.4755
+      pullPolicy: IfNotPresent
