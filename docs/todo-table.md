@@ -45,23 +45,23 @@ This document lists applications that could be considered for addition to the ho
 | ------------------ | ----------- | -------- | ------------------------------------------------------------------------ |
 | **Bazarr**         | ✅ Deployed | -        | Subtitle management for Radarr/Sonarr                                    |
 | **Gaps**           | ✅ Deployed | -        | Media gap detection                                                      |
+| **Kapowarr**       | ✅ Deployed | -        | Software to build and manage a comic book library                        |
+| **Kavita**         | ✅ Deployed | -        | Manga reader                                                             |
+| **Lidarr**         | ✅ Deployed | -        | Music collection manager                                                 |
+| **MeTube**         | ✅ Deployed | -        | Web GUI for youtube-dl                                                   |
+| **Overseerr**      | ✅ Deployed | -        | Request management for Plex/Jellyfin, improves user experience           |
+| **Pinchflat**      | ✅ Deployed | -        | Your next YouTube media manager                                          |
+| **Prowlarr**       | ✅ Deployed | -        | Indexer manager for \*arr applications                                   |
 | **Radarr**         | ✅ Deployed | -        | Movie collection manager                                                 |
+| **Readarr**        | ✅ Deployed | -        | Book collection manager                                                  |
 | **Sonarr**         | ✅ Deployed | -        | TV series collection manager                                             |
+| **Tautulli**       | ✅ Deployed | -        | Plex monitoring and analytics                                            |
 | **SABnzbd**        | 🔄 Planned  | High     | Efficient Usenet downloader                                              |
-| **Kapowarr**       | 🔄 Planned  | High     | Software to build and manage a comic book library                        |
-| **Kavita**         | 🔄 Planned  | High     | Manga reader                                                             |
-| **MeTube**         | 🔄 Planned  | High     | Web GUI for youtube-dl                                                   |
-| **Pinchflat**      | 🔄 Planned  | High     | Your next YouTube media manager                                          |
 | **Recommendarr**   | 🔄 Planned  | High     | Generates personalized TV show and movie recommendations                 |
 | **Stash**          | 🔄 Planned  | High     | Manages your 'stuff'                                                     |
 | **Recyclarr**      | 🔄 Planned  | High     | TRaSH guides automation for \*arr apps, essential for quality management |
 | **Plex**           | 🔄 Planned  | High     | Media server, industry standard with excellent client support            |
 | **Jellyfin**       | 🔄 Planned  | High     | Open-source media server alternative to Plex                             |
-| **Overseerr**      | 🔄 Planned  | High     | Request management for Plex/Jellyfin, improves user experience           |
-| **Prowlarr**       | 🔄 Planned  | High     | Indexer manager for \*arr applications                                   |
-| **Tautulli**       | 🔄 Planned  | High     | Plex monitoring and analytics                                            |
-| **Lidarr**         | 🔄 Planned  | High     | Music collection manager                                                 |
-| **Readarr**        | 🔄 Planned  | High     | Book collection manager                                                  |
 | **PhotoPrism**     | 🔄 Planned  | High     | Photo management and organization with AI features                       |
 | **Immich**         | 🔄 Planned  | High     | Modern photo and video backup solution, Google Photos alternative        |
 | **Audiobookshelf** | 🔄 Planned  | Medium   | Audiobook and podcast server                                             |
@@ -238,4 +238,4 @@ This document lists applications that could be considered for addition to the ho
 
 ---
 
-_Last updated: September 10, 2025_
+_Last updated: September 11, 2025_
