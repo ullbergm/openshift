@@ -25,10 +25,10 @@ applications:
   pinchflat: false
   plex: true
   prowlarr: false
-  radarr: true
-  readarr: true
+  radarr: false
+  readarr: false
   recommendarr: true
-  sabnzbd: true
+  sabnzbd: false
   sonarr: true
   tautulli: true
 
