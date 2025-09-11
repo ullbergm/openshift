@@ -1,0 +1,30 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Tautulli
+  group: Media
+  icon: chart-bar
+  iconColor: ""
+  image: "https://tautulli.com/images/logo.svg"
+  description: "Statistics for Plex"
+  port: 8181
+  location: 0
+
+pods:
+  main:
+    image:
+      repository: ghcr.io/home-operations/tautulli
+      # renovate: datasource=docker depName=ghcr.io/home-operations/tautulli versioning=semver
+      tag: 2.16.0
+      pullPolicy: IfNotPresent

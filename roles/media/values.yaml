@@ -1,4 +1,5 @@
 applications:
+  tautulli: false
   pinchflat: false
   overseerr: false
   metube: false
