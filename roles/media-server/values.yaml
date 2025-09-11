@@ -29,8 +29,8 @@ applications:
   readarr: false
   recommendarr: true
   sabnzbd: false
-  sonarr: true
-  tautulli: true
+  sonarr: false
+  tautulli: false
 
 media:
   nfs:
