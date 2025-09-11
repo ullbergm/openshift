@@ -5,14 +5,6 @@ spec:
     repoURL: YOUR_REPO_URL
     targetRevision: HEAD
 
-roles:
-  ai:
-    enabled: false
-  media:
-    enabled: true
-  utilities:
-    enabled: false
-
 config:
   cluster:
     top_level_domain: example.com

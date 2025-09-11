@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: {{ .Release.Name }}-roles
+  name: {{ .Release.Name }}-media
 spec:
   ignoreApplicationDifferences:
     - jsonPointers:
@@ -10,14 +10,10 @@ spec:
   generators:
     - list:
         elements:
-{{- range $name, $config := .Values.roles }}
-{{- if $config.enabled }}
-        - name: {{ $name }}
-{{- end }}
-{{- end }}
+        - name: kapowarr
   template:
     metadata:
-      name: '{{ .Release.Name }}-roles-{{ "{{" }} .name {{ "}}" }}'
+      name: '{{ .Release.Name }}-apps-{{ "{{" }} .name {{ "}}" }}'
       namespace: "openshift-gitops"
     spec:
       ignoreDifferences:
@@ -31,7 +27,7 @@ spec:
         namespace: "openshift-gitops"
       source:
         repoURL: {{ .Values.spec.source.repoURL }}
-        path: roles/{{ "{{" }} .name {{ "}}" }}
+        path: charts/media/{{ "{{" }} .name {{ "}}" }}
         targetRevision: {{ .Values.spec.source.targetRevision }}
         helm:
           valuesObject:
