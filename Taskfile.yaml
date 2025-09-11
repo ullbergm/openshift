@@ -13,12 +13,21 @@ includes:
 tasks:
   default: task --list
 
+  clean:
+    desc: Clean task cache to force re-running of all cached tasks
+    summary: |
+      Removes the .task-cache directory which contains checksum files
+      used by Task to determine if tasks need to be re-run. Use this
+      to force all validation tasks to run again regardless of file changes.
+    silent: true
+    cmd: rm -rf .task-cache
+
   new-media-chart:
     desc: Scaffold a new media chart by copying charts/media/sonarr
     summary: |
       Interactively prompts for chart details (name, image repo/tag, description,
       port, icon, group, iconColor, etc.) and creates a new chart under charts/media/.
       Also creates a roles/media Application template and updates roles/media/values.yaml.
+    silent: true
     cmds:
       - bash scripts/scaffold-media-app.sh
-    silent: false

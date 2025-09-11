@@ -4,4 +4,5 @@ kubeconfig
 *.pub
 *.key
 .task
+.task-cache/
 /node_modules

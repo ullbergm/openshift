@@ -13,6 +13,13 @@ tasks:
     summary: |
       Validates all helm charts in the repository by running helm template
       on each chart to ensure they generate valid Kubernetes manifests.
+    sources:
+      - charts/**/Chart.yaml
+      - charts/**/values.yaml
+      - charts/**/templates/**/*.yaml
+    generates:
+      - .task-cache/helm-validation.txt
+    method: checksum
     silent: true
     cmds:
       - echo "🔍 Validating helm charts..."
@@ -47,11 +54,19 @@ tasks:
           fi
         done
       - echo "✅ All helm charts validated successfully!"
+      - mkdir -p .task-cache && touch .task-cache/helm-validation.txt
 
   lint:
     desc: Run helm lint on all charts
     summary: |
       Runs helm lint on all charts to check for issues and best practices.
+    sources:
+      - charts/**/Chart.yaml
+      - charts/**/values.yaml
+      - charts/**/templates/**/*.yaml
+    generates:
+      - .task-cache/helm-lint.txt
+    method: checksum
     silent: true
     cmds:
       - echo "🔍 Linting helm charts..."
@@ -86,6 +101,7 @@ tasks:
           fi
         done
       - echo "✅ All helm charts linted successfully!"
+      - mkdir -p .task-cache && touch .task-cache/helm-lint.txt
 
   validate-icons:
     desc: Validate icon fields in helm charts (online by default)
@@ -93,10 +109,17 @@ tasks:
       Validates icon fields in values.yaml files, checks format consistency,
       suggests defaults for missing icons, and verifies icons exist in the
       Iconify database by making API calls. Uses online validation by default.
+    sources:
+      - charts/**/values.yaml
+      - scripts/validate-icons.sh
+    generates:
+      - .task-cache/icon-validation-online.txt
+    method: checksum
     silent: true
     cmds:
       - chmod +x scripts/validate-icons.sh
       - scripts/validate-icons.sh --online
+      - mkdir -p .task-cache && touch .task-cache/icon-validation-online.txt
 
   validate-icons-offline:
     desc: Validate icon fields in helm charts (offline mode)
@@ -104,16 +127,24 @@ tasks:
       Validates icon fields in values.yaml files, checks format consistency,
       and suggests defaults for missing icons based on application type.
       This performs offline validation only without API calls.
+    sources:
+      - charts/**/values.yaml
+      - scripts/validate-icons.sh
+    generates:
+      - .task-cache/icon-validation-offline.txt
+    method: checksum
     silent: true
     cmds:
       - chmod +x scripts/validate-icons.sh
       - scripts/validate-icons.sh
+      - mkdir -p .task-cache && touch .task-cache/icon-validation-offline.txt
 
   validate-all:
     desc: Run all validation tasks on helm charts (online by default)
     summary: |
       Comprehensive validation that runs helm template validation,
       helm lint, and online icon validation on all charts.
+    silent: true
     cmds:
       - task: validation
       - task: lint
@@ -124,6 +155,7 @@ tasks:
     summary: |
       Comprehensive validation that runs helm template validation,
       helm lint, and offline icon validation on all charts.
+    silent: true
     cmds:
       - task: validation
       - task: lint

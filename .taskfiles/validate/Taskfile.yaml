@@ -10,6 +10,7 @@ tasks:
       including helm chart validation, linting, and online icon validation
       against the Iconify database. This task serves as the entry point
       for all validation workflows.
+    silent: true
     cmds:
       - echo "🚀 Running all validation tasks (online mode)..."
       - task: adr
@@ -22,6 +23,7 @@ tasks:
       Comprehensive validation suite that runs all available validation tasks
       including helm chart validation, linting, and offline icon validation
       without making any network requests.
+    silent: true
     cmds:
       - echo "🚀 Running all validation tasks (offline mode)..."
       - task: adr
@@ -33,6 +35,7 @@ tasks:
     summary: |
       Runs helm chart validation and linting tasks.
       Alias for helm:validate-all for convenience.
+    silent: true
     cmds:
       - task: :helm:validate-all
 
@@ -45,6 +48,14 @@ tasks:
         - Optional frontmatter correctness when present (status, date YYYY-MM-DD, decision-makers)
         - Numbering checks (duplicate/malformed numbers error; gaps warning)
       The template.md file is ignored.
+    silent: true
+    sources:
+      - docs/decisions/*.md
+      - scripts/validate-adr.sh
+    generates:
+      - .task-cache/adr-validation.txt
+    method: checksum
     cmds:
       - chmod +x scripts/validate-adr.sh
       - scripts/validate-adr.sh
+      - mkdir -p .task-cache && touch .task-cache/adr-validation.txt
