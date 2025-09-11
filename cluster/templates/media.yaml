@@ -16,9 +16,9 @@ spec:
         - name: kavita
         - name: lidarr
         - name: metube
-        # - name: overseerr
-        # - name: pinchflat
-        # - name: prowlarr
+        - name: overseerr
+        - name: pinchflat
+        - name: prowlarr
         # - name: radarr
         # - name: readarr
         # - name: sabnzbd
