@@ -18,9 +18,9 @@ applications:
   bazarr: false
   gaps: false
   kapowarr: false
-  kavita: true
-  lidarr: true
-  metube: true
+  kavita: false
+  lidarr: false
+  metube: false
   overseerr: true
   pinchflat: true
   plex: true
