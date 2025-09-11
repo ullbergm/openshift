@@ -55,6 +55,12 @@ This media stack follows the \*arr application pattern with automated content di
       └── tv/                      # Organized TV show library
   ```
 
+### Directory layout rationale
+
+We follow the TRaSH-Guides directory structure for all media applications. See ADR-0002 for the rationale and canonical layout:
+
+- docs/decisions/0002-use-trash-guides-directory-structure.md
+
 ### Networking
 
 - Each application runs in its own namespace
