@@ -29,7 +29,7 @@ app-template:
       annotations:
         reloader.stakater.com/auto: "true"
       labels:
-        kasten/backup: "true"
+        kasten/backup: "false"
       containers:
         main:
           image:
