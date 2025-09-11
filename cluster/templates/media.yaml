@@ -24,7 +24,7 @@ spec:
       project: default
       destination:
         server: {{ .Values.spec.destination.server }}
-        namespace: "openshift-gitops"
+        namespace: '{{ "{{" }} .name {{ "}}" }}'
       syncPolicy:
         automated:
           prune: true
