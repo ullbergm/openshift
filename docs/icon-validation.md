@@ -1,6 +1,6 @@
 # Icon Validation
 
-The Helm validation suite now includes icon validation to ensure consistency and proper formatting of icons across all applications.
+The Helm validation suite now includes comprehensive icon validation to ensure consistency and proper formatting of icons across all applications. This includes validation for both Iconify icons and HTTP URL-based icons.
 
 ## Icon Formats Supported
 
@@ -36,6 +36,21 @@ icon: tabler:device-desktop
 icon: heroicons:academic-cap
 ```
 
+### HTTP URL Icons
+
+Direct HTTP/HTTPS URLs to icon images are also supported and validated:
+
+```yaml
+# GitHub raw images
+image: "https://raw.githubusercontent.com/Radarr/Radarr/develop/Logo/256.png"
+
+# Application favicons
+image: "https://ollama.ai/public/apple-touch-icon.png"
+
+# Custom hosted images
+image: "https://avatars.githubusercontent.com/u/59452120"
+```
+
 ## Validation Rules
 
 ### Format Validation (Always Performed)
@@ -43,22 +58,24 @@ icon: heroicons:academic-cap
 1. **Generic Collections**: Most icon collections (mdi, lucide, tabler, heroicons, etc.) must contain only lowercase letters, numbers, and hyphens
 2. **Simple Icons**: Must follow the format `simple-icons:iconname` with lowercase letters, numbers, hyphens, and dots only
 3. **Collection Detection**: Icons with `collection:name` format are parsed automatically; icons without a prefix default to `mdi`
-4. **Missing Icons**: The validator will suggest intelligent defaults using online API search when available
-5. **Empty Icons**: Will trigger a warning with dynamically generated or fallback suggestions
+4. **HTTP URLs**: Must start with `http://` or `https://` and follow proper URL format
+5. **Missing Icons**: The validator will suggest intelligent defaults using online API search when available
+6. **Empty Icons**: Will trigger a warning with dynamically generated or fallback suggestions
 
 ### Online Validation (Optional)
 
 When `--online` flag is used, the validator will also:
 
-1. **Verify Icon Existence**: Check if icons actually exist in the Iconify database
+1. **Verify Iconify Icon Existence**: Check if icons actually exist in the Iconify database
 2. **Collection Validation**: Verify that the icon collection (mdi, simple-icons) is available
-3. **Dynamic Suggestions**: Search Simple Icons API for exact and partial matches when suggesting defaults
-4. **Network Handling**: Gracefully handle network timeouts and API failures
-5. **Caching**: Cache API responses to avoid repeated requests for the same icons and collections
+3. **HTTP URL Accessibility**: Test HTTP/HTTPS URLs to ensure they return successful responses (200, 201, 202, 204)
+4. **Dynamic Suggestions**: Search Simple Icons API for exact and partial matches when suggesting defaults
+5. **Network Handling**: Gracefully handle network timeouts and API failures
+6. **Caching**: Cache API responses to avoid repeated requests for the same icons and collections
 
 ### Validation Modes
 
-- **Online Mode (Default)**: Format validation + Iconify database verification + dynamic icon suggestions
+- **Online Mode (Default)**: Format validation + Iconify database verification + URL accessibility testing + dynamic icon suggestions
 - **Offline Mode**: Fast format validation with hardcoded fallback suggestions, no network requests## Running Icon Validation
 
 ### Online Validation (Default)
@@ -119,8 +136,10 @@ For example:
 
 ```text
 🎨 Validating icons in Helm charts (offline mode)...
-  ✅ ollama: Icon 'robot' is valid
+  ✅ ollama: Icon 'robot' format is valid
+  ✅ ollama: Image URL 'https://ollama.ai/public/apple-touch-icon.png' format is valid
   ⚠️  metube: No icon field found, suggested: simple-icons:youtube
+  ⚠️  metube (line 19): Image field is empty
   ❌ sonarr (line 17): Invalid simple-icons format. Should be 'simple-icons:iconname' with lowercase letters, numbers, hyphens, and dots only.
 
 — Icon validation summary —
@@ -134,7 +153,9 @@ For example:
 🎨 Validating icons in Helm charts (online mode)...
 🌐 Checking Iconify API connectivity... ✓
   ✅ ollama: Icon 'robot' is valid (verified online)
-  ❌ metube (line 17): Icon 'nonexistent-icon' not found in Iconify database
+  ✅ ollama: Image URL 'https://ollama.ai/public/apple-touch-icon.png' is accessible (verified online)
+  ❌ radarr (line 19): Image URL 'https://example.com/broken-image.png' returned HTTP error (404, 403, etc.)
+  ⚠️  metube (line 17): Icon 'nonexistent-icon' not found in Iconify database
   ⚠️  sonarr: Icon 'timeout-test' format valid (online check failed - network error)
 
 — Icon validation summary —
@@ -177,5 +198,5 @@ When network is unavailable or API calls fail:
 
 ## Dependencies
 
-- `curl` - For making HTTP requests to Iconify API
+- `curl` - For making HTTP requests to Iconify API and validating HTTP URL accessibility
 - `jq` - For parsing JSON responses from the API

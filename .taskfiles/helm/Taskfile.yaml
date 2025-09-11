@@ -107,8 +107,8 @@ tasks:
     desc: Validate icon fields in helm charts (online by default)
     summary: |
       Validates icon fields in values.yaml files, checks format consistency,
-      suggests defaults for missing icons, and verifies icons exist in the
-      Iconify database by making API calls. Uses online validation by default.
+      suggests defaults for missing icons, and verifies icons exist online.
+      Supports both Iconify icons and HTTP URL icons. Uses online validation by default.
     sources:
       - charts/**/values.yaml
       - scripts/validate-icons.sh
@@ -126,7 +126,7 @@ tasks:
     summary: |
       Validates icon fields in values.yaml files, checks format consistency,
       and suggests defaults for missing icons based on application type.
-      This performs offline validation only without API calls.
+      Supports both Iconify icons and HTTP URL icons. Offline validation only.
     sources:
       - charts/**/values.yaml
       - scripts/validate-icons.sh
@@ -143,7 +143,7 @@ tasks:
     desc: Run all validation tasks on helm charts (online by default)
     summary: |
       Comprehensive validation that runs helm template validation,
-      helm lint, and online icon validation on all charts.
+      helm lint, and online icon validation (Iconify + URL) on all charts.
     silent: true
     cmds:
       - task: validation
