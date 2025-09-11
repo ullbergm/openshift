@@ -19,9 +19,9 @@ spec:
         - name: overseerr
         - name: pinchflat
         - name: prowlarr
-        # - name: radarr
-        # - name: readarr
-        # - name: sabnzbd
+        - name: radarr
+        - name: readarr
+        - name: sabnzbd
         # - name: sonarr
         # - name: tautulli
 
