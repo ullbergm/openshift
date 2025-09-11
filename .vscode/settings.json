@@ -66,7 +66,10 @@
     "wc": true,
     "mv": true,
     "helm template": true,
-    "grep": true
+    "grep": true,
+    "task": true,
+    "jq": true,
+    "which": true
   },
   "yaml.schemas": {
     "https://www.schemastore.org/yamllint.json": [
