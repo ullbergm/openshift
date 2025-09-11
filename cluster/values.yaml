@@ -7,11 +7,11 @@ spec:
 
 roles:
   ai:
-    enabled: true
+    enabled: false
   media:
     enabled: true
   utilities:
-    enabled: true
+    enabled: false
 
 config:
   cluster:
