@@ -1,0 +1,33 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: MeTube
+  group: Media
+  icon: simple-icons:youtube
+  iconColor: ""
+  image: ""
+  description: "Web UI for yt-dlp/youtube-dl downloads"
+  port: 8081
+  location: 0
+
+pods:
+  main:
+    image:
+      repository: ghcr.io/alexta69/metube
+      # renovate: datasource=docker depName=ghcr.io/alexta69/metube versioning=loose
+      tag: 2025.09.06
+      pullPolicy: IfNotPresent
+    env:
+      DOWNLOAD_DIR: /data/media/metube
+      STATE_DIR: /config

@@ -1,4 +1,5 @@
 applications:
+  metube: false
   lidarr: false
   kavita: false
   readarr: false
