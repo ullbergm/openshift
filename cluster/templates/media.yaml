@@ -11,7 +11,6 @@ spec:
     - list:
         elements:
         - name: kapowarr
-          group: media
   template:
     metadata:
       name: '{{ "{{" }} .name {{ "}}" }}'
@@ -32,7 +31,7 @@ spec:
           selfHeal: true
       source:
         repoURL: {{ .Values.spec.source.repoURL }}
-        path: charts/{{ "{{" }} .group {{ "}}" }}/{{ "{{" }} .name {{ "}}" }}
+        path: charts/{{ "{{" }} default "media" .group {{ "}}" }}/{{ "{{" }} .name {{ "}}" }}
         targetRevision: {{ .Values.spec.source.targetRevision }}
         helm:
           valuesObject:
