@@ -11,6 +11,7 @@ tasks:
       entry point for all validation workflows.
     cmds:
       - echo "🚀 Running all validation tasks..."
+      - task: adr
       - task: :helm:validate-all
       - echo "✅ All validation tasks completed successfully!"
 
@@ -21,3 +22,16 @@ tasks:
       Alias for helm:validate-all for convenience.
     cmds:
       - task: :helm:validate-all
+
+  adr:
+    desc: Validate ADR (Architecture Decision Record) files
+    summary: |
+      Validates ADR markdown files under docs/decisions/ for:
+        - Filename convention: NNNN-title.md (4-digit index)
+        - Presence of key sections: top-level title, Context and Problem Statement, Decision Outcome
+        - Optional frontmatter correctness when present (status, date YYYY-MM-DD, decision-makers)
+        - Numbering checks (duplicate/malformed numbers error; gaps warning)
+      The template.md file is ignored.
+    cmds:
+      - chmod +x scripts/validate-adr.sh
+      - scripts/validate-adr.sh
