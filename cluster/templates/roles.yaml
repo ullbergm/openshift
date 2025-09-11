@@ -20,6 +20,9 @@ spec:
       name: '{{ .Release.Name }}-roles-{{ "{{" }} .name {{ "}}" }}'
       namespace: "openshift-gitops"
     spec:
+      ignoreDifferences:
+      - jsonPointers:
+        - /spec/syncPolicy
       project: default
       destination:
         server: {{ .Values.spec.destination.server }}
