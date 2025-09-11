@@ -16,7 +16,7 @@ application:
   group: Media
   icon: simple-icons:radarr
   iconColor: ""
-  image: "https://raw.githubusercontent.com/Radarr/Radarr/v5.18.0/Logo/256.png"
+  image: "https://avatars.githubusercontent.com/u/25025331"
   description: "Movie management"
   port: 7878
   location: 0
