@@ -33,4 +33,5 @@ spec:
           valuesObject:
             spec:
 {{ .Values.spec | toYaml | nindent 14 }}
-{{ .Values.config | toYaml | nindent 12 }}
+              cluster:
+{{ .Values.cluster | toYaml | nindent 16 }}
