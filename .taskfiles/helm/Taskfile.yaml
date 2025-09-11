@@ -88,43 +88,43 @@ tasks:
       - echo "✅ All helm charts linted successfully!"
 
   validate-icons:
-    desc: Validate icon fields in helm charts (offline)
-    summary: |
-      Validates icon fields in values.yaml files, checks format consistency,
-      and suggests defaults for missing icons based on application type.
-      This performs offline validation only.
-    silent: true
-    cmds:
-      - chmod +x scripts/validate-icons.sh
-      - scripts/validate-icons.sh
-
-  validate-icons-online:
-    desc: Validate icon fields in helm charts with online verification
+    desc: Validate icon fields in helm charts (online by default)
     summary: |
       Validates icon fields in values.yaml files, checks format consistency,
       suggests defaults for missing icons, and verifies icons exist in the
-      Iconify database by making API calls.
+      Iconify database by making API calls. Uses online validation by default.
     silent: true
     cmds:
       - chmod +x scripts/validate-icons.sh
       - scripts/validate-icons.sh --online
 
-  validate-all:
-    desc: Run all validation tasks on helm charts (offline)
+  validate-icons-offline:
+    desc: Validate icon fields in helm charts (offline mode)
     summary: |
-      Comprehensive validation that runs helm template validation,
-      helm lint, and offline icon validation on all charts.
+      Validates icon fields in values.yaml files, checks format consistency,
+      and suggests defaults for missing icons based on application type.
+      This performs offline validation only without API calls.
+    silent: true
     cmds:
-      - task: validation
-      - task: lint
-      - task: validate-icons
+      - chmod +x scripts/validate-icons.sh
+      - scripts/validate-icons.sh
 
-  validate-all-online:
-    desc: Run all validation tasks on helm charts with online verification
+  validate-all:
+    desc: Run all validation tasks on helm charts (online by default)
     summary: |
       Comprehensive validation that runs helm template validation,
       helm lint, and online icon validation on all charts.
     cmds:
       - task: validation
       - task: lint
-      - task: validate-icons-online
+      - task: validate-icons
+
+  validate-all-offline:
+    desc: Run all validation tasks on helm charts (offline mode)
+    summary: |
+      Comprehensive validation that runs helm template validation,
+      helm lint, and offline icon validation on all charts.
+    cmds:
+      - task: validation
+      - task: lint
+      - task: validate-icons-offline

@@ -58,35 +58,33 @@ When `--online` flag is used, the validator will also:
 
 ### Validation Modes
 
-- **Offline Mode**: Fast format validation with hardcoded fallback suggestions, no network requests
-- **Online Mode**: Format validation + Iconify database verification + dynamic icon suggestions
+- **Online Mode (Default)**: Format validation + Iconify database verification + dynamic icon suggestions
+- **Offline Mode**: Fast format validation with hardcoded fallback suggestions, no network requests## Running Icon Validation
 
-## Running Icon Validation
-
-### Offline Validation (Default)
+### Online Validation (Default)
 
 ```bash
-# Run icon validation only (offline)
+# Run icon validation with online verification (default)
 task helm:validate-icons
 
-# Run all helm validation (including icons, offline)
+# Run all helm validation with online icon verification (default)
 task helm:validate-all
 
-# Run complete validation suite (offline)
+# Run complete validation suite with online verification (default)
 task validate:all
 ```
 
-### Online Validation (Iconify Database Verification)
+### Offline Validation (Fast Mode)
 
 ```bash
-# Run icon validation with online verification
-task helm:validate-icons-online
+# Run icon validation only (offline mode)
+task helm:validate-icons-offline
 
-# Run all helm validation with online icon verification
-task helm:validate-all-online
+# Run all helm validation (including icons, offline mode)
+task helm:validate-all-offline
 
-# Run complete validation suite with online verification
-task validate:all-online
+# Run complete validation suite (offline mode)
+task validate:all-offline
 ```
 
 ### Manual Script Usage

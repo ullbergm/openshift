@@ -4,27 +4,28 @@ version: "3"
 
 tasks:
   all:
-    desc: Run all validation tasks (offline)
+    desc: Run all validation tasks (online by default)
     summary: |
       Comprehensive validation suite that runs all available validation tasks
-      including helm chart validation, linting, and offline icon validation.
-      This task serves as the entry point for all validation workflows.
+      including helm chart validation, linting, and online icon validation
+      against the Iconify database. This task serves as the entry point
+      for all validation workflows.
     cmds:
-      - echo "🚀 Running all validation tasks..."
+      - echo "🚀 Running all validation tasks (online mode)..."
       - task: adr
       - task: :helm:validate-all
       - echo "✅ All validation tasks completed successfully!"
 
-  all-online:
-    desc: Run all validation tasks with online verification
+  all-offline:
+    desc: Run all validation tasks (offline mode)
     summary: |
       Comprehensive validation suite that runs all available validation tasks
-      including helm chart validation, linting, and online icon validation
-      against the Iconify database.
+      including helm chart validation, linting, and offline icon validation
+      without making any network requests.
     cmds:
-      - echo "🚀 Running all validation tasks (online mode)..."
+      - echo "🚀 Running all validation tasks (offline mode)..."
       - task: adr
-      - task: :helm:validate-all-online
+      - task: :helm:validate-all-offline
       - echo "✅ All validation tasks completed successfully!"
 
   helm:
