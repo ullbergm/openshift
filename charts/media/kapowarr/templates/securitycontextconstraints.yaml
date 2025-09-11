@@ -1,3 +1,4 @@
+{{- if .Capabilities.APIVersions.Has "security.openshift.io/v1" }}
 ---
 kind: SecurityContextConstraints
 apiVersion: security.openshift.io/v1
@@ -13,3 +14,4 @@ supplementalGroups:
   type: RunAsAny
 users:
   - system:serviceaccount:{{ .Release.Namespace }}:{{ .Release.Name }}
+{{- end }}
