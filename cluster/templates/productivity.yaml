@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: {{ .Release.Name }}-media
+  name: {{ .Release.Name }}-productivity
 spec:
   ignoreApplicationDifferences:
     - jsonPointers:
@@ -10,20 +10,7 @@ spec:
   generators:
     - list:
         elements:
-        # - name: bazarr
-        # - name: gaps
-        - name: kapowarr
-        # - name: kavita
-        # - name: lidarr
-        # - name: metube
-        # - name: overseerr
-        # - name: pinchflat
-        # - name: prowlarr
-        # - name: radarr
-        # - name: readarr
-        # - name: sabnzbd
-        # - name: sonarr
-        # - name: tautulli
+        # - name: excalidraw
 
   template:
     metadata:
@@ -45,7 +32,7 @@ spec:
           selfHeal: true
       source:
         repoURL: {{ .Values.spec.source.repoURL }}
-        path: charts/{{ "{{" }} default "media" .group {{ "}}" }}/{{ "{{" }} .name {{ "}}" }}
+        path: charts/{{ "{{" }} default "productivity" .group {{ "}}" }}/{{ "{{" }} .name {{ "}}" }}
         targetRevision: {{ .Values.spec.source.targetRevision }}
         helm:
           valuesObject:
