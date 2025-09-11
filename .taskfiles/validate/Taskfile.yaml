@@ -1,0 +1,23 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  all:
+    desc: Run all validation tasks
+    summary: |
+      Comprehensive validation suite that runs all available validation tasks
+      including helm chart validation and linting. This task serves as the
+      entry point for all validation workflows.
+    cmds:
+      - echo "🚀 Running all validation tasks..."
+      - task: :helm:validate-all
+      - echo "✅ All validation tasks completed successfully!"
+
+  helm:
+    desc: Run helm validation and linting
+    summary: |
+      Runs helm chart validation and linting tasks.
+      Alias for helm:validate-all for convenience.
+    cmds:
+      - task: :helm:validate-all

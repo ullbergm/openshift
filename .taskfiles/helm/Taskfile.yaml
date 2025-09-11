@@ -1,0 +1,97 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+vars:
+  TEST_CLUSTER_NAME: "test"
+  TEST_DOMAIN: "example.com"
+  TEST_TIMEZONE: "UTC"
+
+tasks:
+  validation:
+    desc: Validate all helm charts by running helm template
+    summary: |
+      Validates all helm charts in the repository by running helm template
+      on each chart to ensure they generate valid Kubernetes manifests.
+    silent: true
+    cmds:
+      - echo "🔍 Validating helm charts..."
+      - |
+        for category in charts/*/; do
+          if [ -d "$category" ]; then
+            category_name=$(basename "$category")
+            for chart_dir in "$category"*/; do
+              if [ -f "$chart_dir/Chart.yaml" ]; then
+                chart_name=$(basename "$chart_dir")
+                # Remove trailing slash from chart_dir
+                chart_path=${chart_dir%/}
+                if helm template "$chart_name" "$chart_path" \
+                  --values "$chart_path/values.yaml" \
+                  --set cluster.name={{.TEST_CLUSTER_NAME}} \
+                  --set cluster.top_level_domain={{.TEST_DOMAIN}} \
+                  --set cluster.timezone={{.TEST_TIMEZONE}} \
+                  > /dev/null 2>&1; then
+                  echo "  ✅ $chart_name - PASSED"
+                else
+                  echo "  ❌ $chart_name - FAILED"
+                  echo "  Running helm template for debugging:"
+                  helm template "$chart_name" "$chart_path" \
+                    --values "$chart_path/values.yaml" \
+                    --set cluster.name={{.TEST_CLUSTER_NAME}} \
+                    --set cluster.top_level_domain={{.TEST_DOMAIN}} \
+                    --set cluster.timezone={{.TEST_TIMEZONE}}
+                  exit 1
+                fi
+              fi
+            done
+          fi
+        done
+      - echo "✅ All helm charts validated successfully!"
+
+  lint:
+    desc: Run helm lint on all charts
+    summary: |
+      Runs helm lint on all charts to check for issues and best practices.
+    silent: true
+    cmds:
+      - echo "🔍 Linting helm charts..."
+      - |
+        for category in charts/*/; do
+          if [ -d "$category" ]; then
+            category_name=$(basename "$category")
+            for chart_dir in "$category"*/; do
+              if [ -f "$chart_dir/Chart.yaml" ]; then
+                chart_name=$(basename "$chart_dir")
+                # Remove trailing slash from chart_dir
+                chart_path=${chart_dir%/}
+                if helm lint "$chart_path" \
+                  --values "$chart_path/values.yaml" \
+                  --set cluster.name={{.TEST_CLUSTER_NAME}} \
+                  --set cluster.top_level_domain={{.TEST_DOMAIN}} \
+                  --set cluster.timezone={{.TEST_TIMEZONE}} \
+                  > /dev/null 2>&1; then
+                  echo "  ✅ $chart_name - PASSED"
+                else
+                  echo "  ❌ $chart_name - FAILED"
+                  echo "  Running helm lint for debugging:"
+                  helm lint "$chart_path" \
+                    --values "$chart_path/values.yaml" \
+                    --set cluster.name={{.TEST_CLUSTER_NAME}} \
+                    --set cluster.top_level_domain={{.TEST_DOMAIN}} \
+                    --set cluster.timezone={{.TEST_TIMEZONE}}
+                  exit 1
+                fi
+              fi
+            done
+          fi
+        done
+      - echo "✅ All helm charts linted successfully!"
+
+  validate-all:
+    desc: Run both validation and linting on all charts
+    summary: |
+      Comprehensive validation that runs both helm template validation
+      and helm lint on all charts.
+    cmds:
+      - task: validation
+      - task: lint
