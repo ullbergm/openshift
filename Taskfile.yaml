@@ -12,3 +12,13 @@ includes:
 
 tasks:
   default: task --list
+
+  new-media-chart:
+    desc: Scaffold a new media chart by copying charts/media/sonarr
+    summary: |
+      Interactively prompts for chart details (name, image repo/tag, description,
+      port, icon, group, iconColor, etc.) and creates a new chart under charts/media/.
+      Also creates a roles/media Application template and updates roles/media/values.yaml.
+    cmds:
+      - bash scripts/scaffold-media-app.sh
+    silent: false
