@@ -15,8 +15,8 @@ cluster:
   timezone: YOUR_TIMEZONE
 
 applications:
-  bazarr: true
-  gaps: true
+  bazarr: false
+  gaps: false
   kapowarr: false
   kavita: true
   lidarr: true
