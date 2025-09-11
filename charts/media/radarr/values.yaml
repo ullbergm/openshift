@@ -29,7 +29,6 @@ pods:
       tag: 5.18.0
       pullPolicy: IfNotPresent
     env:
-      TZ: "{{ .Values.cluster.timezone }}"
       RADARR__INSTANCE_NAME: Radarr
       RADARR__PORT: "{{ .Values.application.port }}"
       RADARR__APPLICATION_URL: "https://radarr.{{ .Values.cluster.top_level_domain }}"

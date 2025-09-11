@@ -28,5 +28,3 @@ pods:
       repository: housewrecker/gaps
       tag: x64-v0.10.4
       pullPolicy: IfNotPresent
-    env:
-      TZ: "{{ .Values.cluster.timezone }}"

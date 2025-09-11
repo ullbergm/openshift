@@ -41,6 +41,8 @@ spec:
       containers:
         - name: main
           env:
+          - name: TZ
+            value: {{ .Values.cluster.timezone }}
           {{- range $key, $value := .Values.pods.main.env }}
           - name: {{ $key }}
             value: "{{ $value }}"

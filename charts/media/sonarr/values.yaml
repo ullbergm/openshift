@@ -29,7 +29,6 @@ pods:
       tag: 4.0.15
       pullPolicy: IfNotPresent
     env:
-      TZ: "{{ .Values.cluster.timezone }}"
       COMPlus_EnableDiagnostics: "0"
       SONARR__APP__INSTANCENAME: Sonarr
       SONARR__AUTH__METHOD: External
