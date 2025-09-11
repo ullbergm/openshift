@@ -4,6 +4,7 @@ applications:
   kavita: false
   readarr: false
   kapowarr: false
+  prowlarr: false
   sonarr: false
   radarr: false
   bazarr: false

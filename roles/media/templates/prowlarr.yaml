@@ -1,0 +1,29 @@
+{{ if .Values.applications.prowlarr }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: prowlarr
+  namespace: openshift-gitops
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  destination:
+    namespace: prowlarr
+    server: "{{ .Values.spec.destination.server }}"
+  project: default
+  source:
+    path: charts/media/prowlarr
+    repoURL: "{{ .Values.spec.source.repoURL }}"
+    targetRevision: "{{ .Values.spec.source.targetRevision }}"
+    helm:
+      valuesObject:
+{{- with .Values }}
+  {{. | toYaml | nindent 10 }}
+{{- end }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+{{ end }}

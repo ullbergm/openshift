@@ -1,0 +1,30 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Prowlarr
+  group: Media
+  icon: cloud-search
+  iconColor: ""
+  image: "https://raw.githubusercontent.com/Prowlarr/Prowlarr/develop/Logo/400.png"
+  description: "Indexer management"
+  port: 9696
+  location: 0
+
+pods:
+  main:
+    image:
+      repository: ghcr.io/home-operations/prowlarr
+      # renovate: datasource=docker depName=ghcr.io/home-operations/prowlarr versioning=semver
+      tag: 1.37.0.5076
+      pullPolicy: IfNotPresent
