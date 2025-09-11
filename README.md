@@ -164,3 +164,8 @@ spec:
 ## Maintenance
 
 - **Updates**: Renovate keeps the versions up to date
+
+## Developer notes
+
+- Validations: run with Task. The CI pipeline runs `validate:all` (ADR checks and Helm template/lint) on pushes and PRs.
+- Pre-commit: local hooks run ADR validation and Helm validation/lint. Install pre-commit and ensure `helm` and `task` are available in your PATH.
