@@ -13,9 +13,9 @@ spec:
         - name: bazarr
         - name: gaps
         - name: kapowarr
-        # - name: kavita
-        # - name: lidarr
-        # - name: metube
+        - name: kavita
+        - name: lidarr
+        - name: metube
         # - name: overseerr
         # - name: pinchflat
         # - name: prowlarr
