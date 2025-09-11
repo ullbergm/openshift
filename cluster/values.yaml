@@ -12,8 +12,8 @@ config:
     admin_email: YOUR_EMAIL
     timezone: YOUR_TIMEZONE
     storage:
-      config:
-        storageClassName: synology-iscsi
+      # config:
+      #   storageClassName: synology-iscsi
       media:
         nfs:
           server: nas
