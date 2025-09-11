@@ -10,8 +10,8 @@ spec:
   generators:
     - list:
         elements:
-        # - name: bazarr
-        # - name: gaps
+        - name: bazarr
+        - name: gaps
         - name: kapowarr
         # - name: kavita
         # - name: lidarr
