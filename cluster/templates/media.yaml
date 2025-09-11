@@ -11,9 +11,10 @@ spec:
     - list:
         elements:
         - name: kapowarr
+          group: media
   template:
     metadata:
-      name: '{{ .Release.Name }}-apps-{{ "{{" }} .name {{ "}}" }}'
+      name: '{{ "{{" }} .name {{ "}}" }}'
       namespace: "openshift-gitops"
     spec:
       ignoreDifferences:
@@ -27,7 +28,7 @@ spec:
         namespace: "openshift-gitops"
       source:
         repoURL: {{ .Values.spec.source.repoURL }}
-        path: charts/media/{{ "{{" }} .name {{ "}}" }}
+        path: charts/{{ "{{" }} .group {{ "}}" }}/{{ "{{" }} .name {{ "}}" }}
         targetRevision: {{ .Values.spec.source.targetRevision }}
         helm:
           valuesObject:
