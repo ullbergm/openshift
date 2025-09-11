@@ -12,6 +12,6 @@ spec:
   resources:
     requests:
       storage: {{ .Values.ollama.persistence.size }}
-{{- if .Values.cluster.storage.config.storageClassName }}
+{{- if and .Values.cluster.storage .Values.cluster.storage.config .Values.cluster.storage.config.storageClassName }}
   storageClassName: {{ .Values.cluster.storage.config.storageClassName }}
 {{- end }}

@@ -64,7 +64,8 @@
     "git commit": false,
     "git": true,
     "wc": true,
-    "mv": true
+    "mv": true,
+    "helm template": true
   },
   "yaml.schemas": {
     "https://www.schemastore.org/yamllint.json": [
