@@ -65,7 +65,8 @@
     "git": true,
     "wc": true,
     "mv": true,
-    "helm template": true
+    "helm template": true,
+    "grep": true
   },
   "yaml.schemas": {
     "https://www.schemastore.org/yamllint.json": [
