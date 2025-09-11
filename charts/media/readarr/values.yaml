@@ -1,0 +1,30 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Readarr
+  group: Media
+  icon: book-open
+  iconColor: ""
+  image: "https://raw.githubusercontent.com/Readarr/Readarr/develop/Logo/400.png"
+  description: "Manages your eBook library"
+  port: 8787
+  location: 0
+
+pods:
+  main:
+    image:
+      repository: ghcr.io/k8s-at-home/readarr
+      # renovate: datasource=docker depName=ghcr.io/k8s-at-home/readarr versioning=semver
+      tag: v0.1.1.1352
+      pullPolicy: IfNotPresent

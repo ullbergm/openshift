@@ -1,4 +1,5 @@
 applications:
+  readarr: false
   kapowarr: false
   sonarr: false
   radarr: false
