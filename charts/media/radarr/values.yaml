@@ -37,7 +37,6 @@ pods:
       RADARR__LOG__LEVEL: info
       RADARR__SERVER__PORT: *port
       RADARR__UPDATE__BRANCH: develop
-      RADARR__APPLICATION_URL: "https://radarr.apps.{{ *cluster }}.{{ *tld }}"
     probes:
       liveness: &probes
         enabled: true
