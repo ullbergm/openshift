@@ -69,7 +69,8 @@
     "grep": true,
     "task": true,
     "jq": true,
-    "which": true
+    "which": true,
+    "/workspaces/openshift/scripts/find-icons.sh": true
   },
   "yaml.schemas": {
     "https://www.schemastore.org/yamllint.json": [

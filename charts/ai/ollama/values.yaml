@@ -10,7 +10,7 @@ cluster:
 application:
   name: Ollama
   group: AI/ML
-  icon: robot
+  icon: simple-icons:ollama
   iconColor: ""
   image: "https://ollama.ai/public/apple-touch-icon.png"
   description: "Run large language models locally"

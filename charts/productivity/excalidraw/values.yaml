@@ -14,7 +14,7 @@ cluster:
 application:
   name: Excalidraw
   group: utilities
-  icon: mdi:draw-pen
+  icon: simple-icons:excalidraw
   iconColor: ""
   image: "https://avatars.githubusercontent.com/u/59452120"
   description: "Collaborative whiteboard tool"
