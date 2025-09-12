@@ -1,0 +1,6 @@
+# Requirements for find-icons.py
+# Install with: pip install -r scripts/requirements.txt
+
+aiohttp>=3.8.0,<4.0.0
+click>=8.0.0,<9.0.0
+rich>=13.0.0,<14.0.0
