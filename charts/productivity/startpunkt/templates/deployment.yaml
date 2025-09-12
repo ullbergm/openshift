@@ -30,8 +30,8 @@ spec:
       securityContext:
         fsGroup: 568
         fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 568
-        runAsUser: 568
+        runAsGroup: 0
+        runAsUser: 0
         supplementalGroups:
         - 44
         - 109

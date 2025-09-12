@@ -7,7 +7,7 @@ metadata:
     route.openshift.io/termination: "edge"
   name: {{ .Release.Name }}
 spec:
-  host: "{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+  host: "apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
   path: /
   to:
     kind: Service
@@ -32,10 +32,10 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-        - "{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+        - "apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
       secretName: "{{ .Release.Name }}-tls"
   rules:
-    - host: "{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+    - host: "apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
       http:
         paths:
           - path: /
