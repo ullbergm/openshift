@@ -28,14 +28,14 @@ spec:
         server: {{ .Values.spec.destination.server }}
         namespace: '{{ "{{" }} .name {{ "}}" }}'
       syncPolicy:
+        managedNamespaceMetadata:
+          labels:
+            goldilocks.fairwinds.com/enabled: "true"
         automated:
           prune: true
           selfHeal: true
         syncOptions:
           - CreateNamespace=true
-        managedNamespaceMetadata:
-          labels:
-            goldilocks.fairwinds.com/enabled: 'true'
       source:
         repoURL: {{ .Values.spec.source.repoURL }}
         path: charts/{{ "{{" }} default "ai" .group {{ "}}" }}/{{ "{{" }} .name {{ "}}" }}
