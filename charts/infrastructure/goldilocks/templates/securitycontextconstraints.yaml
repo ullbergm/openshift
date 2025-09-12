@@ -13,5 +13,6 @@ seLinuxContext:
 supplementalGroups:
   type: RunAsAny
 users:
-  - system:serviceaccount:{{ .Release.Namespace }}:{{ .Release.Name }}
+  - system:serviceaccount:{{ .Release.Namespace }}:{{ .Release.Name }}-controller
+  - system:serviceaccount:{{ .Release.Namespace }}:{{ .Release.Name }}-dashboard
 {{- end }}
