@@ -35,7 +35,7 @@ spec:
       - kind: Application
         group: argoproj.io
         jsonPointers:
-        - /spec/syncPolicy
+        - /spec/syncPolicy/automated
       project: default
       destination:
         server: {{ .Values.spec.destination.server }}
