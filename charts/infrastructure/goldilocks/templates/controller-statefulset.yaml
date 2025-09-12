@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ .Release.Name }}-controller
   labels:
     kasten/backup: "true"
   annotations:
