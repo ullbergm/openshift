@@ -9,7 +9,7 @@ data:
     endpoints:
       - name: {{ .Values.application.name | quote }}
         group: {{ .Values.application.group | default "other" | quote }}
-        url: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+        url: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}/identity
         interval: 60s
         conditions:
 {{- if .Values.gatus }}
