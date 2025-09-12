@@ -1,0 +1,139 @@
+# VPA Goldilocks Reporter Configuration
+# This file can be used to customize the behavior of the vpa-goldilocks-reporter.py script
+
+# Default configuration values
+config:
+  # Default output format if not specified
+  default_format: "console"
+
+  # Default namespaces to include (empty means all namespaces)
+  default_namespaces: []
+
+  # Default namespaces to exclude from reports
+  exclude_namespaces:
+    - "kube-system"
+    - "kube-public"
+    - "kube-node-lease"
+    - "openshift-"  # Exclude OpenShift system namespaces (prefix match)
+
+  # Resource formatting preferences
+  resource_formatting:
+    # Show resources in human-readable format (Mi, Gi instead of bytes)
+    human_readable: true
+
+    # Decimal places for resource values
+    decimal_places: 2
+
+  # HTML report customization
+  html_report:
+    # Custom CSS styles (will be injected into HTML reports)
+    custom_css: |
+      .highlight-over-request {
+        background-color: #fff3cd !important;
+        border-left: 4px solid #ffc107;
+      }
+      .highlight-under-request {
+        background-color: #d1ecf1 !important;
+        border-left: 4px solid #17a2b8;
+      }
+
+    # Include charts in HTML reports (requires additional dependencies)
+    include_charts: false
+
+  # Console output preferences
+  console:
+    # Use colors in console output
+    use_colors: true
+
+    # Maximum width for tables
+    max_table_width: 120
+
+    # Show progress bars
+    show_progress: true
+
+  # Filtering options
+  filters:
+    # Only show VPAs with recommendations that differ significantly from current settings
+    only_significant_changes: false
+
+    # Threshold for considering a change significant (percentage)
+    significant_change_threshold: 20
+
+    # Minimum age for VPA recommendations (in hours)
+    min_recommendation_age: 24
+
+  # kubectl patch generation options
+  kubectl_patches:
+    # Include dry-run flag in generated commands
+    include_dry_run: true
+
+    # Include comments with context
+    include_comments: true
+
+    # Patch strategy (json, merge, strategic)
+    patch_strategy: "json"
+
+  # Logging configuration
+  logging:
+    # Log level (DEBUG, INFO, WARNING, ERROR)
+    level: "INFO"
+
+    # Log format
+    format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+
+    # Include request/response details for Kubernetes API calls
+    include_api_details: false
+
+# Custom resource thresholds
+thresholds:
+  # CPU thresholds (in millicores)
+  cpu:
+    # Minimum CPU request to consider
+    min_request: 10  # 10m
+
+    # Maximum CPU request to suggest
+    max_request: 8000  # 8 cores
+
+    # Warn if VPA suggests more than this
+    warning_threshold: 4000  # 4 cores
+
+  # Memory thresholds (in MB)
+  memory:
+    # Minimum memory request to consider
+    min_request: 32  # 32Mi
+
+    # Maximum memory request to suggest
+    max_request: 16384  # 16Gi
+
+    # Warn if VPA suggests more than this
+    warning_threshold: 8192  # 8Gi
+
+# Report templates
+templates:
+  # Custom report sections
+  sections:
+    - name: "Executive Summary"
+      enabled: true
+
+    - name: "Resource Efficiency Analysis"
+      enabled: true
+
+    - name: "Cost Impact Estimation"
+      enabled: false  # Requires cloud provider integration
+
+    - name: "Historical Trends"
+      enabled: false  # Requires metrics storage
+
+  # Custom fields to include in reports
+  custom_fields:
+    - name: "recommendation_age"
+      description: "Age of the VPA recommendation"
+      enabled: true
+
+    - name: "current_utilization"
+      description: "Current resource utilization"
+      enabled: false  # Requires metrics integration
+
+    - name: "cost_impact"
+      description: "Estimated cost impact of changes"
+      enabled: false  # Requires pricing data

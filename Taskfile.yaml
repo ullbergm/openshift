@@ -31,3 +31,31 @@ tasks:
     silent: true
     cmds:
       - bash scripts/scaffold-new-chart.sh
+
+  vpa-report:
+    desc: Generate VPA Goldilocks resource recommendation report
+    summary: |
+      Fetches VPA (Vertical Pod Autoscaler) recommendations from the cluster
+      and generates a comprehensive report. Supports multiple output formats:
+      console (default), json, yaml, markdown, and kubectl patch commands.
+
+      Options:
+        FORMAT: Output format (console, json, yaml, markdown, kubectl) [default: console]
+        OUTPUT: Output file path (required for non-console formats)
+        NAMESPACE: Specific namespace to analyze (optional)
+
+      Examples:
+        task vpa-report                                    # Console output
+        task vpa-report FORMAT=markdown OUTPUT=report.md  # Markdown report
+        task vpa-report FORMAT=kubectl OUTPUT=patches.sh  # kubectl commands
+        task vpa-report NAMESPACE=media                    # Specific namespace
+    vars:
+      FORMAT: '{{.FORMAT | default "console"}}'
+      OUTPUT: '{{.OUTPUT}}'
+      NAMESPACE: '{{.NAMESPACE}}'
+    cmds:
+      - |
+        ARGS="--format {{.FORMAT}}"
+        {{if .OUTPUT}}ARGS="$ARGS --output {{.OUTPUT}}"{{end}}
+        {{if .NAMESPACE}}ARGS="$ARGS --namespace {{.NAMESPACE}}"{{end}}
+        python3 scripts/vpa-goldilocks-reporter.py $ARGS

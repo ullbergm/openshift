@@ -152,6 +152,37 @@ spec:
 2. Define the list of applications for that functional group in the template
 3. Create the corresponding subdirectory in `/charts/` (e.g., `/charts/monitoring/`)
 
+## Scripts and Tools
+
+### VPA Goldilocks Reporter
+
+A comprehensive Python script for analyzing VPA (Vertical Pod Autoscaler) recommendations from Goldilocks and generating detailed resource configuration reports.
+
+**Features:**
+
+- Multiple output formats: Console, JSON, YAML, HTML, kubectl patches
+- Namespace filtering and comprehensive resource analysis
+- Comparison between current and recommended configurations
+- Ready-to-use kubectl patch commands for applying recommendations
+
+**Usage:**
+
+```bash
+# Install dependencies
+pip install -r scripts/requirements.txt
+
+# Generate console report
+./scripts/vpa-goldilocks-reporter.py
+
+# Generate HTML report for media namespace
+./scripts/vpa-goldilocks-reporter.py --format html --namespace media --output report.html
+
+# Generate kubectl patches
+./scripts/vpa-goldilocks-reporter.py --format kubectl --output apply-recommendations.sh
+```
+
+See [`scripts/README-vpa-goldilocks-reporter.md`](scripts/README-vpa-goldilocks-reporter.md) for complete documentation.
+
 ## Maintenance
 
 - **Updates**: Renovate keeps the versions up to date

@@ -1,6 +1,11 @@
-# Requirements for find-icons.py
+# Requirements for scripts in this directory
 # Install with: pip install -r scripts/requirements.txt
 
+# For find-icons.py
 aiohttp>=3.8.0,<4.0.0
 click>=8.0.0,<9.0.0
 rich>=13.0.0,<14.0.0
+
+# For vpa-goldilocks-reporter.py
+kubernetes>=28.0.0,<29.0.0
+PyYAML>=6.0.0,<7.0.0
