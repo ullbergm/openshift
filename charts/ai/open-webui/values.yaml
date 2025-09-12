@@ -12,7 +12,7 @@ application:
   name: Open WebUI
   group: AI/ML
   icon: robot
-  iconColor: ""
+  iconColor: "darkgoldenrod"
   image: "https://openwebui.com/favicon.png"
   description: "User-friendly WebUI for LLMs"
   port: 8080
