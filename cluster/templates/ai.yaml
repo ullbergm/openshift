@@ -13,7 +13,6 @@ spec:
         - name: litellm
         - name: ollama
         - name: open-webui
-
   template:
     metadata:
       name: '{{ "{{" }} .name {{ "}}" }}'

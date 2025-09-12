@@ -22,12 +22,12 @@ tasks:
     silent: true
     cmd: rm -rf .task-cache
 
-  new-media-chart:
-    desc: Scaffold a new media chart by copying charts/media/sonarr
+  new-chart:
+    desc: Scaffold a new chart by copying charts/media/sonarr
     summary: |
       Interactively prompts for chart details (name, image repo/tag, description,
       port, icon, group, iconColor, etc.) and creates a new chart under charts/media/.
       Also updates cluster/templates/media.yaml ApplicationSet with the new application.
     silent: true
     cmds:
-      - bash scripts/scaffold-media-app.sh
+      - bash scripts/scaffold-new-chart.sh

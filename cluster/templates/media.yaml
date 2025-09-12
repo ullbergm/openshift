@@ -26,7 +26,6 @@ spec:
         - name: sabnzbd
         - name: sonarr
         - name: tautulli
-
   template:
     metadata:
       name: '{{ "{{" }} .name {{ "}}" }}'

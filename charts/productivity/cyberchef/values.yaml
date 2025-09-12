@@ -12,19 +12,19 @@ cluster:
         path: /volume1/media
 
 application:
-  name: Excalidraw
+  name: Cyberchef
   group: Productivity
-  icon: simple-icons:excalidraw
+  icon: mdi:chef-hat
   iconColor: ""
-  image: "https://avatars.githubusercontent.com/u/59452120"
-  description: "Collaborative whiteboard tool"
-  port: 8080
+  image: ""
+  description: "The cyber Swiss Army knife"
+  port: 80
   location: 0
 
 pods:
   main:
     image:
-      # renovate custom-docker versioning=semver
-      repository: ghcr.io/wipash/excalidraw-collab
-      tag: 0.18.0
+      repository: ghcr.io/gchq/cyberchef
+      # renovate: datasource=docker depName=ghcr.io/gchq/cyberchef versioning=semver
+      tag: 10.19.4
       pullPolicy: IfNotPresent

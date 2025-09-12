@@ -11,7 +11,7 @@ spec:
     - list:
         elements:
         - name: excalidraw
-
+        - name: cyberchef
   template:
     metadata:
       name: '{{ "{{" }} .name {{ "}}" }}'
