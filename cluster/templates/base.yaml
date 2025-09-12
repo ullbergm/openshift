@@ -1,0 +1,43 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: {{ .Release.Name }}-productivity
+spec:
+  ignoreApplicationDifferences:
+    - jsonPointers:
+        - /spec/syncPolicy
+  goTemplate: true
+  generators:
+    - list:
+        elements:
+        - name: goldilocks
+          group: infrastructure
+  template:
+    metadata:
+      name: '{{ "{{" }} .name {{ "}}" }}'
+      namespace: "openshift-gitops"
+    spec:
+      ignoreDifferences:
+      - kind: Application
+        group: argoproj.io
+        jsonPointers:
+        - /spec/syncPolicy
+      project: default
+      destination:
+        server: {{ .Values.spec.destination.server }}
+        namespace: '{{ "{{" }} .name {{ "}}" }}'
+      syncPolicy:
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
+      source:
+        repoURL: {{ .Values.spec.source.repoURL }}
+        path: charts/{{ "{{" }} default "base" .group {{ "}}" }}/{{ "{{" }} .name {{ "}}" }}
+        targetRevision: {{ .Values.spec.source.targetRevision }}
+        helm:
+          valuesObject:
+            spec:
+{{ .Values.spec | toYaml | nindent 14 }}
+{{ .Values.config | toYaml | nindent 12 }}

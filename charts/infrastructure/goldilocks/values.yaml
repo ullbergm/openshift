@@ -1,0 +1,30 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Goldilocks
+  group: Infrastructure
+  icon: mdi:scale-balance
+  iconColor: ""
+  image: "https://raw.githubusercontent.com/FairwindsOps/goldilocks/master/pkg/dashboard/assets/images/favicon.ico"
+  description: "Kubernetes Resource Recommendations"
+  port: 80
+  location: 0
+
+pods:
+  main:
+    image:
+      repository: us-docker.pkg.dev/fairwinds-ops/oss/goldilocks
+      # renovate: datasource=docker depName=us-docker.pkg.dev/fairwinds-ops/oss/goldilocks versioning=semver
+      tag: v4.14.1
+      pullPolicy: IfNotPresent
