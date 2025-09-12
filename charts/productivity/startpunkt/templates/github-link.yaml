@@ -1,0 +1,13 @@
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha2" }}
+---
+apiVersion: startpunkt.ullberg.us/v1alpha2
+kind: Application
+metadata:
+  name: github
+spec:
+  name: GitHub Repo
+  group: Infrastructure
+  icon: simple-icons:github
+  url: {{ .Values.spec.source.repoURL }}
+  info: GitHub Repo
+{{- end }}

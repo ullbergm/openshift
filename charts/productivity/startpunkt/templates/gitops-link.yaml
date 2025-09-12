@@ -1,0 +1,13 @@
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha2" }}
+---
+apiVersion: startpunkt.ullberg.us/v1alpha2
+kind: Application
+metadata:
+  name: gitops
+spec:
+  name: GitOps
+  group: Infrastructure
+  icon: simple-icons:argo
+  url: https://openshift-gitops-server-openshift-gitops.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  info: GitOps
+{{- end }}
