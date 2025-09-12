@@ -39,7 +39,7 @@ spec:
         - 100
         - 65535
       containers:
-        - name: main
+        - name: controller
           env:
           - name: TZ
             value: {{ .Values.cluster.timezone }}
@@ -52,3 +52,16 @@ spec:
           command:
             - /goldilocks
             - controller
+        - name: dashboard
+          env:
+          - name: TZ
+            value: {{ .Values.cluster.timezone }}
+          {{- range $key, $value := .Values.pods.main.env }}
+          - name: {{ $key }}
+            value: "{{ $value }}"
+          {{- end }}
+          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
+          imagePullPolicy: IfNotPresent
+          command:
+            - /goldilocks
+            - dashboard
