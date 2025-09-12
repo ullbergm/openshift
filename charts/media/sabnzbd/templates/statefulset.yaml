@@ -44,6 +44,13 @@ spec:
           - name: TZ
             value: {{ .Values.cluster.timezone }}
           {{- range $key, $value := .Values.pods.main.env }}
+          - name: SABNZBD__HOST_WHITELIST_ENTRIES
+            value: "sabnzbd,
+                    sabnzbd.sabnzbd,
+                    sabnzbd.sabnzbd.svc,
+                    sabnzbd.sabnzbd.svc.cluster,
+                    sabnzbd.sabnzbd.svc.cluster.local,
+                    sabnzbd.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
           - name: {{ $key }}
             value: "{{ $value }}"
           {{- end }}

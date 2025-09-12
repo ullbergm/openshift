@@ -30,13 +30,6 @@ pods:
       pullPolicy: IfNotPresent
     env:
       SABNZBD__PORT: *port
-      SABNZBD__HOST_WHITELIST_ENTRIES: >-
-        sabnzbd,
-        sabnzbd.sabnzbd,
-        sabnzbd.sabnzbd.svc,
-        sabnzbd.sabnzbd.svc.cluster,
-        sabnzbd.sabnzbd.svc.cluster.local,
-        sabnzbd.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
     probes:
       liveness: &probes
         enabled: true
