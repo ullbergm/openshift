@@ -12,6 +12,8 @@ spec:
         elements:
         - name: goldilocks
           group: infrastructure
+        - name: gatus
+          group: infrastructure
   template:
     metadata:
       name: '{{ "{{" }} .name {{ "}}" }}'

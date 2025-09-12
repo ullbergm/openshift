@@ -1,0 +1,98 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    kasten/backup: "true"
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  revisionHistoryLimit: 1
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/controller: main
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  serviceName: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/controller: main
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+    spec:
+      enableServiceLinks: false
+      serviceAccountName: {{ .Release.Name }}
+      automountServiceAccountToken: true
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 568
+        runAsUser: 568
+        supplementalGroups:
+        - 44
+        - 109
+        - 100
+        - 65535
+      initContainers:
+        init-config:
+          image: {{ .Values.pods.init.image.repository }}:{{ .Values.pods.init.image.tag }}
+          env:
+            FOLDER: /config
+            LABEL: gatus.io/enabled
+            NAMESPACE: ALL
+            RESOURCE: both
+            UNIQUE_FILENAMES: true
+            METHOD: WATCH
+          restartPolicy: Always
+          resources:
+            requests:
+              cpu: 10m
+            limits:
+              memory: 128Mi
+      containers:
+        - name: main
+          env:
+          - name: TZ
+            value: {{ .Values.cluster.timezone }}
+          - name: GATUS_CONFIG_PATH
+            value: /config
+          - name: GATUS_DELAY_START_SECONDS
+            value: 5
+          {{- range $key, $value := .Values.pods.main.env }}
+          - name: {{ $key }}
+            value: "{{ $value }}"
+          {{- end }}
+          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - mountPath: /data
+            name: config
+          - mountPath: /config/config.yaml
+            name: {{ .Release.Name }}-config
+            subPath: config.yaml
+            readOnly: true
+          probes:
+            liveness: &probes
+              enabled: true
+              custom: true
+              spec:
+                httpGet:
+                  path: /health
+                  port: *port
+                initialDelaySeconds: 0
+                periodSeconds: 10
+                timeoutSeconds: 1
+                failureThreshold: 3
+            readiness: *probes
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-config
+        - name: gatus-config
+          configMap:
+            name: {{ .Release.Name }}-config
