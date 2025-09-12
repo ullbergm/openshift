@@ -58,9 +58,9 @@ spec:
             name: transcode
           resources:
             requests:
-              gpu.intel.com/i915: 1
+              gpu.intel.com/i915: 2
             limits:
-              gpu.intel.com/i915: 4
+              gpu.intel.com/i915: 2
       volumes:
         - name: config
           persistentVolumeClaim:
