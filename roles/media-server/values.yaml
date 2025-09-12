@@ -23,7 +23,7 @@ applications:
   metube: false
   overseerr: false
   pinchflat: false
-  plex: true
+  plex: false
   prowlarr: false
   radarr: false
   readarr: false
