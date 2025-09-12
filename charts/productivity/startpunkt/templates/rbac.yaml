@@ -1,0 +1,31 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ .Release.Name }}
+rules:
+- apiGroups: ["", "extensions", "networking.k8s.io", "discovery.k8s.io"]
+  resources: ["ingresses", "namespaces", "endpointslices", "routes"]
+  verbs: ["get", "list"]
+- apiGroups: ["hajimari.io"]
+  resources: ["applications", "bookmarks"]
+  verbs: ["get", "list"]
+- apiGroups: ["startpunkt.ullberg.us"]
+  resources: ["applications", "bookmarks"]
+  verbs: ["get", "list", "create", "update", "delete"]
+- apiGroups: ["gateway.networking.k8s.io"]
+  resources: ["httproutes"]
+  verbs: ["get", "list"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ .Release.Name }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ .Release.Name }}
+subjects:
+- kind: ServiceAccount
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
