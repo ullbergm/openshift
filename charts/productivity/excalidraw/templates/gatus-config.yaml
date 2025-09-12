@@ -8,8 +8,9 @@ data:
   config.yaml: |-
     endpoints:
       - name: {{ .Values.application.name | quote }}
-        group: external
-        url: "https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
-        interval: 1m
+        group: productivity
+        url: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+        interval: 60s
         conditions:
-          - "[STATUS] == ${GATUS_STATUS:=200}"
+          - "[STATUS] == 200"
+          - "[BODY] == pat(*Excalidraw*)"
