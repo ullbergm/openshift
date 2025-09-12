@@ -407,6 +407,78 @@ class IconSearcher:
 
         self.console.print(recommendations_panel)
 
+    def export_to_markdown(self, results: List[IconResult], search_term: str, filename: str):
+        """Export search results to a markdown file with icon previews."""
+        if not results:
+            self.console.print("[yellow]No results to export[/yellow]")
+            return
+
+        # Iconify CDN URL pattern for icon images
+        # Format: https://api.iconify.design/{collection}/{icon}.svg
+
+        markdown_content = f"""# Icon Search Results for "{search_term}"
+
+Generated on {time.strftime('%Y-%m-%d %H:%M:%S')}
+
+Found **{len(results)}** icons matching your search.
+
+| Rank | Icon Name | Preview |
+|------|-----------|---------|
+"""
+
+        for idx, icon in enumerate(results, 1):
+            # Create icon URL for Iconify API
+            # Extract just the icon name without collection prefix
+            clean_icon_name = icon.name.split(':')[-1] if ':' in icon.name else icon.name
+            icon_url = f"https://api.iconify.design/{icon.collection}/{clean_icon_name}.svg"
+
+            # Create markdown image with size limit and fallback
+            icon_preview = f'<img src="{icon_url}" alt="{icon.name}" width="32" height="32" style="vertical-align: middle;" onerror="this.style.display=\'none\'">'
+
+            markdown_content += f"| {idx} | {icon.name} | {icon_preview} |\n"
+
+        # Add usage instructions at the end
+        markdown_content += f"""
+
+## Usage Instructions
+
+To use any of these icons in your Helm charts, add the icon name to your `values.yaml`:
+
+```yaml
+icon: {results[0].name}  # Recommended (top match)
+```
+
+### Alternative Options:
+"""
+
+        for i, result in enumerate(results[1:6], 1):
+            markdown_content += f"- `{result.name}` (Alternative {i})\n"
+
+        markdown_content += """
+
+### Icon Validation
+
+After updating your values.yaml, run the validation script:
+```bash
+./scripts/validate-icons.sh --online
+```
+
+### Icon Preview URLs
+
+All icons are served via the Iconify API:
+- Base URL: `https://api.iconify.design/{collection}/{icon}.svg`
+- You can also use PNG format by changing `.svg` to `.png`
+- Add size parameters: `?width=64&height=64`
+
+"""
+
+        try:
+            with open(filename, 'w', encoding='utf-8') as f:
+                f.write(markdown_content)
+            self.console.print(f"[green]Markdown results exported to {filename}[/green]")
+        except Exception as e:
+            self.console.print(f"[red]Error exporting markdown: {e}[/red]")
+
     async def get_detailed_info(self, api: IconifyAPI, results: List[IconResult], limit: int = 3):
         """Fetch detailed information for top results."""
         if not results:
@@ -433,6 +505,8 @@ Examples:
   %(prog)s jellyfin --max-results 20 --details
   %(prog)s unifi --all-collections --timeout 15
   %(prog)s docker --export results.json
+  %(prog)s plex --export-md plex-icons.md
+  %(prog)s jellyfin --details --export-md jellyfin-icons.md
         """
     )
 
@@ -478,6 +552,13 @@ Examples:
         type=str,
         metavar="FILE",
         help="Export results to JSON file"
+    )
+
+    parser.add_argument(
+        "--export-md",
+        type=str,
+        metavar="FILE",
+        help="Export results to Markdown file with icon previews"
     )
 
     parser.add_argument(
@@ -578,6 +659,10 @@ async def main():
                     json.dump(export_data, f, indent=2)
 
                 console.print(f"\n[green]Results exported to {args.export}[/green]")
+
+            # Export markdown results if requested
+            if args.export_md and filtered_results:
+                searcher.export_to_markdown(filtered_results, args.search_term, args.export_md)
 
             # Exit with appropriate code
             sys.exit(0 if filtered_results else 1)
