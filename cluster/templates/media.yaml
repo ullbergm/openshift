@@ -18,6 +18,7 @@ spec:
         - name: metube
         - name: overseerr
         - name: pinchflat
+        - name: plex
         - name: prowlarr
         - name: radarr
         - name: readarr
