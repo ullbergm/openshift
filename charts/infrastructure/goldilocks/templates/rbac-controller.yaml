@@ -1,0 +1,63 @@
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ .Release.Name }}-controller
+rules:
+  - apiGroups:
+      - 'apps'
+    resources:
+      - '*'
+    verbs:
+      - 'get'
+      - 'list'
+      - 'watch'
+  - apiGroups:
+      - 'batch'
+    resources:
+      - 'cronjobs'
+      - 'jobs'
+    verbs:
+      - 'get'
+      - 'list'
+      - 'watch'
+  - apiGroups:
+      - ''
+    resources:
+      - 'namespaces'
+      - 'pods'
+    verbs:
+      - 'get'
+      - 'list'
+      - 'watch'
+  - apiGroups:
+      - 'autoscaling.k8s.io'
+    resources:
+      - 'verticalpodautoscalers'
+    verbs:
+      - 'get'
+      - 'list'
+      - 'create'
+      - 'delete'
+      - 'update'
+  - apiGroups:
+      - 'argoproj.io'
+    resources:
+      - rollouts
+    verbs:
+      - 'get'
+      - 'list'
+      - 'watch'
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ .Release.Name }}-controller
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ .Release.Name }}
+subjects:
+- kind: ServiceAccount
+  name: {{ .Release.Name }}-controller
+  namespace: {{ .Release.Namespace }}

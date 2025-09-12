@@ -13,7 +13,7 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      app.kubernetes.io/controller: main
+      app.kubernetes.io/controller: controller
       app.kubernetes.io/name: {{ .Release.Name }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   serviceName: {{ .Release.Name }}
@@ -21,12 +21,12 @@ spec:
     metadata:
       labels:
         app: {{ .Release.Name }}
-        app.kubernetes.io/controller: main
+        app.kubernetes.io/controller: controller
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/name: {{ .Release.Name }}
     spec:
       enableServiceLinks: false
-      serviceAccountName: {{ .Release.Name }}
+      serviceAccountName: {{ .Release.Name }}-controller
       automountServiceAccountToken: true
       securityContext:
         fsGroup: 568
@@ -52,16 +52,3 @@ spec:
           command:
             - /goldilocks
             - controller
-        - name: dashboard
-          env:
-          - name: TZ
-            value: {{ .Values.cluster.timezone }}
-          {{- range $key, $value := .Values.pods.main.env }}
-          - name: {{ $key }}
-            value: "{{ $value }}"
-          {{- end }}
-          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
-          imagePullPolicy: IfNotPresent
-          command:
-            - /goldilocks
-            - dashboard
