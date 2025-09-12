@@ -52,12 +52,7 @@ spec:
           volumeMounts:
           - mountPath: /config
             name: config
-          - mountPath: /data
-            name: data
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-config
-        - name: data
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-data-volume
