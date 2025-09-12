@@ -14,7 +14,7 @@ cluster:
 application:
   name: Huntarr
   group: Media
-  icon: reticle
+  icon: f7:scope
   iconColor: ""
   image: ""
   description: "Searches for missing items"
