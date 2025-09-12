@@ -1,0 +1,30 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Flaresolverr
+  group: Media
+  icon: simple-icons:cloudflare
+  iconColor: ""
+  image: ""
+  description: "Cloudflare bypass tool"
+  port: 8191
+  location: 0
+
+pods:
+  main:
+    image:
+      repository: ghcr.io/flaresolverr/flaresolverr
+      # renovate: datasource=docker depName=ghcr.io/flaresolverr/flaresolverr versioning=semver
+      tag: v3.3.21
+      pullPolicy: IfNotPresent
