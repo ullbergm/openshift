@@ -18,3 +18,7 @@ config:
         nfs:
           server: nas
           path: /volume1/media
+
+  plex:
+    network:
+      ip: 192.168.1.10

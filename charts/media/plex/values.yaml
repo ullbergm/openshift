@@ -1,0 +1,34 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Plex
+  group: Media
+  icon: simple-icons:plex
+  iconColor: "orange"
+  image: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Plex_logo_2022.svg"
+  description: "Manages your movie library"
+  port: 32400
+  location: 0
+
+plex:
+  network:
+    ip: 192.168.1.10
+
+pods:
+  main:
+    image:
+      repository: lscr.io/linuxserver/plex
+      # renovate: datasource=docker depName=lscr.io/linuxserver/plex versioning=semver
+      tag: 1.42.1
+      pullPolicy: IfNotPresent

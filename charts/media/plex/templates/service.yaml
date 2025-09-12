@@ -1,0 +1,56 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}
+  annotations:
+    keepalived-operator.redhat-cop.io/keepalivedgroup: "keepalived-operator/lan"
+spec:
+  type: ClusterIP
+  externalIPs:
+    - {{ .Values.plex.network.ip }}
+  ports:
+    - name: http
+      port: {{ .Values.application.port }}
+      targetPort: {{ .Values.application.port }}
+      protocol: TCP
+    - name: dlna-udp
+      port: 1900
+      targetPort: 1900
+      protocol: UDP
+    - name: dlna-tcp
+      port: 32469
+      targetPort: 32469
+      protocol: TCP
+    - name: plex-companion
+      port: 3005
+      targetPort: 3005
+      protocol: TCP
+    - name: plex-roku
+      port: 8234
+      targetPort: 8234
+      protocol: TCP
+    - name: gdm-1
+      port: 32410
+      targetPort: 32410
+      protocol: UDP
+    - name: gdm-2
+      port: 32412
+      targetPort: 32412
+      protocol: UDP
+    - name: gdm3
+      port: 32413
+      targetPort: 32413
+      protocol: UDP
+    - name: gdm-4
+      port: 32414
+      targetPort: 32414
+      protocol: UDP
+    - name: bonjour
+      port: 5353
+      targetPort: 5353
+      protocol: UDP
+  selector:
+    app.kubernetes.io/controller: main
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}
