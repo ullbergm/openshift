@@ -1,0 +1,30 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: IT-Tools
+  group: Productivity
+  icon: chef-hat
+  iconColor: ""
+  image: "https://raw.githubusercontent.com/CorentinTh/it-tools/refs/heads/main/public/apple-touch-icon.png"
+  description: "Useful tools for IT engineers"
+  port: 80
+  location: 0
+
+pods:
+  main:
+    image:
+      repository: ghcr.io/corentinth/it-tools
+      # renovate: datasource=docker depName=ghcr.io/corentinth/it-tools versioning=semver
+      tag: 2024.10.22-7ca5933
+      pullPolicy: IfNotPresent

@@ -12,6 +12,7 @@ spec:
         elements:
         - name: excalidraw
         - name: cyberchef
+        - name: it-tools
   template:
     metadata:
       name: '{{ "{{" }} .name {{ "}}" }}'
