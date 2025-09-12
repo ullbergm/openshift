@@ -1,0 +1,13 @@
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha2" }}
+---
+apiVersion: startpunkt.ullberg.us/v1alpha2
+kind: Bookmark
+metadata:
+  name: linkedin
+spec:
+  name: LinkedIn
+  group: Business
+  icon: simple-icons:linkedin
+  url: https://linkedin.com/
+  info: Business Networking
+{{- end }}

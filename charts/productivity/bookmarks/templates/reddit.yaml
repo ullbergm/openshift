@@ -1,0 +1,13 @@
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha2" }}
+---
+apiVersion: startpunkt.ullberg.us/v1alpha2
+kind: Bookmark
+metadata:
+  name: reddit
+spec:
+  name: Reddit
+  group: Communication
+  icon: simple-icons:reddit
+  url: https://old.reddit.com/r/all
+  info: Social Media
+{{- end }}

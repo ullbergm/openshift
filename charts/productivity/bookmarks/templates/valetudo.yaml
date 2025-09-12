@@ -1,0 +1,13 @@
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha2" }}
+---
+apiVersion: startpunkt.ullberg.us/v1alpha2
+kind: Application
+metadata:
+  name: valetudo
+spec:
+  name: Vacuum
+  group: Home Automation
+  icon: robot-vacuum
+  url: http://valetudo.{{ .Values.cluster.top_level_domain }}
+  info: Home automation
+{{- end }}

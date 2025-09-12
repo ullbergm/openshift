@@ -10,8 +10,9 @@ spec:
   generators:
     - list:
         elements:
-        - name: excalidraw
+        - name: bookmarks
         - name: cyberchef
+        - name: excalidraw
         - name: it-tools
   template:
     metadata:

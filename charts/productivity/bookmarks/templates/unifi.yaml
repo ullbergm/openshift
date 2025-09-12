@@ -1,0 +1,13 @@
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha2" }}
+---
+apiVersion: startpunkt.ullberg.us/v1alpha2
+kind: Application
+metadata:
+  name: unifi
+spec:
+  name: UniFi
+  group: Infrastructure
+  icon: arcticons:unifi-network
+  url: http://unifi.{{ .Values.cluster.top_level_domain }}:8443
+  info: Manage WIFI
+{{- end }}
