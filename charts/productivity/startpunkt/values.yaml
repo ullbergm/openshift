@@ -13,13 +13,7 @@ cluster:
 
 application:
   name: Startpunkt
-  group: Productivity
-  icon:
-  iconColor: ""
-  image: ""
-  description: ""
-  port: 443
-  location: 0
+  port: 8080
 
 pods:
   main:
