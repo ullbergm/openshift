@@ -59,15 +59,6 @@ class IconSearchConfig:
     DEFAULT_MAX_RESULTS = 10
     CONCURRENT_REQUESTS = 5
 
-    # Preferred collections in order of priority
-    PREFERRED_COLLECTIONS = [
-        "simple-icons",   # Brand icons - highest priority
-        "mdi",            # Material Design Icons
-        "cbi",            # Custom Brand Icons
-        "fa6-brands",     # FontAwesome brands
-        "logos",          # Various logos
-    ]
-
     # Collection priorities for scoring
     COLLECTION_PRIORITIES = {
         "simple-icons": 100,
@@ -247,8 +238,7 @@ class IconSearcher:
         api: IconifyAPI,
         search_term: str,
         collections: List[str],
-        max_results: int,
-        all_collections: bool = False
+        max_results: int
     ) -> List[IconResult]:
         """Search multiple collections concurrently."""
 
@@ -280,16 +270,10 @@ class IconSearcher:
             transient=not self.verbose
         ) as progress:
 
-            if all_collections:
-                task = progress.add_task(
-                    f"Searching {len(collections)} collections...",
-                    total=len(collections)
-                )
-            else:
-                task = progress.add_task(
-                    f"Searching preferred collections...",
-                    total=len(collections)
-                )
+            task = progress.add_task(
+                f"Searching {len(collections)} collections...",
+                total=len(collections)
+            )
 
             tasks = []
             for collection in collections:
@@ -372,7 +356,6 @@ class IconSearcher:
             "• Try a shorter or more generic term\n"
             "• Check spelling\n"
             "• Try searching for the company/brand name instead\n"
-            "• Use --all-collections to search all available collections\n"
             "• Some applications may not have dedicated icons",
             title="No Results Found",
             border_style="yellow"
@@ -503,7 +486,7 @@ Examples:
   %(prog)s plex
   %(prog)s "visual studio code" --verbose
   %(prog)s jellyfin --max-results 20 --details
-  %(prog)s unifi --all-collections --timeout 15
+  %(prog)s unifi --timeout 15
   %(prog)s docker --export results.json
   %(prog)s plex --export-md plex-icons.md
   %(prog)s jellyfin --details --export-md jellyfin-icons.md
@@ -519,12 +502,6 @@ Examples:
         "-v", "--verbose",
         action="store_true",
         help="Enable verbose output with detailed logging"
-    )
-
-    parser.add_argument(
-        "-a", "--all-collections",
-        action="store_true",
-        help="Search all available collections (slower but comprehensive)"
     )
 
     parser.add_argument(
@@ -599,7 +576,7 @@ async def main():
             if args.collections:
                 collections_to_search = args.collections
                 console.print(f"[cyan]Using custom collections: {', '.join(collections_to_search)}[/cyan]\n")
-            elif args.all_collections:
+            else:
                 console.print("[cyan]Fetching all available collections...[/cyan]")
                 all_collections = await api.get_collections()
 
@@ -610,17 +587,13 @@ async def main():
                 )
                 collections_to_search = sorted_collections
                 console.print(f"[green]Found {len(collections_to_search)} collections[/green]\n")
-            else:
-                collections_to_search = IconSearchConfig.PREFERRED_COLLECTIONS
-                console.print(f"[cyan]Using preferred collections: {', '.join(collections_to_search)}[/cyan]\n")
 
             # Search for icons
             results = await searcher.search_collections(
                 api,
                 args.search_term,
                 collections_to_search,
-                args.max_results,
-                args.all_collections
+                args.max_results
             )
 
             # Filter by minimum score
