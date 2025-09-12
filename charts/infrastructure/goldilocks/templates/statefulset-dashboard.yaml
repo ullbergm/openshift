@@ -52,3 +52,4 @@ spec:
           command:
             - /goldilocks
             - dashboard
+            - --enable-cost=false
