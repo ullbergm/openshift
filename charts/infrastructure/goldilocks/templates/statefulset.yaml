@@ -49,3 +49,6 @@ spec:
           {{- end }}
           image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
           imagePullPolicy: IfNotPresent
+          command:
+            - /goldilocks
+            - controller
