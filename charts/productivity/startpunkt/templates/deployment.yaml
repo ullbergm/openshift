@@ -54,5 +54,5 @@ spec:
             subPath: application.yaml
       volumes:
         - name: config
-          secret:
-            secretName: {{ .Release.Name }}-config
+          configMap:
+            configMapName: {{ .Release.Name }}-config
