@@ -10,7 +10,7 @@ spec:
   generators:
     - list:
         elements:
-        # - name: excalidraw
+        - name: excalidraw
 
   template:
     metadata:
