@@ -58,6 +58,9 @@ spec:
               cpu: 10m
             limits:
               memory: 128Mi
+          volumeMounts:
+          - mountPath: /config
+            name: config
       containers:
         - name: main
           env:
@@ -75,6 +78,8 @@ spec:
           imagePullPolicy: IfNotPresent
           volumeMounts:
           - mountPath: /data
+            name: data
+          - mountPath: /config
             name: config
           - mountPath: /config/config.yaml
             name: {{ .Release.Name }}-config
@@ -97,6 +102,9 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-data
         - name: gatus-config
           configMap:
             name: {{ .Release.Name }}-config

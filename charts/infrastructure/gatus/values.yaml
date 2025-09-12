@@ -37,8 +37,20 @@ pods:
       pullPolicy: IfNotPresent
 
 config:
+  web:
+    port: 8080
+  storage:
+    type: sqlite
+    path: /data/sqlite.db
+    caching: true
+  metrics: true
+  debug: false
+  ui:
+    title: Status | Gatus
+    header: Status
   endpoints:
     - name: google
+      group: external
       url: https://google.com
       interval: 60s
       conditions:
