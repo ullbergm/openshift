@@ -56,11 +56,12 @@ This document lists applications that could be considered for addition to the ho
 | **Readarr**        | ✅ Deployed | -        | Book collection manager                                                  |
 | **Sonarr**         | ✅ Deployed | -        | TV series collection manager                                             |
 | **Tautulli**       | ✅ Deployed | -        | Plex monitoring and analytics                                            |
-| **SABnzbd**        | 🔄 Planned  | High     | Efficient Usenet downloader                                              |
+| **SABnzbd**        | ✅ Deployed | -        | Efficient Usenet downloader                                              |
+| **Plex**           | ✅ Deployed | -        | Media server, industry standard with excellent client support            |
+| **FlareSolverr**   | ✅ Deployed | -        | Proxy server to bypass Cloudflare protection for \*arr applications      |
 | **Recommendarr**   | 🔄 Planned  | High     | Generates personalized TV show and movie recommendations                 |
 | **Stash**          | 🔄 Planned  | High     | Manages your 'stuff'                                                     |
 | **Recyclarr**      | 🔄 Planned  | High     | TRaSH guides automation for \*arr apps, essential for quality management |
-| **Plex**           | 🔄 Planned  | High     | Media server, industry standard with excellent client support            |
 | **Jellyfin**       | 🔄 Planned  | High     | Open-source media server alternative to Plex                             |
 | **PhotoPrism**     | 🔄 Planned  | High     | Photo management and organization with AI features                       |
 | **Immich**         | 🔄 Planned  | High     | Modern photo and video backup solution, Google Photos alternative        |
@@ -127,8 +128,9 @@ This document lists applications that could be considered for addition to the ho
 | Application       | Status      | Priority | Notes                                               |
 | ----------------- | ----------- | -------- | --------------------------------------------------- |
 | **Excalidraw**    | ✅ Deployed | -        | Virtual whiteboard for sketching                    |
-| **CyberChef**     | 🔄 Planned  | High     | The Cyber Swiss Army Knife                          |
-| **IT-Tools**      | 🔄 Planned  | High     | Useful tools for developer and people working in IT |
+| **CyberChef**     | ✅ Deployed | -        | The Cyber Swiss Army Knife                          |
+| **IT-Tools**      | ✅ Deployed | -        | Useful tools for developer and people working in IT |
+| **Bookmarks**     | ✅ Deployed | -        | Custom bookmarks for Startpunkt                     |
 | **Monica**        | 🔄 Planned  | High     | A tool for managing your life                       |
 | **N8N**           | 🔄 Planned  | High     | A tool for automating tasks and workflows           |
 | **Paperless-NGX** | 🔄 Planned  | High     | A document management system                        |
@@ -238,4 +240,6 @@ This document lists applications that could be considered for addition to the ho
 
 ---
 
-_Last updated: September 11, 2025_
+## Last Updated
+
+September 12, 2025

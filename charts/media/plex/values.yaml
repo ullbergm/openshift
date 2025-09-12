@@ -14,12 +14,12 @@ cluster:
 application:
   name: Plex
   group: Media
-  icon: simple-icons:plex
+  icon: mdi:plex
   iconColor: "orange"
   image: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Plex_logo_2022.svg"
   description: "Manages your movie library"
   port: 32400
-  location: 0
+  location: 100
 
 plex:
   network:

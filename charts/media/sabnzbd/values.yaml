@@ -15,11 +15,10 @@ application:
   name: Sabnzbd
   group: Media
   icon: download-box
-  iconColor: "orange"
   image: "https://raw.githubusercontent.com/sabnzbd/sabnzbd/develop/icons/logo-arrow.svg"
   description: "Efficient Usenet downloader"
   port: &port 8080
-  location: 100
+  location: 0
 
 pods:
   main:
