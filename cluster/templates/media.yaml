@@ -13,6 +13,7 @@ spec:
         - name: bazarr
         - name: flaresolverr
         - name: gaps
+        - name: huntarr
         - name: kapowarr
         - name: kavita
         - name: lidarr
@@ -26,6 +27,7 @@ spec:
         - name: sabnzbd
         - name: sonarr
         - name: tautulli
+        - name: huntarr
   template:
     metadata:
       name: '{{ "{{" }} .name {{ "}}" }}'

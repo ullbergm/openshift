@@ -1,0 +1,30 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Huntarr
+  group: Media
+  icon: reticle
+  iconColor: ""
+  image: ""
+  description: "Searches for missing items"
+  port: 9705
+  location: 0
+
+pods:
+  main:
+    image:
+      repository: ghcr.io/plexguide/huntarr
+      # renovate: datasource=docker depName=ghcr.io/plexguide/huntarr versioning=semver
+      tag: 8.2.1
+      pullPolicy: IfNotPresent
