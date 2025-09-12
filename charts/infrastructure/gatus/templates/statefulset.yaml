@@ -39,7 +39,7 @@ spec:
         - 100
         - 65535
       initContainers:
-        init-config:
+        - name: init-config:
           image: {{ .Values.pods.init.image.repository }}:{{ .Values.pods.init.image.tag }}
           env:
             FOLDER: /config
