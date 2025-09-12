@@ -60,9 +60,9 @@ spec:
           - name: TZ
             value: {{ .Values.cluster.timezone }}
           - name: GATUS_CONFIG_PATH
-            value: /config
+            value: "/config"
           - name: GATUS_DELAY_START_SECONDS
-            value: 5
+            value: "5"
           {{- range $key, $value := .Values.pods.main.env }}
           - name: {{ $key }}
             value: "{{ $value }}"
