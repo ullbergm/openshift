@@ -1,6 +1,6 @@
 cluster:
-  top_level_domain: example.com
-  name: openshift
+  top_level_domain: &tld example.com
+  name: &cluster openshift
   admin_email: admin@example.com
   timezone: America/New_York
   storage:
@@ -18,7 +18,7 @@ application:
   iconColor: ""
   image: "https://avatars.githubusercontent.com/u/25025331"
   description: "Movie management"
-  port: 7878
+  port: &port 7878
   location: 0
 
 pods:
@@ -29,7 +29,25 @@ pods:
       tag: 5.28.0.10205
       pullPolicy: IfNotPresent
     env:
-      RADARR__INSTANCE_NAME: Radarr
-      RADARR__PORT: "{{ .Values.application.port }}"
-      RADARR__APPLICATION_URL: "https://radarr.{{ .Values.cluster.top_level_domain }}"
-      RADARR__LOG_LEVEL: info
+      RADARR__APP__INSTANCENAME: Radarr
+      RADARR__APP__THEME: dark
+      RADARR__AUTH__METHOD: External
+      RADARR__AUTH__REQUIRED: DisabledForLocalAddresses
+      RADARR__LOG__DBENABLED: "False"
+      RADARR__LOG__LEVEL: info
+      RADARR__SERVER__PORT: *port
+      RADARR__UPDATE__BRANCH: develop
+      RADARR__APPLICATION_URL: "https://radarr.apps.{{ *cluster }}.{{ *tld }}"
+    probes:
+      liveness: &probes
+        enabled: true
+        custom: true
+        spec:
+          httpGet:
+            path: /ping
+            port: *port
+          initialDelaySeconds: 0
+          periodSeconds: 10
+          timeoutSeconds: 1
+          failureThreshold: 3
+      readiness: *probes
