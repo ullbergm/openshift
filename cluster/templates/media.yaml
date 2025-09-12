@@ -45,6 +45,8 @@ spec:
         automated:
           prune: true
           selfHeal: true
+        syncOptions:
+          - CreateNamespace=true
       source:
         repoURL: {{ .Values.spec.source.repoURL }}
         path: charts/{{ "{{" }} default "media" .group {{ "}}" }}/{{ "{{" }} .name {{ "}}" }}
