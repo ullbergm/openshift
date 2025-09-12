@@ -12,4 +12,12 @@ data:
         url: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
         interval: 60s
         conditions:
-          - "[STATUS] == {{ .Values.gatus.responseCode | default 200 }}"
+{{- if .Values.gatus }}
+  {{- if .Values.gatus.responseCode }}
+          - "[STATUS] == {{ .Values.gatus.responseCode }}"
+  {{- else }}
+          - "[STATUS] == 200"
+  {{- end }}
+{{- else }}
+          - "[STATUS] == 200"
+{{- end }}
