@@ -77,13 +77,15 @@ spec:
           - name: TZ
             value: {{ .Values.cluster.timezone }}
           - name: PLEX_URL
-            value: http://{{ .Release.Name }}.{{ .Release.Namespace }}:32400
+            value: https://{{ .Release.Name }}.{{ .Release.Namespace }}:32400
           - name: PLEX_PATH
             value: /config/Library/Application Support/Plex Media Server
           - name: MODE
             value: report
           - name: PHOTO_TRANSCODER
             value: 'true'
+          #- name: SCHEDULE
+          #  value: '06:30'
           envFrom:
             - secretRef:
                 name: {{ .Release.Name }}
