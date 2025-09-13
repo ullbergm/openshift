@@ -2,7 +2,7 @@ apiVersion: operator.external-secrets.io/v1alpha1
 kind: OperatorConfig
 metadata:
   name: external-secrets
-  namespace: external-secrets
+  namespace: openshift-operators
 spec:
   certController:
     create: true
