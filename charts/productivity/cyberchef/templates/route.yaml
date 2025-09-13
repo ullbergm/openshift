@@ -11,7 +11,11 @@ spec:
   path: /
   to:
     kind: Service
+{{- if .Values.oauthProxy }}
+    name: proxy
+{{- else }}
     name: {{ .Release.Name }}
+{{- end }}
     weight: 100
   port:
     targetPort: http
