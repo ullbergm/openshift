@@ -56,8 +56,8 @@ spec:
             limits:
               memory: 128Mi
           volumeMounts:
-          - mountPath: /config/watcher
-            name: watcher
+          - mountPath: /config
+            name: config
           - mountPath: /app/config-file
             name: config-files
       containers:
@@ -72,14 +72,14 @@ spec:
           image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
           imagePullPolicy: IfNotPresent
           volumeMounts:
-          - mountPath: /config/watcher
-            name: watcher
+          - mountPath: /config
+            name: config
           - mountPath: /app/config-file
             name: config-files
       volumes:
-        - name: watcher
+        - name: config
           persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-watcher
+            claimName: {{ .Release.Name }}-config
         - name: config-files
           configMap:
             name: {{ .Release.Name }}
