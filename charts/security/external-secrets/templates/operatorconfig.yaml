@@ -70,8 +70,8 @@ spec:
     create: false
   replicaCount: 1
   resources: {}
-  scopedNamespace: 'openshift-operators'
-  scopedRBAC: true
+  scopedNamespace: ''
+  scopedRBAC: false
   securityContext: {}
   serviceAccount:
     annotations:
@@ -83,7 +83,7 @@ spec:
     affinity: {}
     certCheckInterval: 5m
     certDir: /tmp/certs
-    create: true
+    create: false
     deploymentAnnotations:
       argocd.argoproj.io/compare-options: IgnoreExtraneous
     extraArgs: {}
