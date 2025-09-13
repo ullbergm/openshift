@@ -41,7 +41,7 @@ spec:
       containers:
 {{- if .Values.application.oauthProxy }}
         - name: oauth-proxy
-          image: openshift/oauth-proxy:latest
+          image: registry.redhat.io/openshift4/ose-oauth-proxy:latest
           imagePullPolicy: IfNotPresent
           ports:
           - containerPort: 8443
