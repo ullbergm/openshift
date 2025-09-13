@@ -19,7 +19,6 @@ data:
     if [ -f "/config/temp/Posterizarr.Running" ]; then
         rm /config/temp/Posterizarr.Running
     fi
-    mkdir /config/watcher
   config.json.template: |
     {
       "ApiPart": {
