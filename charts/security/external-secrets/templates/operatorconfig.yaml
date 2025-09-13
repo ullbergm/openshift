@@ -67,7 +67,7 @@ spec:
     service:
       port: 8080
   rbac:
-    create: true
+    create: false
   replicaCount: 1
   resources: {}
   scopedNamespace: 'openshift-operators'
