@@ -25,7 +25,7 @@ spec:
       service:
         port: 8080
     rbac:
-      create: true
+      create: false
     requeueInterval: 5m
     resources: {}
     securityContext: {}
