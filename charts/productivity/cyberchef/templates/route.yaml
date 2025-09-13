@@ -11,7 +11,7 @@ spec:
   path: /
   to:
     kind: Service
-{{- if .Values.oauthProxy }}
+{{- if .Values.application.oauthProxy }}
     name: proxy
 {{- else }}
     name: {{ .Release.Name }}

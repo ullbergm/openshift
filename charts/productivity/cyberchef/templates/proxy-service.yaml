@@ -1,4 +1,4 @@
-{{- if .Values.oauthProxy }}
+{{- if .Values.application.oauthProxy }}
 ---
 apiVersion: v1
 kind: Service

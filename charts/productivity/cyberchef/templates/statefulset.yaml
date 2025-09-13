@@ -39,7 +39,7 @@ spec:
         - 100
         - 65535
       containers:
-{{- if .Values.oauthProxy }}
+{{- if .Values.application.oauthProxy }}
         - name: oauth-proxy
           image: openshift/oauth-proxy:latest
           imagePullPolicy: IfNotPresent
