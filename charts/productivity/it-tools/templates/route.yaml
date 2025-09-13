@@ -11,12 +11,20 @@ spec:
   path: /
   to:
     kind: Service
+{{- if .Values.application.oauthProxy }}
+    name: proxy
+{{- else }}
     name: {{ .Release.Name }}
+{{- end }}
     weight: 100
   port:
     targetPort: http
   tls:
+{{- if .Values.application.oauthProxy }}
+    termination: reencrypt
+{{- else }}
     termination: edge
+{{- end }}
     insecureEdgeTerminationPolicy: Redirect
   wildcardPolicy: None
 {{- else }}

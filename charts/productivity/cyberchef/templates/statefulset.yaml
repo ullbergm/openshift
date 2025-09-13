@@ -49,6 +49,7 @@ spec:
           args:
           - --https-address=:8443
           - --provider=openshift
+          - --cookie-domain=apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
           - --openshift-service-account={{ .Release.Name }}
           - --upstream=http://{{ .Release.Name }}:{{ .Values.application.port }}
           - --tls-cert=/etc/tls/private/tls.crt

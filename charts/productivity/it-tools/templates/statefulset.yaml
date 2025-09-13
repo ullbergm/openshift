@@ -39,6 +39,26 @@ spec:
         - 100
         - 65535
       containers:
+{{- if .Values.application.oauthProxy }}
+        - name: oauth-proxy
+          image: registry.redhat.io/openshift4/ose-oauth-proxy:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+          - containerPort: 8443
+            name: public
+          args:
+          - --https-address=:8443
+          - --provider=openshift
+          - --cookie-domain=apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+          - --openshift-service-account={{ .Release.Name }}
+          - --upstream=http://{{ .Release.Name }}:{{ .Values.application.port }}
+          - --tls-cert=/etc/tls/private/tls.crt
+          - --tls-key=/etc/tls/private/tls.key
+          - --cookie-secret=SECRET
+          volumeMounts:
+          - mountPath: /etc/tls/private
+            name: proxy-tls
+{{- end }}
         - name: main
           env:
           - name: TZ
@@ -49,3 +69,9 @@ spec:
           {{- end }}
           image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
           imagePullPolicy: IfNotPresent
+{{- if .Values.application.oauthProxy }}
+      volumes:
+      - name: proxy-tls
+        secret:
+          secretName: proxy-tls
+{{- end }}
