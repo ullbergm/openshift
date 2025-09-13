@@ -69,7 +69,7 @@ spec:
     - openshift-gitops
     - openshift-gitops-operator
     - openshift-host-network
-    - openshift-image-registryobject-lease-operator-system
+    - openshift-image-registry
     - openshift-infra
     - openshift-ingress
     - openshift-ingress-canary
