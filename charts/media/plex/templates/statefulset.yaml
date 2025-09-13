@@ -85,7 +85,7 @@ spec:
           - name: PHOTO_TRANSCODER
             value: 'true'
           - name: SCHEDULE
-            value: '06:30'
+            value: '06:30|daily'
           envFrom:
             - secretRef:
                 name: {{ .Release.Name }}
