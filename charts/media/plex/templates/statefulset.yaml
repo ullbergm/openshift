@@ -81,7 +81,7 @@ spec:
           - name: PLEX_PATH
             value: /config/Library/Application Support/Plex Media Server
           - name: MODE
-            value: report
+            value: remove
           - name: PHOTO_TRANSCODER
             value: 'true'
           #- name: SCHEDULE
