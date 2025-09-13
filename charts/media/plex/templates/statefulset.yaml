@@ -43,6 +43,8 @@ spec:
           env:
           - name: TZ
             value: {{ .Values.cluster.timezone }}
+          - name: PLEX_ADVERTISE_URL
+            value: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}:443
           {{- range $key, $value := .Values.pods.main.env }}
           - name: {{ $key }}
             value: "{{ $value }}"
@@ -52,10 +54,16 @@ spec:
           volumeMounts:
           - mountPath: /config
             name: config
+          - mountPath: /config/Library/Application Support/Plex Media Server/Cache
+            name: cache
+          - mountPath: /config/Library/Application Support/Plex Media Server/Logs
+            name: logs
           - mountPath: /data
             name: data
           - mountPath: /transcode
             name: transcode
+          - mountPath: /tmp
+            name: tmp
           resources:
             requests:
               gpu.intel.com/i915: 1
@@ -65,8 +73,15 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-config
+        - name: cache
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-cache
         - name: data
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-data-volume
+        - name: logs
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}
         - name: transcode
           emptyDir: {}
