@@ -39,11 +39,9 @@ spec:
         - 100
         - 65535
       initContainers:
-        init-config:
-          image:
-            repository: {{ .Values.pods.init.image.repository }}
-            tag: {{ .Values.pods.init.image.tag }}
-            pullPolicy: IfNotPresent
+        - name: init-config
+          image: {{ .Values.pods.init.image.repository }}:{{ .Values.pods.init.image.tag }}
+          imagePullPolicy: IfNotPresent
           command:
             - "/bin/sh"
           args:
