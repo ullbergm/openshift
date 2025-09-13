@@ -18,20 +18,46 @@ The deployment model follows a two-tier architecture:
 │   ├── Chart.yaml
 │   ├── values.yaml            # Cluster-wide configuration
 │   └── templates/
-│       ├── media.yaml         # Media applications ApplicationSet
+│       ├── base.yaml          # Core cluster services ApplicationSet
 │       ├── ai.yaml            # AI/ML applications ApplicationSet
-│       └── utilities.yaml     # Utilities ApplicationSet
+│       ├── infrastructure.yaml # Infrastructure applications ApplicationSet
+│       ├── media.yaml         # Media applications ApplicationSet
+│       ├── productivity.yaml  # Productivity applications ApplicationSet
+│       └── security.yaml     # Security applications ApplicationSet
 └── charts/                    # Individual application Helm charts
     ├── ai/
     │   ├── litellm/           # LiteLLM proxy for LLM management
     │   ├── ollama/            # Local LLM runtime
     │   └── open-webui/        # Web UI for LLMs
+    ├── infrastructure/
+    │   ├── gatus/             # Service monitoring and health checks
+    │   └── goldilocks/        # VPA recommendations dashboard
     ├── media/
     │   ├── bazarr/            # Subtitle management
+    │   ├── flaresolverr/      # Cloudflare proxy solver
     │   ├── gaps/              # Media gap detection
-    │   └── kapowarr/          # Comic book management
-    └── utilities/
-        └── excalidraw/        # Whiteboard tool
+    │   ├── huntarr/           # Wanted movie management
+    │   ├── kapowarr/          # Comic book management
+    │   ├── kavita/            # Digital library and comic reader
+    │   ├── lidarr/            # Music collection management
+    │   ├── metube/            # YouTube downloader web UI
+    │   ├── overseerr/         # Media request management
+    │   ├── pinchflat/         # YouTube channel archiver
+    │   ├── plex/              # Media server
+    │   ├── prowlarr/          # Indexer management
+    │   ├── radarr/            # Movie collection management
+    │   ├── readarr/           # Book and audiobook management
+    │   ├── sabnzbd/           # Usenet downloader
+    │   ├── sonarr/            # TV series management
+    │   └── tautulli/          # Plex analytics and monitoring
+    ├── productivity/
+    │   ├── bookmarks/         # Bookmark management
+    │   ├── cyberchef/         # Data manipulation toolkit
+    │   ├── excalidraw/        # Whiteboard and diagramming
+    │   ├── it-tools/          # Collection of IT utilities
+    │   └── startpunkt/        # Homepage and dashboard
+    └── security/
+        └── external-secrets-operator/ # External secrets management
 ```
 
 ## How It Works
@@ -47,11 +73,14 @@ The cluster bootstrap process starts by deploying the main cluster chart, which 
 
 ### 2. Template-Based Application Management
 
-Each functional domain (AI/ML, Media, etc.) is managed by an ApplicationSet template in `cluster/templates/`:
+Each functional domain is managed by an ApplicationSet template in `cluster/templates/`:
 
-- **media.yaml**: ApplicationSet that manages media applications
+- **base.yaml**: ApplicationSet that manages core cluster services
 - **ai.yaml**: ApplicationSet that manages AI/ML applications
-- **utilities.yaml**: ApplicationSet that manages utility applications
+- **infrastructure.yaml**: ApplicationSet that manages infrastructure applications
+- **media.yaml**: ApplicationSet that manages media applications
+- **productivity.yaml**: ApplicationSet that manages productivity applications
+- **security.yaml**: ApplicationSet that manages security applications
 
 Each ApplicationSet template defines which applications to deploy from the corresponding `/charts` subdirectory.
 
@@ -66,20 +95,48 @@ Each application in the `/charts` directory is a complete Helm chart with:
 
 ## Available Applications
 
-### AI/ML Role
+### AI/ML Applications
 
 - **LiteLLM**: Unified API proxy for managing multiple LLM providers
 - **Ollama**: Local large language model runtime
 - **Open WebUI**: User-friendly web interface for interacting with LLMs
 
-### Media Role
+### Infrastructure Applications
 
-- **Bazarr**: Subtitle management for media files
-- **Gaps**: Tool for finding missing movies in series
+- **Gatus**: Service monitoring and health checks with status page
+- **Goldilocks**: VPA (Vertical Pod Autoscaler) recommendations dashboard
 
-### Utilities Role
+### Media Applications
 
-- **Excalidraw**: Whiteboard tool
+- **Bazarr**: Subtitle management for movies and TV shows
+- **FlareSolverr**: Cloudflare proxy solver for web scraping
+- **Gaps**: Tool for finding missing movies in collections
+- **Huntarr**: Wanted movie management and automation
+- **Kapowarr**: Comic book collection management
+- **Kavita**: Digital library server and comic/book reader
+- **Lidarr**: Music collection management and automation
+- **Metube**: Web-based YouTube downloader
+- **Overseerr**: Media request management for Plex users
+- **Pinchflat**: YouTube channel archiver and downloader
+- **Plex**: Media server for streaming movies, TV shows, and music
+- **Prowlarr**: Indexer management for \*arr applications
+- **Radarr**: Movie collection management and automation
+- **Readarr**: Book and audiobook collection management
+- **SABnzbd**: Usenet newsreader and downloader
+- **Sonarr**: TV series collection management and automation
+- **Tautulli**: Plex media server analytics and monitoring
+
+### Productivity Applications
+
+- **Bookmarks**: Web bookmark management service
+- **CyberChef**: Data manipulation and analysis toolkit
+- **Excalidraw**: Collaborative whiteboard and diagramming tool
+- **IT-Tools**: Collection of handy IT utilities and converters
+- **Startpunkt**: Customizable homepage and application dashboard
+
+### Security Applications
+
+- **External Secrets Operator**: Kubernetes operator for managing external secrets
 
 ## Configuration
 
@@ -151,6 +208,8 @@ spec:
 1. Create a new ApplicationSet template in `/cluster/templates/` (e.g., `monitoring.yaml`)
 2. Define the list of applications for that functional group in the template
 3. Create the corresponding subdirectory in `/charts/` (e.g., `/charts/monitoring/`)
+
+**Note**: The `infrastructure` and `security` ApplicationSet templates have been added to manage their respective application groups.
 
 ## Scripts and Tools
 
