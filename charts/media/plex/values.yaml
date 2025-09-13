@@ -31,4 +31,8 @@ pods:
       repository: lscr.io/linuxserver/plex
       # renovate: datasource=docker depName=lscr.io/linuxserver/plex versioning=semver
       tag: 1.42.1
-      pullPolicy: IfNotPresent
+  imagemaid:
+    image:
+      repository: docker.io/kometateam/imagemaid
+      # renovate: datasource=docker depName=docker.io/kometateam/imagemaid versioning=semver
+      tag: v1.1.1

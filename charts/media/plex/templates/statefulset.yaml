@@ -69,6 +69,29 @@ spec:
               gpu.intel.com/i915: 1
             limits:
               gpu.intel.com/i915: 1
+
+        - name: imagemaid
+          image: {{ .Values.pods.imagemaid.image.repository }}:{{ .Values.pods.imagemaid.image.tag }}
+          imagePullPolicy: IfNotPresent
+          env:
+          - name: TZ
+            value: {{ .Values.cluster.timezone }}
+          - name: PLEX_URL
+            value: http://{{ .Release.Name }}.{{ .Release.Namespace }}:32400
+          - name: PLEX_PATH
+            value: /config/Library/Application Support/Plex Media Server
+          - name: MODE
+            value: report
+          - name: PHOTO_TRANSCODER
+            value: 'true'
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}
+          volumeMounts:
+          - mountPath: /config
+            name: config
+          - mountPath: /config/Library/Application Support/Plex Media Server/Cache
+            name: cache
       volumes:
         - name: config
           persistentVolumeClaim:
