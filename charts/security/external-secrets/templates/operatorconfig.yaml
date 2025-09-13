@@ -3,6 +3,8 @@ kind: OperatorConfig
 metadata:
   name: external-secrets
   namespace: openshift-operators
+  annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
   certController:
     create: true
