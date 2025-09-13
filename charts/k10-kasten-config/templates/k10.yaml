@@ -69,7 +69,7 @@ spec:
     - openshift-gitops
     - openshift-gitops-operator
     - openshift-host-network
-    - openshift-image-registry
+    - openshift-image-registryobject-lease-operator-system
     - openshift-infra
     - openshift-ingress
     - openshift-ingress-canary
@@ -112,3 +112,8 @@ spec:
     - openshift-virtualization-os-images
     - openshift-vsphere-infra
     - synology-csi
+    - bookmarks
+    - object-lease-operator-system
+    - openshift-vertical-pod-autoscaler
+    - openwebui
+    - startpunkt
