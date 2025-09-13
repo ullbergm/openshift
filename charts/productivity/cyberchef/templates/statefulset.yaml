@@ -68,3 +68,9 @@ spec:
           {{- end }}
           image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
           imagePullPolicy: IfNotPresent
+{{- if .Values.application.oauthProxy }}
+      volumes:
+      - name: proxy-tls
+        secret:
+          secretName: proxy-tls
+{{- end }}
