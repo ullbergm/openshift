@@ -8,8 +8,7 @@ metadata:
     app.kubernetes.io/instance: {{ .Release.Name }}
 spec:
   accessModes:
-    - ReadWriteMany
-  volumeMode: Block
+    - ReadWriteOnce
   resources:
     requests:
       storage: 15Gi
