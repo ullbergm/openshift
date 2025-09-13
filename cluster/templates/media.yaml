@@ -21,6 +21,7 @@ spec:
         - name: overseerr
         - name: pinchflat
         - name: plex
+        - name: posterizarr
         - name: prowlarr
         - name: radarr
         - name: readarr

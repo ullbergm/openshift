@@ -1,0 +1,24 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+pods:
+  init:
+    image:
+      repository: docker.io/mikefarah/yq
+      # renovate: datasource=docker depName=docker.io/mikefarah/yq versioning=semver
+      tag: 4.47.2
+  main:
+    image:
+      repository: ghcr.io/dapperdivers/posterizarr
+      # renovate: datasource=docker depName=ghcr.io/dapperdivers/posterizarr versioning=semver
+      tag: v1.9.77
