@@ -71,7 +71,7 @@ spec:
   replicaCount: 1
   resources: {}
   scopedNamespace: ''
-  scopedRBAC: false
+  scopedRBAC: true
   securityContext: {}
   serviceAccount:
     annotations:
