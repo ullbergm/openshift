@@ -1,0 +1,20 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+externalSecrets:
+  secret: infiscal-auth-secret
+  infisical:
+    projectSlug: openshift
+    environmentSlug: prod
+    auth:
+      clientId: infiscal-auth-secret
