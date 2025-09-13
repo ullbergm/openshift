@@ -77,7 +77,7 @@ spec:
           - name: TZ
             value: {{ .Values.cluster.timezone }}
           - name: PLEX_URL
-            value: https://{{ .Release.Name }}.{{ .Release.Namespace }}:32400
+            value: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
           - name: PLEX_PATH
             value: /config/Library/Application Support/Plex Media Server
           - name: MODE
