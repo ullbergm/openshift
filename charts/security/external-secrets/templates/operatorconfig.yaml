@@ -70,7 +70,7 @@ spec:
     create: true
   replicaCount: 1
   resources: {}
-  scopedNamespace: ''
+  scopedNamespace: 'openshift-operators'
   scopedRBAC: true
   securityContext: {}
   serviceAccount:
