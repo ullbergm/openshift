@@ -26,6 +26,7 @@ spec:
         app.kubernetes.io/name: {{ .Release.Name }}
     spec:
       enableServiceLinks: false
+      restartPolicy: Never
       serviceAccountName: {{ .Release.Name }}
       automountServiceAccountToken: true
       securityContext:
