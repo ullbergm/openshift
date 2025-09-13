@@ -9,8 +9,9 @@ The External Secrets Operator allows you to use external secret management syste
 ## Prerequisites
 
 1. **External Secrets Operator** must be installed in the cluster
-2. **Infisical project** with Universal Auth configured
-3. **Universal Auth credentials** (Client ID and Client Secret) from Infisical
+2. **OperatorConfig** object must be created
+3. **Infisical project** with Universal Auth configured
+4. **Universal Auth credentials** (Client ID and Client Secret) from Infisical
 
 ## Bootstrap Process
 
@@ -57,7 +58,7 @@ spec:
   refreshInterval: 5m
   secretStoreRef:
     kind: ClusterSecretStore
-    name: infisical # References the ClusterSecretStore created by this chart
+    name: external-secrets # References the ClusterSecretStore created by this chart
   target:
     name: radarr-secret
     creationPolicy: Owner
@@ -79,7 +80,7 @@ metadata:
 spec:
   secretStoreRef:
     kind: ClusterSecretStore
-    name: infisical
+    name: external-secrets
   target:
     name: radarr-secret
     template:
