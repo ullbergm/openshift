@@ -1,0 +1,58 @@
+apiVersion: operator.external-secrets.io/v1alpha1
+kind: OperatorConfig
+metadata:
+  name: external-secrets
+  namespace: external-secrets
+spec:
+  certController:
+    create: true
+    image:
+      pullPolicy: IfNotPresent
+      repository: ghcr.io/external-secrets/external-secrets
+    prometheus:
+      enabled: true
+      service:
+        port: 8080
+    rbac:
+      create: true
+    requeueInterval: 5m
+    serviceAccount:
+      create: true
+  concurrent: 1
+  crds:
+    createClusterExternalSecret: true
+    createClusterSecretStore: true
+  createOperator: true
+  image:
+    pullPolicy: IfNotPresent
+    repository: ghcr.io/external-secrets/external-secrets
+  installCRDs: false
+  leaderElect: false
+  processClusterExternalSecret: true
+  processClusterStore: true
+  prometheus:
+    enabled: true
+    service:
+      port: 8080
+  rbac:
+    create: true
+  replicaCount: 1
+  scopedRBAC: false
+  serviceAccount:
+    create: true
+  webhook:
+    certCheckInterval: 5m
+    certDir: /tmp/certs
+    create: true
+    image:
+      pullPolicy: IfNotPresent
+      repository: ghcr.io/external-secrets/external-secrets
+    prometheus:
+      enabled: true
+      service:
+        port: 8080
+    rbac:
+      create: true
+    replicaCount: 1
+    serviceAccount:
+      create: true
