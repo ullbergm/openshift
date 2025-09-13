@@ -44,7 +44,7 @@ spec:
           - name: TZ
             value: {{ .Values.cluster.timezone }}
           - name: PLEX_ADVERTISE_URL
-            value: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}:443
+            value: http://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}:443
           {{- range $key, $value := .Values.pods.main.env }}
           - name: {{ $key }}
             value: "{{ $value }}"
@@ -77,7 +77,7 @@ spec:
           - name: TZ
             value: {{ .Values.cluster.timezone }}
           - name: PLEX_URL
-            value: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+            value: http://{{ .Release.Name }}.{{ .Release.Namespace }}:{{ .Values.application.port }}
           - name: PLEX_PATH
             value: /config/Library/Application Support/Plex Media Server
           - name: MODE
