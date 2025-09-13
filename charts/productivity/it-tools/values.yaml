@@ -20,7 +20,6 @@ application:
   description: "Useful tools for IT engineers"
   port: 80
   location: 0
-  oauthProxy: true
 
 pods:
   main:

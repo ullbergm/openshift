@@ -20,7 +20,6 @@ application:
   description: "The cyber Swiss Army knife"
   port: 80
   location: 0
-  oauthProxy: true
 
 pods:
   main:
