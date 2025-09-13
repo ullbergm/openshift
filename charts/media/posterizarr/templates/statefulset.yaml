@@ -76,6 +76,8 @@ spec:
             name: config
           - mountPath: /app/config-file
             name: config-files
+          - mountPath: /data
+            name: data
       volumes:
         - name: config
           persistentVolumeClaim:
@@ -84,3 +86,6 @@ spec:
           configMap:
             name: {{ .Release.Name }}
             defaultMode: 0755
+        - name: data
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-data-volume
