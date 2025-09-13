@@ -51,7 +51,7 @@ spec:
           {{- end }}
           envFrom:
             - secretRef:
-                name: radarr
+                name: {{ .Release.Name }}
           image: "{{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}"
           imagePullPolicy: IfNotPresent
           volumeMounts:
