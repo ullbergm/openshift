@@ -12,5 +12,7 @@ spec:
     port: 443
     targetPort: 8443
   selector:
-    app: proxy
+    app.kubernetes.io/controller: main
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}
 {{- end }}
