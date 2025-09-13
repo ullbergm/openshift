@@ -20,7 +20,11 @@ spec:
   port:
     targetPort: http
   tls:
+{{- if .Values.application.oauthProxy }}
+    termination: reencrypt
+{{- else }}
     termination: edge
+{{- end }}
     insecureEdgeTerminationPolicy: Redirect
   wildcardPolicy: None
 {{- else }}
