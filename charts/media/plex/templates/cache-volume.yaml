@@ -9,7 +9,7 @@ metadata:
     kasten/skip: "true"
 spec:
   accessModes:
-    - ReadWriteOnce
+    - ReadWriteMany
   resources:
     requests:
       storage: 15Gi
