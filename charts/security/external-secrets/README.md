@@ -72,7 +72,7 @@ To create a secret to be used for environment variables:
 ```yaml
 ---
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_v1beta1.json
-apiVersion: external-secrets.io/v1
+apiVersion: external-secrets.io/v1beta1
 kind: ExternalSecret
 metadata:
   name: radarr
