@@ -23,6 +23,14 @@ spec:
         spec:
           restartPolicy: OnFailure
           serviceAccountName: {{ .Release.Name }}
+          affinity:
+            podAffinity:
+              requiredDuringSchedulingIgnoredDuringExecution:
+              - labelSelector:
+                  matchLabels:
+                    app.kubernetes.io/name: {{ .Release.Name }}
+                    app.kubernetes.io/controller: main
+                topologyKey: kubernetes.io/hostname
           securityContext:
             fsGroup: 568
             fsGroupChangePolicy: OnRootMismatch
