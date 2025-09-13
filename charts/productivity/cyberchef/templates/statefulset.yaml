@@ -49,7 +49,7 @@ spec:
           args:
           - --https-address=:8443
           - --provider=openshift
-          - --openshift-service-account=proxy
+          - --openshift-service-account={{ .Release.Name }}
           - --upstream=http://{{ .Release.Name }}:{{ .Values.application.port }}
           - --tls-cert=/etc/tls/private/tls.crt
           - --tls-key=/etc/tls/private/tls.key
