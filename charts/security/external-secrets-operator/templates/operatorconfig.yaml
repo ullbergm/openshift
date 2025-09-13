@@ -1,0 +1,114 @@
+apiVersion: operator.external-secrets.io/v1alpha1
+kind: OperatorConfig
+metadata:
+  name: external-secrets
+  namespace: openshift-gitops
+spec:
+  certController:
+    nodeSelector: {}
+    imagePullSecrets: []
+    requeueInterval: 5m
+    podLabels: {}
+    resources: {}
+    fullnameOverride: ''
+    affinity: {}
+    prometheus:
+      enabled: false
+      service:
+        port: 8080
+    podSecurityContext: {}
+    extraArgs: {}
+    securityContext: {}
+    rbac:
+      create: true
+    nameOverride: ''
+    serviceAccount:
+      annotations: {}
+      create: true
+      name: ''
+    image:
+      pullPolicy: IfNotPresent
+      repository: ghcr.io/external-secrets/external-secrets
+      tag: ''
+    create: true
+    tolerations: []
+    extraEnv: []
+    priorityClassName: ''
+    deploymentAnnotations: {}
+    podAnnotations: {}
+  createOperator: true
+  nodeSelector: {}
+  scopedRBAC: false
+  imagePullSecrets: []
+  podLabels: {}
+  resources: {}
+  leaderElect: false
+  fullnameOverride: ''
+  processClusterExternalSecret: true
+  affinity: {}
+  prometheus:
+    enabled: false
+    service:
+      port: 8080
+  podSecurityContext: {}
+  scopedNamespace: ''
+  extraArgs: {}
+  securityContext: {}
+  rbac:
+    create: true
+  processClusterStore: true
+  concurrent: 1
+  webhook:
+    nodeSelector: {}
+    imagePullSecrets: []
+    podLabels: {}
+    resources: {}
+    fullnameOverride: ''
+    affinity: {}
+    certCheckInterval: 5m
+    certDir: /tmp/certs
+    prometheus:
+      enabled: false
+      service:
+        port: 8080
+    podSecurityContext: {}
+    extraArgs: {}
+    securityContext: {}
+    rbac:
+      create: true
+    replicaCount: 1
+    nameOverride: ''
+    serviceAccount:
+      annotations: {}
+      create: true
+      name: ''
+    image:
+      pullPolicy: IfNotPresent
+      repository: ghcr.io/external-secrets/external-secrets
+      tag: ''
+    create: true
+    tolerations: []
+    extraEnv: []
+    priorityClassName: ''
+    deploymentAnnotations: {}
+    podAnnotations: {}
+  replicaCount: 1
+  nameOverride: ''
+  serviceAccount:
+    annotations: {}
+    create: true
+    name: ''
+  installCRDs: false
+  image:
+    pullPolicy: IfNotPresent
+    repository: ghcr.io/external-secrets/external-secrets
+    tag: ''
+  controllerClass: ''
+  tolerations: []
+  extraEnv: []
+  crds:
+    createClusterExternalSecret: true
+    createClusterSecretStore: true
+  priorityClassName: ''
+  deploymentAnnotations: {}
+  podAnnotations: {}
