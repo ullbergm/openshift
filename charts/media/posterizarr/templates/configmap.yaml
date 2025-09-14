@@ -30,9 +30,11 @@ data:
         "EmbyAPIKey": "EMBYAPIKEY",
         "FavProvider": "tmdb",
         "PreferredLanguageOrder": [
+          "xx",
           "en"
         ],
         "PreferredSeasonLanguageOrder": [
+          "xx",
           "en"
         ],
         "tmdb_vote_sorting": "vote_average",
@@ -42,6 +44,7 @@ data:
         "BgTcMinWidth": "3840",
         "BgTcMinHeight": "2160",
         "PreferredBackgroundLanguageOrder": [
+          "xx",
           "en"
         ]
       },
@@ -110,7 +113,8 @@ data:
         "RTLFont": "Colus-Regular.ttf",
         "NewLineOnSpecificSymbols": "false",
         "NewLineSymbols": [
-          " - "
+          " - ",
+          ": "
         ],
         "PlexUpload": "true",
         "BackupPath": "/data/plex/backup",
