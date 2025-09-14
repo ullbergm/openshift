@@ -16,6 +16,20 @@ data:
     mkdir -p /config
     chmod 660 /tmp/config.json
     mv /tmp/config.json /config/config.json
+
+    # Download fonts and images only if they don't already exist
+    if [ ! -f "/config/Colus-Regular.ttf" ]; then
+        wget -O /config/Colus-Regular.ttf https://raw.githubusercontent.com/Kometa-Team/Community-Configs/refs/heads/master/bullmoose20/posterizarr/Colus-Regular.ttf
+    fi
+    if [ ! -f "/config/Comfortaa-Medium.ttf" ]; then
+        wget -O /config/Comfortaa-Medium.ttf https://raw.githubusercontent.com/Kometa-Team/Community-Configs/refs/heads/master/bullmoose20/posterizarr/Comfortaa-Medium.ttf
+    fi
+    if [ ! -f "/config/bottom-up-fade-background.png" ]; then
+        wget -O /config/bottom-up-fade-background.png https://raw.githubusercontent.com/Kometa-Team/Community-Configs/refs/heads/master/bullmoose20/posterizarr/bottom-up-fade-background.png
+    fi
+    if [ ! -f "/config/bottom-up-fade.png" ]; then
+        wget -O /config/bottom-up-fade.png https://raw.githubusercontent.com/Kometa-Team/Community-Configs/refs/heads/master/bullmoose20/posterizarr/bottom-up-fade.png
+    fi
     if [ -f "/config/temp/Posterizarr.Running" ]; then
         rm /config/temp/Posterizarr.Running
     fi
