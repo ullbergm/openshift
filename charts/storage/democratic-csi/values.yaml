@@ -12,6 +12,14 @@ cluster:
       storageClassName: synology-iscsi
 
 democratic-csi:
+  driver:
+    existingConfigSecret: {{ .Release.Name }}-config
+    config:
+      driver: synology-iscsi
+
+  csiDriver:
+    name: "org.democratic-csi.iscsi-synology"
+
   node:
     rbac:
       openshift:
@@ -23,8 +31,6 @@ democratic-csi:
       openshift:
         privileged: true
 
-  csiDriver:
-    name: "org.democratic-csi.iscsi-synology"
 
   storageClasses:
     - name: synology-iscsi
@@ -55,8 +61,3 @@ democratic-csi:
 
     externalSnapshotter:
       enabled: true
-
-  driver:
-    existingConfigSecret: {{ .Release.Name }}-config
-    config:
-      driver: synology-iscsi
