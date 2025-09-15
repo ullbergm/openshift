@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: ApplicationSet
 metadata:
-  name: {{ .Release.Name }}-base
+  name: {{ .Release.Name }}-storage
 spec:
   ignoreApplicationDifferences:
     - jsonPointers:
@@ -10,17 +10,11 @@ spec:
   generators:
     - list:
         elements:
-        - name: custom-error-pages
-          group: infrastructure
-        - name: external-secrets-operator
-          group: security
-        - name: goldilocks
-          group: infrastructure
-        - name: gatus
-          group: infrastructure
+        - name: democratic-csi
+          group: storage
   template:
     metadata:
-      name: '{{ "{{" }} .name {{ "}}" }}'
+      name: 'cluster-democratic-csi'
       namespace: "openshift-gitops"
     spec:
       ignoreDifferences:
@@ -31,7 +25,7 @@ spec:
       project: default
       destination:
         server: {{ .Values.spec.destination.server }}
-        namespace: '{{ "{{" }} .name {{ "}}" }}'
+        namespace: 'democratic-csi'
       syncPolicy:
         automated:
           prune: true
