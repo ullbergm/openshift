@@ -1,4 +1,4 @@
-{{- if eq (index .Values "custom-error-pages" "template") "connection" }}
+{{- if eq (index .Values "custom-error-pages" "template") "win98" }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -19,8 +19,8 @@ data:
     <head>
       <meta charset="utf-8">
       <meta name="robots" content="nofollow,noarchive,noindex">
-      <title>404 | Not Found</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>404: Not Found</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
       <!--  -->
       <meta name="title" content="404: Not Found">
       <meta name="description" content="The server can not find the requested page">
@@ -30,406 +30,499 @@ data:
       <meta property="twitter:description" content="The server can not find the requested page">
       <style>
         :root {
-          --color-bg-primary: #fff;
-          --color-text-primary: #000;
-          --color-text-secondary: #575958;
-          --ui-card-color-bg: #f2f2f2;
-          --color-text-ok: #137333;
-          --color-bg-ok: #e6f4ea;
-          --color-text-error: #c5221f;
-          --color-bg-error: #fce8e6;
-          --color-text-warning: #b05a00;
-          --color-bg-warning: #fef7e0;
-          --icon-size: 48px;
+          --color-desktop: #008080;
         }
 
         @media (prefers-color-scheme: dark) {
           :root {
-            --color-bg-primary: #111;
-            --color-text-primary: rgba(255, 255, 255, 0.86);
-            --color-text-secondary: rgba(255, 255, 255, 0.4);
-            --ui-card-color-bg: rgba(40, 40, 40, 0.73);
-            --color-bg-ok: #07220f;
-            --color-bg-error: #270501;
-            --color-bg-warning: #392605;
+            --color-desktop: #1a1a1a;
           }
         }
 
-        /** Idea author: https://github.com/186526/CloudflareCustomErrorPage */
         html, body {
           margin: 0;
           padding: 0;
           min-height: 100%;
-          color: var(--color-text-primary);
-          background-color: var(--color-bg-primary);
+          height: 100%;
+          width: 100%;
           font-family: sans-serif;
           font-size: 16px;
-          word-break: keep-all;
         }
 
         @media screen and (min-width: 2000px) {
           html, body {
-            font-size: 20px;
+            font-size: 18px;
           }
         }
 
         body {
-          margin: 2em 2em;
-        }
-
-        header {
-          margin-left: 1em;
-        }
-
-        header .error-code {
-          font-size: 3.2em;
-          font-family: monospace;
-          font-weight: 400;
-          margin: 0 0 0 10px;
-        }
-
-        header .error-description {
-          font-family: sans-serif;
-          font-size: 1.4em;
-          color: var(--color-text-secondary);
-          margin: 0 0 0 10px;
-        }
-
-        code {
-          font-family: monospace;
-        }
-
-        .status {
-          margin-top: 2.5em;
           display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
           justify-content: center;
           align-items: center;
         }
 
-        .card {
-          background-color: var(--ui-card-color-bg);
-          padding: 2em;
-          margin: 1em 1em;
-          min-height: 3em;
-          border-radius: 9px;
-          flex-grow: 1;
+        main {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          height: 100%;
         }
 
-        .arrows svg {
-          fill: var(--color-text-secondary);
+        .desktop {
+          background-color: var(--color-desktop);
+          flex: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: max-content;
+          grid-template-rows: repeat(auto-fill, 100px);
+          box-sizing: border-box;
+          overflow: hidden;
+          position: relative;
         }
 
-        .icon svg {
-          width: var(--icon-size);
-          height: auto;
-          fill: var(--color-text-primary);
+        .desktop .desktop-icon {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          color: #fff;
+          user-select: none;
+          padding: 10px 10px 0 20px;
         }
 
-        .card.ok {
-          background-color: var(--color-bg-ok);
+        .desktop .desktop-icon svg {
+          width: 48px;
+          height: 48px;
         }
 
-        .card.ok .status-text {
-          color: var(--color-text-ok);
-        }
-
-        .card.ok svg {
-          fill: var(--color-text-ok);
-        }
-
-        .card.error {
-          background-color: var(--color-bg-error);
-        }
-
-        .card.error .status-text {
-          color: var(--color-text-error);
-        }
-
-        .card.error svg {
-          fill: var(--color-text-error);
-        }
-
-        .card.warning {
-          background-color: var(--color-bg-warning);
-        }
-
-        .card.warning .status-text {
-          color: var(--color-text-warning);
-        }
-
-        .card.warning svg {
-          fill: var(--color-text-warning);
-        }
-
-        .card .caption {
-          font-size: 1.37em;
-        }
-
-        .card .status-text, .reason p {
+        .desktop .desktop-icon p {
           margin: 0;
-          font-family: sans-serif;
+          font-size: 0.85em;
+          padding-top: 0.5em;
         }
 
-        .reason p {
-          line-height: 125%;
+        dialog {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          margin: 0;
+          border: none;
+          box-shadow:
+            inset 1px 1px 0 #dfdfdf,
+            inset -1px -1px 0 #808080;
+          padding: 3px;
+          background-color: #c0c0c0;
+          max-width: 95%;
         }
 
-        a {
-          text-decoration: none;
-          color: #1967d2;
+        dialog.blink header {
+          background: linear-gradient(90deg, #000080, #1084d0);
+          animation: blink 350ms infinite;
         }
 
-        .reason {
+        @keyframes blink {
+          0% { background: linear-gradient(90deg, #808080, #b5b5b5); }
+          49.99% { background: linear-gradient(90deg, #808080, #b5b5b5); }
+          50% { background: linear-gradient(90deg, #000080, #1084d0); }
+          100% { background: linear-gradient(90deg, #000080, #1084d0); }
+        }
+
+        dialog header {
           display: flex;
           flex-direction: row;
-          flex-wrap: wrap;
+          height: 20px;
+          align-items: center;
           justify-content: space-between;
-          align-items: baseline;
+          background: linear-gradient(90deg, #000080, #1084d0);
         }
 
-        .reason > * {
-          display: block;
-          margin: 1em;
-          flex-grow: 1;
-          max-width: 40%;
+        dialog header p {
+          margin: 0 5px 0 2px;
+          color: #fff;
+          font-size: 0.8em;
+          font-weight: bold;
+          user-select: none;
+          white-space: nowrap;
         }
 
-        .reason h2 {
-          font-size: 1.45em;
-          margin: 0 0 .6em 0;
-          font-weight: normal;
+        dialog header .controls {
+          display: flex;
+          padding-right: 2px;
         }
 
-        footer {
-          margin: 1em;
-          color: var(--color-text-secondary);
+        dialog header .controls .button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #c0c0c0;
+          padding: 4px;
+          box-shadow:
+            inset 1px 1px 0 #fff,
+            inset -1px -1px 0 #000,
+            inset 2px 2px 0 #dfdfdf,
+            inset -2px -2px 0 #808080;
         }
 
-        /*  */
-
-        @media screen and (max-width: 820px) {
-          .arrows {
-            display: none;
-          }
+        dialog section {
+          display: flex;
+          flex-direction: row;
         }
 
-        @media screen and (max-width: 480px) {
-          .reason > * {
-            max-width: 100%;
-          }
+        dialog section .icon {
+          padding: 12px;
         }
 
-        @media screen and (min-width: 768px) {
-          body {
-            margin: 8% 10%;
-          }
+        dialog section .content {
+          padding: 18px 0;
+          margin-right: 10px;
+        }
 
-          header > * {
-            display: inline-block;
-            margin-left: 1%;
-          }
+        dialog section .content p {
+          margin: 0;
+        }
+
+        dialog section .content .details {
+          font-size: 0.8em;
+          padding-top: 1em;
+          color: #252525;
+        }
+
+        dialog .actions {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          padding: 0 0 8px 0;
+        }
+
+        dialog .actions button {
+          background-color: #c0c0c0;
+          padding: 4px 8px;
+          margin: 4px;
+          box-shadow:
+            inset 1px 1px 0 #fff,
+            inset -1px -1px 0 #000,
+            inset 2px 2px 0 #dfdfdf,
+            inset -2px -2px 0 #808080;
+          color: #868080;
+          text-shadow: 1px 1px 0 #fff;
+          border: 1px solid #000;
+          min-width: 80px;
+          border-radius: 0;
+          user-select: none;
+        }
+
+        dialog .actions button:focus {
+          outline: none;
+        }
+
+        .taskbar {
+          background-color: #c0c0c0;
+          box-sizing: border-box;
+          height: 30px;
+          width: 100%;
+          position: absolute;
+          bottom: 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          box-shadow: inset 0 1px 0 #dfdfdf, inset 0 2px 0 #fff;
+          padding: 4px 2px 2px 2px;
+          cursor: default;
+          z-index: 1000;
+          user-select: none;
+        }
+
+        .taskbar .group {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+        }
+
+        .taskbar .start {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 13px;
+          height: 100%;
+          background-color: #c0c0c0;
+          color: #000;
+          padding: 0 6px;
+          box-shadow:
+            inset 1px 1px 0 #fff,
+            inset -1px -1px 0 #000,
+            inset 2px 2px 0 #dfdfdf,
+            inset -2px -2px 0 #808080;
+          font-family: 'Tahoma', sans-serif;
+        }
+
+        .taskbar .start svg {
+          margin-right: 1px;
+        }
+
+        .taskbar .spacer {
+          width: 2px;
+          height: 100%;
+          box-shadow: inset 1px 0 0 #808080, inset -1px 0 0 #fff;
+          margin-left: 2px;
+        }
+
+        .taskbar .tray {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: 2px;
+          padding: 0 4px;
+          height: 100%;
+          background-color: #c0c0c0;
+          box-shadow:
+            inset 1px 1px 0 #808080,
+            inset -1px -1px 0 #fff;
+        }
+
+        .taskbar .tray svg {
+          margin-right: 4px;
+        }
+
+        .taskbar .tray .clock {
+          font-size: 0.75em;
+          white-space: nowrap;
         }
       </style>
     </head>
     <body>
-    <header>
-      <h1 class="error-code">404</h1>
-      <p class="error-description">Not Found</p>
-    </header>
-    <div class="status">
-      <div class="card warning" id="client-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.89-2-2-2zm0 14H5V8h14v10z"/>
+    <main>
+      <div class="desktop">
+        <div class="desktop-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 8.467 8.467">
+            <path d="M1.852 1.852v2.646h2.117 1.852V1.852H3.969z" fill="#00f"/>
+            <path d="M6.879.265v.265h.265V.265zm0 .265h-.265v.265h.265zm-.265.265H1.323v.265h5.292zm-5.292.265h-.265v4.233h.265zm4.762.265v3.44H1.588v.265h4.498.265V1.323zM2.91 2.646v.265.529h.529V2.91h.794v-.265zm.794.529v.794h1.323v-.794zm-3.44 2.91v.265 1.588h.265V6.35h6.615v-.265z" fill="#fff"/>
+            <path d="M1.852.265v.265h-.265v.265h5.027V.529h.265V.265zm-.529.794v.265 3.704.265H6.35h.265V1.323v-.265H1.588zm.265.265H6.35v3.704H1.588zm6.085 3.969v.265h.265v-.265zm0 .265h-.265v.265h.265zm-.265.265h-.265v.265h.265zM.529 6.35v1.588h6.615V6.35z" fill="silver"/>
+            <path d="M1.852 0v.265h5.292v.265h-.265v.265h-.265v4.498H1.058V1.058H.794v4.498h.265 5.821v-.265h.265v-.265h.265V.529 0h-.265zm5.556 5.027v.265h-.265v.265h-.265v.265H.265v.265h6.879v-.265h.265v-.265h.265v-.265h.265v.265h-.265v.265h-.265v.265h-.265v1.852H.265V6.085H0v2.117h.265 7.144v-.265h.265v-.265h.265v-.265h.265V5.556v-.529h-.265zm-6.35-3.969h.265V.794h-.265zm.265-.265h.265V.529h-.265zm.265-.265h.265V.265h-.265zm0 .794v.265h4.498v-.265zm1.058 1.323v.794h.265v-.794zm.794.529v.794h.265v-.794zm.529 3.44v.265h2.646v-.265zm1.588.529v.265h.265v-.265z" fill="gray"/>
+            <path d="M7.408.265v4.762h.265V.265h-.265zm0 4.762h-.265v.265h.265v-.265zm-.265.265h-.265v.265h.265v-.265zm-.265.265H.794v.265h6.085v-.265zM1.588 1.588v2.91h.265V1.852h3.969v-.265H1.852h-.265zm1.058.794v.265h1.588v.265h.265v-.265-.265H2.646zm2.381.529v1.058H3.44v.265h1.588.265V2.91h-.265zm-2.381.529v.265h.794V3.44h-.794zm5.556 1.852v2.117h.265V5.292h-.265zm0 2.117h-.265v.265h.265v-.265zm-.265.265h-.265v.265h.265v-.265zm-.265.265h-.265v.265h.265v-.265zm-.265.265H.265v.265h7.144v-.265zm-3.44-1.323v.265h2.646v-.265H3.969z" fill="#000"/>
+            <path d="M1.058 7.144v.265h.265.265v-.265h-.265z" fill="green"/>
+            <path d="M1.058 6.879v.265h.265.265v-.265h-.265z" fill="#0f0"/>
+            <path d="M2.117 2.117v.265.265h.265v-.265-.265z" fill="#0ff"/>
+            <path d="M5.821 1.588v2.91H1.588v.265h4.233.265V1.588h-.265zM3.44 2.91v.265h1.588V2.91H3.44z" fill="navy"/>
           </svg>
-        </i>
-        <div class="caption" data-l10n>Your Client</div>
-        <p class="status-text" data-l10n>Unknown</p>
-      </div>
-
-      <div class="arrows">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#000000">
-          <defs>
-            <symbol id="arrows-horizontal" viewBox="0 0 24 24">
-              <rect fill="none" height="24" width="24" x="0"/>
-              <polygon points="7.41,13.41 6,12 2,16 6,20 7.41,18.59 5.83,17 21,17 21,15 5.83,15"/>
-              <polygon points="16.59,10.59 18,12 22,8 18,4 16.59,5.41 18.17,7 3,7 3,9 18.17,9"/>
-            </symbol>
-          </defs>
-          <use href="#arrows-horizontal"/>
-        </svg>
-      </div>
-
-      <div class="card ok" id="network-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3H6c-2.21
-                     0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6m0-2C9.11 4 6.6 5.64 5.35
-                     8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96C18.67
-                     6.59 15.64 4 12 4z"/>
+          <p data-l10n>My Computer</p>
+        </div>
+        <div class="desktop-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 8.467 8.467">
+            <path d="M4.233.265v.265h-.265v.265h-.265v.265H3.44v.265h-.265-1.852v.265h-.265v.265H.794V3.44H.265v.265H0v1.323h.265v1.058h.265v1.058h.265v.794h.265v.265h6.615v-.265h.265v-2.91-.265h.265v-.265h.265v-.265h-.265v-.265h-.265v-.265-1.058h-.265v-.265h-.265v-.265H6.35h-.265v-.265h-.265v-.265h-.265v-.265h-.265v-.265h-.265V.794h-.265V.529h-.265V.265h-.265z" fill="#330"/>
+            <path d="M7.673 5.027v.265h-.265V6.35h.265v1.588h.265v-2.91zm0 2.91H1.058v.265h6.615z"/>
+            <path d="M2.381 1.852v.265h.265v-.265zm0 .265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265h-.265v.265h.265zM.265 3.44v.265h6.35V3.44zm6.35.265v.265h.265v-.265zm.265.265v.794h.265v-.794zm.265.794v.794h.265v-.794zM.265 3.704H0v1.323h.265zm0 1.323v1.058h.265V5.027zm.265 1.058v1.058h.265V6.085zm.265 1.058v.794h.265 6.615v-.265V6.35h-.265v1.323h-6.35v-.529z" fill="#990"/>
+            <path d="M2.646 1.588v.265h.265v-.265zm-1.058.265v.265h-.265v.794h.265v-.265h.265v-.265h.265v-.265h.265v-.265h-.265-.265zm5.027.529v.265h.265v.265h.265v.265h.265V2.91v-.265h-.265v-.265zm0 1.588v.265h.265v-.265zm.265.794v.265h.265v-.265zm.265.794v.265h.265v-.265z" fill="#cc6"/>
+            <path d="M1.323 1.588v.265h-.265v.265V3.44h.265V2.117h.265v-.265h1.058v-.265H1.323zM.529 3.969v1.058h.265v1.058h.265v1.323h5.556.265.265V5.027h-.265v-.794h-.265v-.265H1.058.794.529z" fill="#ff9"/>
+            <path d="M2.91 3.969v.265h.265v-.265zm.794 0v.265h.265v-.265zm.529 0v.265h.265v-.265zm.529 0v.265h.265v-.265zm1.058 0v.265h.265v-.265zm0 .265h-.265v.265h.265zm.529 0v.265h.265v-.265zm0 .265h-.265v.265h.265zm0 .265v.265h.265v-.265zm-5.027-.265v.265h.265v-.265zm1.058 0v.265h.265v-.265zm.265.265v.265h.265v-.265zm0 .265h-.265v.265h.265zm.529-.529v.265h.265v-.265zm.265.265v.265h.265v-.265zm1.058-.265v.265h.265v-.265zm.529 0v.265h.265v-.265zm-1.058.265v.265h.265v-.265zm-2.117.265v.265h.265v-.265zm3.175 0v.265h-.265v.265h.265.265v-.529zm.265.529v.265h.265v-.265zm.265 0h.265v-.529h-.265zm.265 0v.529h.265v-.529zm.265 0h.265v-.265h-.265zm.265 0v.529h.265v-.529zm.265 0h.265v.529h.265v.265h-.265v-.265h-.265v.265H6.35v.265h.265v.265h.265v-.265h.265v.265h-.265v.265h-.265v.265H6.35v-.265h.265v-.265H6.35v-.265h-.265v.265h-.265v.265h.265v.265h-.265v-.265h-.265v.265h-.265v-.265h-.265v.265h-.529v-.265h-.529v.265h-.265v-.265h-.529v.265h-.529v-.265h-.265v.265h-.529v-.265h-.265v.265h-.529v.265h6.35v-.265-1.587h-.265v-.794h-.265v.265h-.265zM1.588 7.144v-.265h-.265v.265zm-.265-.265v-.265h-.265v.265zm.529.265h.265v-.265h-.265zm.265-.265h.265v-.265h-.265zm.529.265h.529v-.265h-.529zm.529-.265h.265v-.265h-.265zm.265-.265h.265V6.35H3.44zm0-.265v-.265h-.265v.265zm-.265-.265v-.265H2.91v.265zm.265 0h.265v-.265H3.44zm.265 0v.265h.265v-.265zm0 .529v.529h.265v-.265h.265v-.265h-.265zm.529 0h.529V6.35h-.529zm.529-.265h.265v-.265h-.265zm0-.265v-.529h-.265v.265h-.265v.265h.265zm-.529-.265v-.265h-.265v.265zm0-.265h.265v-.265h-.265zm.794.529h.265v-.265h-.265zm.265 0v.265h.529v-.265zm.529.265v.265h.265V6.35zm.265 0h.265v-.265h-.265zm-.265.265h-.265-.265v.529h.265v-.265h.265zm-.529 0V6.35h-.265v.265zm-.265 0h-.265v.265h-.265v.265h.529v-.265zM1.058 5.292v.265h.265v-.265zm1.852 0v.265h.265v-.265zm.529 0v.265h.265v-.265zm-1.587.265v.265h.265v-.265zm0 .265h-.265v.265h.265zm0 .265v.265h.265v-.265zm-.265 0h-.265v.265h.265zm.794-.529v.265h.265v-.265zm0 .529v.265h.265v-.265zm.265.265v.265h.265V6.35z" fill="#fc9"/>
+            <path d="M1.323 1.323v.265h1.852v-.265zm0 .265h-.265v.265h.265zm-.265.265H.794V3.44h.265zm5.292.265v.265h.794v.265h.265v-.265-.265zm1.058.529v.794h.265v-.794z" fill="olive"/>
+            <path d="M4.233.265v.265h.265V.265zm0 .265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265H3.44v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265H2.91v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265h-.265v.265h.265z" fill="#868686"/>
+            <path d="M6.615 2.646v.265h.265v-.265zm1.058 1.058v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm0 .265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265h-.265v.265h.265z" fill="#000"/>
+            <path d="M4.498.529v.265h.265V.529zm.265.265v.265h.265V.794zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.529.529v.265h.265V2.91zm.265.265v.265h.265v-.265zm.265.265v.265h.265V3.44z" fill="#555"/>
+            <path d="M3.969 1.852v.265h.265v-.265zm0 .265h-.265v.265h.265zm-.265.265H3.44v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265H2.91v.265h.265zm-.265.265h-.265v.265h.265zm1.323-.794v.265h.265v-.265zm0 .265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265H3.44v.265h.265zm1.058-.529v.265h.265v-.265zm0 .265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm.794-.265v.265h.265V2.91zm0 .265h-.265v.265h.265z" fill="#039"/>
+            <path d="M4.498.794v.265h.265V.794zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.529.529v.265h.265v-.265zm.265.265v.265h.265V2.91zm.265.265v.265h.265v-.265zm.265.265v.265h.265V3.44zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm0 .265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265 0v-.794h-.265v.794zm-.265-.794v-.265h-.265v.265zm-.265-.265V3.44h-.265v.265zm-.265-.265v-.265H5.556v.265zm-5.027-.265v.265h1.058v-.265zm1.588 0v.265h.265v-.265zm.794 0v.265h.265v-.265zm.794 0v.265h.265v-.265z" fill="silver"/>
+            <path d="M4.233.529v.265h.265V.529zm1.852 1.852v.265h.265v-.265z" fill="#ada990"/>
+            <path d="M7.408 2.381v.265h.265v-.265zm.265.265v1.058h.265V2.646z" fill="#033"/>
+            <path d="M3.969.794v.265h-.265v.265H3.44v.265h-.265v.265H2.91v.265h-.265v.265h-.265v.265h-.265v.265h1.058v-.265h.265v-.265h.265v-.265h.265v-.265h.265v.265.265h.265v.265.265h.265v-.265h.265v.265H6.35v-.265h-.265v-.265h-.265v-.265h-.265v-.265h-.265v-.265h-.265v-.265h-.265v-.265h-.265V.794z" fill="#fffbf0"/>
+            <path d="M3.969 2.381v.265h.265v-.265h-.265zm0 .265h-.265v.265h.265v-.265zm-.265.265H3.44v.265h.265V2.91zm-1.852 0v.265H2.91V2.91H1.852zm2.381 0v.265h.265V2.91h-.265zm.794 0v.265h.265V2.91h-.265zm.529 0v.265h1.058V2.91H5.556zm1.058.265v.265h.265v-.265h-.265zm.265.265v.265h.265V3.44h-.265zm.265.265v.265h.265v-.265h-.265zm.265.265v.794h.265v-.265h.265v-.265h-.265v-.265h-.265z" fill="#e7e7d6"/>
+            <path d="M3.969 2.117v.265h.265v-.265h-.265zm0 .265h-.265v.265h.265v-.265zm-.265.265H3.44v.265h.265v-.265zm-.265.265h-.265v.265h.265V2.91zm-.265.265H2.91v.265h.265v-.265zm1.058-.529v.265h.265v-.265h-.265zm0 .265h-.265v.265h.265V2.91zm-.265.265h-.265v.265h.265v-.265zm.794-.265v.265h.265V2.91h-.265zm0 .265h-.265v.265h.265v-.265zm.529 0v.265h.265v-.265h-.265z" fill="#a0a0a4"/>
+            <path d="M.265 3.704v.265 1.058h.265V3.969h6.085v-.265H.265zm.265 1.323v1.058h.265V5.027H.529zm.265 1.058v1.058h.265V6.085H.794z" fill="#fffbf0"/>
           </svg>
-        </i>
-        <div class="caption" data-l10n>Network</div>
-        <p class="status-text" data-l10n>Working</p>
-      </div>
+          <p data-l10n>My Documents</p>
+        </div>
 
-      <div class="arrows">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#000000">
-          <use href="#arrows-horizontal"/>
-        </svg>
+        <dialog open>
+          <header>
+            <p>404: <span data-l10n>Not Found</span></p>
+            <div class="controls">
+              <div class="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="8" viewBox="0 0 2.381 2.117">
+                  <path d="M.265.265v.265h.265v.265h.265v.265h.265v.265H.794v.265H.529v.265H.265v.265h.529v-.265h.265v-.265h.529v.265h.265v.265h.529v-.265h-.265v-.265h-.265v-.265h-.265v-.265h.265V.794h.265V.529h.265V.265h-.529v.265h-.265v.265h-.529V.529H.794V.265z" fill="#fff"/>
+                  <path d="M0 0v.265h.265v.265h.265v.265h.265v.265H.529v.265H.265v.265H0v.265h.529v-.265h.265v-.265h.529v.265h.265v.265h.529v-.265h-.265v-.265h-.265v-.265h-.265V.794h.265V.529h.265V.265h.265V0h-.529v.265h-.265v.265H.794V.265H.529V0z" fill="gray"/>
+                </svg>
+              </div>
+            </div>
+          </header>
+          <section>
+            <div class="icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 8.467 8.467">
+                <path d="M1.587 1.587v5.821h.265v.265h.529v.265h.265v.265h.794v.265h2.117v-.265h.794v-.265h.265v-.265h.529v-.265h.265v-.265h.265v-.529h.265V6.35h.265v-.794h.265V3.44h-.265v-.794h-.265v-.265h-.265v-.529h-.265v-.265z" fill="gray"/>
+                <path d="M2.91 0v.265h-.794v.265h-.265v.265h-.529v.265h-.265v.265H.794v.529H.529v.265H.265v.794H0v2.117h.265v.794h.265v.265h.265v.529h.265v.265h.265v.265h.529v.265h.265v.265h.794v.265h2.117v-.265h.794v-.265h.265v-.265h.529v-.265h.265v-.265h.265v-.529h.265v-.265h.265v-.794h.265V2.91h-.265v-.794h-.265v-.265h-.265v-.529h-.265v-.265h-.265V.794h-.529V.529h-.265V.265h-.794V0z" fill="red"/>
+                <path d="M2.91 0v.265h2.117V0zm2.117.265v.265h.794V.265zm.794.265v.265h.265V.529zm.265.265v.265h.529V.794zm.529.265v.265h.265v-.265zm.265.265v.529h.265v-.529zm.265.529v.265h.265v-.265zm.265.265v.794h.265v-.794zm.265.794v2.117h.265V2.91zm0 2.117h-.265v.794h.265zm-.265.794h-.265v.265h.265zm-.265.265h-.265v.529h.265zm-.265.529h-.265v.265h.265zm-.265.265h-.529v.265h.529zm-.529.265h-.265v.265h.265zm-.265.265h-.794v.265h.794zm-.794.265H2.91v.265h2.117zm-2.117 0v-.265h-.794v.265zm-.794-.265v-.265h-.265v.265zm-.265-.265v-.265h-.529v.265zm-.529-.265v-.265h-.265v.265zm-.265-.265v-.529H.794v.529zm-.265-.529v-.265H.529v.265zm-.265-.265v-.794H.265v.794zm-.265-.794V2.91H0v2.117zm0-2.117h.265v-.794H.265zm.265-.794h.265v-.265H.529zm.265-.265h.265v-.529H.794zm.265-.529h.265v-.265h-.265zm.265-.265h.529V.794h-.529zm.529-.265h.265V.529h-.265zm.265-.265h.794V.265h-.794z" fill="maroon"/>
+                <path d="M2.381 1.852v.265h-.265v.265h-.265v.265h.265v.265h.265v.265h.265v.265h.265v.265h.265v.529H2.91v.265h-.265v.265h-.265v.265h-.265v.265h-.265v.265h.265v.265h.265v.265h.265v-.265h.265v-.265h.265v-.265h.265v-.265h.265v-.265h.529v.265h.265v.265h.265v.265h.265v.265h.265v.265h.265v-.265h.265v-.265h.265v-.265h-.265v-.265h-.265v-.265h-.265v-.265h-.265v-.265h-.265v-.529h.265V3.44h.265v-.265h.265V2.91h.265v-.265h.265v-.265h-.265v-.265h-.265v-.265h-.265v.265h-.265v.265h-.265v.265h-.265v.265h-.265v.265h-.529V2.91H3.44v-.265h-.265v-.265H2.91v-.265h-.265v-.265z" fill="#fff"/>
+              </svg>
+            </div>
+            <div class="content">
+              <p><span data-l10n>The server can not find the requested page</span><!----></p>
+              <!---->
+            </div>
+          </section>
+          <div class="actions">
+            <button disabled>OK</button>
+          </div>
+        </dialog>
       </div>
-
-      <div class="card warning" id="server-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M19 15v4H5v-4h14m1-2H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zM7
-            18.5c-.82 0-1.5-.67-1.5-1.5s.68-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM19 5v4H5V5h14m1-2H4c-.55 0-1
-            .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zM7 8.5c-.82 0-1.5-.67-1.5-1.5S6.18 5.5 7
-            5.5s1.5.68 1.5 1.5S7.83 8.5 7 8.5z"/>
-          </svg>
-        </i>
-        <div class="caption" data-l10n>Web Server</div>
-        <p class="status-text" data-l10n>Unknown</p>
+      <div class="taskbar">
+        <div class="group">
+          <div class="start">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 21.167 18.521">
+              <path d="M11.906 0v1.323H9.26v1.323H7.938v1.323H5.292v1.323H3.969V3.969H2.646v2.646h1.323 1.323 2.646v7.938 1.323H5.292v1.115.208H3.969v-1.323H2.646v1.323 1.323H9.26v-1.323h2.646v-.208-1.115h2.646 2.646v1.323h2.646v1.323h1.323V2.646h-1.323V1.323h-2.646V0h-5.292zM0 2.646v2.646h1.323V2.646H0zm0 11.906v2.646h1.323v-2.646H0z"/>
+              <path d="M11.906 2.646v1.323h-1.323v3.969h1.323V6.615h1.323V2.646zM0 6.615V9.26h1.323V6.615zm2.646 1.323v2.646h1.323 1.323 2.646V7.938H5.292V9.26H3.969V7.938z" fill="red"/>
+              <path d="M15.875 2.646v3.969h1.323v1.323h1.323V3.969h-1.323V2.646z" fill="#0f0"/>
+              <path d="M11.906 9.26v1.323h-1.323v3.969h1.323v-1.323h1.323V9.26zM0 10.583v2.646h1.323v-2.646zm2.646 1.323v2.646h1.323 1.323 2.646v-2.646H5.292v1.323H3.969v-1.323z" fill="#00f"/>
+              <path d="M15.875 9.26v3.969h1.323v1.323h1.323v-3.969h-1.323V9.26z" fill="#ff0"/>
+            </svg>
+            <strong data-l10n>Start</strong>
+          </div>
+          <div class="spacer"></div>
+        </div>
+        <div class="group"></div>
+        <div class="group">
+          <div class="spacer"></div>
+          <div class="tray">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 4.233 4.233">
+              <path d="M.265.265h3.44v3.44H.265z" fill="#fff"/>
+              <path d="M0 0v.265 1.323h.265V.265h.529V0zm1.058 0v.265h1.058V0zm1.058.265v.265h1.852V.265zm0 .794v.265H3.44v.529h.265v-.529-.265zm-1.852.794v1.323.265h1.587v-.265H.529V1.852zm2.117.529v.265h.265v-.265zm1.058 0v.265h.265v-.265zm-1.058.529v.265h.265V2.91zm0 .529v.265h.265V3.44zm.529 0v.265h.265V3.44zm.529 0v.265h.265V3.44z" fill="#85898d"/>
+              <path d="M1.588.265v1.323h.265V.265zm1.058.529v.265h.265V.794zm.529 0v.265h.265V.794zM.529 1.852v1.323h.265V1.852z" fill="#c2c6ca"/>
+              <path d="M.265.529v.265h.265V.529zm1.058 0v.265h.265V.529zm-1.058.529v.265h.265v-.265zm1.058 0v.265h.265v-.265z" fill="#100dfb"/>
+              <path d="M2.117.529v.265.265h.529V.794h1.058V.529zm.794 2.117v.529h.265.265V2.91h-.265v-.265z" fill="#0706a7"/>
+              <path d="M.794.265v1.323h.265V.265zm.265 1.323v.265h1.058v-.265V.265h-.265v1.323zm-.265 0H0v.265h.794zM3.704.529v.265H3.44v.265h.265v1.323h.265V.529zm.265 1.852v1.323h.265V2.381zm0 1.323h-.265v.265h.265zm-.265.265H2.381v.265h1.323zM2.91.794v.265h.265V.794zM.265 3.44v.265h1.587V3.44z" fill="#000"/>
+              <path d="M2.381 1.852v.265h-.265v.265h-.265v.265 1.058h.265v.265h.265.265v-.265h-.265V3.44h-.265v-.794h.265v-.265h.265v-.265h.794v.265h.265v-.529H3.44zm1.323.529v.265h.265v-.265zm0 1.058v.265h.265V3.44zm0 .265H3.44v.265h.265z" fill="#a90055"/>
+              <path d="M2.646 2.117v.265h.794v-.265zm-.529.529v.794h.265v-.794zm1.588 0v.794h.265v-.794zM2.646 3.704v.265h.794v-.265z" fill="#fd0016"/>
+            </svg>
+            <div class="clock">00:00 AM</div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="reason">
-      <div class="what-happened">
-        <h2 data-l10n>What happened?</h2>
-        <p class="description" data-l10n>The server can not find the requested page</p>
-      </div>
-      <div class="what-can-i-do">
-        <h2 data-l10n>What can I do?</h2>
-        <p class="description" data-l10n>Please try again in a few minutes</p>
-      </div>
-    </div>
-    <footer>
-      <!---->
-    </footer>
+    </main>
     <script>
-      const errorCode = parseInt(`404`, 10);
+      'use strict';
 
-      if (errorCode && !isNaN(errorCode)) {
+      /**
+       * Set the clock to the current time in HH:MM AM/PM format.
+       *
+       * @return {void}
+       */
+      const updateClock = () => {
+        const now = new Date();
+        const hours24 = now.getHours();
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const ampm = hours24 >= 12 ? 'PM' : 'AM';
+        const formattedTime = `${(hours24 % 12) || 12}:${minutes} ${ampm}`;
+
+        document.querySelectorAll('.clock').forEach($el => $el.textContent = formattedTime);
+      };
+
+      const $dialog = document.querySelector('dialog');
+
+      /**
+       * Triggers a blinking effect on the dialog.
+       *
+       * @return {void}
+       */
+      const blinkDialog = () => {
+        if ($dialog.classList.contains('blink') || !$dialog.open) {
+          return; // prevent multiple triggers
+        }
+
+        $dialog.classList.add('blink');
+        window.setTimeout(() => $dialog.classList.remove('blink'), 350 * 4 - 50);
+      };
+
+      /** Centers the dialog in the viewport. */
+      const centerDialog = () => {
+        $dialog.style.transform = 'none';
+
+        let [prevTop, prevLeft] = ['', ''];
+
+        // dirty hack to ensure the dialog is centered
+        while (true) {
+          $dialog.style.top = `calc(50% - ${$dialog.offsetHeight / 2}px)`;
+          $dialog.style.left = `calc(50% - ${$dialog.offsetWidth / 2}px)`;
+
+          if (prevTop !== $dialog.style.top || prevLeft !== $dialog.style.left) {
+            prevTop = $dialog.style.top;
+            prevLeft = $dialog.style.left;
+          } else {
+            break; // exit loop when the position is stable
+          }
+        }
+      };
+
+      { // add event listeners
+        // blink the dialog when clicking on outside the dialog
+        [document.querySelector('.desktop'), document.querySelector('.taskbar')].forEach(($el) => {
+          $el.addEventListener('click', blinkDialog);
+        });
+
+        // prevent event propagation from the dialog to the desktop and taskbar
+        $dialog.addEventListener('click', (e) => e.stopPropagation());
+
         /**
-         * @param {HTMLElement} $card
-         * @param { {isOk?: boolean, isWarning?: boolean, isError?: boolean} } state
-         * @param {string} statusText
+         * Get the client coordinates of the event, handling both mouse and touch events.
+         *
+         * @param {MouseEvent|TouchEvent} e
+         * @return { {x: number, y: number} }
          */
-        const setCardState = ($card, state, statusText) => {
-          const [okClass, warnClass, errClass] = ['ok', 'warning', 'error'];
-          const $statusText = $card.querySelectorAll('.status-text');
-
-          switch (true) {
-            case state.isOk === true:
-              $card.classList.remove(errClass, warnClass);
-              $card.classList.add(okClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
-
-            case state.isWarning === true:
-              $card.classList.remove(okClass, errClass);
-              $card.classList.add(warnClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
-
-            case state.isError === true:
-              $card.classList.remove(okClass, warnClass);
-              $card.classList.add(errClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
+        const getClientCoords = (e) => {
+          if (e.touches && e.touches.length > 0) {
+            return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+          } else {
+            return { x: e.clientX, y: e.clientY };
           }
         };
 
-        /** @param { {whatHappened?: string, whatToDo?: string} } reasons */
-        const setReasons = (reasons) => {
-          const descSelector = '.description';
+        const onStart = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
 
-          [...document.getElementsByClassName('what-happened')].forEach(($el) => {
-            if (typeof reasons.whatHappened === 'string' && reasons.whatHappened.length > 0) {
-              [...$el.querySelectorAll(descSelector)].forEach(($desc) => $desc.innerText = reasons.whatHappened);
-            } else {
-              $el.remove();
-            }
-          });
+          const { x: startX, y: startY } = getClientCoords(e);
+          const dialogStyle = window.getComputedStyle($dialog);
+          const offsetX = startX - parseInt(dialogStyle.left, 10);
+          const offsetY = startY - parseInt(dialogStyle.top, 10);
 
-          [...document.getElementsByClassName('what-can-i-do')].forEach(($el) => {
-            if (typeof reasons.whatToDo === 'string' && reasons.whatToDo.length > 0) {
-              [...$el.querySelectorAll(descSelector)].forEach(($desc) => $desc.innerText = reasons.whatToDo);
-            } else {
-              $el.remove();
-            }
-          });
-        };
+          const onMove = (e) => {
+            const { x: clientX, y: clientY } = getClientCoords(e);
 
-        /**
-         * @param {string} text
-         */
-        const setErrorDescription = function (text) {
-          [...document.getElementsByClassName('error-description')].forEach(($el) => $el.innerHTML = text);
-        };
+            let top = Math.max(clientY - offsetY, 0);
+            let left = Math.max(clientX - offsetX, 0);
 
-        const message = `Not Found`.trim();
-        const cards = {
-          $client: document.getElementById('client-status-card'),
-          $network: document.getElementById('network-status-card'),
-          $server: document.getElementById('server-status-card'),
-        };
-
-        let whatToDo = 'Please try again in a few minutes';
-
-        switch (true) {
-          case errorCode >= 400 && errorCode <= 499:
-            switch (errorCode) {
-              case 400:
-              case 405:
-              case 411:
-              case 413:
-                whatToDo = 'Please try to change the request method, headers, payload, or URL';
-                break;
-              case 401:
-              case 403:
-              case 407:
-                whatToDo = 'Please check your authorization data';
-                break;
-              case 404:
-                whatToDo = 'Please double-check the URL and try again';
-                break;
-              case 409:
-              case 410:
-              case 418:
-                whatToDo = '¯\\_(ツ)_/¯';
-                break;
+            // prevent overflow
+            if (left + $dialog.clientWidth > window.innerWidth) {
+              left = window.innerWidth - $dialog.clientWidth;
             }
 
-            setErrorDescription(`<span data-l10n>${message}</span> (<span data-l10n>client-side error</span>)`);
-            setCardState(cards.$client, {isError: true}, message)
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isOk: true}, 'Working')
-            break;
+            if (top + $dialog.clientHeight > window.innerHeight) {
+              top = window.innerHeight - $dialog.clientHeight;
+            }
 
-          case errorCode >= 500 && errorCode <= 599:
-            setErrorDescription(`<span data-l10n>${message}</span> (<span data-l10n>server-side error</span>)`);
-            setCardState(cards.$client, {isOk: true}, 'Working')
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isError: true}, message)
-            break;
+            $dialog.style.top = top + 'px';
+            $dialog.style.left = left + 'px';
 
-          default:
-            setErrorDescription(message);
-            setCardState(cards.$client, {isWarning: true}, 'Unknown')
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isWarning: true}, 'Unknown')
-            break;
-        }
+            e.preventDefault();
+          };
 
-        setReasons({whatHappened: `The server can not find the requested page`.trim(), whatToDo: whatToDo.trim()});
-      } else {
-        console.warn('Cannot parse the error code:', errorCode);
+          const onEnd = () => {
+            ['mousemove', 'touchmove'].forEach(eventType => document.removeEventListener(eventType, onMove));
+            ['mouseup', 'touchend'].forEach(eventType => document.removeEventListener(eventType, onEnd));
+          };
+
+          ['mousemove', 'touchmove'].forEach(eventType => document.addEventListener(eventType, onMove, { passive: false }));
+          ['mouseup', 'touchend'].forEach(eventType => document.addEventListener(eventType, onEnd));
+        };
+
+        ['mousedown', 'touchstart'].forEach(eventType => {
+          $dialog.querySelector('header').addEventListener(eventType, onStart, { passive: false });
+        });
+
+        window.addEventListener('resize', centerDialog);
+        window.setInterval(updateClock, 1000);
       }
+
+      updateClock();
+      centerDialog();
     </script>
 
     <!---->
@@ -1672,8 +1765,8 @@ data:
     <head>
       <meta charset="utf-8">
       <meta name="robots" content="nofollow,noarchive,noindex">
-      <title>503 | Service Unavailable</title>
-      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>503: Service Unavailable</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
       <!--  -->
       <meta http-equiv="refresh" content="30">
       <!--  -->
@@ -1685,406 +1778,499 @@ data:
       <meta property="twitter:description" content="The server is temporarily overloading or down">
       <style>
         :root {
-          --color-bg-primary: #fff;
-          --color-text-primary: #000;
-          --color-text-secondary: #575958;
-          --ui-card-color-bg: #f2f2f2;
-          --color-text-ok: #137333;
-          --color-bg-ok: #e6f4ea;
-          --color-text-error: #c5221f;
-          --color-bg-error: #fce8e6;
-          --color-text-warning: #b05a00;
-          --color-bg-warning: #fef7e0;
-          --icon-size: 48px;
+          --color-desktop: #008080;
         }
 
         @media (prefers-color-scheme: dark) {
           :root {
-            --color-bg-primary: #111;
-            --color-text-primary: rgba(255, 255, 255, 0.86);
-            --color-text-secondary: rgba(255, 255, 255, 0.4);
-            --ui-card-color-bg: rgba(40, 40, 40, 0.73);
-            --color-bg-ok: #07220f;
-            --color-bg-error: #270501;
-            --color-bg-warning: #392605;
+            --color-desktop: #1a1a1a;
           }
         }
 
-        /** Idea author: https://github.com/186526/CloudflareCustomErrorPage */
         html, body {
           margin: 0;
           padding: 0;
           min-height: 100%;
-          color: var(--color-text-primary);
-          background-color: var(--color-bg-primary);
+          height: 100%;
+          width: 100%;
           font-family: sans-serif;
           font-size: 16px;
-          word-break: keep-all;
         }
 
         @media screen and (min-width: 2000px) {
           html, body {
-            font-size: 20px;
+            font-size: 18px;
           }
         }
 
         body {
-          margin: 2em 2em;
-        }
-
-        header {
-          margin-left: 1em;
-        }
-
-        header .error-code {
-          font-size: 3.2em;
-          font-family: monospace;
-          font-weight: 400;
-          margin: 0 0 0 10px;
-        }
-
-        header .error-description {
-          font-family: sans-serif;
-          font-size: 1.4em;
-          color: var(--color-text-secondary);
-          margin: 0 0 0 10px;
-        }
-
-        code {
-          font-family: monospace;
-        }
-
-        .status {
-          margin-top: 2.5em;
           display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
           justify-content: center;
           align-items: center;
         }
 
-        .card {
-          background-color: var(--ui-card-color-bg);
-          padding: 2em;
-          margin: 1em 1em;
-          min-height: 3em;
-          border-radius: 9px;
-          flex-grow: 1;
+        main {
+          display: flex;
+          flex-direction: column;
+          width: 100%;
+          height: 100%;
         }
 
-        .arrows svg {
-          fill: var(--color-text-secondary);
+        .desktop {
+          background-color: var(--color-desktop);
+          flex: 1;
+          display: grid;
+          grid-auto-flow: column;
+          grid-auto-columns: max-content;
+          grid-template-rows: repeat(auto-fill, 100px);
+          box-sizing: border-box;
+          overflow: hidden;
+          position: relative;
         }
 
-        .icon svg {
-          width: var(--icon-size);
-          height: auto;
-          fill: var(--color-text-primary);
+        .desktop .desktop-icon {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          color: #fff;
+          user-select: none;
+          padding: 10px 10px 0 20px;
         }
 
-        .card.ok {
-          background-color: var(--color-bg-ok);
+        .desktop .desktop-icon svg {
+          width: 48px;
+          height: 48px;
         }
 
-        .card.ok .status-text {
-          color: var(--color-text-ok);
-        }
-
-        .card.ok svg {
-          fill: var(--color-text-ok);
-        }
-
-        .card.error {
-          background-color: var(--color-bg-error);
-        }
-
-        .card.error .status-text {
-          color: var(--color-text-error);
-        }
-
-        .card.error svg {
-          fill: var(--color-text-error);
-        }
-
-        .card.warning {
-          background-color: var(--color-bg-warning);
-        }
-
-        .card.warning .status-text {
-          color: var(--color-text-warning);
-        }
-
-        .card.warning svg {
-          fill: var(--color-text-warning);
-        }
-
-        .card .caption {
-          font-size: 1.37em;
-        }
-
-        .card .status-text, .reason p {
+        .desktop .desktop-icon p {
           margin: 0;
-          font-family: sans-serif;
+          font-size: 0.85em;
+          padding-top: 0.5em;
         }
 
-        .reason p {
-          line-height: 125%;
+        dialog {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          margin: 0;
+          border: none;
+          box-shadow:
+            inset 1px 1px 0 #dfdfdf,
+            inset -1px -1px 0 #808080;
+          padding: 3px;
+          background-color: #c0c0c0;
+          max-width: 95%;
         }
 
-        a {
-          text-decoration: none;
-          color: #1967d2;
+        dialog.blink header {
+          background: linear-gradient(90deg, #000080, #1084d0);
+          animation: blink 350ms infinite;
         }
 
-        .reason {
+        @keyframes blink {
+          0% { background: linear-gradient(90deg, #808080, #b5b5b5); }
+          49.99% { background: linear-gradient(90deg, #808080, #b5b5b5); }
+          50% { background: linear-gradient(90deg, #000080, #1084d0); }
+          100% { background: linear-gradient(90deg, #000080, #1084d0); }
+        }
+
+        dialog header {
           display: flex;
           flex-direction: row;
-          flex-wrap: wrap;
+          height: 20px;
+          align-items: center;
           justify-content: space-between;
-          align-items: baseline;
+          background: linear-gradient(90deg, #000080, #1084d0);
         }
 
-        .reason > * {
-          display: block;
-          margin: 1em;
-          flex-grow: 1;
-          max-width: 40%;
+        dialog header p {
+          margin: 0 5px 0 2px;
+          color: #fff;
+          font-size: 0.8em;
+          font-weight: bold;
+          user-select: none;
+          white-space: nowrap;
         }
 
-        .reason h2 {
-          font-size: 1.45em;
-          margin: 0 0 .6em 0;
-          font-weight: normal;
+        dialog header .controls {
+          display: flex;
+          padding-right: 2px;
         }
 
-        footer {
-          margin: 1em;
-          color: var(--color-text-secondary);
+        dialog header .controls .button {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          background-color: #c0c0c0;
+          padding: 4px;
+          box-shadow:
+            inset 1px 1px 0 #fff,
+            inset -1px -1px 0 #000,
+            inset 2px 2px 0 #dfdfdf,
+            inset -2px -2px 0 #808080;
         }
 
-        /*  */
-
-        @media screen and (max-width: 820px) {
-          .arrows {
-            display: none;
-          }
+        dialog section {
+          display: flex;
+          flex-direction: row;
         }
 
-        @media screen and (max-width: 480px) {
-          .reason > * {
-            max-width: 100%;
-          }
+        dialog section .icon {
+          padding: 12px;
         }
 
-        @media screen and (min-width: 768px) {
-          body {
-            margin: 8% 10%;
-          }
+        dialog section .content {
+          padding: 18px 0;
+          margin-right: 10px;
+        }
 
-          header > * {
-            display: inline-block;
-            margin-left: 1%;
-          }
+        dialog section .content p {
+          margin: 0;
+        }
+
+        dialog section .content .details {
+          font-size: 0.8em;
+          padding-top: 1em;
+          color: #252525;
+        }
+
+        dialog .actions {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+          padding: 0 0 8px 0;
+        }
+
+        dialog .actions button {
+          background-color: #c0c0c0;
+          padding: 4px 8px;
+          margin: 4px;
+          box-shadow:
+            inset 1px 1px 0 #fff,
+            inset -1px -1px 0 #000,
+            inset 2px 2px 0 #dfdfdf,
+            inset -2px -2px 0 #808080;
+          color: #868080;
+          text-shadow: 1px 1px 0 #fff;
+          border: 1px solid #000;
+          min-width: 80px;
+          border-radius: 0;
+          user-select: none;
+        }
+
+        dialog .actions button:focus {
+          outline: none;
+        }
+
+        .taskbar {
+          background-color: #c0c0c0;
+          box-sizing: border-box;
+          height: 30px;
+          width: 100%;
+          position: absolute;
+          bottom: 0;
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          box-shadow: inset 0 1px 0 #dfdfdf, inset 0 2px 0 #fff;
+          padding: 4px 2px 2px 2px;
+          cursor: default;
+          z-index: 1000;
+          user-select: none;
+        }
+
+        .taskbar .group {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+        }
+
+        .taskbar .start {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          font-size: 13px;
+          height: 100%;
+          background-color: #c0c0c0;
+          color: #000;
+          padding: 0 6px;
+          box-shadow:
+            inset 1px 1px 0 #fff,
+            inset -1px -1px 0 #000,
+            inset 2px 2px 0 #dfdfdf,
+            inset -2px -2px 0 #808080;
+          font-family: 'Tahoma', sans-serif;
+        }
+
+        .taskbar .start svg {
+          margin-right: 1px;
+        }
+
+        .taskbar .spacer {
+          width: 2px;
+          height: 100%;
+          box-shadow: inset 1px 0 0 #808080, inset -1px 0 0 #fff;
+          margin-left: 2px;
+        }
+
+        .taskbar .tray {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          margin-left: 2px;
+          padding: 0 4px;
+          height: 100%;
+          background-color: #c0c0c0;
+          box-shadow:
+            inset 1px 1px 0 #808080,
+            inset -1px -1px 0 #fff;
+        }
+
+        .taskbar .tray svg {
+          margin-right: 4px;
+        }
+
+        .taskbar .tray .clock {
+          font-size: 0.75em;
+          white-space: nowrap;
         }
       </style>
     </head>
     <body>
-    <header>
-      <h1 class="error-code">503</h1>
-      <p class="error-description">Service Unavailable</p>
-    </header>
-    <div class="status">
-      <div class="card warning" id="client-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.89-2-2-2zm0 14H5V8h14v10z"/>
+    <main>
+      <div class="desktop">
+        <div class="desktop-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 8.467 8.467">
+            <path d="M1.852 1.852v2.646h2.117 1.852V1.852H3.969z" fill="#00f"/>
+            <path d="M6.879.265v.265h.265V.265zm0 .265h-.265v.265h.265zm-.265.265H1.323v.265h5.292zm-5.292.265h-.265v4.233h.265zm4.762.265v3.44H1.588v.265h4.498.265V1.323zM2.91 2.646v.265.529h.529V2.91h.794v-.265zm.794.529v.794h1.323v-.794zm-3.44 2.91v.265 1.588h.265V6.35h6.615v-.265z" fill="#fff"/>
+            <path d="M1.852.265v.265h-.265v.265h5.027V.529h.265V.265zm-.529.794v.265 3.704.265H6.35h.265V1.323v-.265H1.588zm.265.265H6.35v3.704H1.588zm6.085 3.969v.265h.265v-.265zm0 .265h-.265v.265h.265zm-.265.265h-.265v.265h.265zM.529 6.35v1.588h6.615V6.35z" fill="silver"/>
+            <path d="M1.852 0v.265h5.292v.265h-.265v.265h-.265v4.498H1.058V1.058H.794v4.498h.265 5.821v-.265h.265v-.265h.265V.529 0h-.265zm5.556 5.027v.265h-.265v.265h-.265v.265H.265v.265h6.879v-.265h.265v-.265h.265v-.265h.265v.265h-.265v.265h-.265v.265h-.265v1.852H.265V6.085H0v2.117h.265 7.144v-.265h.265v-.265h.265v-.265h.265V5.556v-.529h-.265zm-6.35-3.969h.265V.794h-.265zm.265-.265h.265V.529h-.265zm.265-.265h.265V.265h-.265zm0 .794v.265h4.498v-.265zm1.058 1.323v.794h.265v-.794zm.794.529v.794h.265v-.794zm.529 3.44v.265h2.646v-.265zm1.588.529v.265h.265v-.265z" fill="gray"/>
+            <path d="M7.408.265v4.762h.265V.265h-.265zm0 4.762h-.265v.265h.265v-.265zm-.265.265h-.265v.265h.265v-.265zm-.265.265H.794v.265h6.085v-.265zM1.588 1.588v2.91h.265V1.852h3.969v-.265H1.852h-.265zm1.058.794v.265h1.588v.265h.265v-.265-.265H2.646zm2.381.529v1.058H3.44v.265h1.588.265V2.91h-.265zm-2.381.529v.265h.794V3.44h-.794zm5.556 1.852v2.117h.265V5.292h-.265zm0 2.117h-.265v.265h.265v-.265zm-.265.265h-.265v.265h.265v-.265zm-.265.265h-.265v.265h.265v-.265zm-.265.265H.265v.265h7.144v-.265zm-3.44-1.323v.265h2.646v-.265H3.969z" fill="#000"/>
+            <path d="M1.058 7.144v.265h.265.265v-.265h-.265z" fill="green"/>
+            <path d="M1.058 6.879v.265h.265.265v-.265h-.265z" fill="#0f0"/>
+            <path d="M2.117 2.117v.265.265h.265v-.265-.265z" fill="#0ff"/>
+            <path d="M5.821 1.588v2.91H1.588v.265h4.233.265V1.588h-.265zM3.44 2.91v.265h1.588V2.91H3.44z" fill="navy"/>
           </svg>
-        </i>
-        <div class="caption" data-l10n>Your Client</div>
-        <p class="status-text" data-l10n>Unknown</p>
-      </div>
-
-      <div class="arrows">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#000000">
-          <defs>
-            <symbol id="arrows-horizontal" viewBox="0 0 24 24">
-              <rect fill="none" height="24" width="24" x="0"/>
-              <polygon points="7.41,13.41 6,12 2,16 6,20 7.41,18.59 5.83,17 21,17 21,15 5.83,15"/>
-              <polygon points="16.59,10.59 18,12 22,8 18,4 16.59,5.41 18.17,7 3,7 3,9 18.17,9"/>
-            </symbol>
-          </defs>
-          <use href="#arrows-horizontal"/>
-        </svg>
-      </div>
-
-      <div class="card ok" id="network-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3H6c-2.21
-                     0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6m0-2C9.11 4 6.6 5.64 5.35
-                     8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96C18.67
-                     6.59 15.64 4 12 4z"/>
+          <p data-l10n>My Computer</p>
+        </div>
+        <div class="desktop-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 8.467 8.467">
+            <path d="M4.233.265v.265h-.265v.265h-.265v.265H3.44v.265h-.265-1.852v.265h-.265v.265H.794V3.44H.265v.265H0v1.323h.265v1.058h.265v1.058h.265v.794h.265v.265h6.615v-.265h.265v-2.91-.265h.265v-.265h.265v-.265h-.265v-.265h-.265v-.265-1.058h-.265v-.265h-.265v-.265H6.35h-.265v-.265h-.265v-.265h-.265v-.265h-.265v-.265h-.265V.794h-.265V.529h-.265V.265h-.265z" fill="#330"/>
+            <path d="M7.673 5.027v.265h-.265V6.35h.265v1.588h.265v-2.91zm0 2.91H1.058v.265h6.615z"/>
+            <path d="M2.381 1.852v.265h.265v-.265zm0 .265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265h-.265v.265h.265zM.265 3.44v.265h6.35V3.44zm6.35.265v.265h.265v-.265zm.265.265v.794h.265v-.794zm.265.794v.794h.265v-.794zM.265 3.704H0v1.323h.265zm0 1.323v1.058h.265V5.027zm.265 1.058v1.058h.265V6.085zm.265 1.058v.794h.265 6.615v-.265V6.35h-.265v1.323h-6.35v-.529z" fill="#990"/>
+            <path d="M2.646 1.588v.265h.265v-.265zm-1.058.265v.265h-.265v.794h.265v-.265h.265v-.265h.265v-.265h.265v-.265h-.265-.265zm5.027.529v.265h.265v.265h.265v.265h.265V2.91v-.265h-.265v-.265zm0 1.588v.265h.265v-.265zm.265.794v.265h.265v-.265zm.265.794v.265h.265v-.265z" fill="#cc6"/>
+            <path d="M1.323 1.588v.265h-.265v.265V3.44h.265V2.117h.265v-.265h1.058v-.265H1.323zM.529 3.969v1.058h.265v1.058h.265v1.323h5.556.265.265V5.027h-.265v-.794h-.265v-.265H1.058.794.529z" fill="#ff9"/>
+            <path d="M2.91 3.969v.265h.265v-.265zm.794 0v.265h.265v-.265zm.529 0v.265h.265v-.265zm.529 0v.265h.265v-.265zm1.058 0v.265h.265v-.265zm0 .265h-.265v.265h.265zm.529 0v.265h.265v-.265zm0 .265h-.265v.265h.265zm0 .265v.265h.265v-.265zm-5.027-.265v.265h.265v-.265zm1.058 0v.265h.265v-.265zm.265.265v.265h.265v-.265zm0 .265h-.265v.265h.265zm.529-.529v.265h.265v-.265zm.265.265v.265h.265v-.265zm1.058-.265v.265h.265v-.265zm.529 0v.265h.265v-.265zm-1.058.265v.265h.265v-.265zm-2.117.265v.265h.265v-.265zm3.175 0v.265h-.265v.265h.265.265v-.529zm.265.529v.265h.265v-.265zm.265 0h.265v-.529h-.265zm.265 0v.529h.265v-.529zm.265 0h.265v-.265h-.265zm.265 0v.529h.265v-.529zm.265 0h.265v.529h.265v.265h-.265v-.265h-.265v.265H6.35v.265h.265v.265h.265v-.265h.265v.265h-.265v.265h-.265v.265H6.35v-.265h.265v-.265H6.35v-.265h-.265v.265h-.265v.265h.265v.265h-.265v-.265h-.265v.265h-.265v-.265h-.265v.265h-.529v-.265h-.529v.265h-.265v-.265h-.529v.265h-.529v-.265h-.265v.265h-.529v-.265h-.265v.265h-.529v.265h6.35v-.265-1.587h-.265v-.794h-.265v.265h-.265zM1.588 7.144v-.265h-.265v.265zm-.265-.265v-.265h-.265v.265zm.529.265h.265v-.265h-.265zm.265-.265h.265v-.265h-.265zm.529.265h.529v-.265h-.529zm.529-.265h.265v-.265h-.265zm.265-.265h.265V6.35H3.44zm0-.265v-.265h-.265v.265zm-.265-.265v-.265H2.91v.265zm.265 0h.265v-.265H3.44zm.265 0v.265h.265v-.265zm0 .529v.529h.265v-.265h.265v-.265h-.265zm.529 0h.529V6.35h-.529zm.529-.265h.265v-.265h-.265zm0-.265v-.529h-.265v.265h-.265v.265h.265zm-.529-.265v-.265h-.265v.265zm0-.265h.265v-.265h-.265zm.794.529h.265v-.265h-.265zm.265 0v.265h.529v-.265zm.529.265v.265h.265V6.35zm.265 0h.265v-.265h-.265zm-.265.265h-.265-.265v.529h.265v-.265h.265zm-.529 0V6.35h-.265v.265zm-.265 0h-.265v.265h-.265v.265h.529v-.265zM1.058 5.292v.265h.265v-.265zm1.852 0v.265h.265v-.265zm.529 0v.265h.265v-.265zm-1.587.265v.265h.265v-.265zm0 .265h-.265v.265h.265zm0 .265v.265h.265v-.265zm-.265 0h-.265v.265h.265zm.794-.529v.265h.265v-.265zm0 .529v.265h.265v-.265zm.265.265v.265h.265V6.35z" fill="#fc9"/>
+            <path d="M1.323 1.323v.265h1.852v-.265zm0 .265h-.265v.265h.265zm-.265.265H.794V3.44h.265zm5.292.265v.265h.794v.265h.265v-.265-.265zm1.058.529v.794h.265v-.794z" fill="olive"/>
+            <path d="M4.233.265v.265h.265V.265zm0 .265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265H3.44v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265H2.91v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265h-.265v.265h.265z" fill="#868686"/>
+            <path d="M6.615 2.646v.265h.265v-.265zm1.058 1.058v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm0 .265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265h-.265v.265h.265z" fill="#000"/>
+            <path d="M4.498.529v.265h.265V.529zm.265.265v.265h.265V.794zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.529.529v.265h.265V2.91zm.265.265v.265h.265v-.265zm.265.265v.265h.265V3.44z" fill="#555"/>
+            <path d="M3.969 1.852v.265h.265v-.265zm0 .265h-.265v.265h.265zm-.265.265H3.44v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265H2.91v.265h.265zm-.265.265h-.265v.265h.265zm1.323-.794v.265h.265v-.265zm0 .265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265.265H3.44v.265h.265zm1.058-.529v.265h.265v-.265zm0 .265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm.794-.265v.265h.265V2.91zm0 .265h-.265v.265h.265z" fill="#039"/>
+            <path d="M4.498.794v.265h.265V.794zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.529.529v.265h.265v-.265zm.265.265v.265h.265V2.91zm.265.265v.265h.265v-.265zm.265.265v.265h.265V3.44zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm.265.265v.265h.265v-.265zm0 .265h-.265v.265h.265zm-.265.265h-.265v.265h.265zm-.265 0v-.794h-.265v.794zm-.265-.794v-.265h-.265v.265zm-.265-.265V3.44h-.265v.265zm-.265-.265v-.265H5.556v.265zm-5.027-.265v.265h1.058v-.265zm1.588 0v.265h.265v-.265zm.794 0v.265h.265v-.265zm.794 0v.265h.265v-.265z" fill="silver"/>
+            <path d="M4.233.529v.265h.265V.529zm1.852 1.852v.265h.265v-.265z" fill="#ada990"/>
+            <path d="M7.408 2.381v.265h.265v-.265zm.265.265v1.058h.265V2.646z" fill="#033"/>
+            <path d="M3.969.794v.265h-.265v.265H3.44v.265h-.265v.265H2.91v.265h-.265v.265h-.265v.265h-.265v.265h1.058v-.265h.265v-.265h.265v-.265h.265v-.265h.265v.265.265h.265v.265.265h.265v-.265h.265v.265H6.35v-.265h-.265v-.265h-.265v-.265h-.265v-.265h-.265v-.265h-.265v-.265h-.265v-.265h-.265V.794z" fill="#fffbf0"/>
+            <path d="M3.969 2.381v.265h.265v-.265h-.265zm0 .265h-.265v.265h.265v-.265zm-.265.265H3.44v.265h.265V2.91zm-1.852 0v.265H2.91V2.91H1.852zm2.381 0v.265h.265V2.91h-.265zm.794 0v.265h.265V2.91h-.265zm.529 0v.265h1.058V2.91H5.556zm1.058.265v.265h.265v-.265h-.265zm.265.265v.265h.265V3.44h-.265zm.265.265v.265h.265v-.265h-.265zm.265.265v.794h.265v-.265h.265v-.265h-.265v-.265h-.265z" fill="#e7e7d6"/>
+            <path d="M3.969 2.117v.265h.265v-.265h-.265zm0 .265h-.265v.265h.265v-.265zm-.265.265H3.44v.265h.265v-.265zm-.265.265h-.265v.265h.265V2.91zm-.265.265H2.91v.265h.265v-.265zm1.058-.529v.265h.265v-.265h-.265zm0 .265h-.265v.265h.265V2.91zm-.265.265h-.265v.265h.265v-.265zm.794-.265v.265h.265V2.91h-.265zm0 .265h-.265v.265h.265v-.265zm.529 0v.265h.265v-.265h-.265z" fill="#a0a0a4"/>
+            <path d="M.265 3.704v.265 1.058h.265V3.969h6.085v-.265H.265zm.265 1.323v1.058h.265V5.027H.529zm.265 1.058v1.058h.265V6.085H.794z" fill="#fffbf0"/>
           </svg>
-        </i>
-        <div class="caption" data-l10n>Network</div>
-        <p class="status-text" data-l10n>Working</p>
-      </div>
+          <p data-l10n>My Documents</p>
+        </div>
 
-      <div class="arrows">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#000000">
-          <use href="#arrows-horizontal"/>
-        </svg>
+        <dialog open>
+          <header>
+            <p>503: <span data-l10n>Service Unavailable</span></p>
+            <div class="controls">
+              <div class="button">
+                <svg xmlns="http://www.w3.org/2000/svg" width="9" height="8" viewBox="0 0 2.381 2.117">
+                  <path d="M.265.265v.265h.265v.265h.265v.265h.265v.265H.794v.265H.529v.265H.265v.265h.529v-.265h.265v-.265h.529v.265h.265v.265h.529v-.265h-.265v-.265h-.265v-.265h-.265v-.265h.265V.794h.265V.529h.265V.265h-.529v.265h-.265v.265h-.529V.529H.794V.265z" fill="#fff"/>
+                  <path d="M0 0v.265h.265v.265h.265v.265h.265v.265H.529v.265H.265v.265H0v.265h.529v-.265h.265v-.265h.529v.265h.265v.265h.529v-.265h-.265v-.265h-.265v-.265h-.265V.794h.265V.529h.265V.265h.265V0h-.529v.265h-.265v.265H.794V.265H.529V0z" fill="gray"/>
+                </svg>
+              </div>
+            </div>
+          </header>
+          <section>
+            <div class="icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 8.467 8.467">
+                <path d="M1.587 1.587v5.821h.265v.265h.529v.265h.265v.265h.794v.265h2.117v-.265h.794v-.265h.265v-.265h.529v-.265h.265v-.265h.265v-.529h.265V6.35h.265v-.794h.265V3.44h-.265v-.794h-.265v-.265h-.265v-.529h-.265v-.265z" fill="gray"/>
+                <path d="M2.91 0v.265h-.794v.265h-.265v.265h-.529v.265h-.265v.265H.794v.529H.529v.265H.265v.794H0v2.117h.265v.794h.265v.265h.265v.529h.265v.265h.265v.265h.529v.265h.265v.265h.794v.265h2.117v-.265h.794v-.265h.265v-.265h.529v-.265h.265v-.265h.265v-.529h.265v-.265h.265v-.794h.265V2.91h-.265v-.794h-.265v-.265h-.265v-.529h-.265v-.265h-.265V.794h-.529V.529h-.265V.265h-.794V0z" fill="red"/>
+                <path d="M2.91 0v.265h2.117V0zm2.117.265v.265h.794V.265zm.794.265v.265h.265V.529zm.265.265v.265h.529V.794zm.529.265v.265h.265v-.265zm.265.265v.529h.265v-.529zm.265.529v.265h.265v-.265zm.265.265v.794h.265v-.794zm.265.794v2.117h.265V2.91zm0 2.117h-.265v.794h.265zm-.265.794h-.265v.265h.265zm-.265.265h-.265v.529h.265zm-.265.529h-.265v.265h.265zm-.265.265h-.529v.265h.529zm-.529.265h-.265v.265h.265zm-.265.265h-.794v.265h.794zm-.794.265H2.91v.265h2.117zm-2.117 0v-.265h-.794v.265zm-.794-.265v-.265h-.265v.265zm-.265-.265v-.265h-.529v.265zm-.529-.265v-.265h-.265v.265zm-.265-.265v-.529H.794v.529zm-.265-.529v-.265H.529v.265zm-.265-.265v-.794H.265v.794zm-.265-.794V2.91H0v2.117zm0-2.117h.265v-.794H.265zm.265-.794h.265v-.265H.529zm.265-.265h.265v-.529H.794zm.265-.529h.265v-.265h-.265zm.265-.265h.529V.794h-.529zm.529-.265h.265V.529h-.265zm.265-.265h.794V.265h-.794z" fill="maroon"/>
+                <path d="M2.381 1.852v.265h-.265v.265h-.265v.265h.265v.265h.265v.265h.265v.265h.265v.265h.265v.529H2.91v.265h-.265v.265h-.265v.265h-.265v.265h-.265v.265h.265v.265h.265v.265h.265v-.265h.265v-.265h.265v-.265h.265v-.265h.265v-.265h.529v.265h.265v.265h.265v.265h.265v.265h.265v.265h.265v-.265h.265v-.265h.265v-.265h-.265v-.265h-.265v-.265h-.265v-.265h-.265v-.265h-.265v-.529h.265V3.44h.265v-.265h.265V2.91h.265v-.265h.265v-.265h-.265v-.265h-.265v-.265h-.265v.265h-.265v.265h-.265v.265h-.265v.265h-.265v.265h-.529V2.91H3.44v-.265h-.265v-.265H2.91v-.265h-.265v-.265z" fill="#fff"/>
+              </svg>
+            </div>
+            <div class="content">
+              <p><span data-l10n>The server is temporarily overloading or down</span><!----></p>
+              <!---->
+            </div>
+          </section>
+          <div class="actions">
+            <button disabled>OK</button>
+          </div>
+        </dialog>
       </div>
-
-      <div class="card warning" id="server-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M19 15v4H5v-4h14m1-2H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zM7
-            18.5c-.82 0-1.5-.67-1.5-1.5s.68-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM19 5v4H5V5h14m1-2H4c-.55 0-1
-            .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zM7 8.5c-.82 0-1.5-.67-1.5-1.5S6.18 5.5 7
-            5.5s1.5.68 1.5 1.5S7.83 8.5 7 8.5z"/>
-          </svg>
-        </i>
-        <div class="caption" data-l10n>Web Server</div>
-        <p class="status-text" data-l10n>Unknown</p>
+      <div class="taskbar">
+        <div class="group">
+          <div class="start">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="14" viewBox="0 0 21.167 18.521">
+              <path d="M11.906 0v1.323H9.26v1.323H7.938v1.323H5.292v1.323H3.969V3.969H2.646v2.646h1.323 1.323 2.646v7.938 1.323H5.292v1.115.208H3.969v-1.323H2.646v1.323 1.323H9.26v-1.323h2.646v-.208-1.115h2.646 2.646v1.323h2.646v1.323h1.323V2.646h-1.323V1.323h-2.646V0h-5.292zM0 2.646v2.646h1.323V2.646H0zm0 11.906v2.646h1.323v-2.646H0z"/>
+              <path d="M11.906 2.646v1.323h-1.323v3.969h1.323V6.615h1.323V2.646zM0 6.615V9.26h1.323V6.615zm2.646 1.323v2.646h1.323 1.323 2.646V7.938H5.292V9.26H3.969V7.938z" fill="red"/>
+              <path d="M15.875 2.646v3.969h1.323v1.323h1.323V3.969h-1.323V2.646z" fill="#0f0"/>
+              <path d="M11.906 9.26v1.323h-1.323v3.969h1.323v-1.323h1.323V9.26zM0 10.583v2.646h1.323v-2.646zm2.646 1.323v2.646h1.323 1.323 2.646v-2.646H5.292v1.323H3.969v-1.323z" fill="#00f"/>
+              <path d="M15.875 9.26v3.969h1.323v1.323h1.323v-3.969h-1.323V9.26z" fill="#ff0"/>
+            </svg>
+            <strong data-l10n>Start</strong>
+          </div>
+          <div class="spacer"></div>
+        </div>
+        <div class="group"></div>
+        <div class="group">
+          <div class="spacer"></div>
+          <div class="tray">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 4.233 4.233">
+              <path d="M.265.265h3.44v3.44H.265z" fill="#fff"/>
+              <path d="M0 0v.265 1.323h.265V.265h.529V0zm1.058 0v.265h1.058V0zm1.058.265v.265h1.852V.265zm0 .794v.265H3.44v.529h.265v-.529-.265zm-1.852.794v1.323.265h1.587v-.265H.529V1.852zm2.117.529v.265h.265v-.265zm1.058 0v.265h.265v-.265zm-1.058.529v.265h.265V2.91zm0 .529v.265h.265V3.44zm.529 0v.265h.265V3.44zm.529 0v.265h.265V3.44z" fill="#85898d"/>
+              <path d="M1.588.265v1.323h.265V.265zm1.058.529v.265h.265V.794zm.529 0v.265h.265V.794zM.529 1.852v1.323h.265V1.852z" fill="#c2c6ca"/>
+              <path d="M.265.529v.265h.265V.529zm1.058 0v.265h.265V.529zm-1.058.529v.265h.265v-.265zm1.058 0v.265h.265v-.265z" fill="#100dfb"/>
+              <path d="M2.117.529v.265.265h.529V.794h1.058V.529zm.794 2.117v.529h.265.265V2.91h-.265v-.265z" fill="#0706a7"/>
+              <path d="M.794.265v1.323h.265V.265zm.265 1.323v.265h1.058v-.265V.265h-.265v1.323zm-.265 0H0v.265h.794zM3.704.529v.265H3.44v.265h.265v1.323h.265V.529zm.265 1.852v1.323h.265V2.381zm0 1.323h-.265v.265h.265zm-.265.265H2.381v.265h1.323zM2.91.794v.265h.265V.794zM.265 3.44v.265h1.587V3.44z" fill="#000"/>
+              <path d="M2.381 1.852v.265h-.265v.265h-.265v.265 1.058h.265v.265h.265.265v-.265h-.265V3.44h-.265v-.794h.265v-.265h.265v-.265h.794v.265h.265v-.529H3.44zm1.323.529v.265h.265v-.265zm0 1.058v.265h.265V3.44zm0 .265H3.44v.265h.265z" fill="#a90055"/>
+              <path d="M2.646 2.117v.265h.794v-.265zm-.529.529v.794h.265v-.794zm1.588 0v.794h.265v-.794zM2.646 3.704v.265h.794v-.265z" fill="#fd0016"/>
+            </svg>
+            <div class="clock">00:00 AM</div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="reason">
-      <div class="what-happened">
-        <h2 data-l10n>What happened?</h2>
-        <p class="description" data-l10n>The server is temporarily overloading or down</p>
-      </div>
-      <div class="what-can-i-do">
-        <h2 data-l10n>What can I do?</h2>
-        <p class="description" data-l10n>Please try again in a few minutes</p>
-      </div>
-    </div>
-    <footer>
-      <!---->
-    </footer>
+    </main>
     <script>
-      const errorCode = parseInt(`503`, 10);
+      'use strict';
 
-      if (errorCode && !isNaN(errorCode)) {
+      /**
+       * Set the clock to the current time in HH:MM AM/PM format.
+       *
+       * @return {void}
+       */
+      const updateClock = () => {
+        const now = new Date();
+        const hours24 = now.getHours();
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+        const ampm = hours24 >= 12 ? 'PM' : 'AM';
+        const formattedTime = `${(hours24 % 12) || 12}:${minutes} ${ampm}`;
+
+        document.querySelectorAll('.clock').forEach($el => $el.textContent = formattedTime);
+      };
+
+      const $dialog = document.querySelector('dialog');
+
+      /**
+       * Triggers a blinking effect on the dialog.
+       *
+       * @return {void}
+       */
+      const blinkDialog = () => {
+        if ($dialog.classList.contains('blink') || !$dialog.open) {
+          return; // prevent multiple triggers
+        }
+
+        $dialog.classList.add('blink');
+        window.setTimeout(() => $dialog.classList.remove('blink'), 350 * 4 - 50);
+      };
+
+      /** Centers the dialog in the viewport. */
+      const centerDialog = () => {
+        $dialog.style.transform = 'none';
+
+        let [prevTop, prevLeft] = ['', ''];
+
+        // dirty hack to ensure the dialog is centered
+        while (true) {
+          $dialog.style.top = `calc(50% - ${$dialog.offsetHeight / 2}px)`;
+          $dialog.style.left = `calc(50% - ${$dialog.offsetWidth / 2}px)`;
+
+          if (prevTop !== $dialog.style.top || prevLeft !== $dialog.style.left) {
+            prevTop = $dialog.style.top;
+            prevLeft = $dialog.style.left;
+          } else {
+            break; // exit loop when the position is stable
+          }
+        }
+      };
+
+      { // add event listeners
+        // blink the dialog when clicking on outside the dialog
+        [document.querySelector('.desktop'), document.querySelector('.taskbar')].forEach(($el) => {
+          $el.addEventListener('click', blinkDialog);
+        });
+
+        // prevent event propagation from the dialog to the desktop and taskbar
+        $dialog.addEventListener('click', (e) => e.stopPropagation());
+
         /**
-         * @param {HTMLElement} $card
-         * @param { {isOk?: boolean, isWarning?: boolean, isError?: boolean} } state
-         * @param {string} statusText
+         * Get the client coordinates of the event, handling both mouse and touch events.
+         *
+         * @param {MouseEvent|TouchEvent} e
+         * @return { {x: number, y: number} }
          */
-        const setCardState = ($card, state, statusText) => {
-          const [okClass, warnClass, errClass] = ['ok', 'warning', 'error'];
-          const $statusText = $card.querySelectorAll('.status-text');
-
-          switch (true) {
-            case state.isOk === true:
-              $card.classList.remove(errClass, warnClass);
-              $card.classList.add(okClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
-
-            case state.isWarning === true:
-              $card.classList.remove(okClass, errClass);
-              $card.classList.add(warnClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
-
-            case state.isError === true:
-              $card.classList.remove(okClass, warnClass);
-              $card.classList.add(errClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
+        const getClientCoords = (e) => {
+          if (e.touches && e.touches.length > 0) {
+            return { x: e.touches[0].clientX, y: e.touches[0].clientY };
+          } else {
+            return { x: e.clientX, y: e.clientY };
           }
         };
 
-        /** @param { {whatHappened?: string, whatToDo?: string} } reasons */
-        const setReasons = (reasons) => {
-          const descSelector = '.description';
+        const onStart = (e) => {
+          e.preventDefault();
+          e.stopPropagation();
 
-          [...document.getElementsByClassName('what-happened')].forEach(($el) => {
-            if (typeof reasons.whatHappened === 'string' && reasons.whatHappened.length > 0) {
-              [...$el.querySelectorAll(descSelector)].forEach(($desc) => $desc.innerText = reasons.whatHappened);
-            } else {
-              $el.remove();
-            }
-          });
+          const { x: startX, y: startY } = getClientCoords(e);
+          const dialogStyle = window.getComputedStyle($dialog);
+          const offsetX = startX - parseInt(dialogStyle.left, 10);
+          const offsetY = startY - parseInt(dialogStyle.top, 10);
 
-          [...document.getElementsByClassName('what-can-i-do')].forEach(($el) => {
-            if (typeof reasons.whatToDo === 'string' && reasons.whatToDo.length > 0) {
-              [...$el.querySelectorAll(descSelector)].forEach(($desc) => $desc.innerText = reasons.whatToDo);
-            } else {
-              $el.remove();
-            }
-          });
-        };
+          const onMove = (e) => {
+            const { x: clientX, y: clientY } = getClientCoords(e);
 
-        /**
-         * @param {string} text
-         */
-        const setErrorDescription = function (text) {
-          [...document.getElementsByClassName('error-description')].forEach(($el) => $el.innerHTML = text);
-        };
+            let top = Math.max(clientY - offsetY, 0);
+            let left = Math.max(clientX - offsetX, 0);
 
-        const message = `Service Unavailable`.trim();
-        const cards = {
-          $client: document.getElementById('client-status-card'),
-          $network: document.getElementById('network-status-card'),
-          $server: document.getElementById('server-status-card'),
-        };
-
-        let whatToDo = 'Please try again in a few minutes';
-
-        switch (true) {
-          case errorCode >= 400 && errorCode <= 499:
-            switch (errorCode) {
-              case 400:
-              case 405:
-              case 411:
-              case 413:
-                whatToDo = 'Please try to change the request method, headers, payload, or URL';
-                break;
-              case 401:
-              case 403:
-              case 407:
-                whatToDo = 'Please check your authorization data';
-                break;
-              case 404:
-                whatToDo = 'Please double-check the URL and try again';
-                break;
-              case 409:
-              case 410:
-              case 418:
-                whatToDo = '¯\\_(ツ)_/¯';
-                break;
+            // prevent overflow
+            if (left + $dialog.clientWidth > window.innerWidth) {
+              left = window.innerWidth - $dialog.clientWidth;
             }
 
-            setErrorDescription(`<span data-l10n>${message}</span> (<span data-l10n>client-side error</span>)`);
-            setCardState(cards.$client, {isError: true}, message)
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isOk: true}, 'Working')
-            break;
+            if (top + $dialog.clientHeight > window.innerHeight) {
+              top = window.innerHeight - $dialog.clientHeight;
+            }
 
-          case errorCode >= 500 && errorCode <= 599:
-            setErrorDescription(`<span data-l10n>${message}</span> (<span data-l10n>server-side error</span>)`);
-            setCardState(cards.$client, {isOk: true}, 'Working')
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isError: true}, message)
-            break;
+            $dialog.style.top = top + 'px';
+            $dialog.style.left = left + 'px';
 
-          default:
-            setErrorDescription(message);
-            setCardState(cards.$client, {isWarning: true}, 'Unknown')
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isWarning: true}, 'Unknown')
-            break;
-        }
+            e.preventDefault();
+          };
 
-        setReasons({whatHappened: `The server is temporarily overloading or down`.trim(), whatToDo: whatToDo.trim()});
-      } else {
-        console.warn('Cannot parse the error code:', errorCode);
+          const onEnd = () => {
+            ['mousemove', 'touchmove'].forEach(eventType => document.removeEventListener(eventType, onMove));
+            ['mouseup', 'touchend'].forEach(eventType => document.removeEventListener(eventType, onEnd));
+          };
+
+          ['mousemove', 'touchmove'].forEach(eventType => document.addEventListener(eventType, onMove, { passive: false }));
+          ['mouseup', 'touchend'].forEach(eventType => document.addEventListener(eventType, onEnd));
+        };
+
+        ['mousedown', 'touchstart'].forEach(eventType => {
+          $dialog.querySelector('header').addEventListener(eventType, onStart, { passive: false });
+        });
+
+        window.addEventListener('resize', centerDialog);
+        window.setInterval(updateClock, 1000);
       }
+
+      updateClock();
+      centerDialog();
     </script>
 
     <!---->

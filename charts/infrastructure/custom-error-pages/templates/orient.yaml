@@ -1,4 +1,4 @@
-{{- if eq (index .Values "custom-error-pages" "template") "connection" }}
+{{- if eq (index .Values "custom-error-pages" "template") "orient" }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -19,7 +19,7 @@ data:
     <head>
       <meta charset="utf-8">
       <meta name="robots" content="nofollow,noarchive,noindex">
-      <title>404 | Not Found</title>
+      <title>Not Found</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <!--  -->
       <meta name="title" content="404: Not Found">
@@ -31,38 +31,29 @@ data:
       <style>
         :root {
           --color-bg-primary: #fff;
-          --color-text-primary: #000;
-          --color-text-secondary: #575958;
-          --ui-card-color-bg: #f2f2f2;
-          --color-text-ok: #137333;
-          --color-bg-ok: #e6f4ea;
-          --color-text-error: #c5221f;
-          --color-bg-error: #fce8e6;
-          --color-text-warning: #b05a00;
-          --color-bg-warning: #fef7e0;
-          --icon-size: 48px;
+          --color-text-primary: #22292f;
+          --color-text-secondary: #606f7b;
         }
 
         @media (prefers-color-scheme: dark) {
           :root {
-            --color-bg-primary: #111;
-            --color-text-primary: rgba(255, 255, 255, 0.86);
-            --color-text-secondary: rgba(255, 255, 255, 0.4);
-            --ui-card-color-bg: rgba(40, 40, 40, 0.73);
-            --color-bg-ok: #07220f;
-            --color-bg-error: #270501;
-            --color-bg-warning: #392605;
+            --color-bg-primary: #212121;
+            --color-text-primary: #fafafa;
+            --color-text-secondary: #9db6cb;
           }
         }
 
-        /** Idea author: https://github.com/186526/CloudflareCustomErrorPage */
         html, body {
+          height: 100%;
+          line-height: 1.15;
+          text-size-adjust: 100%;
+          box-sizing: border-box;
+          font-family: sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
           margin: 0;
           padding: 0;
-          min-height: 100%;
-          color: var(--color-text-primary);
           background-color: var(--color-bg-primary);
-          font-family: sans-serif;
           font-size: 16px;
           word-break: keep-all;
         }
@@ -73,364 +64,131 @@ data:
           }
         }
 
-        body {
-          margin: 2em 2em;
+        *,
+        *::before,
+        *::after {
+          box-sizing: inherit;
+          border-style: none;
         }
 
-        header {
-          margin-left: 1em;
-        }
-
-        header .error-code {
-          font-size: 3.2em;
-          font-family: monospace;
-          font-weight: 400;
-          margin: 0 0 0 10px;
-        }
-
-        header .error-description {
-          font-family: sans-serif;
-          font-size: 1.4em;
-          color: var(--color-text-secondary);
-          margin: 0 0 0 10px;
-        }
-
-        code {
-          font-family: monospace;
-        }
-
-        .status {
-          margin-top: 2.5em;
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .card {
-          background-color: var(--ui-card-color-bg);
-          padding: 2em;
-          margin: 1em 1em;
-          min-height: 3em;
-          border-radius: 9px;
-          flex-grow: 1;
-        }
-
-        .arrows svg {
-          fill: var(--color-text-secondary);
-        }
-
-        .icon svg {
-          width: var(--icon-size);
-          height: auto;
-          fill: var(--color-text-primary);
-        }
-
-        .card.ok {
-          background-color: var(--color-bg-ok);
-        }
-
-        .card.ok .status-text {
-          color: var(--color-text-ok);
-        }
-
-        .card.ok svg {
-          fill: var(--color-text-ok);
-        }
-
-        .card.error {
-          background-color: var(--color-bg-error);
-        }
-
-        .card.error .status-text {
-          color: var(--color-text-error);
-        }
-
-        .card.error svg {
-          fill: var(--color-text-error);
-        }
-
-        .card.warning {
-          background-color: var(--color-bg-warning);
-        }
-
-        .card.warning .status-text {
-          color: var(--color-text-warning);
-        }
-
-        .card.warning svg {
-          fill: var(--color-text-warning);
-        }
-
-        .card .caption {
-          font-size: 1.37em;
-        }
-
-        .card .status-text, .reason p {
+        p {
           margin: 0;
-          font-family: sans-serif;
         }
 
-        .reason p {
-          line-height: 125%;
-        }
-
-        a {
-          text-decoration: none;
-          color: #1967d2;
-        }
-
-        .reason {
+        main {
           display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          justify-content: space-between;
-          align-items: baseline;
+          flex-direction: column;
+          height: 100%;
         }
 
-        .reason > * {
-          display: block;
-          margin: 1em;
-          flex-grow: 1;
-          max-width: 40%;
+        main .left, main .right {
+          width: 100%;
         }
 
-        .reason h2 {
-          font-size: 1.45em;
-          margin: 0 0 .6em 0;
-          font-weight: normal;
+        main .left .container {
+          max-width: 30em;
+          margin: 2em;
         }
 
-        footer {
-          margin: 1em;
+        main .left .container .code {
+          color: var(--color-text-primary);
+          font-size: 3em;
+          font-weight: 900;
+        }
+
+        main .left .container .space {
+          width: 4em;
+          height: .25em;
+          background-color: #a779e9;
+          margin-top: .75em;
+          margin-bottom: .75em;
+        }
+
+        main .left .container .description {
           color: var(--color-text-secondary);
+          font-size: 1.5em;
+          margin-bottom: 2em;
+        }
+
+        main .right {
+          height: 100%;
+        }
+
+        main .right .container {
+          width: 100%;
+          height: 100%;
+          background-size: cover;
+          background-repeat: no-repeat;
+          /* */
+          /* https://github.com/LaravelCollective/errors/blob/8a0cf6fb73ba0041330967d3d6a137bd4509f7bd/src/publish/svg/404.svg */
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 1024 1024'%3E%3Cdefs%3E%3ClinearGradient id='A' x1='50.31%25' x2='50%25' y1='74.74%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23ffe98a'/%3E%3Cstop offset='67.7%25' stop-color='%23b63e59'/%3E%3Cstop offset='100%25' stop-color='%2368126f'/%3E%3C/linearGradient%3E%3Ccircle id='B' cx='603' cy='682' r='93'/%3E%3Cfilter id='C' width='203.2%25' height='203.2%25' x='-51.6%25' y='-51.6%25'%3E%3CfeOffset in='SourceAlpha'/%3E%3CfeGaussianBlur stdDeviation='32'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0'/%3E%3C/filter%3E%3ClinearGradient id='D' x1='49.48%25' x2='49.87%25' y1='11.66%25' y2='77.75%25'%3E%3Cstop offset='0%25' stop-color='%23f7eab9'/%3E%3Cstop offset='100%25' stop-color='%23e5765e'/%3E%3C/linearGradient%3E%3ClinearGradient id='E' x1='91.59%25' x2='66.97%25' y1='5.89%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23a22a50'/%3E%3Cstop offset='100%25' stop-color='%23ee7566'/%3E%3C/linearGradient%3E%3ClinearGradient id='F' x1='49.48%25' x2='49.61%25' y1='11.66%25' y2='98.34%25'%3E%3Cstop offset='0%25' stop-color='%23f7eab9'/%3E%3Cstop offset='100%25' stop-color='%23e5765e'/%3E%3C/linearGradient%3E%3ClinearGradient id='G' x1='78.5%25' x2='36.4%25' y1='106.76%25' y2='26.41%25'%3E%3Cstop offset='0%25' stop-color='%23a22a50'/%3E%3Cstop offset='100%25' stop-color='%23ee7566'/%3E%3C/linearGradient%3E%3C/defs%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath fill='url(%23A)' d='M0 0h1024v1024H0z'/%3E%3Cuse fill='%23000' filter='url(%23C)' xlink:href='%23B'/%3E%3Cuse fill='%23fff6cb' xlink:href='%23B'/%3E%3Cg fill='%23fff' opacity='.3'%3E%3Ccircle cx='217' cy='278' r='3' fill-opacity='.4'/%3E%3Ccircle cx='96' cy='257' r='2'/%3E%3Ccircle cx='36' cy='287' r='2' opacity='.4'/%3E%3Ccircle cx='127' cy='88' r='3'/%3E%3Ccircle cx='216' cy='25' r='2'/%3E%3Ccircle cx='16' cy='137' r='2'/%3E%3Ccircle cx='166' cy='167' r='2'/%3E%3Ccircle cx='376' cy='247' r='2'/%3E%3Ccircle cx='467' cy='88' r='3' opacity='.4'/%3E%3Ccircle cx='527' cy='278' r='3'/%3E%3Ccircle cx='607' cy='138' r='3'/%3E%3Ccircle cx='817' cy='28' r='3' opacity='.4'/%3E%3Ccircle cx='516' cy='157' r='2'/%3E%3Ccircle cx='846' cy='227' r='2'/%3E%3Ccircle cx='766' cy='137' r='2'/%3E%3Ccircle cx='947' cy='278' r='3' opacity='.4'/%3E%3Ccircle cx='717' cy='248' r='3'/%3E%3Ccircle cx='917' cy='78' r='3'/%3E%3Ccircle cx='996' cy='167' r='2'/%3E%3Ccircle cx='646' cy='37' r='2'/%3E%3C/g%3E%3Cg transform='translate(0 550)'%3E%3Cpath fill='%238e2c15' d='M259 5.47c0 5.33 3.33 9.5 10 12.5s9.67 9.16 9 18.5h1c.67-6.31 1-11.8 1-16.47 8.67 0 13.33-1.33 14-4 .67 4.98 1.67 8.3 3 9.97 1.33 1.66 2 5.16 2 10.5h1c0-5.65.33-9.64 1-11.97 1-3.5 4-10.03-1-14.53S295 7 290 3s-10-3-13 2-5 7-9 7-5-3.53-5-5.53 2-5-1.5-5-7.5 0-7.5 2c0 1.33 1.67 2 5 2z'/%3E%3Cg fill='url(%23D)'%3E%3Cpath d='M1024 390H0V105.08C77.3 71.4 155.26 35 297.4 35c250 0 250.76 125.25 500 125 84.03-.08 160.02-18.2 226.6-40.93V390z'/%3E%3Cpath d='M1024 442H0V271.82c137.51-15.4 203.1-50.49 356.67-60.1C555.24 199.3 606.71 86.59 856.74 86.59c72.78 0 124.44 10.62 167.26 25.68V442z'/%3E%3C/g%3E%3Cg fill='url(%23E)'%3E%3Cpath d='M1024 112.21V412H856.91c99.31-86.5 112.63-140.75 39.97-162.78C710.24 192.64 795.12 86.58 856.9 86.58c72.7 0 124.3 10.6 167.09 25.63z'/%3E%3Cpath d='M1024 285.32V412H857c99.31-86.6 112.63-140.94 39.97-163L1024 285.32z'/%3E%3C/g%3E%3Cpath fill='url(%23F)' d='M0 474V223.93C67.12 190.69 129.55 155 263 155c250 0 331.46 162.6 530 175 107.42 6.71 163-26.77 231-58.92V474H0z'/%3E%3Cpath fill='url(%23E)' d='M353.02 474H0V223.93C67.12 190.69 129.55 155 263 155c71.14 0 151.5 12.76 151.5 70.5 0 54.5-45.5 79.72-112.5 109-82.26 35.95-54.57 111.68 51.02 139.5z'/%3E%3Cpath fill='url(%23G)' d='M353.02 474H0v-14.8l302-124.7c-82.26 35.95-54.57 111.68 51.02 139.5z'/%3E%3C/g%3E%3Cg fill='%23fff'%3E%3Cg opacity='.2'%3E%3Ccircle cx='538' cy='633' r='110'/%3E%3Ccircle cx='708' cy='601' r='60'/%3E%3Ccircle cx='358' cy='743' r='70'/%3E%3C/g%3E%3Cg fill-rule='nonzero' opacity='.08'%3E%3Cpath d='M145 396.22c5.536-5.491 14.464-5.491 20 0s14.464 5.491 20 0l20-19.86c16.603-16.484 43.397-16.484 60 0l15 14.9c8.304 8.237 21.696 8.237 30 0s21.696-8.237 30 0l.9.9A47.69 47.69 0 0 1 355 426H135v-5.76a33.84 33.84 0 0 1 10-24.02zm559.1-66.11l5.9-5.86c11.07-11 28.93-11 40 0l10 9.94c5.534 5.497 14.466 5.497 20 0s14.466-5.497 20 0a16.36 16.36 0 0 0 21.3 1.5l8.7-6.47c11.867-8.844 28.133-8.844 40 0l4.06 3.03A39.6 39.6 0 0 1 890 364H690a47.77 47.77 0 0 1 14.1-33.89z'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+          /* */
         }
 
         /*  */
 
-        @media screen and (max-width: 820px) {
-          .arrows {
-            display: none;
+        @media (min-width: 768px) {
+          main {
+            flex-direction: row;
+          }
+
+          main .left, main .right {
+            width: 50%;
+          }
+
+          main .left {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          main .left .container .code {
+            font-size: 9em;
+          }
+
+          main .left .container .space {
+            margin-top: 1.5em;
+            margin-bottom: 1.5em;
+          }
+
+          main .left .container .description {
+            font-size: 1.875em;
+            font-weight: 300;
+            line-height: 1.5;
+          }
+
+          main .right {
+            display: flex;
+            padding-bottom: 0;
+            min-height: 100vh;
+          }
+
+          main .right .container {
+            background-position: left;
           }
         }
 
-        @media screen and (max-width: 480px) {
-          .reason > * {
-            max-width: 100%;
-          }
-        }
-
-        @media screen and (min-width: 768px) {
-          body {
-            margin: 8% 10%;
-          }
-
-          header > * {
-            display: inline-block;
-            margin-left: 1%;
+        @media (min-width: 992px) {
+          main .right .container {
+            background-position: center;
           }
         }
       </style>
     </head>
     <body>
-    <header>
-      <h1 class="error-code">404</h1>
-      <p class="error-description">Not Found</p>
-    </header>
-    <div class="status">
-      <div class="card warning" id="client-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.89-2-2-2zm0 14H5V8h14v10z"/>
-          </svg>
-        </i>
-        <div class="caption" data-l10n>Your Client</div>
-        <p class="status-text" data-l10n>Unknown</p>
+    <main>
+      <div class="left">
+        <div class="container">
+          <div class="code">404</div>
+          <div class="space"></div>
+          <p class="description" data-l10n>The server can not find the requested page</p>
+          <!--  -->
+        </div>
       </div>
-
-      <div class="arrows">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#000000">
-          <defs>
-            <symbol id="arrows-horizontal" viewBox="0 0 24 24">
-              <rect fill="none" height="24" width="24" x="0"/>
-              <polygon points="7.41,13.41 6,12 2,16 6,20 7.41,18.59 5.83,17 21,17 21,15 5.83,15"/>
-              <polygon points="16.59,10.59 18,12 22,8 18,4 16.59,5.41 18.17,7 3,7 3,9 18.17,9"/>
-            </symbol>
-          </defs>
-          <use href="#arrows-horizontal"/>
-        </svg>
+      <div class="right">
+        <div class="container"></div>
       </div>
-
-      <div class="card ok" id="network-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3H6c-2.21
-                     0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6m0-2C9.11 4 6.6 5.64 5.35
-                     8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96C18.67
-                     6.59 15.64 4 12 4z"/>
-          </svg>
-        </i>
-        <div class="caption" data-l10n>Network</div>
-        <p class="status-text" data-l10n>Working</p>
-      </div>
-
-      <div class="arrows">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#000000">
-          <use href="#arrows-horizontal"/>
-        </svg>
-      </div>
-
-      <div class="card warning" id="server-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M19 15v4H5v-4h14m1-2H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zM7
-            18.5c-.82 0-1.5-.67-1.5-1.5s.68-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM19 5v4H5V5h14m1-2H4c-.55 0-1
-            .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zM7 8.5c-.82 0-1.5-.67-1.5-1.5S6.18 5.5 7
-            5.5s1.5.68 1.5 1.5S7.83 8.5 7 8.5z"/>
-          </svg>
-        </i>
-        <div class="caption" data-l10n>Web Server</div>
-        <p class="status-text" data-l10n>Unknown</p>
-      </div>
-    </div>
-    <div class="reason">
-      <div class="what-happened">
-        <h2 data-l10n>What happened?</h2>
-        <p class="description" data-l10n>The server can not find the requested page</p>
-      </div>
-      <div class="what-can-i-do">
-        <h2 data-l10n>What can I do?</h2>
-        <p class="description" data-l10n>Please try again in a few minutes</p>
-      </div>
-    </div>
-    <footer>
-      <!---->
-    </footer>
-    <script>
-      const errorCode = parseInt(`404`, 10);
-
-      if (errorCode && !isNaN(errorCode)) {
-        /**
-         * @param {HTMLElement} $card
-         * @param { {isOk?: boolean, isWarning?: boolean, isError?: boolean} } state
-         * @param {string} statusText
-         */
-        const setCardState = ($card, state, statusText) => {
-          const [okClass, warnClass, errClass] = ['ok', 'warning', 'error'];
-          const $statusText = $card.querySelectorAll('.status-text');
-
-          switch (true) {
-            case state.isOk === true:
-              $card.classList.remove(errClass, warnClass);
-              $card.classList.add(okClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
-
-            case state.isWarning === true:
-              $card.classList.remove(okClass, errClass);
-              $card.classList.add(warnClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
-
-            case state.isError === true:
-              $card.classList.remove(okClass, warnClass);
-              $card.classList.add(errClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
-          }
-        };
-
-        /** @param { {whatHappened?: string, whatToDo?: string} } reasons */
-        const setReasons = (reasons) => {
-          const descSelector = '.description';
-
-          [...document.getElementsByClassName('what-happened')].forEach(($el) => {
-            if (typeof reasons.whatHappened === 'string' && reasons.whatHappened.length > 0) {
-              [...$el.querySelectorAll(descSelector)].forEach(($desc) => $desc.innerText = reasons.whatHappened);
-            } else {
-              $el.remove();
-            }
-          });
-
-          [...document.getElementsByClassName('what-can-i-do')].forEach(($el) => {
-            if (typeof reasons.whatToDo === 'string' && reasons.whatToDo.length > 0) {
-              [...$el.querySelectorAll(descSelector)].forEach(($desc) => $desc.innerText = reasons.whatToDo);
-            } else {
-              $el.remove();
-            }
-          });
-        };
-
-        /**
-         * @param {string} text
-         */
-        const setErrorDescription = function (text) {
-          [...document.getElementsByClassName('error-description')].forEach(($el) => $el.innerHTML = text);
-        };
-
-        const message = `Not Found`.trim();
-        const cards = {
-          $client: document.getElementById('client-status-card'),
-          $network: document.getElementById('network-status-card'),
-          $server: document.getElementById('server-status-card'),
-        };
-
-        let whatToDo = 'Please try again in a few minutes';
-
-        switch (true) {
-          case errorCode >= 400 && errorCode <= 499:
-            switch (errorCode) {
-              case 400:
-              case 405:
-              case 411:
-              case 413:
-                whatToDo = 'Please try to change the request method, headers, payload, or URL';
-                break;
-              case 401:
-              case 403:
-              case 407:
-                whatToDo = 'Please check your authorization data';
-                break;
-              case 404:
-                whatToDo = 'Please double-check the URL and try again';
-                break;
-              case 409:
-              case 410:
-              case 418:
-                whatToDo = '¯\\_(ツ)_/¯';
-                break;
-            }
-
-            setErrorDescription(`<span data-l10n>${message}</span> (<span data-l10n>client-side error</span>)`);
-            setCardState(cards.$client, {isError: true}, message)
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isOk: true}, 'Working')
-            break;
-
-          case errorCode >= 500 && errorCode <= 599:
-            setErrorDescription(`<span data-l10n>${message}</span> (<span data-l10n>server-side error</span>)`);
-            setCardState(cards.$client, {isOk: true}, 'Working')
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isError: true}, message)
-            break;
-
-          default:
-            setErrorDescription(message);
-            setCardState(cards.$client, {isWarning: true}, 'Unknown')
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isWarning: true}, 'Unknown')
-            break;
-        }
-
-        setReasons({whatHappened: `The server can not find the requested page`.trim(), whatToDo: whatToDo.trim()});
-      } else {
-        console.warn('Cannot parse the error code:', errorCode);
-      }
-    </script>
+    </main>
 
     <!---->
     <script>// // the very first line should be kept as a comment to avoid unexpected commenting when embedding the script into the HTML
@@ -1672,7 +1430,7 @@ data:
     <head>
       <meta charset="utf-8">
       <meta name="robots" content="nofollow,noarchive,noindex">
-      <title>503 | Service Unavailable</title>
+      <title>Service Unavailable</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <!--  -->
       <meta http-equiv="refresh" content="30">
@@ -1686,38 +1444,29 @@ data:
       <style>
         :root {
           --color-bg-primary: #fff;
-          --color-text-primary: #000;
-          --color-text-secondary: #575958;
-          --ui-card-color-bg: #f2f2f2;
-          --color-text-ok: #137333;
-          --color-bg-ok: #e6f4ea;
-          --color-text-error: #c5221f;
-          --color-bg-error: #fce8e6;
-          --color-text-warning: #b05a00;
-          --color-bg-warning: #fef7e0;
-          --icon-size: 48px;
+          --color-text-primary: #22292f;
+          --color-text-secondary: #606f7b;
         }
 
         @media (prefers-color-scheme: dark) {
           :root {
-            --color-bg-primary: #111;
-            --color-text-primary: rgba(255, 255, 255, 0.86);
-            --color-text-secondary: rgba(255, 255, 255, 0.4);
-            --ui-card-color-bg: rgba(40, 40, 40, 0.73);
-            --color-bg-ok: #07220f;
-            --color-bg-error: #270501;
-            --color-bg-warning: #392605;
+            --color-bg-primary: #212121;
+            --color-text-primary: #fafafa;
+            --color-text-secondary: #9db6cb;
           }
         }
 
-        /** Idea author: https://github.com/186526/CloudflareCustomErrorPage */
         html, body {
+          height: 100%;
+          line-height: 1.15;
+          text-size-adjust: 100%;
+          box-sizing: border-box;
+          font-family: sans-serif;
+          -webkit-font-smoothing: antialiased;
+          -moz-osx-font-smoothing: grayscale;
           margin: 0;
           padding: 0;
-          min-height: 100%;
-          color: var(--color-text-primary);
           background-color: var(--color-bg-primary);
-          font-family: sans-serif;
           font-size: 16px;
           word-break: keep-all;
         }
@@ -1728,364 +1477,131 @@ data:
           }
         }
 
-        body {
-          margin: 2em 2em;
+        *,
+        *::before,
+        *::after {
+          box-sizing: inherit;
+          border-style: none;
         }
 
-        header {
-          margin-left: 1em;
-        }
-
-        header .error-code {
-          font-size: 3.2em;
-          font-family: monospace;
-          font-weight: 400;
-          margin: 0 0 0 10px;
-        }
-
-        header .error-description {
-          font-family: sans-serif;
-          font-size: 1.4em;
-          color: var(--color-text-secondary);
-          margin: 0 0 0 10px;
-        }
-
-        code {
-          font-family: monospace;
-        }
-
-        .status {
-          margin-top: 2.5em;
-          display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          justify-content: center;
-          align-items: center;
-        }
-
-        .card {
-          background-color: var(--ui-card-color-bg);
-          padding: 2em;
-          margin: 1em 1em;
-          min-height: 3em;
-          border-radius: 9px;
-          flex-grow: 1;
-        }
-
-        .arrows svg {
-          fill: var(--color-text-secondary);
-        }
-
-        .icon svg {
-          width: var(--icon-size);
-          height: auto;
-          fill: var(--color-text-primary);
-        }
-
-        .card.ok {
-          background-color: var(--color-bg-ok);
-        }
-
-        .card.ok .status-text {
-          color: var(--color-text-ok);
-        }
-
-        .card.ok svg {
-          fill: var(--color-text-ok);
-        }
-
-        .card.error {
-          background-color: var(--color-bg-error);
-        }
-
-        .card.error .status-text {
-          color: var(--color-text-error);
-        }
-
-        .card.error svg {
-          fill: var(--color-text-error);
-        }
-
-        .card.warning {
-          background-color: var(--color-bg-warning);
-        }
-
-        .card.warning .status-text {
-          color: var(--color-text-warning);
-        }
-
-        .card.warning svg {
-          fill: var(--color-text-warning);
-        }
-
-        .card .caption {
-          font-size: 1.37em;
-        }
-
-        .card .status-text, .reason p {
+        p {
           margin: 0;
-          font-family: sans-serif;
         }
 
-        .reason p {
-          line-height: 125%;
-        }
-
-        a {
-          text-decoration: none;
-          color: #1967d2;
-        }
-
-        .reason {
+        main {
           display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          justify-content: space-between;
-          align-items: baseline;
+          flex-direction: column;
+          height: 100%;
         }
 
-        .reason > * {
-          display: block;
-          margin: 1em;
-          flex-grow: 1;
-          max-width: 40%;
+        main .left, main .right {
+          width: 100%;
         }
 
-        .reason h2 {
-          font-size: 1.45em;
-          margin: 0 0 .6em 0;
-          font-weight: normal;
+        main .left .container {
+          max-width: 30em;
+          margin: 2em;
         }
 
-        footer {
-          margin: 1em;
+        main .left .container .code {
+          color: var(--color-text-primary);
+          font-size: 3em;
+          font-weight: 900;
+        }
+
+        main .left .container .space {
+          width: 4em;
+          height: .25em;
+          background-color: #a779e9;
+          margin-top: .75em;
+          margin-bottom: .75em;
+        }
+
+        main .left .container .description {
           color: var(--color-text-secondary);
+          font-size: 1.5em;
+          margin-bottom: 2em;
+        }
+
+        main .right {
+          height: 100%;
+        }
+
+        main .right .container {
+          width: 100%;
+          height: 100%;
+          background-size: cover;
+          background-repeat: no-repeat;
+          /* */
+          /* https://github.com/LaravelCollective/errors/blob/8a0cf6fb73ba0041330967d3d6a137bd4509f7bd/src/publish/svg/503.svg */
+          background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink' viewBox='0 0 1024 1024'%3E%3Cdefs%3E%3ClinearGradient id='A' x1='50.31%25' x2='50%25' y1='74.74%25' y2='0%25'%3E%3Cstop offset='0%25' stop-color='%23e26b6b'/%3E%3Cstop offset='50.28%25' stop-color='%23f5bcf4'/%3E%3Cstop offset='100%25' stop-color='%238690e1'/%3E%3C/linearGradient%3E%3ClinearGradient id='B' x1='50%25' x2='50%25' y1='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%238c9ce7'/%3E%3Cstop offset='100%25' stop-color='%234353a4'/%3E%3C/linearGradient%3E%3ClinearGradient id='C' x1='50%25' x2='50%25' y1='0%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23d1d9ff'/%3E%3Cstop offset='100%25' stop-color='%238395eb'/%3E%3C/linearGradient%3E%3Ccircle id='D' cx='622' cy='663' r='60'/%3E%3Cfilter id='E' width='260%25' height='260%25' x='-80%25' y='-80%25'%3E%3CfeOffset in='SourceAlpha'/%3E%3CfeGaussianBlur stdDeviation='32'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 1 0'/%3E%3C/filter%3E%3ClinearGradient id='F' x1='49.87%25' x2='49.87%25' y1='3.62%25' y2='77.75%25'%3E%3Cstop offset='0%25' stop-color='%23b0ddf1'/%3E%3Cstop offset='100%25' stop-color='%23325c82'/%3E%3C/linearGradient%3E%3ClinearGradient id='G' x1='100%25' x2='72.45%25' y1='0%25' y2='85.2%25'%3E%3Cstop offset='0%25' stop-color='%231d3a6d'/%3E%3Cstop offset='100%25' stop-color='%23467994'/%3E%3C/linearGradient%3E%3ClinearGradient id='H' x1='49.48%25' x2='49.87%25' y1='11.66%25' y2='77.75%25'%3E%3Cstop offset='0%25' stop-color='%23b9c9f7'/%3E%3Cstop offset='100%25' stop-color='%23301863'/%3E%3C/linearGradient%3E%3ClinearGradient id='I' x1='91.59%25' x2='70.98%25' y1='5.89%25' y2='88%25'%3E%3Cstop offset='0%25' stop-color='%232d3173'/%3E%3Cstop offset='100%25' stop-color='%237f90e0'/%3E%3C/linearGradient%3E%3ClinearGradient id='J' x1='70.98%25' x2='70.98%25' y1='9.88%25' y2='88%25'%3E%3Cstop offset='0%25' stop-color='%232d3173'/%3E%3Cstop offset='100%25' stop-color='%237f90e0'/%3E%3C/linearGradient%3E%3Cpath id='K' d='M251 506a8 8 0 0 1 8 8v15l-16 1v-16a8 8 0 0 1 8-8z'/%3E%3Cpath id='L' d='M253 506.25a8 8 0 0 0-6 7.75v15.75l-4 .25v-16a8 8 0 0 1 10-7.75z'/%3E%3C/defs%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cpath fill='url(%23A)' d='M0 0h1024v1024H0z'/%3E%3Cg transform='translate(211 420)'%3E%3Cpath fill='%238c9ce7' d='M65 0a2 2 0 0 1 2 2v23h-4V2c0-1.1.9-2 2-2z'/%3E%3Cpath fill='%235263b8' d='M64 24h2a3 3 0 0 1 3 3v2h-8v-2a3 3 0 0 1 3-3z'/%3E%3Cpath fill='url(%23B)' d='M65 108h40V68a40 40 0 1 0-80 0v40h40z'/%3E%3Cpath fill='%232e3d87' d='M0 118l30-6v106H0z'/%3E%3Cpath fill='%23301862' d='M60 118l-30-6v106h30z'/%3E%3Cpath fill='url(%23C)' d='M45 107V68a40.02 40.02 0 0 1 30.03-38.75C92.27 33.65 105 49.11 105 67.5V107H45z'/%3E%3Cpath fill='%234353a4' d='M15 78l50-10 2 2v108H15z'/%3E%3Cpath fill='%238c9ce7' d='M115 78L65 68v2 108h50z'/%3E%3Cpath fill='%234353a4' d='M75 118l30-6v106H75z'/%3E%3Cpath fill='%238c9ce7' d='M135 118l-30-6v106h30z'/%3E%3C/g%3E%3Cuse fill='%23000' filter='url(%23E)' xlink:href='%23D'/%3E%3Cuse fill='%23fff' xlink:href='%23D'/%3E%3Cg transform='translate(146 245)'%3E%3Cpath fill='url(%23F)' d='M169.12 450.57C192.22 464.04 143.85 532.52 24 656h649L169.12 450.57z'/%3E%3Cpath fill='url(%23G)' d='M178.5 538.5C137.83 567.17 199.67 606.33 364 656H0l178.5-117.5z'/%3E%3C/g%3E%3Cpath fill='url(%23H)' d='M1024 940H0V655.08C77.3 621.4 155.26 585 297.4 585c250 0 250.76 125.25 500 125 84.03-.08 160.02-18.2 226.6-40.93V940z'/%3E%3Cuse xlink:href='%23K' fill='%231f2a68'/%3E%3Cuse xlink:href='%23L' fill='%237c8cda'/%3E%3Cuse xlink:href='%23K' y='40' fill='%231f2a68'/%3E%3Cuse xlink:href='%23L' y='40' fill='%237c8cda'/%3E%3Cpath fill='%235263b8' d='M301 506a8 8 0 0 1 8 8v16l-16-1v-15a8 8 0 0 1 8-8z'/%3E%3Cpath fill='%23293781' d='M305 529.75V514a8 8 0 0 0-6-7.75 8.01 8.01 0 0 1 10 7.75v16l-4-.25z'/%3E%3Cg transform='translate(0 636)'%3E%3Cpath fill='url(%23H)' d='M1024 356H0V185.82c137.51-15.4 203.1-50.49 356.67-60.1C555.24 113.3 606.71.59 856.74.59 929.52.58 981.18 11.2 1024 26.26V356z'/%3E%3Cg fill='url(%23I)'%3E%3Cpath d='M1024 26.21V326H856.91c99.31-86.5 112.63-140.75 39.97-162.78C710.24 106.64 795.12.58 856.9.58c72.7 0 124.3 10.6 167.09 25.63z'/%3E%3Cpath d='M1024 199.32V326H857c99.31-86.6 112.63-140.94 39.97-163L1024 199.32z'/%3E%3C/g%3E%3C/g%3E%3Cg fill='%23fff'%3E%3Ccircle cx='566' cy='599' r='110' opacity='.1'/%3E%3Ccircle cx='669' cy='539' r='60' opacity='.1'/%3E%3C/g%3E%3Cg transform='translate(0 705)'%3E%3Cpath fill='url(%23H)' d='M0 319V68.93C67.12 35.69 129.55 0 263 0c250 0 331.46 162.6 530 175 107.42 6.71 163-26.77 231-58.92V319H0z'/%3E%3Cpath fill='url(%23I)' d='M353.02 319H0V68.93C67.12 35.69 129.55 0 263 0c71.14 0 151.5 12.76 151.5 70.5 0 54.5-45.5 79.72-112.5 109-82.26 35.95-54.57 111.68 51.02 139.5z'/%3E%3Cpath fill='url(%23J)' d='M353.02 319H0v-14.8l302-124.7c-82.26 35.95-54.57 111.68 51.02 139.5z'/%3E%3C/g%3E%3Cg fill='%23fff'%3E%3Ccircle cx='414' cy='799' r='70' opacity='.1'/%3E%3Ccircle cx='479' cy='745' r='30' opacity='.1'/%3E%3Cg opacity='.15'%3E%3Cpath d='M603.67 345.48a9.46 9.46 0 0 1 13.33 0 9.46 9.46 0 0 0 13.33 0l13.33-13.24c11.07-10.988 28.93-10.988 40 0l10 9.93c5.536 5.491 14.464 5.491 20 0s14.464-5.491 20 0l.6.6a31.8 31.8 0 0 1 9.4 22.56H597v-3.84c0-6.01 2.4-11.78 6.67-16.01zM800 222.25c11.07-11 28.93-11 40 0l10 9.94c5.534 5.497 14.466 5.497 20 0s14.466-5.497 20 0a16.36 16.36 0 0 0 21.3 1.5l8.7-6.47c11.867-8.844 28.133-8.844 40 0l4.06 3.03A39.6 39.6 0 0 1 980 262H780c0-12.72 8.93-28.75 20-39.75zM63.1 289.14l.9-.9c8.302-8.242 21.698-8.242 30 0s21.698 8.242 30 0l10-9.93c13.835-13.739 36.165-13.739 50 0l15 14.9c5.536 5.491 14.464 5.491 20 0s14.464-5.491 20 0a33.84 33.84 0 0 1 10 24.02V323H49c0-12.71 5.07-24.9 14.1-33.86z'/%3E%3C/g%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+          /* */
         }
 
         /*  */
 
-        @media screen and (max-width: 820px) {
-          .arrows {
-            display: none;
+        @media (min-width: 768px) {
+          main {
+            flex-direction: row;
+          }
+
+          main .left, main .right {
+            width: 50%;
+          }
+
+          main .left {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+
+          main .left .container .code {
+            font-size: 9em;
+          }
+
+          main .left .container .space {
+            margin-top: 1.5em;
+            margin-bottom: 1.5em;
+          }
+
+          main .left .container .description {
+            font-size: 1.875em;
+            font-weight: 300;
+            line-height: 1.5;
+          }
+
+          main .right {
+            display: flex;
+            padding-bottom: 0;
+            min-height: 100vh;
+          }
+
+          main .right .container {
+            background-position: left;
           }
         }
 
-        @media screen and (max-width: 480px) {
-          .reason > * {
-            max-width: 100%;
-          }
-        }
-
-        @media screen and (min-width: 768px) {
-          body {
-            margin: 8% 10%;
-          }
-
-          header > * {
-            display: inline-block;
-            margin-left: 1%;
+        @media (min-width: 992px) {
+          main .right .container {
+            background-position: center;
           }
         }
       </style>
     </head>
     <body>
-    <header>
-      <h1 class="error-code">503</h1>
-      <p class="error-description">Service Unavailable</p>
-    </header>
-    <div class="status">
-      <div class="card warning" id="client-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.89-2-2-2zm0 14H5V8h14v10z"/>
-          </svg>
-        </i>
-        <div class="caption" data-l10n>Your Client</div>
-        <p class="status-text" data-l10n>Unknown</p>
+    <main>
+      <div class="left">
+        <div class="container">
+          <div class="code">503</div>
+          <div class="space"></div>
+          <p class="description" data-l10n>The server is temporarily overloading or down</p>
+          <!--  -->
+        </div>
       </div>
-
-      <div class="arrows">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#000000">
-          <defs>
-            <symbol id="arrows-horizontal" viewBox="0 0 24 24">
-              <rect fill="none" height="24" width="24" x="0"/>
-              <polygon points="7.41,13.41 6,12 2,16 6,20 7.41,18.59 5.83,17 21,17 21,15 5.83,15"/>
-              <polygon points="16.59,10.59 18,12 22,8 18,4 16.59,5.41 18.17,7 3,7 3,9 18.17,9"/>
-            </symbol>
-          </defs>
-          <use href="#arrows-horizontal"/>
-        </svg>
+      <div class="right">
+        <div class="container"></div>
       </div>
-
-      <div class="card ok" id="network-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3H6c-2.21
-                     0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6m0-2C9.11 4 6.6 5.64 5.35
-                     8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96C18.67
-                     6.59 15.64 4 12 4z"/>
-          </svg>
-        </i>
-        <div class="caption" data-l10n>Network</div>
-        <p class="status-text" data-l10n>Working</p>
-      </div>
-
-      <div class="arrows">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#000000">
-          <use href="#arrows-horizontal"/>
-        </svg>
-      </div>
-
-      <div class="card warning" id="server-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M19 15v4H5v-4h14m1-2H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zM7
-            18.5c-.82 0-1.5-.67-1.5-1.5s.68-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM19 5v4H5V5h14m1-2H4c-.55 0-1
-            .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zM7 8.5c-.82 0-1.5-.67-1.5-1.5S6.18 5.5 7
-            5.5s1.5.68 1.5 1.5S7.83 8.5 7 8.5z"/>
-          </svg>
-        </i>
-        <div class="caption" data-l10n>Web Server</div>
-        <p class="status-text" data-l10n>Unknown</p>
-      </div>
-    </div>
-    <div class="reason">
-      <div class="what-happened">
-        <h2 data-l10n>What happened?</h2>
-        <p class="description" data-l10n>The server is temporarily overloading or down</p>
-      </div>
-      <div class="what-can-i-do">
-        <h2 data-l10n>What can I do?</h2>
-        <p class="description" data-l10n>Please try again in a few minutes</p>
-      </div>
-    </div>
-    <footer>
-      <!---->
-    </footer>
-    <script>
-      const errorCode = parseInt(`503`, 10);
-
-      if (errorCode && !isNaN(errorCode)) {
-        /**
-         * @param {HTMLElement} $card
-         * @param { {isOk?: boolean, isWarning?: boolean, isError?: boolean} } state
-         * @param {string} statusText
-         */
-        const setCardState = ($card, state, statusText) => {
-          const [okClass, warnClass, errClass] = ['ok', 'warning', 'error'];
-          const $statusText = $card.querySelectorAll('.status-text');
-
-          switch (true) {
-            case state.isOk === true:
-              $card.classList.remove(errClass, warnClass);
-              $card.classList.add(okClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
-
-            case state.isWarning === true:
-              $card.classList.remove(okClass, errClass);
-              $card.classList.add(warnClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
-
-            case state.isError === true:
-              $card.classList.remove(okClass, warnClass);
-              $card.classList.add(errClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
-          }
-        };
-
-        /** @param { {whatHappened?: string, whatToDo?: string} } reasons */
-        const setReasons = (reasons) => {
-          const descSelector = '.description';
-
-          [...document.getElementsByClassName('what-happened')].forEach(($el) => {
-            if (typeof reasons.whatHappened === 'string' && reasons.whatHappened.length > 0) {
-              [...$el.querySelectorAll(descSelector)].forEach(($desc) => $desc.innerText = reasons.whatHappened);
-            } else {
-              $el.remove();
-            }
-          });
-
-          [...document.getElementsByClassName('what-can-i-do')].forEach(($el) => {
-            if (typeof reasons.whatToDo === 'string' && reasons.whatToDo.length > 0) {
-              [...$el.querySelectorAll(descSelector)].forEach(($desc) => $desc.innerText = reasons.whatToDo);
-            } else {
-              $el.remove();
-            }
-          });
-        };
-
-        /**
-         * @param {string} text
-         */
-        const setErrorDescription = function (text) {
-          [...document.getElementsByClassName('error-description')].forEach(($el) => $el.innerHTML = text);
-        };
-
-        const message = `Service Unavailable`.trim();
-        const cards = {
-          $client: document.getElementById('client-status-card'),
-          $network: document.getElementById('network-status-card'),
-          $server: document.getElementById('server-status-card'),
-        };
-
-        let whatToDo = 'Please try again in a few minutes';
-
-        switch (true) {
-          case errorCode >= 400 && errorCode <= 499:
-            switch (errorCode) {
-              case 400:
-              case 405:
-              case 411:
-              case 413:
-                whatToDo = 'Please try to change the request method, headers, payload, or URL';
-                break;
-              case 401:
-              case 403:
-              case 407:
-                whatToDo = 'Please check your authorization data';
-                break;
-              case 404:
-                whatToDo = 'Please double-check the URL and try again';
-                break;
-              case 409:
-              case 410:
-              case 418:
-                whatToDo = '¯\\_(ツ)_/¯';
-                break;
-            }
-
-            setErrorDescription(`<span data-l10n>${message}</span> (<span data-l10n>client-side error</span>)`);
-            setCardState(cards.$client, {isError: true}, message)
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isOk: true}, 'Working')
-            break;
-
-          case errorCode >= 500 && errorCode <= 599:
-            setErrorDescription(`<span data-l10n>${message}</span> (<span data-l10n>server-side error</span>)`);
-            setCardState(cards.$client, {isOk: true}, 'Working')
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isError: true}, message)
-            break;
-
-          default:
-            setErrorDescription(message);
-            setCardState(cards.$client, {isWarning: true}, 'Unknown')
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isWarning: true}, 'Unknown')
-            break;
-        }
-
-        setReasons({whatHappened: `The server is temporarily overloading or down`.trim(), whatToDo: whatToDo.trim()});
-      } else {
-        console.warn('Cannot parse the error code:', errorCode);
-      }
-    </script>
+    </main>
 
     <!---->
     <script>// // the very first line should be kept as a comment to avoid unexpected commenting when embedding the script into the HTML

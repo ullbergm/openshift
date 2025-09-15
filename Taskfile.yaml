@@ -59,3 +59,33 @@ tasks:
         {{if .OUTPUT}}ARGS="$ARGS --output {{.OUTPUT}}"{{end}}
         {{if .NAMESPACE}}ARGS="$ARGS --namespace {{.NAMESPACE}}"{{end}}
         python3 scripts/vpa-goldilocks-reporter.py $ARGS
+
+  update-error-pages:
+    desc: Update custom error pages from tarampampam/error-pages repository
+    summary: |
+      Downloads the latest custom error pages (404 and 503) from the
+      tarampampam/error-pages repository and generates Helm templates for all
+      available page templates. Updates the custom-error-pages chart with the
+      latest designs and template options.
+
+      The script will:
+      - Download from https://github.com/tarampampam/error-pages/zipball/gh-pages/
+      - Generate Helm templates for each available template (connection, cats, ghost, etc.)
+      - Convert HTML files to HTTP response format for OpenShift ingress
+      - Update values.yaml with available template options
+      - Generate comprehensive README.md with live preview links and template descriptions
+      - Only include templates that have both 404.html and 503.html files
+
+      Options:
+        DRY_RUN: Show what would be done without making changes [default: false]
+
+      Examples:
+        task update-error-pages                 # Update error pages
+        task update-error-pages DRY_RUN=true   # Preview changes without modifying files
+    vars:
+      DRY_RUN: '{{.DRY_RUN | default "false"}}'
+    cmds:
+      - |
+        ARGS=""
+        {{if eq .DRY_RUN "true"}}ARGS="$ARGS --dry-run"{{end}}
+        python3 scripts/update-error-pages.py $ARGS

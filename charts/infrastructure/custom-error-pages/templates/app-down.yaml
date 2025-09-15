@@ -1,4 +1,4 @@
-{{- if eq (index .Values "custom-error-pages" "template") "connection" }}
+{{- if eq (index .Values "custom-error-pages" "template") "app-down" }}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -19,7 +19,7 @@ data:
     <head>
       <meta charset="utf-8">
       <meta name="robots" content="nofollow,noarchive,noindex">
-      <title>404 | Not Found</title>
+      <title>Not Found</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <!--  -->
       <meta name="title" content="404: Not Found">
@@ -31,405 +31,452 @@ data:
       <style>
         :root {
           --color-bg-primary: #fff;
-          --color-text-primary: #000;
-          --color-text-secondary: #575958;
-          --ui-card-color-bg: #f2f2f2;
-          --color-text-ok: #137333;
-          --color-bg-ok: #e6f4ea;
-          --color-text-error: #c5221f;
-          --color-bg-error: #fce8e6;
-          --color-text-warning: #b05a00;
-          --color-bg-warning: #fef7e0;
-          --icon-size: 48px;
+          --color-bg-secondary: #eef6fa;
+          --color-bg-sign: #fff;
+          --color-text-primary: #333;
+          --color-text-secondary: #777;
+          --color-img-details: #f62f37;
+          --color-img-primary: #7990a1;
+          --color-img-secondary: #00baff;
         }
 
         @media (prefers-color-scheme: dark) {
           :root {
-            --color-bg-primary: #111;
-            --color-text-primary: rgba(255, 255, 255, 0.86);
-            --color-text-secondary: rgba(255, 255, 255, 0.4);
-            --ui-card-color-bg: rgba(40, 40, 40, 0.73);
-            --color-bg-ok: #07220f;
-            --color-bg-error: #270501;
-            --color-bg-warning: #392605;
+            --color-bg-primary: #222526;
+            --color-bg-secondary: #292e2f;
+            --color-bg-sign: #262828;
+            --color-text-primary: #fff;
+            --color-text-secondary: #999;
+            --color-img-details: #c72d34;
+            --color-img-primary: #adacac;
+            --color-img-secondary: #dedede
           }
         }
 
-        /** Idea author: https://github.com/186526/CloudflareCustomErrorPage */
-        html, body {
+        body, html {
+          background-color: var(--color-bg-primary);
+          color: var(--color-text-primary);
+          font-family: sans-serif;
           margin: 0;
           padding: 0;
           min-height: 100%;
-          color: var(--color-text-primary);
-          background-color: var(--color-bg-primary);
-          font-family: sans-serif;
+          height: 100%;
+          width: 100%;
+          overflow-x: hidden;
           font-size: 16px;
           word-break: keep-all;
         }
 
         @media screen and (min-width: 2000px) {
-          html, body {
+          body, html {
             font-size: 20px;
           }
         }
 
         body {
-          margin: 2em 2em;
-        }
-
-        header {
-          margin-left: 1em;
-        }
-
-        header .error-code {
-          font-size: 3.2em;
-          font-family: monospace;
-          font-weight: 400;
-          margin: 0 0 0 10px;
-        }
-
-        header .error-description {
-          font-family: sans-serif;
-          font-size: 1.4em;
-          color: var(--color-text-secondary);
-          margin: 0 0 0 10px;
-        }
-
-        code {
-          font-family: monospace;
-        }
-
-        .status {
-          margin-top: 2.5em;
           display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          justify-content: center;
           align-items: center;
+          justify-content: center;
         }
 
-        .card {
-          background-color: var(--ui-card-color-bg);
-          padding: 2em;
-          margin: 1em 1em;
-          min-height: 3em;
-          border-radius: 9px;
-          flex-grow: 1;
-        }
-
-        .arrows svg {
-          fill: var(--color-text-secondary);
-        }
-
-        .icon svg {
-          width: var(--icon-size);
-          height: auto;
-          fill: var(--color-text-primary);
-        }
-
-        .card.ok {
-          background-color: var(--color-bg-ok);
-        }
-
-        .card.ok .status-text {
-          color: var(--color-text-ok);
-        }
-
-        .card.ok svg {
-          fill: var(--color-text-ok);
-        }
-
-        .card.error {
-          background-color: var(--color-bg-error);
-        }
-
-        .card.error .status-text {
-          color: var(--color-text-error);
-        }
-
-        .card.error svg {
-          fill: var(--color-text-error);
-        }
-
-        .card.warning {
-          background-color: var(--color-bg-warning);
-        }
-
-        .card.warning .status-text {
-          color: var(--color-text-warning);
-        }
-
-        .card.warning svg {
-          fill: var(--color-text-warning);
-        }
-
-        .card .caption {
-          font-size: 1.37em;
-        }
-
-        .card .status-text, .reason p {
-          margin: 0;
-          font-family: sans-serif;
-        }
-
-        .reason p {
-          line-height: 125%;
-        }
-
-        a {
-          text-decoration: none;
-          color: #1967d2;
-        }
-
-        .reason {
+        main {
+          width: 100%;
+          max-width: 1024px;
+          padding: 0 40px;
           display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
           justify-content: space-between;
-          align-items: baseline;
         }
 
-        .reason > * {
-          display: block;
-          margin: 1em;
-          flex-grow: 1;
-          max-width: 40%;
+        article, .pic {
+          box-sizing: border-box;
         }
 
-        .reason h2 {
-          font-size: 1.45em;
-          margin: 0 0 .6em 0;
-          font-weight: normal;
+        article {
+          display: flex;
+          flex-direction: column;
+          flex-shrink: 0;
+          justify-content: space-around;
+          width: 45%;
+          z-index: 1;
         }
 
-        footer {
-          margin: 1em;
-          color: var(--color-text-secondary);
+        article h1 {
+          font-size: 2.8em;
+          margin: 0 0 30px;
+          width: 130%;
+        }
+
+        .subtitle {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          margin: 16px 0;
+        }
+
+        ul {
+          padding: 0;
+          list-style: none;
+          line-height: 1.4em;
+        }
+
+        ul li::before {
+          content: '•';
+          padding-right: 7px;
+          color: var(--color-img-secondary);
         }
 
         /*  */
 
-        @media screen and (max-width: 820px) {
-          .arrows {
-            display: none;
+        a {
+          text-decoration: underline;
+          color: var(--color-img-secondary);
+        }
+
+        .hidden {
+          display: none;
+        }
+
+        .pic {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 55%;
+          user-select: none;
+          z-index: 0;
+        }
+
+        .pic svg {
+          width: 100%;
+        }
+
+        .pic svg .st10, .pic svg .st11, .pic svg .st12, .pic svg .st13,
+        .pic svg .st14, .pic svg .st15, .pic svg .st16, .pic svg .st17,
+        .pic svg .st3, .pic svg .st6, .pic svg .st9 {
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          stroke-miterlimit: 10;
+        }
+
+        .pic svg .st0 {
+          fill: var(--color-bg-primary);
+        }
+
+        .pic svg .st1 {
+          fill: url(#svg-background-gradient);
+        }
+
+        .pic svg .st2 {
+          fill: var(--color-bg-secondary);
+        }
+
+        .pic svg .st3 {
+          fill: var(--color-bg-primary);
+          stroke: var(--color-img-primary);
+          stroke-width: 3.5;
+        }
+
+        .pic svg .st4 {
+          fill: var(--color-img-secondary);
+        }
+
+        .pic svg .st5 {
+          fill: none;
+          stroke: var(--color-img-secondary);
+          stroke-width: 4;
+          stroke-linejoin: round;
+          stroke-miterlimit: 10;
+        }
+
+        .pic svg .st6 {
+          fill: var(--color-bg-primary);
+          stroke: var(--color-img-primary);
+          stroke-width: 3;
+        }
+
+        .pic svg .st7 {
+          fill: var(--color-img-primary);
+        }
+
+        .pic svg .st8 {
+          fill: none;
+          stroke: var(--color-img-primary);
+          stroke-width: 2.5;
+          stroke-linecap: round;
+          stroke-miterlimit: 10;
+        }
+
+        .pic svg .st9 {
+          fill: none;
+          stroke: var(--color-img-primary);
+          stroke-width: 3;
+        }
+
+        .pic svg .st10 {
+          fill: none;
+          stroke: var(--color-img-primary);
+          stroke-width: 3.5;
+        }
+
+        .pic svg .st11 {
+          fill: none;
+          stroke: var(--color-img-secondary);
+          stroke-width: 4;
+        }
+
+        .pic svg .st12 {
+          fill: var(--color-bg-primary);
+          stroke: var(--color-img-primary);
+          stroke-width: 4;
+        }
+
+        .pic svg .st13 {
+          fill: none;
+          stroke: var(--color-img-primary);
+          stroke-width: 4;
+        }
+
+        .pic svg .st14 {
+          fill: none;
+          stroke: var(--color-img-secondary);
+          stroke-width: 4.5;
+        }
+
+        .pic svg .st15 {
+          fill: none;
+          stroke: var(--color-img-secondary);
+          stroke-width: 5;
+        }
+
+        .pic svg .st16 {
+          fill: none;
+          stroke: var(--color-img-primary);
+          stroke-width: 5;
+        }
+
+        .pic svg .st17 {
+          fill: var(--color-bg-primary);
+          stroke: var(--color-img-details);
+          stroke-width: 3.5;
+        }
+
+        .pic svg .st19 {
+          fill: none;
+          stroke: var(--color-img-details);
+          stroke-width: 2.5;
+          stroke-linecap: round;
+          stroke-miterlimit: 10;
+        }
+
+        .pic svg .error-code {
+          font: bold 40px sans-serif;
+          fill: var(--color-img-details);
+        }
+
+        @media (max-width: 800px) {
+          body, html {
+            font-size: 14px;
+          }
+
+          article, .pic, article h1 {
+            width: 100%;
+          }
+
+          .pic {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            opacity: .2;
+            width: 100%;
+            height: 100%;
+          }
+
+          .pic svg {
+            max-width: 70%;
           }
         }
 
-        @media screen and (max-width: 480px) {
-          .reason > * {
-            max-width: 100%;
-          }
-        }
-
-        @media screen and (min-width: 768px) {
-          body {
-            margin: 8% 10%;
+        @media (max-width: 600px) {
+          body, html {
+            font-size: 12px;
           }
 
-          header > * {
-            display: inline-block;
-            margin-left: 1%;
+          .pic svg {
+            max-width: 90%;
           }
         }
       </style>
     </head>
     <body>
-    <header>
-      <h1 class="error-code">404</h1>
-      <p class="error-description">Not Found</p>
-    </header>
-    <div class="status">
-      <div class="card warning" id="client-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.89-2-2-2zm0 14H5V8h14v10z"/>
-          </svg>
-        </i>
-        <div class="caption" data-l10n>Your Client</div>
-        <p class="status-text" data-l10n>Unknown</p>
-      </div>
-
-      <div class="arrows">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#000000">
-          <defs>
-            <symbol id="arrows-horizontal" viewBox="0 0 24 24">
-              <rect fill="none" height="24" width="24" x="0"/>
-              <polygon points="7.41,13.41 6,12 2,16 6,20 7.41,18.59 5.83,17 21,17 21,15 5.83,15"/>
-              <polygon points="16.59,10.59 18,12 22,8 18,4 16.59,5.41 18.17,7 3,7 3,9 18.17,9"/>
-            </symbol>
-          </defs>
-          <use href="#arrows-horizontal"/>
+    <main>
+      <article>
+        <h1 data-l10n>Not Found</h1>
+        <p data-l10n>The server can not find the requested page</p>
+        <div class="subtitle if-not-found hidden">
+          <p><span data-l10n>Here's what might have happened</span>:</p>
+          <ul>
+            <li data-l10n>You may have mistyped the URL</li>
+            <li data-l10n>The site was moved</li>
+            <li data-l10n>It was never here</li>
+          </ul>
+        </div>
+        <p class="if-maybe-wrong-uri">
+          <span data-l10n>Double-check the URL</span>.
+          <a class="go-back hidden" data-l10n>Alternatively, go back</a>
+        </p>
+        <!---->
+      </article>
+      <div class="pic">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480" x="0px" y="0px" xml:space="preserve">
+          <rect y="0" class="st0" width="600" height="480"></rect>
+          <radialgradient id="svg-background-gradient" cx="328.1394" cy="306.3561" r="219.5134"
+                          gradientUnits="userSpaceOnUse">
+            <stop offset="0" style="stop-color:var(--color-bg-secondary)"></stop>
+            <stop offset="0.5002" style="stop-color:var(--color-bg-secondary)"></stop>
+            <stop offset="1" style="stop-color:var(--color-bg-primary)"></stop>
+          </radialgradient>
+          <rect x="95.2" y="35.7" class="st1" width="460" height="271.4"></rect>
+          <ellipse class="st2" cx="289.7" cy="352.3" rx="69.5" ry="13.9"></ellipse>
+          <ellipse class="st2" cx="180.5" cy="396.3" rx="51.2" ry="9.5"></ellipse>
+          <ellipse class="st2" cx="381.3" cy="418.3" rx="40.8" ry="6.4"></ellipse>
+          <path class="st3"
+                d="M551.1,285.8H527c-2.3,0-4.1-1.8-4.1-4.1v-30c0-2.3,1.8-4.1,4.1-4.1h24.1c2.3,0,4.1,1.8,4.1,4.1v30
+                   C555.2,284,553.4,285.8,551.1,285.8z"></path>
+          <circle class="st3" cx="539.1" cy="266.7" r="10.3"></circle>
+          <path class="st4" d="M265.6,343.3c-5,0-9,4-9,9h18C274.6,347.3,270.6,343.3,265.6,343.3z"></path>
+          <line class="st5" x1="272.7" y1="328.1" x2="272.7" y2="352.3"></line>
+          <path class="st4" d="M307,343.3c-5,0-9,4-9,9h18C316,347.3,311.9,343.3,307,343.3z"></path>
+          <line class="st5" x1="314.1" y1="328.1" x2="314.1" y2="352.3"></line>
+          <path class="st6"
+                d="M380.7,422.6l-37.6-6.4c-1.5-0.3-2.5-1.5-2.2-2.9l4.6-26.8c0.2-1.4,1.6-2.2,3-2l37.6,6.4
+                   c1.5,0.3,2.5,1.5,2.2,2.9l-4.6,26.8C383.6,422,382.2,422.9,380.7,422.6z"></path>
+          <path class="st6"
+                d="M344.6,391.5l0.8-4.5c0.3-1.7,1.6-2.8,3.1-2.5l37.6,6.4c1.5,0.3,2.4,1.7,2.1,3.4l-0.8,4.5L344.6,391.5z"></path>
+          <circle class="st7" cx="349" cy="388.4" r="1"></circle>
+          <circle class="st7" cx="353.1" cy="389.1" r="1"></circle>
+          <circle class="st7" cx="357.1" cy="389.8" r="1"></circle>
+          <line class="st8" x1="360.4" y1="402.8" x2="367.4" y2="412.7"></line>
+          <line class="st8" x1="368.8" y1="404.3" x2="359" y2="411.2"></line>
+          <path class="st6"
+                d="M166.4,401.4l-36.6-10.8c-1.5-0.4-2.3-1.8-1.9-3.1l7.7-26.1c0.4-1.3,1.8-2,3.3-1.6l36.6,10.8
+                c1.5,0.4,2.3,1.8,1.9,3.1l-7.7,26.1C169.3,401.1,167.9,401.8,166.4,401.4z"></path>
+          <path class="st6"
+                d="M134.2,366.2l1.3-4.4c0.5-1.6,2-2.6,3.4-2.1l36.6,10.8c1.5,0.4,2.2,2,1.7,3.6l-1.3,4.4L134.2,366.2z"></path>
+          <circle class="st7" cx="138.9" cy="363.7" r="1"></circle>
+          <circle class="st7" cx="142.9" cy="364.8" r="1"></circle>
+          <circle class="st7" cx="146.9" cy="366" r="1"></circle>
+          <path class="st6"
+                d="M220.9,399.3l-38-3.9c-1.5-0.2-2.5-1.3-2.4-2.7l2.8-27.1c0.1-1.4,1.4-2.3,2.9-2.2l38,3.9
+                c1.5,0.2,2.5,1.3,2.4,2.7l-2.8,27.1C223.6,398.5,222.4,399.5,220.9,399.3z"></path>
+          <path class="st6"
+                d="M188.6,400.9l-38.1,2.8c-1.5,0.1-2.7-0.9-2.8-2.3l-2-27.1c-0.1-1.4,1-2.6,2.5-2.7l38.1-2.8
+                c1.5-0.1,2.7,0.9,2.8,2.3l2,27.1C191.2,399.6,190.1,400.8,188.6,400.9z"></path>
+          <path class="st9"
+                d="M146.1,379.4l-0.3-4.5c-0.1-1.7,0.9-3.1,2.4-3.2l38.1-2.8c1.5-0.1,2.8,1.1,2.9,2.8l0.3,4.5L146.1,379.4z"></path>
+          <circle class="st7" cx="149.6" cy="375.3" r="1"></circle>
+          <circle class="st7" cx="153.7" cy="375" r="1"></circle>
+          <circle class="st7" cx="157.8" cy="374.7" r="1"></circle>
+          <line class="st8" x1="164.1" y1="386.6" x2="173.3" y2="394.4"></line>
+          <line class="st8" x1="172.7" y1="385.9" x2="164.8" y2="395.1"></line>
+          <path class="st10"
+                d="M539.1,267.8c0,96.1-51.7,97.6-67.6,98.6c-28.1,1.8-76.3-14.4-63-25.6c13.3-11.2,53.8-10.3,59.3-4.3
+                c4,4.3,6.1,16.6-49.9,15.8c-29.4-0.4-51-8.4-60.8-32.1"></path>
+          <path class="st11" d="M184.1,262.5c17.8,9,28.4-2.4,28.4-2.4"></path>
+          <ellipse class="st0" cx="289.7" cy="170.7" rx="77.1" ry="21.7"></ellipse>
+          <path class="st12"
+                d="M366.8,308.7c0,12.1-34.5,21.8-77.1,21.8c-42.6,0-77.1-9.8-77.1-21.8V170.7c0,12.1,34.5,21.8,77.1,21.8
+                c42.6,0,77.1-9.8,77.1-21.8V308.7z"></path>
+          <path class="st13" d="M212.6,170.7c0-12.1,34.5-21.8,77.1-21.8c42.6,0,77.1,9.8,77.1,21.8"></path>
+          <path class="st13" d="M366.8,216.7c0,12.1-34.5,21.8-77.1,21.8c-42.6,0-77.1-9.8-77.1-21.8"></path>
+          <path class="st13" d="M366.8,262.7c0,12.1-34.5,21.8-77.1,21.8c-42.6,0-77.1-9.8-77.1-21.8"></path>
+          <path class="st11" d="M384.2,279.8c-6.2-18.9-25.1-18.7-25.1-18.7"></path>
+          <path class="st14" d="M378,288.7c0,0,0-6.3,5.6-8.8c0,0,1.6,0.5,3.3,1.3"></path>
+          <path class="st15" d="M384.2,279.8"></path>
+          <circle class="st4" cx="319" cy="254.8" r="4.2"></circle>
+          <circle class="st4" cx="257.2" cy="255.4" r="4.2"></circle>
+          <line class="st16" x1="182.4" y1="284.4" x2="179" y2="229.2"></line>
+          <polygon class="st17"
+                   points="191.3,144 153.6,146.3 128.7,174.8 131,212.7 159.3,238 196.9,235.6 221.8,207.2 219.5,169.2"
+                   style="fill:var(--color-bg-sign)"></polygon>
+          <text class="error-code" x="125" y="220" transform="rotate(-5)">404</text>
+          <line class="st14" x1="183.2" y1="255.9" x2="175.9" y2="258.8"></line>
+          <line class="st14" x1="184.7" y1="260.4" x2="175.8" y2="263"></line>
+          <line class="st14" x1="185.4" y1="265.4" x2="176.9" y2="267.2"></line>
+          <ellipse class="st11" cx="287.7" cy="269" rx="4.4" ry="6.7"></ellipse>
+          <path class="st6"
+                d="M405.5,316l-37.8,5.5c-1.5,0.2-2.8-0.7-3-2.1l-3.9-26.9c-0.2-1.4,0.8-2.6,2.3-2.8l37.8-5.5
+                c1.5-0.2,2.8,0.7,3,2.1l3.9,26.9C407.9,314.5,407,315.7,405.5,316z"></path>
+          <path class="st6"
+                d="M361.5,297.6l-0.7-4.5c-0.2-1.7,0.7-3.1,2.2-3.4l37.8-5.5c1.5-0.2,2.8,0.9,3.1,2.6l0.7,4.5L361.5,297.6z"></path>
+          <circle class="st7" cx="364.7" cy="293.3" r="1"></circle>
+          <circle class="st7" cx="368.8" cy="292.7" r="1"></circle>
+          <circle class="st7" cx="372.9" cy="292.1" r="1"></circle>
+          <line class="st19" x1="380" y1="303.4" x2="389.7" y2="310.6"></line>
+          <line class="st19" x1="388.5" y1="302.2" x2="381.3" y2="311.9"></line>
+          <path class="st6"
+                d="M204.8,355.2l-28.4,25.5c-1.1,1-2.7,1-3.6-0.1l-18.2-20.3c-0.9-1-0.8-2.6,0.3-3.6l28.4-25.5
+                c1.1-1,2.7-1,3.6,0.1l18.2,20.3C206.1,352.6,205.9,354.2,204.8,355.2z"></path>
+          <path class="st9" d="M158,364.1l-3-3.4c-1.1-1.3-1.1-3,0-4l28.4-25.5c1.1-1,2.9-0.8,4,0.5l3,3.4L158,364.1z"></path>
+          <circle class="st7" cx="158.3" cy="358.7" r="1"></circle>
+          <circle class="st7" cx="161.3" cy="356" r="1"></circle>
+          <circle class="st7" cx="164.4" cy="353.2" r="1"></circle>
+          <line class="st8" x1="176.7" y1="358.8" x2="188.7" y2="359.4"></line>
+          <line class="st8" x1="183" y1="353.1" x2="182.4" y2="365.1"></line>
+          <path class="st6"
+                d="M219.9,344l14.8,35.2c0.6,1.4,0,2.9-1.2,3.4l-25.1,10.5c-1.3,0.5-2.7-0.1-3.3-1.5l-14.8-35.2
+                c-0.6-1.4,0-2.9,1.2-3.4l25.1-10.5C217.8,341.9,219.3,342.6,219.9,344z"></path>
+          <path class="st9"
+                d="M213,391.1l-4.2,1.8c-1.6,0.7-3.2,0.1-3.8-1.3l-14.8-35.2c-0.6-1.4,0.2-3,1.7-3.6l4.2-1.8L213,391.1z"></path>
+          <circle class="st7" cx="208" cy="389.1" r="1"></circle>
+          <circle class="st7" cx="206.4" cy="385.3" r="1"></circle>
+          <circle class="st7" cx="204.8" cy="381.5" r="1"></circle>
+          <line class="st8" x1="214.1" y1="371.7" x2="218.6" y2="360.6"></line>
+          <line class="st8" x1="210.8" y1="363.9" x2="221.9" y2="368.4"></line>
+          <path class="st14" d="M394.1,287.1c-0.7-1.6-3.9-4.5-7.2-5.9"></path>
+          <path class="st6"
+                d="M419.7,413.7l-37.8,5.2c-1.5,0.2-2.8-0.7-3-2.1l-3.7-27c-0.2-1.4,0.8-2.6,2.3-2.8l37.8-5.2
+                c1.5-0.2,2.8,0.7,3,2.1l3.7,27C422.2,412.2,421.2,413.5,419.7,413.7z"></path>
+          <path class="st6"
+                d="M375.9,394.8l-0.6-4.5c-0.2-1.7,0.7-3.1,2.2-3.3l37.8-5.2c1.5-0.2,2.8,0.9,3.1,2.6l0.6,4.5L375.9,394.8z"></path>
+          <circle class="st7" cx="379.2" cy="390.6" r="1"></circle>
+          <circle class="st7" cx="383.3" cy="390" r="1"></circle>
+          <circle class="st7" cx="387.4" cy="389.5" r="1"></circle>
+          <line class="st8" x1="394.4" y1="400.9" x2="404" y2="408.2"></line>
+          <line class="st8" x1="402.9" y1="399.7" x2="395.6" y2="409.4"></line>
+          <polygon class="st17"
+                   points="361,62.2 346.5,104.9 364.7,107.8 347.6,141.8 382,99.7 363.5,93.5 385,63.8"></polygon>
+          <polygon class="st17"
+                   points="396.5,101.6 374.8,122.8 384.1,130.2 363.6,145.4 396.4,130.6 388,121.2 409.5,109.9"></polygon>
+          <line class="st14" x1="384.7" y1="281.7" x2="386" y2="290.6"></line>
         </svg>
       </div>
+    </main>
 
-      <div class="card ok" id="network-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3H6c-2.21
-                     0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6m0-2C9.11 4 6.6 5.64 5.35
-                     8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96C18.67
-                     6.59 15.64 4 12 4z"/>
-          </svg>
-        </i>
-        <div class="caption" data-l10n>Network</div>
-        <p class="status-text" data-l10n>Working</p>
-      </div>
-
-      <div class="arrows">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#000000">
-          <use href="#arrows-horizontal"/>
-        </svg>
-      </div>
-
-      <div class="card warning" id="server-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M19 15v4H5v-4h14m1-2H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zM7
-            18.5c-.82 0-1.5-.67-1.5-1.5s.68-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM19 5v4H5V5h14m1-2H4c-.55 0-1
-            .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zM7 8.5c-.82 0-1.5-.67-1.5-1.5S6.18 5.5 7
-            5.5s1.5.68 1.5 1.5S7.83 8.5 7 8.5z"/>
-          </svg>
-        </i>
-        <div class="caption" data-l10n>Web Server</div>
-        <p class="status-text" data-l10n>Unknown</p>
-      </div>
-    </div>
-    <div class="reason">
-      <div class="what-happened">
-        <h2 data-l10n>What happened?</h2>
-        <p class="description" data-l10n>The server can not find the requested page</p>
-      </div>
-      <div class="what-can-i-do">
-        <h2 data-l10n>What can I do?</h2>
-        <p class="description" data-l10n>Please try again in a few minutes</p>
-      </div>
-    </div>
-    <footer>
-      <!---->
-    </footer>
     <script>
-      const errorCode = parseInt(`404`, 10);
+      [...document.getElementsByClassName('if-not-found')].forEach(($el) => {
+        $el.style.display = '404' === '404' ? 'block' : 'none';
+      });
 
-      if (errorCode && !isNaN(errorCode)) {
-        /**
-         * @param {HTMLElement} $card
-         * @param { {isOk?: boolean, isWarning?: boolean, isError?: boolean} } state
-         * @param {string} statusText
-         */
-        const setCardState = ($card, state, statusText) => {
-          const [okClass, warnClass, errClass] = ['ok', 'warning', 'error'];
-          const $statusText = $card.querySelectorAll('.status-text');
+      [...document.getElementsByClassName('if-maybe-wrong-uri')].forEach(($el) => {
+        $el.style.display = ['401', '403', '404', '418', '505'].includes('404') ? 'block' : 'none';
+      });
 
-          switch (true) {
-            case state.isOk === true:
-              $card.classList.remove(errClass, warnClass);
-              $card.classList.add(okClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
+      [...document.getElementsByClassName('go-back')].forEach(($el) => {
+        if (document.referrer || history.length) {
+          $el.setAttribute('href', '#back-to-the-future');
 
-            case state.isWarning === true:
-              $card.classList.remove(okClass, errClass);
-              $card.classList.add(warnClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
+          $el.addEventListener('click', event => {
+            history.back();
+            event.preventDefault();
 
-            case state.isError === true:
-              $card.classList.remove(okClass, warnClass);
-              $card.classList.add(errClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
-          }
-        };
+            return false;
+          }, false);
 
-        /** @param { {whatHappened?: string, whatToDo?: string} } reasons */
-        const setReasons = (reasons) => {
-          const descSelector = '.description';
-
-          [...document.getElementsByClassName('what-happened')].forEach(($el) => {
-            if (typeof reasons.whatHappened === 'string' && reasons.whatHappened.length > 0) {
-              [...$el.querySelectorAll(descSelector)].forEach(($desc) => $desc.innerText = reasons.whatHappened);
-            } else {
-              $el.remove();
-            }
-          });
-
-          [...document.getElementsByClassName('what-can-i-do')].forEach(($el) => {
-            if (typeof reasons.whatToDo === 'string' && reasons.whatToDo.length > 0) {
-              [...$el.querySelectorAll(descSelector)].forEach(($desc) => $desc.innerText = reasons.whatToDo);
-            } else {
-              $el.remove();
-            }
-          });
-        };
-
-        /**
-         * @param {string} text
-         */
-        const setErrorDescription = function (text) {
-          [...document.getElementsByClassName('error-description')].forEach(($el) => $el.innerHTML = text);
-        };
-
-        const message = `Not Found`.trim();
-        const cards = {
-          $client: document.getElementById('client-status-card'),
-          $network: document.getElementById('network-status-card'),
-          $server: document.getElementById('server-status-card'),
-        };
-
-        let whatToDo = 'Please try again in a few minutes';
-
-        switch (true) {
-          case errorCode >= 400 && errorCode <= 499:
-            switch (errorCode) {
-              case 400:
-              case 405:
-              case 411:
-              case 413:
-                whatToDo = 'Please try to change the request method, headers, payload, or URL';
-                break;
-              case 401:
-              case 403:
-              case 407:
-                whatToDo = 'Please check your authorization data';
-                break;
-              case 404:
-                whatToDo = 'Please double-check the URL and try again';
-                break;
-              case 409:
-              case 410:
-              case 418:
-                whatToDo = '¯\\_(ツ)_/¯';
-                break;
-            }
-
-            setErrorDescription(`<span data-l10n>${message}</span> (<span data-l10n>client-side error</span>)`);
-            setCardState(cards.$client, {isError: true}, message)
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isOk: true}, 'Working')
-            break;
-
-          case errorCode >= 500 && errorCode <= 599:
-            setErrorDescription(`<span data-l10n>${message}</span> (<span data-l10n>server-side error</span>)`);
-            setCardState(cards.$client, {isOk: true}, 'Working')
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isError: true}, message)
-            break;
-
-          default:
-            setErrorDescription(message);
-            setCardState(cards.$client, {isWarning: true}, 'Unknown')
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isWarning: true}, 'Unknown')
-            break;
+          $el.style.display = 'inline-block';
+        } else {
+          $el.style.display = 'none';
         }
-
-        setReasons({whatHappened: `The server can not find the requested page`.trim(), whatToDo: whatToDo.trim()});
-      } else {
-        console.warn('Cannot parse the error code:', errorCode);
-      }
+      });
     </script>
 
     <!---->
@@ -1672,7 +1719,7 @@ data:
     <head>
       <meta charset="utf-8">
       <meta name="robots" content="nofollow,noarchive,noindex">
-      <title>503 | Service Unavailable</title>
+      <title>Service Unavailable</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
       <!--  -->
       <meta http-equiv="refresh" content="30">
@@ -1686,405 +1733,452 @@ data:
       <style>
         :root {
           --color-bg-primary: #fff;
-          --color-text-primary: #000;
-          --color-text-secondary: #575958;
-          --ui-card-color-bg: #f2f2f2;
-          --color-text-ok: #137333;
-          --color-bg-ok: #e6f4ea;
-          --color-text-error: #c5221f;
-          --color-bg-error: #fce8e6;
-          --color-text-warning: #b05a00;
-          --color-bg-warning: #fef7e0;
-          --icon-size: 48px;
+          --color-bg-secondary: #eef6fa;
+          --color-bg-sign: #fff;
+          --color-text-primary: #333;
+          --color-text-secondary: #777;
+          --color-img-details: #f62f37;
+          --color-img-primary: #7990a1;
+          --color-img-secondary: #00baff;
         }
 
         @media (prefers-color-scheme: dark) {
           :root {
-            --color-bg-primary: #111;
-            --color-text-primary: rgba(255, 255, 255, 0.86);
-            --color-text-secondary: rgba(255, 255, 255, 0.4);
-            --ui-card-color-bg: rgba(40, 40, 40, 0.73);
-            --color-bg-ok: #07220f;
-            --color-bg-error: #270501;
-            --color-bg-warning: #392605;
+            --color-bg-primary: #222526;
+            --color-bg-secondary: #292e2f;
+            --color-bg-sign: #262828;
+            --color-text-primary: #fff;
+            --color-text-secondary: #999;
+            --color-img-details: #c72d34;
+            --color-img-primary: #adacac;
+            --color-img-secondary: #dedede
           }
         }
 
-        /** Idea author: https://github.com/186526/CloudflareCustomErrorPage */
-        html, body {
+        body, html {
+          background-color: var(--color-bg-primary);
+          color: var(--color-text-primary);
+          font-family: sans-serif;
           margin: 0;
           padding: 0;
           min-height: 100%;
-          color: var(--color-text-primary);
-          background-color: var(--color-bg-primary);
-          font-family: sans-serif;
+          height: 100%;
+          width: 100%;
+          overflow-x: hidden;
           font-size: 16px;
           word-break: keep-all;
         }
 
         @media screen and (min-width: 2000px) {
-          html, body {
+          body, html {
             font-size: 20px;
           }
         }
 
         body {
-          margin: 2em 2em;
-        }
-
-        header {
-          margin-left: 1em;
-        }
-
-        header .error-code {
-          font-size: 3.2em;
-          font-family: monospace;
-          font-weight: 400;
-          margin: 0 0 0 10px;
-        }
-
-        header .error-description {
-          font-family: sans-serif;
-          font-size: 1.4em;
-          color: var(--color-text-secondary);
-          margin: 0 0 0 10px;
-        }
-
-        code {
-          font-family: monospace;
-        }
-
-        .status {
-          margin-top: 2.5em;
           display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
-          justify-content: center;
           align-items: center;
+          justify-content: center;
         }
 
-        .card {
-          background-color: var(--ui-card-color-bg);
-          padding: 2em;
-          margin: 1em 1em;
-          min-height: 3em;
-          border-radius: 9px;
-          flex-grow: 1;
-        }
-
-        .arrows svg {
-          fill: var(--color-text-secondary);
-        }
-
-        .icon svg {
-          width: var(--icon-size);
-          height: auto;
-          fill: var(--color-text-primary);
-        }
-
-        .card.ok {
-          background-color: var(--color-bg-ok);
-        }
-
-        .card.ok .status-text {
-          color: var(--color-text-ok);
-        }
-
-        .card.ok svg {
-          fill: var(--color-text-ok);
-        }
-
-        .card.error {
-          background-color: var(--color-bg-error);
-        }
-
-        .card.error .status-text {
-          color: var(--color-text-error);
-        }
-
-        .card.error svg {
-          fill: var(--color-text-error);
-        }
-
-        .card.warning {
-          background-color: var(--color-bg-warning);
-        }
-
-        .card.warning .status-text {
-          color: var(--color-text-warning);
-        }
-
-        .card.warning svg {
-          fill: var(--color-text-warning);
-        }
-
-        .card .caption {
-          font-size: 1.37em;
-        }
-
-        .card .status-text, .reason p {
-          margin: 0;
-          font-family: sans-serif;
-        }
-
-        .reason p {
-          line-height: 125%;
-        }
-
-        a {
-          text-decoration: none;
-          color: #1967d2;
-        }
-
-        .reason {
+        main {
+          width: 100%;
+          max-width: 1024px;
+          padding: 0 40px;
           display: flex;
-          flex-direction: row;
-          flex-wrap: wrap;
           justify-content: space-between;
-          align-items: baseline;
         }
 
-        .reason > * {
-          display: block;
-          margin: 1em;
-          flex-grow: 1;
-          max-width: 40%;
+        article, .pic {
+          box-sizing: border-box;
         }
 
-        .reason h2 {
-          font-size: 1.45em;
-          margin: 0 0 .6em 0;
-          font-weight: normal;
+        article {
+          display: flex;
+          flex-direction: column;
+          flex-shrink: 0;
+          justify-content: space-around;
+          width: 45%;
+          z-index: 1;
         }
 
-        footer {
-          margin: 1em;
-          color: var(--color-text-secondary);
+        article h1 {
+          font-size: 2.8em;
+          margin: 0 0 30px;
+          width: 130%;
+        }
+
+        .subtitle {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          margin: 16px 0;
+        }
+
+        ul {
+          padding: 0;
+          list-style: none;
+          line-height: 1.4em;
+        }
+
+        ul li::before {
+          content: '•';
+          padding-right: 7px;
+          color: var(--color-img-secondary);
         }
 
         /*  */
 
-        @media screen and (max-width: 820px) {
-          .arrows {
-            display: none;
+        a {
+          text-decoration: underline;
+          color: var(--color-img-secondary);
+        }
+
+        .hidden {
+          display: none;
+        }
+
+        .pic {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 55%;
+          user-select: none;
+          z-index: 0;
+        }
+
+        .pic svg {
+          width: 100%;
+        }
+
+        .pic svg .st10, .pic svg .st11, .pic svg .st12, .pic svg .st13,
+        .pic svg .st14, .pic svg .st15, .pic svg .st16, .pic svg .st17,
+        .pic svg .st3, .pic svg .st6, .pic svg .st9 {
+          stroke-linecap: round;
+          stroke-linejoin: round;
+          stroke-miterlimit: 10;
+        }
+
+        .pic svg .st0 {
+          fill: var(--color-bg-primary);
+        }
+
+        .pic svg .st1 {
+          fill: url(#svg-background-gradient);
+        }
+
+        .pic svg .st2 {
+          fill: var(--color-bg-secondary);
+        }
+
+        .pic svg .st3 {
+          fill: var(--color-bg-primary);
+          stroke: var(--color-img-primary);
+          stroke-width: 3.5;
+        }
+
+        .pic svg .st4 {
+          fill: var(--color-img-secondary);
+        }
+
+        .pic svg .st5 {
+          fill: none;
+          stroke: var(--color-img-secondary);
+          stroke-width: 4;
+          stroke-linejoin: round;
+          stroke-miterlimit: 10;
+        }
+
+        .pic svg .st6 {
+          fill: var(--color-bg-primary);
+          stroke: var(--color-img-primary);
+          stroke-width: 3;
+        }
+
+        .pic svg .st7 {
+          fill: var(--color-img-primary);
+        }
+
+        .pic svg .st8 {
+          fill: none;
+          stroke: var(--color-img-primary);
+          stroke-width: 2.5;
+          stroke-linecap: round;
+          stroke-miterlimit: 10;
+        }
+
+        .pic svg .st9 {
+          fill: none;
+          stroke: var(--color-img-primary);
+          stroke-width: 3;
+        }
+
+        .pic svg .st10 {
+          fill: none;
+          stroke: var(--color-img-primary);
+          stroke-width: 3.5;
+        }
+
+        .pic svg .st11 {
+          fill: none;
+          stroke: var(--color-img-secondary);
+          stroke-width: 4;
+        }
+
+        .pic svg .st12 {
+          fill: var(--color-bg-primary);
+          stroke: var(--color-img-primary);
+          stroke-width: 4;
+        }
+
+        .pic svg .st13 {
+          fill: none;
+          stroke: var(--color-img-primary);
+          stroke-width: 4;
+        }
+
+        .pic svg .st14 {
+          fill: none;
+          stroke: var(--color-img-secondary);
+          stroke-width: 4.5;
+        }
+
+        .pic svg .st15 {
+          fill: none;
+          stroke: var(--color-img-secondary);
+          stroke-width: 5;
+        }
+
+        .pic svg .st16 {
+          fill: none;
+          stroke: var(--color-img-primary);
+          stroke-width: 5;
+        }
+
+        .pic svg .st17 {
+          fill: var(--color-bg-primary);
+          stroke: var(--color-img-details);
+          stroke-width: 3.5;
+        }
+
+        .pic svg .st19 {
+          fill: none;
+          stroke: var(--color-img-details);
+          stroke-width: 2.5;
+          stroke-linecap: round;
+          stroke-miterlimit: 10;
+        }
+
+        .pic svg .error-code {
+          font: bold 40px sans-serif;
+          fill: var(--color-img-details);
+        }
+
+        @media (max-width: 800px) {
+          body, html {
+            font-size: 14px;
+          }
+
+          article, .pic, article h1 {
+            width: 100%;
+          }
+
+          .pic {
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            opacity: .2;
+            width: 100%;
+            height: 100%;
+          }
+
+          .pic svg {
+            max-width: 70%;
           }
         }
 
-        @media screen and (max-width: 480px) {
-          .reason > * {
-            max-width: 100%;
-          }
-        }
-
-        @media screen and (min-width: 768px) {
-          body {
-            margin: 8% 10%;
+        @media (max-width: 600px) {
+          body, html {
+            font-size: 12px;
           }
 
-          header > * {
-            display: inline-block;
-            margin-left: 1%;
+          .pic svg {
+            max-width: 90%;
           }
         }
       </style>
     </head>
     <body>
-    <header>
-      <h1 class="error-code">503</h1>
-      <p class="error-description">Service Unavailable</p>
-    </header>
-    <div class="status">
-      <div class="card warning" id="client-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M19 4H5c-1.11 0-2 .9-2 2v12c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2V6c0-1.1-.89-2-2-2zm0 14H5V8h14v10z"/>
-          </svg>
-        </i>
-        <div class="caption" data-l10n>Your Client</div>
-        <p class="status-text" data-l10n>Unknown</p>
-      </div>
-
-      <div class="arrows">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#000000">
-          <defs>
-            <symbol id="arrows-horizontal" viewBox="0 0 24 24">
-              <rect fill="none" height="24" width="24" x="0"/>
-              <polygon points="7.41,13.41 6,12 2,16 6,20 7.41,18.59 5.83,17 21,17 21,15 5.83,15"/>
-              <polygon points="16.59,10.59 18,12 22,8 18,4 16.59,5.41 18.17,7 3,7 3,9 18.17,9"/>
-            </symbol>
-          </defs>
-          <use href="#arrows-horizontal"/>
+    <main>
+      <article>
+        <h1 data-l10n>Service Unavailable</h1>
+        <p data-l10n>The server is temporarily overloading or down</p>
+        <div class="subtitle if-not-found hidden">
+          <p><span data-l10n>Here's what might have happened</span>:</p>
+          <ul>
+            <li data-l10n>You may have mistyped the URL</li>
+            <li data-l10n>The site was moved</li>
+            <li data-l10n>It was never here</li>
+          </ul>
+        </div>
+        <p class="if-maybe-wrong-uri">
+          <span data-l10n>Double-check the URL</span>.
+          <a class="go-back hidden" data-l10n>Alternatively, go back</a>
+        </p>
+        <!---->
+      </article>
+      <div class="pic">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480" x="0px" y="0px" xml:space="preserve">
+          <rect y="0" class="st0" width="600" height="480"></rect>
+          <radialgradient id="svg-background-gradient" cx="328.1394" cy="306.3561" r="219.5134"
+                          gradientUnits="userSpaceOnUse">
+            <stop offset="0" style="stop-color:var(--color-bg-secondary)"></stop>
+            <stop offset="0.5002" style="stop-color:var(--color-bg-secondary)"></stop>
+            <stop offset="1" style="stop-color:var(--color-bg-primary)"></stop>
+          </radialgradient>
+          <rect x="95.2" y="35.7" class="st1" width="460" height="271.4"></rect>
+          <ellipse class="st2" cx="289.7" cy="352.3" rx="69.5" ry="13.9"></ellipse>
+          <ellipse class="st2" cx="180.5" cy="396.3" rx="51.2" ry="9.5"></ellipse>
+          <ellipse class="st2" cx="381.3" cy="418.3" rx="40.8" ry="6.4"></ellipse>
+          <path class="st3"
+                d="M551.1,285.8H527c-2.3,0-4.1-1.8-4.1-4.1v-30c0-2.3,1.8-4.1,4.1-4.1h24.1c2.3,0,4.1,1.8,4.1,4.1v30
+                   C555.2,284,553.4,285.8,551.1,285.8z"></path>
+          <circle class="st3" cx="539.1" cy="266.7" r="10.3"></circle>
+          <path class="st4" d="M265.6,343.3c-5,0-9,4-9,9h18C274.6,347.3,270.6,343.3,265.6,343.3z"></path>
+          <line class="st5" x1="272.7" y1="328.1" x2="272.7" y2="352.3"></line>
+          <path class="st4" d="M307,343.3c-5,0-9,4-9,9h18C316,347.3,311.9,343.3,307,343.3z"></path>
+          <line class="st5" x1="314.1" y1="328.1" x2="314.1" y2="352.3"></line>
+          <path class="st6"
+                d="M380.7,422.6l-37.6-6.4c-1.5-0.3-2.5-1.5-2.2-2.9l4.6-26.8c0.2-1.4,1.6-2.2,3-2l37.6,6.4
+                   c1.5,0.3,2.5,1.5,2.2,2.9l-4.6,26.8C383.6,422,382.2,422.9,380.7,422.6z"></path>
+          <path class="st6"
+                d="M344.6,391.5l0.8-4.5c0.3-1.7,1.6-2.8,3.1-2.5l37.6,6.4c1.5,0.3,2.4,1.7,2.1,3.4l-0.8,4.5L344.6,391.5z"></path>
+          <circle class="st7" cx="349" cy="388.4" r="1"></circle>
+          <circle class="st7" cx="353.1" cy="389.1" r="1"></circle>
+          <circle class="st7" cx="357.1" cy="389.8" r="1"></circle>
+          <line class="st8" x1="360.4" y1="402.8" x2="367.4" y2="412.7"></line>
+          <line class="st8" x1="368.8" y1="404.3" x2="359" y2="411.2"></line>
+          <path class="st6"
+                d="M166.4,401.4l-36.6-10.8c-1.5-0.4-2.3-1.8-1.9-3.1l7.7-26.1c0.4-1.3,1.8-2,3.3-1.6l36.6,10.8
+                c1.5,0.4,2.3,1.8,1.9,3.1l-7.7,26.1C169.3,401.1,167.9,401.8,166.4,401.4z"></path>
+          <path class="st6"
+                d="M134.2,366.2l1.3-4.4c0.5-1.6,2-2.6,3.4-2.1l36.6,10.8c1.5,0.4,2.2,2,1.7,3.6l-1.3,4.4L134.2,366.2z"></path>
+          <circle class="st7" cx="138.9" cy="363.7" r="1"></circle>
+          <circle class="st7" cx="142.9" cy="364.8" r="1"></circle>
+          <circle class="st7" cx="146.9" cy="366" r="1"></circle>
+          <path class="st6"
+                d="M220.9,399.3l-38-3.9c-1.5-0.2-2.5-1.3-2.4-2.7l2.8-27.1c0.1-1.4,1.4-2.3,2.9-2.2l38,3.9
+                c1.5,0.2,2.5,1.3,2.4,2.7l-2.8,27.1C223.6,398.5,222.4,399.5,220.9,399.3z"></path>
+          <path class="st6"
+                d="M188.6,400.9l-38.1,2.8c-1.5,0.1-2.7-0.9-2.8-2.3l-2-27.1c-0.1-1.4,1-2.6,2.5-2.7l38.1-2.8
+                c1.5-0.1,2.7,0.9,2.8,2.3l2,27.1C191.2,399.6,190.1,400.8,188.6,400.9z"></path>
+          <path class="st9"
+                d="M146.1,379.4l-0.3-4.5c-0.1-1.7,0.9-3.1,2.4-3.2l38.1-2.8c1.5-0.1,2.8,1.1,2.9,2.8l0.3,4.5L146.1,379.4z"></path>
+          <circle class="st7" cx="149.6" cy="375.3" r="1"></circle>
+          <circle class="st7" cx="153.7" cy="375" r="1"></circle>
+          <circle class="st7" cx="157.8" cy="374.7" r="1"></circle>
+          <line class="st8" x1="164.1" y1="386.6" x2="173.3" y2="394.4"></line>
+          <line class="st8" x1="172.7" y1="385.9" x2="164.8" y2="395.1"></line>
+          <path class="st10"
+                d="M539.1,267.8c0,96.1-51.7,97.6-67.6,98.6c-28.1,1.8-76.3-14.4-63-25.6c13.3-11.2,53.8-10.3,59.3-4.3
+                c4,4.3,6.1,16.6-49.9,15.8c-29.4-0.4-51-8.4-60.8-32.1"></path>
+          <path class="st11" d="M184.1,262.5c17.8,9,28.4-2.4,28.4-2.4"></path>
+          <ellipse class="st0" cx="289.7" cy="170.7" rx="77.1" ry="21.7"></ellipse>
+          <path class="st12"
+                d="M366.8,308.7c0,12.1-34.5,21.8-77.1,21.8c-42.6,0-77.1-9.8-77.1-21.8V170.7c0,12.1,34.5,21.8,77.1,21.8
+                c42.6,0,77.1-9.8,77.1-21.8V308.7z"></path>
+          <path class="st13" d="M212.6,170.7c0-12.1,34.5-21.8,77.1-21.8c42.6,0,77.1,9.8,77.1,21.8"></path>
+          <path class="st13" d="M366.8,216.7c0,12.1-34.5,21.8-77.1,21.8c-42.6,0-77.1-9.8-77.1-21.8"></path>
+          <path class="st13" d="M366.8,262.7c0,12.1-34.5,21.8-77.1,21.8c-42.6,0-77.1-9.8-77.1-21.8"></path>
+          <path class="st11" d="M384.2,279.8c-6.2-18.9-25.1-18.7-25.1-18.7"></path>
+          <path class="st14" d="M378,288.7c0,0,0-6.3,5.6-8.8c0,0,1.6,0.5,3.3,1.3"></path>
+          <path class="st15" d="M384.2,279.8"></path>
+          <circle class="st4" cx="319" cy="254.8" r="4.2"></circle>
+          <circle class="st4" cx="257.2" cy="255.4" r="4.2"></circle>
+          <line class="st16" x1="182.4" y1="284.4" x2="179" y2="229.2"></line>
+          <polygon class="st17"
+                   points="191.3,144 153.6,146.3 128.7,174.8 131,212.7 159.3,238 196.9,235.6 221.8,207.2 219.5,169.2"
+                   style="fill:var(--color-bg-sign)"></polygon>
+          <text class="error-code" x="125" y="220" transform="rotate(-5)">503</text>
+          <line class="st14" x1="183.2" y1="255.9" x2="175.9" y2="258.8"></line>
+          <line class="st14" x1="184.7" y1="260.4" x2="175.8" y2="263"></line>
+          <line class="st14" x1="185.4" y1="265.4" x2="176.9" y2="267.2"></line>
+          <ellipse class="st11" cx="287.7" cy="269" rx="4.4" ry="6.7"></ellipse>
+          <path class="st6"
+                d="M405.5,316l-37.8,5.5c-1.5,0.2-2.8-0.7-3-2.1l-3.9-26.9c-0.2-1.4,0.8-2.6,2.3-2.8l37.8-5.5
+                c1.5-0.2,2.8,0.7,3,2.1l3.9,26.9C407.9,314.5,407,315.7,405.5,316z"></path>
+          <path class="st6"
+                d="M361.5,297.6l-0.7-4.5c-0.2-1.7,0.7-3.1,2.2-3.4l37.8-5.5c1.5-0.2,2.8,0.9,3.1,2.6l0.7,4.5L361.5,297.6z"></path>
+          <circle class="st7" cx="364.7" cy="293.3" r="1"></circle>
+          <circle class="st7" cx="368.8" cy="292.7" r="1"></circle>
+          <circle class="st7" cx="372.9" cy="292.1" r="1"></circle>
+          <line class="st19" x1="380" y1="303.4" x2="389.7" y2="310.6"></line>
+          <line class="st19" x1="388.5" y1="302.2" x2="381.3" y2="311.9"></line>
+          <path class="st6"
+                d="M204.8,355.2l-28.4,25.5c-1.1,1-2.7,1-3.6-0.1l-18.2-20.3c-0.9-1-0.8-2.6,0.3-3.6l28.4-25.5
+                c1.1-1,2.7-1,3.6,0.1l18.2,20.3C206.1,352.6,205.9,354.2,204.8,355.2z"></path>
+          <path class="st9" d="M158,364.1l-3-3.4c-1.1-1.3-1.1-3,0-4l28.4-25.5c1.1-1,2.9-0.8,4,0.5l3,3.4L158,364.1z"></path>
+          <circle class="st7" cx="158.3" cy="358.7" r="1"></circle>
+          <circle class="st7" cx="161.3" cy="356" r="1"></circle>
+          <circle class="st7" cx="164.4" cy="353.2" r="1"></circle>
+          <line class="st8" x1="176.7" y1="358.8" x2="188.7" y2="359.4"></line>
+          <line class="st8" x1="183" y1="353.1" x2="182.4" y2="365.1"></line>
+          <path class="st6"
+                d="M219.9,344l14.8,35.2c0.6,1.4,0,2.9-1.2,3.4l-25.1,10.5c-1.3,0.5-2.7-0.1-3.3-1.5l-14.8-35.2
+                c-0.6-1.4,0-2.9,1.2-3.4l25.1-10.5C217.8,341.9,219.3,342.6,219.9,344z"></path>
+          <path class="st9"
+                d="M213,391.1l-4.2,1.8c-1.6,0.7-3.2,0.1-3.8-1.3l-14.8-35.2c-0.6-1.4,0.2-3,1.7-3.6l4.2-1.8L213,391.1z"></path>
+          <circle class="st7" cx="208" cy="389.1" r="1"></circle>
+          <circle class="st7" cx="206.4" cy="385.3" r="1"></circle>
+          <circle class="st7" cx="204.8" cy="381.5" r="1"></circle>
+          <line class="st8" x1="214.1" y1="371.7" x2="218.6" y2="360.6"></line>
+          <line class="st8" x1="210.8" y1="363.9" x2="221.9" y2="368.4"></line>
+          <path class="st14" d="M394.1,287.1c-0.7-1.6-3.9-4.5-7.2-5.9"></path>
+          <path class="st6"
+                d="M419.7,413.7l-37.8,5.2c-1.5,0.2-2.8-0.7-3-2.1l-3.7-27c-0.2-1.4,0.8-2.6,2.3-2.8l37.8-5.2
+                c1.5-0.2,2.8,0.7,3,2.1l3.7,27C422.2,412.2,421.2,413.5,419.7,413.7z"></path>
+          <path class="st6"
+                d="M375.9,394.8l-0.6-4.5c-0.2-1.7,0.7-3.1,2.2-3.3l37.8-5.2c1.5-0.2,2.8,0.9,3.1,2.6l0.6,4.5L375.9,394.8z"></path>
+          <circle class="st7" cx="379.2" cy="390.6" r="1"></circle>
+          <circle class="st7" cx="383.3" cy="390" r="1"></circle>
+          <circle class="st7" cx="387.4" cy="389.5" r="1"></circle>
+          <line class="st8" x1="394.4" y1="400.9" x2="404" y2="408.2"></line>
+          <line class="st8" x1="402.9" y1="399.7" x2="395.6" y2="409.4"></line>
+          <polygon class="st17"
+                   points="361,62.2 346.5,104.9 364.7,107.8 347.6,141.8 382,99.7 363.5,93.5 385,63.8"></polygon>
+          <polygon class="st17"
+                   points="396.5,101.6 374.8,122.8 384.1,130.2 363.6,145.4 396.4,130.6 388,121.2 409.5,109.9"></polygon>
+          <line class="st14" x1="384.7" y1="281.7" x2="386" y2="290.6"></line>
         </svg>
       </div>
+    </main>
 
-      <div class="card ok" id="network-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M12 6c2.62 0 4.88 1.86 5.39 4.43l.3 1.5 1.53.11c1.56.1 2.78 1.41 2.78 2.96 0 1.65-1.35 3-3 3H6c-2.21
-                     0-4-1.79-4-4 0-2.05 1.53-3.76 3.56-3.97l1.07-.11.5-.95C8.08 7.14 9.94 6 12 6m0-2C9.11 4 6.6 5.64 5.35
-                     8.04 2.34 8.36 0 10.91 0 14c0 3.31 2.69 6 6 6h13c2.76 0 5-2.24 5-5 0-2.64-2.05-4.78-4.65-4.96C18.67
-                     6.59 15.64 4 12 4z"/>
-          </svg>
-        </i>
-        <div class="caption" data-l10n>Network</div>
-        <p class="status-text" data-l10n>Working</p>
-      </div>
-
-      <div class="arrows">
-        <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#000000">
-          <use href="#arrows-horizontal"/>
-        </svg>
-      </div>
-
-      <div class="card warning" id="server-status-card">
-        <i class="icon">
-          <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
-            <path d="M0 0h24v24H0V0z" fill="none"/>
-            <path d="M19 15v4H5v-4h14m1-2H4c-.55 0-1 .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1v-6c0-.55-.45-1-1-1zM7
-            18.5c-.82 0-1.5-.67-1.5-1.5s.68-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zM19 5v4H5V5h14m1-2H4c-.55 0-1
-            .45-1 1v6c0 .55.45 1 1 1h16c.55 0 1-.45 1-1V4c0-.55-.45-1-1-1zM7 8.5c-.82 0-1.5-.67-1.5-1.5S6.18 5.5 7
-            5.5s1.5.68 1.5 1.5S7.83 8.5 7 8.5z"/>
-          </svg>
-        </i>
-        <div class="caption" data-l10n>Web Server</div>
-        <p class="status-text" data-l10n>Unknown</p>
-      </div>
-    </div>
-    <div class="reason">
-      <div class="what-happened">
-        <h2 data-l10n>What happened?</h2>
-        <p class="description" data-l10n>The server is temporarily overloading or down</p>
-      </div>
-      <div class="what-can-i-do">
-        <h2 data-l10n>What can I do?</h2>
-        <p class="description" data-l10n>Please try again in a few minutes</p>
-      </div>
-    </div>
-    <footer>
-      <!---->
-    </footer>
     <script>
-      const errorCode = parseInt(`503`, 10);
+      [...document.getElementsByClassName('if-not-found')].forEach(($el) => {
+        $el.style.display = '503' === '404' ? 'block' : 'none';
+      });
 
-      if (errorCode && !isNaN(errorCode)) {
-        /**
-         * @param {HTMLElement} $card
-         * @param { {isOk?: boolean, isWarning?: boolean, isError?: boolean} } state
-         * @param {string} statusText
-         */
-        const setCardState = ($card, state, statusText) => {
-          const [okClass, warnClass, errClass] = ['ok', 'warning', 'error'];
-          const $statusText = $card.querySelectorAll('.status-text');
+      [...document.getElementsByClassName('if-maybe-wrong-uri')].forEach(($el) => {
+        $el.style.display = ['401', '403', '404', '418', '505'].includes('503') ? 'block' : 'none';
+      });
 
-          switch (true) {
-            case state.isOk === true:
-              $card.classList.remove(errClass, warnClass);
-              $card.classList.add(okClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
+      [...document.getElementsByClassName('go-back')].forEach(($el) => {
+        if (document.referrer || history.length) {
+          $el.setAttribute('href', '#back-to-the-future');
 
-            case state.isWarning === true:
-              $card.classList.remove(okClass, errClass);
-              $card.classList.add(warnClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
+          $el.addEventListener('click', event => {
+            history.back();
+            event.preventDefault();
 
-            case state.isError === true:
-              $card.classList.remove(okClass, warnClass);
-              $card.classList.add(errClass);
-              $statusText.forEach(($statusText) => $statusText.innerText = statusText);
-              break;
-          }
-        };
+            return false;
+          }, false);
 
-        /** @param { {whatHappened?: string, whatToDo?: string} } reasons */
-        const setReasons = (reasons) => {
-          const descSelector = '.description';
-
-          [...document.getElementsByClassName('what-happened')].forEach(($el) => {
-            if (typeof reasons.whatHappened === 'string' && reasons.whatHappened.length > 0) {
-              [...$el.querySelectorAll(descSelector)].forEach(($desc) => $desc.innerText = reasons.whatHappened);
-            } else {
-              $el.remove();
-            }
-          });
-
-          [...document.getElementsByClassName('what-can-i-do')].forEach(($el) => {
-            if (typeof reasons.whatToDo === 'string' && reasons.whatToDo.length > 0) {
-              [...$el.querySelectorAll(descSelector)].forEach(($desc) => $desc.innerText = reasons.whatToDo);
-            } else {
-              $el.remove();
-            }
-          });
-        };
-
-        /**
-         * @param {string} text
-         */
-        const setErrorDescription = function (text) {
-          [...document.getElementsByClassName('error-description')].forEach(($el) => $el.innerHTML = text);
-        };
-
-        const message = `Service Unavailable`.trim();
-        const cards = {
-          $client: document.getElementById('client-status-card'),
-          $network: document.getElementById('network-status-card'),
-          $server: document.getElementById('server-status-card'),
-        };
-
-        let whatToDo = 'Please try again in a few minutes';
-
-        switch (true) {
-          case errorCode >= 400 && errorCode <= 499:
-            switch (errorCode) {
-              case 400:
-              case 405:
-              case 411:
-              case 413:
-                whatToDo = 'Please try to change the request method, headers, payload, or URL';
-                break;
-              case 401:
-              case 403:
-              case 407:
-                whatToDo = 'Please check your authorization data';
-                break;
-              case 404:
-                whatToDo = 'Please double-check the URL and try again';
-                break;
-              case 409:
-              case 410:
-              case 418:
-                whatToDo = '¯\\_(ツ)_/¯';
-                break;
-            }
-
-            setErrorDescription(`<span data-l10n>${message}</span> (<span data-l10n>client-side error</span>)`);
-            setCardState(cards.$client, {isError: true}, message)
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isOk: true}, 'Working')
-            break;
-
-          case errorCode >= 500 && errorCode <= 599:
-            setErrorDescription(`<span data-l10n>${message}</span> (<span data-l10n>server-side error</span>)`);
-            setCardState(cards.$client, {isOk: true}, 'Working')
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isError: true}, message)
-            break;
-
-          default:
-            setErrorDescription(message);
-            setCardState(cards.$client, {isWarning: true}, 'Unknown')
-            setCardState(cards.$network, {isOk: true}, 'Working')
-            setCardState(cards.$server, {isWarning: true}, 'Unknown')
-            break;
+          $el.style.display = 'inline-block';
+        } else {
+          $el.style.display = 'none';
         }
-
-        setReasons({whatHappened: `The server is temporarily overloading or down`.trim(), whatToDo: whatToDo.trim()});
-      } else {
-        console.warn('Cannot parse the error code:', errorCode);
-      }
+      });
     </script>
 
     <!---->
