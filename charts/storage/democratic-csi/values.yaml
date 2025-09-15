@@ -11,56 +11,55 @@ cluster:
     config:
       storageClassName: synology-iscsi
 
-democratic-csi:
+driver:
+  existingConfigSecret: {{ .Release.Name }}-config
+  config:
+    driver: synology-iscsi
+    iscsi:
+      lunTemplate:
+        description: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
+
+csiDriver:
+  name: "org.democratic-csi.iscsi-synology"
+
+node:
+  rbac:
+    openshift:
+      privileged: true
   driver:
-    #existingConfigSecret: {{ .Release.Name }}-config
-    config:
-      driver: synology-iscsi
-      iscsi:
-        lunTemplate:
-          description: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
+    localtimeHostPath: false
 
-  csiDriver:
-    name: "org.democratic-csi.iscsi-synology"
+controller:
+  rbac:
+    openshift:
+      privileged: true
 
-  node:
-    rbac:
-      openshift:
-        privileged: true
-    driver:
-      localtimeHostPath: false
+storageClasses:
+  - name: synology-iscsi
+    defaultClass: true
+    reclaimPolicy: Delete
+    volumeBindingMode: Immediate
+    allowVolumeExpansion: true
+    parameters:
+      fsType: ext4
 
-  controller:
-    rbac:
-      openshift:
-        privileged: true
+    mountOptions: []
+    secrets:
+      provisioner-secret:
+      controller-publish-secret:
+      node-stage-secret:
+      node-publish-secret:
+      controller-expand-secret:
 
-  storageClasses:
-    - name: synology-iscsi
-      defaultClass: true
-      reclaimPolicy: Delete
-      volumeBindingMode: Immediate
-      allowVolumeExpansion: true
-      parameters:
-        fsType: ext4
+volumeSnapshotClasses:
+  - name: synology-iscsi
+    parameters:
+    secrets:
+      snapshotter-secret:
 
-      mountOptions: []
-      secrets:
-        provisioner-secret:
-        controller-publish-secret:
-        node-stage-secret:
-        node-publish-secret:
-        controller-expand-secret:
+controller:
+  externalResizer:
+    enabled: true
 
-  volumeSnapshotClasses:
-    - name: synology-iscsi
-      parameters:
-      secrets:
-        snapshotter-secret:
-
-  controller:
-    externalResizer:
-      enabled: true
-
-    externalSnapshotter:
-      enabled: true
+  externalSnapshotter:
+    enabled: true
