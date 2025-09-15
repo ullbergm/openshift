@@ -13,9 +13,12 @@ cluster:
 
 democratic-csi:
   driver:
-    #existingConfigSecret: {{ .Release.Name }}-config
+    existingConfigSecret: {{ .Release.Name }}-config
     config:
       driver: synology-iscsi
+      iscsi:
+        lunTemplate:
+          description: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
 
   csiDriver:
     name: "org.democratic-csi.iscsi-synology"
