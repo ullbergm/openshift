@@ -10,7 +10,9 @@ spec:
   generators:
     - list:
         elements:
-        - name: democratic-csi
+        - name: custom-error-pages
+          group: infrastructure
+        - name: cluster-democratic-csi
           group: storage
         - name: external-secrets-operator
           group: security
