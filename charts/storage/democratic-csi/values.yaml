@@ -46,17 +46,17 @@ democratic-csi:
 
       mountOptions: []
       secrets:
-        provisioner-secret:
-        controller-publish-secret:
-        node-stage-secret:
-        node-publish-secret:
-        controller-expand-secret:
+        provisioner-secret: provisioner-secret-synology-iscsi-cluster-democratic-csi
+        controller-publish-secret: controller-publish-secret-synology-iscsi-cluster-democratic-csi
+        node-stage-secret: node-stage-secret-synology-iscsi-cluster-democratic-csi
+        node-publish-secret: node-publish-secret-synology-iscsi-cluster-democratic-csi
+        controller-expand-secret: controller-expand-secret-synology-iscsi-cluster-democratic-csi
 
   volumeSnapshotClasses:
     - name: synology-iscsi
       parameters:
       secrets:
-        snapshotter-secret:
+        snapshotter-secret: snapshotter-secret-synology-iscsi-cluster-democratic-csi
 
   controller:
     externalResizer:
