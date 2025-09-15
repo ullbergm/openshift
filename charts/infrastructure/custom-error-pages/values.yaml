@@ -1,0 +1,15 @@
+cluster:
+  top_level_domain: example.com
+  name: cluster
+  storage:
+    democratic-csi:
+      httpConnection:
+        host: nas.ullberg.family
+        port: 5000
+      iscsi:
+        targetPortal: nas.ullberg.family
+    config:
+      storageClassName: synology-iscsi
+
+custom-error-pages:
+  template: connection
