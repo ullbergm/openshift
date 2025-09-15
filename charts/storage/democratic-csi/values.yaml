@@ -16,9 +16,6 @@ democratic-csi:
     existingConfigSecret: {{ .Release.Name }}-config
     config:
       driver: synology-iscsi
-      iscsi:
-        lunTemplate:
-          description: "{{ parameters.[csi.storage.k8s.io/pvc/namespace] }}-{{ parameters.[csi.storage.k8s.io/pvc/name] }}"
 
   csiDriver:
     name: "org.democratic-csi.iscsi-synology"
@@ -29,11 +26,11 @@ democratic-csi:
         privileged: true
     driver:
       localtimeHostPath: false
+
   controller:
     rbac:
       openshift:
         privileged: true
-
 
   storageClasses:
     - name: synology-iscsi
