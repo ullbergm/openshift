@@ -13,7 +13,7 @@ cluster:
 
 democratic-csi:
   driver:
-    #existingConfigSecret: {{ .Release.Name }}-config
+    existingConfigSecret: democratic-csi-config
     config:
       driver: synology-iscsi
       iscsi:
