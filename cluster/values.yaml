@@ -12,6 +12,12 @@ config:
     admin_email: YOUR_EMAIL
     timezone: YOUR_TIMEZONE
     storage:
+      democratic-csi:
+        httpConnection:
+          host: nas.ullberg.family
+          port: 5000
+        iscsi:
+          targetPortal: nas.ullberg.family
       config:
         storageClassName: synology-iscsi
       media:

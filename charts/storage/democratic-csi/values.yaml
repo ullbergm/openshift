@@ -1,0 +1,62 @@
+cluster:
+  top_level_domain: example.com
+  name: cluster
+  storage:
+    democratic-csi:
+      httpConnection:
+        host: nas.ullberg.family
+        port: 5000
+      iscsi:
+        targetPortal: nas.ullberg.family
+    config:
+      storageClassName: synology-iscsi
+
+democratic-csi:
+  node:
+    rbac:
+      openshift:
+        privileged: true
+    driver:
+      localtimeHostPath: false
+  controller:
+    rbac:
+      openshift:
+        privileged: true
+
+  csiDriver:
+    name: "org.democratic-csi.iscsi-synology"
+
+  storageClasses:
+    - name: synology-iscsi
+      defaultClass: true
+      reclaimPolicy: Delete
+      volumeBindingMode: Immediate
+      allowVolumeExpansion: true
+      parameters:
+        fsType: ext4
+
+      mountOptions: []
+      secrets:
+        provisioner-secret:
+        controller-publish-secret:
+        node-stage-secret:
+        node-publish-secret:
+        controller-expand-secret:
+
+  volumeSnapshotClasses:
+    - name: synology-iscsi
+      parameters:
+      secrets:
+        snapshotter-secret:
+
+  controller:
+    externalResizer:
+      enabled: true
+
+    externalSnapshotter:
+      enabled: true
+
+  driver:
+    existingConfigSecret: {{ .Release.Name }}-config
+    config:
+      driver: synology-iscsi
