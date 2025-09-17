@@ -103,7 +103,7 @@ app-template:
         gotenburg:
           image:
             repository: thecodingmachine/gotenberg
-            tag: 8.23.0
+            tag: 8.23.1
             pullPolicy: IfNotPresent
           env:
             - {name: DISABLE_GOOGLE_CHROME, value: '1'}
