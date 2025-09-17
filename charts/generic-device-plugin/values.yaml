@@ -14,7 +14,7 @@ app-template:
           image:
             # renovate: docker-image
             repository: ghcr.io/squat/generic-device-plugin
-            tag: latest@sha256:5aab484db48d662b48342476b431c842b95d3fcba419fe35c19afbb6ceab1658
+            tag: latest@sha256:752a0847f1aeda9259a12bea396844d66dc44ea15dae610de0730a22e079ab0c
             pullPolicy: IfNotPresent
           args:
               - --log-level
