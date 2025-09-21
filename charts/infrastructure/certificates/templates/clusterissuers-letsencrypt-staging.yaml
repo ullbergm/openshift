@@ -4,7 +4,7 @@ apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
   name: letsencrypt-staging
-  namespace: cert-manager
+  namespace: cert-manager-operator
 spec:
   acme:
     server: https://acme-staging-v02.api.letsencrypt.org/directory
@@ -17,7 +17,7 @@ spec:
           - {{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
       dns01:
         route53:
-          region: {{ .Values.certificates.aws.region }}
+          region: {{ .Values.aws.region }}
           accessKeyIDSecretRef:
             name: {{ .Release.Name }}-secret
             key: accessKeyID

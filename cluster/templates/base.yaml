@@ -12,6 +12,7 @@ spec:
         elements:
         - name: certificates
           group: infrastructure
+          createNamespace: false
         - name: custom-error-pages
           group: infrastructure
         - name: external-secrets-operator
