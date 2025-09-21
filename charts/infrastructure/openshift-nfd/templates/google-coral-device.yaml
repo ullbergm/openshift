@@ -1,0 +1,16 @@
+apiVersion: nfd.openshift.io/v1alpha1
+kind: NodeFeatureRule
+metadata:
+  name: google-coral-device
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  rules:
+    - # Google Coral USB Accelerator
+      labels:
+        google.feature.node.kubernetes.io/coral: "true"
+      matchFeatures:
+        - feature: usb.device
+          matchExpressions:
+            vendor: { op: In, value: ["1a6e", "18d1"] }
+      name: google.coral

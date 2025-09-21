@@ -18,6 +18,8 @@ spec:
           group: infrastructure
         - name: gatus
           group: infrastructure
+        - name: openshift-nfd
+          group: infrastructure
   template:
     metadata:
       name: '{{ "{{" }} .name {{ "}}" }}'

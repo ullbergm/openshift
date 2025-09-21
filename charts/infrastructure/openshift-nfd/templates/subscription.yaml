@@ -1,0 +1,14 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: nfd
+  labels:
+    app.kubernetes.io/instance: node-feature-discovery-operator
+    operators.coreos.com/nfd.openshift-nfd: ''
+spec:
+  channel: stable
+  installPlanApproval: Automatic
+  name: nfd
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: nfd.4.18.0-202504021503
