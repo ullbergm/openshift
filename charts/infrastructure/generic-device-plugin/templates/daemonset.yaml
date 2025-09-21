@@ -23,6 +23,11 @@ spec:
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/name: {{ .Release.Name }}
     spec:
+      tolerations:
+      - operator: "Exists"
+        effect: "NoExecute"
+      - operator: "Exists"
+        effect: "NoSchedule"
       enableServiceLinks: false
       serviceAccountName: {{ .Release.Name }}
       automountServiceAccountToken: true
@@ -43,6 +48,16 @@ spec:
           imagePullPolicy: IfNotPresent
           securityContext:
             privileged: true
+          resources:
+            requests:
+              cpu: 50m
+              memory: 10Mi
+            limits:
+              cpu: 50m
+              memory: 20Mi
+          ports:
+          - containerPort: 8080
+            name: http
           args:
               - --log-level
               - info
@@ -79,16 +94,14 @@ spec:
                     - vendor: 0bda
                       product: 00000001
           volumeMounts:
-          - mountPath: /var/lib/kubelet/device-plugins
-            name: device-plugins
-          - mountPath: /dev
-            name: dev
+          - name: device-plugin
+            mountPath: /var/lib/kubelet/device-plugins
+          - name: dev
+            mountPath: /dev
       volumes:
-        - name: dev
-          hostPath:
-            path: /dev
-            type: hostPath
-        - name: device-plugins
-          hostPath:
-            path: /var/lib/kubelet/device-plugins
-            type: hostPath
+      - name: device-plugin
+        hostPath:
+          path: /var/lib/kubelet/device-plugins
+      - name: dev
+        hostPath:
+          path: /dev
