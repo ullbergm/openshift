@@ -54,6 +54,9 @@ democratic-csi:
 
   volumeSnapshotClasses:
     - name: synology-iscsi
+      annotations:
+        k10.kasten.io/is-snapshot-class: "true"
+      deletionPolicy: Delete
       parameters:
       secrets:
         snapshotter-secret:
