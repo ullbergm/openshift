@@ -44,21 +44,23 @@ This document lists applications that could be considered for addition to the ho
 | Application        | Status      | Priority | Notes                                                                    |
 | ------------------ | ----------- | -------- | ------------------------------------------------------------------------ |
 | **Bazarr**         | ✅ Deployed | -        | Subtitle management for Radarr/Sonarr                                    |
+| **FlareSolverr**   | ✅ Deployed | -        | Proxy server to bypass Cloudflare protection for \*arr applications      |
 | **Gaps**           | ✅ Deployed | -        | Media gap detection                                                      |
+| **Huntarr**        | ✅ Deployed | -        | Subtitle downloading and management                                      |
 | **Kapowarr**       | ✅ Deployed | -        | Software to build and manage a comic book library                        |
 | **Kavita**         | ✅ Deployed | -        | Manga reader                                                             |
 | **Lidarr**         | ✅ Deployed | -        | Music collection manager                                                 |
 | **MeTube**         | ✅ Deployed | -        | Web GUI for youtube-dl                                                   |
 | **Overseerr**      | ✅ Deployed | -        | Request management for Plex/Jellyfin, improves user experience           |
 | **Pinchflat**      | ✅ Deployed | -        | Your next YouTube media manager                                          |
+| **Plex**           | ✅ Deployed | -        | Media server, industry standard with excellent client support            |
+| **Posterizarr**    | ✅ Deployed | -        | Media poster and artwork management                                      |
 | **Prowlarr**       | ✅ Deployed | -        | Indexer manager for \*arr applications                                   |
 | **Radarr**         | ✅ Deployed | -        | Movie collection manager                                                 |
 | **Readarr**        | ✅ Deployed | -        | Book collection manager                                                  |
+| **SABnzbd**        | ✅ Deployed | -        | Efficient Usenet downloader                                              |
 | **Sonarr**         | ✅ Deployed | -        | TV series collection manager                                             |
 | **Tautulli**       | ✅ Deployed | -        | Plex monitoring and analytics                                            |
-| **SABnzbd**        | ✅ Deployed | -        | Efficient Usenet downloader                                              |
-| **Plex**           | ✅ Deployed | -        | Media server, industry standard with excellent client support            |
-| **FlareSolverr**   | ✅ Deployed | -        | Proxy server to bypass Cloudflare protection for \*arr applications      |
 | **Recommendarr**   | 🔄 Planned  | High     | Generates personalized TV show and movie recommendations                 |
 | **Stash**          | 🔄 Planned  | High     | Manages your 'stuff'                                                     |
 | **Recyclarr**      | 🔄 Planned  | High     | TRaSH guides automation for \*arr apps, essential for quality management |
@@ -114,33 +116,34 @@ This document lists applications that could be considered for addition to the ho
 
 ## Productivity & Organization
 
-| Application       | Status     | Priority | Notes                                          |
-| ----------------- | ---------- | -------- | ---------------------------------------------- |
-| **Vikunja**       | 🔄 Planned | Medium   | Task management and to-do lists                |
-| **Bookstack**     | 🔄 Planned | High     | Wiki and documentation platform                |
-| **Outline**       | 🔄 Planned | Medium   | Team knowledge base                            |
-| **Focalboard**    | 🔄 Planned | Medium   | Project management (Notion/Trello alternative) |
-| **HedgeDoc**      | 🔄 Planned | Medium   | Collaborative markdown editor                  |
-| **Joplin Server** | 🔄 Planned | Low      | Note-taking and synchronization                |
+| Application       | Status      | Priority | Notes                                               |
+| ----------------- | ----------- | -------- | --------------------------------------------------- |
+| **Bookmarks**     | ✅ Deployed | -        | Custom bookmarks for Startpunkt                     |
+| **CyberChef**     | ✅ Deployed | -        | The Cyber Swiss Army Knife                          |
+| **Excalidraw**    | ✅ Deployed | -        | Virtual whiteboard for sketching                    |
+| **IT-Tools**      | ✅ Deployed | -        | Useful tools for developer and people working in IT |
+| **Startpunkt**    | ✅ Deployed | -        | Personal dashboard and homepage                     |
+| **Vikunja**       | 🔄 Planned  | Medium   | Task management and to-do lists                     |
+| **Bookstack**     | 🔄 Planned  | High     | Wiki and documentation platform                     |
+| **Outline**       | 🔄 Planned  | Medium   | Team knowledge base                                 |
+| **Focalboard**    | 🔄 Planned  | Medium   | Project management (Notion/Trello alternative)      |
+| **HedgeDoc**      | 🔄 Planned  | Medium   | Collaborative markdown editor                       |
+| **Joplin Server** | 🔄 Planned  | Low      | Note-taking and synchronization                     |
 
 ## Utilities & Tools
 
-| Application       | Status      | Priority | Notes                                               |
-| ----------------- | ----------- | -------- | --------------------------------------------------- |
-| **Excalidraw**    | ✅ Deployed | -        | Virtual whiteboard for sketching                    |
-| **CyberChef**     | ✅ Deployed | -        | The Cyber Swiss Army Knife                          |
-| **IT-Tools**      | ✅ Deployed | -        | Useful tools for developer and people working in IT |
-| **Bookmarks**     | ✅ Deployed | -        | Custom bookmarks for Startpunkt                     |
-| **Monica**        | 🔄 Planned  | High     | A tool for managing your life                       |
-| **N8N**           | 🔄 Planned  | High     | A tool for automating tasks and workflows           |
-| **Paperless-NGX** | 🔄 Planned  | High     | A document management system                        |
-| **Homepage**      | 🔄 Planned  | High     | Customizable application dashboard                  |
-| **Uptime Kuma**   | 🔄 Planned  | High     | Service monitoring and status pages                 |
-| **FreshRSS**      | 🔄 Planned  | Medium   | RSS feed aggregator                                 |
-| **Linkding**      | 🔄 Planned  | Medium   | Bookmark manager                                    |
-| **Gotify**        | 🔄 Planned  | Medium   | Push notification server                            |
-| **Searx**         | 🔄 Planned  | Medium   | Privacy-respecting metasearch engine                |
-| **Wallabag**      | 🔄 Planned  | Low      | Read-it-later service (Pocket alternative)          |
+| Application       | Status     | Priority | Notes                                      |
+| ----------------- | ---------- | -------- | ------------------------------------------ |
+| **Monica**        | 🔄 Planned | High     | A tool for managing your life              |
+| **N8N**           | 🔄 Planned | High     | A tool for automating tasks and workflows  |
+| **Paperless-NGX** | 🔄 Planned | High     | A document management system               |
+| **Homepage**      | 🔄 Planned | High     | Customizable application dashboard         |
+| **Uptime Kuma**   | 🔄 Planned | High     | Service monitoring and status pages        |
+| **FreshRSS**      | 🔄 Planned | Medium   | RSS feed aggregator                        |
+| **Linkding**      | 🔄 Planned | Medium   | Bookmark manager                           |
+| **Gotify**        | 🔄 Planned | Medium   | Push notification server                   |
+| **Searx**         | 🔄 Planned | Medium   | Privacy-respecting metasearch engine       |
+| **Wallabag**      | 🔄 Planned | Low      | Read-it-later service (Pocket alternative) |
 
 ## Security & Privacy
 
@@ -200,13 +203,23 @@ This document lists applications that could be considered for addition to the ho
 
 ## Infrastructure Services
 
-| Application      | Status     | Priority | Notes                           |
-| ---------------- | ---------- | -------- | ------------------------------- |
-| **MetalLB**      | 🔄 Planned | Medium   | Bare metal load balancer        |
-| **Velero**       | 🔄 Planned | High     | Kubernetes backup and migration |
-| **Longhorn**     | 🔄 Planned | Medium   | Distributed block storage       |
-| **External DNS** | 🔄 Planned | Medium   | DNS record management           |
-| **Cert Manager** | 🔄 Planned | High     | TLS certificate management      |
+| Application                   | Status      | Priority | Notes                                         |
+| ----------------------------- | ----------- | -------- | --------------------------------------------- |
+| **Certificates**              | ✅ Deployed | -        | Certificate management                        |
+| **Custom Error Pages**        | ✅ Deployed | -        | Custom HTTP error pages                       |
+| **Democratic CSI**            | ✅ Deployed | -        | Container Storage Interface driver            |
+| **External Secrets Operator** | ✅ Deployed | -        | Kubernetes external secrets management        |
+| **Gatus**                     | ✅ Deployed | -        | Service health monitoring                     |
+| **Generic Device Plugin**     | ✅ Deployed | -        | Device plugin for custom hardware resources   |
+| **Goldilocks**                | ✅ Deployed | -        | VPA recommendations dashboard                 |
+| **Intel GPU Operator**        | ✅ Deployed | -        | Intel GPU device plugin and monitoring        |
+| **K10 Kasten Operator**       | ✅ Deployed | -        | Kubernetes backup and disaster recovery       |
+| **Keepalived Operator**       | ✅ Deployed | -        | High availability for load balancers          |
+| **OpenShift NFD**             | ✅ Deployed | -        | Node Feature Discovery for hardware detection |
+| **MetalLB**                   | 🔄 Planned  | Medium   | Bare metal load balancer                      |
+| **Velero**                    | 🔄 Planned  | High     | Kubernetes backup and migration               |
+| **Longhorn**                  | 🔄 Planned  | Medium   | Distributed block storage                     |
+| **External DNS**              | 🔄 Planned  | Medium   | DNS record management                         |
 
 ---
 
@@ -242,4 +255,4 @@ This document lists applications that could be considered for addition to the ho
 
 ## Last Updated
 
-September 12, 2025
+September 21, 2025
