@@ -1,0 +1,29 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Home Assistant
+  group: Home Automation
+  icon: mdi:home-assistant
+  image: https://upload.wikimedia.org/wikipedia/commons/6/6e/Home_Assistant_Logo.svg
+  description: "Home Assistant integration."
+  port: 8123
+  location: 100
+
+pods:
+  main:
+    image:
+      repository: ghcr.io/home-assistant/home-assistant
+      # renovate: datasource=docker depName=ghcr.io/home-assistant/home-assistant versioning=semver
+      tag: 2025.9.4
+      pullPolicy: IfNotPresent
