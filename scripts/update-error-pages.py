@@ -4,6 +4,9 @@ Update Custom Error Pages Script
 
 This script downloads the latest custom error pages from tarampampam/error-pages
 and generates Helm templates for each available template with 404 and 503 error pages.
+
+The script automatically strips all non-English localization data to reduce file size
+while preserving the visual design and functionality of the error pages.
 """
 
 import os
@@ -51,6 +54,27 @@ Content-Type: text/html
 {html_content}"""
     return http_response
 
+def strip_non_english_localization(html_content):
+    """Remove all non-English localization data to reduce file size."""
+    import re
+
+    # Remove the entire localization script block
+    # This removes the entire <script> block that contains the l10n object
+    l10n_script_pattern = r'<script>// // the very first line should be kept.*?Object\.defineProperty\(window, \'l10n\'.*?</script>'
+    html_content = re.sub(l10n_script_pattern, '', html_content, flags=re.DOTALL)
+
+    # Also remove any remaining l10n references
+    l10n_call_pattern = r'window\.l10n\.localizeDocument\(\);'
+    html_content = re.sub(l10n_call_pattern, '', html_content)
+
+    # Remove all data-l10n attributes since we don't need them for English-only
+    html_content = re.sub(r'\s*data-l10n(?:="[^"]*")?', '', html_content)
+
+    # Remove empty comments
+    html_content = re.sub(r'<!--\s*-->', '', html_content)
+
+    return html_content
+
 def get_available_templates(error_pages_dir):
     """Get list of available error page templates."""
     templates = []
@@ -70,6 +94,11 @@ def generate_template_file(template_name, error_pages_dir, output_dir):
     # Read 404 and 503 HTML files
     html_404 = (template_dir / "404.html").read_text(encoding="utf-8")
     html_503 = (template_dir / "503.html").read_text(encoding="utf-8")
+
+    # Strip non-English localization data to reduce file size significantly
+    # This removes the large JavaScript l10n object and data-l10n attributes
+    html_404 = strip_non_english_localization(html_404)
+    html_503 = strip_non_english_localization(html_503)
 
     # Convert to HTTP response format
     http_404 = html_to_http_response(html_404, "404", "File Not Found")

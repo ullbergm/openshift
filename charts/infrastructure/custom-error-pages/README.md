@@ -12,6 +12,109 @@ Error pages are automatically updated from: [https://github.com/tarampampam/erro
 
 Live demos available at: [https://tarampampam.github.io/error-pages/](https://tarampampam.github.io/error-pages/)
 
+## Available Templates
+
+The chart includes 11 different error page templates, each with unique visual designs:
+
+### app-down
+
+Application maintenance page style with a clean, professional look
+
+- **404 Preview**: [https://tarampampam.github.io/error-pages/app-down/404.html](https://tarampampam.github.io/error-pages/app-down/404.html)
+- **503 Preview**: [https://tarampampam.github.io/error-pages/app-down/503.html](https://tarampampam.github.io/error-pages/app-down/503.html)
+
+> **Live Preview**: Open the links above to see the actual error pages in your browser.
+
+### cats
+
+Cat-themed error pages (fetches cat images from external servers)
+
+- **404 Preview**: [https://tarampampam.github.io/error-pages/cats/404.html](https://tarampampam.github.io/error-pages/cats/404.html)
+- **503 Preview**: [https://tarampampam.github.io/error-pages/cats/503.html](https://tarampampam.github.io/error-pages/cats/503.html)
+
+> **Live Preview**: Open the links above to see the actual error pages in your browser.
+
+### connection
+
+Network connection themed with technical diagnostic styling
+
+- **404 Preview**: [https://tarampampam.github.io/error-pages/connection/404.html](https://tarampampam.github.io/error-pages/connection/404.html)
+- **503 Preview**: [https://tarampampam.github.io/error-pages/connection/503.html](https://tarampampam.github.io/error-pages/connection/503.html)
+
+> **Live Preview**: Open the links above to see the actual error pages in your browser.
+
+### ghost
+
+Minimalist ghost theme with subtle animations
+
+- **404 Preview**: [https://tarampampam.github.io/error-pages/ghost/404.html](https://tarampampam.github.io/error-pages/ghost/404.html)
+- **503 Preview**: [https://tarampampam.github.io/error-pages/ghost/503.html](https://tarampampam.github.io/error-pages/ghost/503.html)
+
+> **Live Preview**: Open the links above to see the actual error pages in your browser.
+
+### hacker-terminal
+
+Terminal/hacker aesthetic with green text on black background
+
+- **404 Preview**: [https://tarampampam.github.io/error-pages/hacker-terminal/404.html](https://tarampampam.github.io/error-pages/hacker-terminal/404.html)
+- **503 Preview**: [https://tarampampam.github.io/error-pages/hacker-terminal/503.html](https://tarampampam.github.io/error-pages/hacker-terminal/503.html)
+
+> **Live Preview**: Open the links above to see the actual error pages in your browser.
+
+### l7
+
+Layer 7 network theme with modern tech styling
+
+- **404 Preview**: [https://tarampampam.github.io/error-pages/l7/404.html](https://tarampampam.github.io/error-pages/l7/404.html)
+- **503 Preview**: [https://tarampampam.github.io/error-pages/l7/503.html](https://tarampampam.github.io/error-pages/l7/503.html)
+
+> **Live Preview**: Open the links above to see the actual error pages in your browser.
+
+### lost-in-space
+
+Space-themed pages with cosmic backgrounds and animations
+
+- **404 Preview**: [https://tarampampam.github.io/error-pages/lost-in-space/404.html](https://tarampampam.github.io/error-pages/lost-in-space/404.html)
+- **503 Preview**: [https://tarampampam.github.io/error-pages/lost-in-space/503.html](https://tarampampam.github.io/error-pages/lost-in-space/503.html)
+
+> **Live Preview**: Open the links above to see the actual error pages in your browser.
+
+### noise
+
+Glitch/static effect theme with digital distortion
+
+- **404 Preview**: [https://tarampampam.github.io/error-pages/noise/404.html](https://tarampampam.github.io/error-pages/noise/404.html)
+- **503 Preview**: [https://tarampampam.github.io/error-pages/noise/503.html](https://tarampampam.github.io/error-pages/noise/503.html)
+
+> **Live Preview**: Open the links above to see the actual error pages in your browser.
+
+### orient
+
+Eastern-inspired design with elegant typography
+
+- **404 Preview**: [https://tarampampam.github.io/error-pages/orient/404.html](https://tarampampam.github.io/error-pages/orient/404.html)
+- **503 Preview**: [https://tarampampam.github.io/error-pages/orient/503.html](https://tarampampam.github.io/error-pages/orient/503.html)
+
+> **Live Preview**: Open the links above to see the actual error pages in your browser.
+
+### shuffle
+
+Playing card theme with colorful, playful design
+
+- **404 Preview**: [https://tarampampam.github.io/error-pages/shuffle/404.html](https://tarampampam.github.io/error-pages/shuffle/404.html)
+- **503 Preview**: [https://tarampampam.github.io/error-pages/shuffle/503.html](https://tarampampam.github.io/error-pages/shuffle/503.html)
+
+> **Live Preview**: Open the links above to see the actual error pages in your browser.
+
+### win98
+
+Windows 98 nostalgic theme with classic dialog boxes
+
+- **404 Preview**: [https://tarampampam.github.io/error-pages/win98/404.html](https://tarampampam.github.io/error-pages/win98/404.html)
+- **503 Preview**: [https://tarampampam.github.io/error-pages/win98/503.html](https://tarampampam.github.io/error-pages/win98/503.html)
+
+> **Live Preview**: Open the links above to see the actual error pages in your browser.
+
 ## Installation
 
 ### Prerequisites
@@ -43,7 +146,7 @@ Update the template in your `values.yaml`:
 ```yaml
 custom-error-pages:
   # Available templates: app-down, cats, connection, ghost, hacker-terminal, l7, lost-in-space, noise, orient, shuffle, win98
-  template: connection # Change to any available template
+  template: connection  # Change to any available template
 ```
 
 ### Switching Templates
@@ -58,19 +161,19 @@ To change the error page design:
 
 ### Template Options
 
-| Template          | Description                                                        | Preview Links                                                                                                                                          |
-| ----------------- | ------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `app-down`        | Application maintenance page style with a clean, professional look | [404](https://tarampampam.github.io/error-pages/app-down/404.html) \| [503](https://tarampampam.github.io/error-pages/app-down/503.html)               |
-| `cats`            | Cat-themed error pages (fetches cat images from external servers)  | [404](https://tarampampam.github.io/error-pages/cats/404.html) \| [503](https://tarampampam.github.io/error-pages/cats/503.html)                       |
-| `connection`      | Network connection themed with technical diagnostic styling        | [404](https://tarampampam.github.io/error-pages/connection/404.html) \| [503](https://tarampampam.github.io/error-pages/connection/503.html)           |
-| `ghost`           | Minimalist ghost theme with subtle animations                      | [404](https://tarampampam.github.io/error-pages/ghost/404.html) \| [503](https://tarampampam.github.io/error-pages/ghost/503.html)                     |
-| `hacker-terminal` | Terminal/hacker aesthetic with green text on black background      | [404](https://tarampampam.github.io/error-pages/hacker-terminal/404.html) \| [503](https://tarampampam.github.io/error-pages/hacker-terminal/503.html) |
-| `l7`              | Layer 7 network theme with modern tech styling                     | [404](https://tarampampam.github.io/error-pages/l7/404.html) \| [503](https://tarampampam.github.io/error-pages/l7/503.html)                           |
-| `lost-in-space`   | Space-themed pages with cosmic backgrounds and animations          | [404](https://tarampampam.github.io/error-pages/lost-in-space/404.html) \| [503](https://tarampampam.github.io/error-pages/lost-in-space/503.html)     |
-| `noise`           | Glitch/static effect theme with digital distortion                 | [404](https://tarampampam.github.io/error-pages/noise/404.html) \| [503](https://tarampampam.github.io/error-pages/noise/503.html)                     |
-| `orient`          | Eastern-inspired design with elegant typography                    | [404](https://tarampampam.github.io/error-pages/orient/404.html) \| [503](https://tarampampam.github.io/error-pages/orient/503.html)                   |
-| `shuffle`         | Playing card theme with colorful, playful design                   | [404](https://tarampampam.github.io/error-pages/shuffle/404.html) \| [503](https://tarampampam.github.io/error-pages/shuffle/503.html)                 |
-| `win98`           | Windows 98 nostalgic theme with classic dialog boxes               | [404](https://tarampampam.github.io/error-pages/win98/404.html) \| [503](https://tarampampam.github.io/error-pages/win98/503.html)                     |
+| Template | Description | Preview Links |
+|----------|-------------|---------------|
+| `app-down` | Application maintenance page style with a clean, professional look | [404](https://tarampampam.github.io/error-pages/app-down/404.html) \| [503](https://tarampampam.github.io/error-pages/app-down/503.html) |
+| `cats` | Cat-themed error pages (fetches cat images from external servers) | [404](https://tarampampam.github.io/error-pages/cats/404.html) \| [503](https://tarampampam.github.io/error-pages/cats/503.html) |
+| `connection` | Network connection themed with technical diagnostic styling | [404](https://tarampampam.github.io/error-pages/connection/404.html) \| [503](https://tarampampam.github.io/error-pages/connection/503.html) |
+| `ghost` | Minimalist ghost theme with subtle animations | [404](https://tarampampam.github.io/error-pages/ghost/404.html) \| [503](https://tarampampam.github.io/error-pages/ghost/503.html) |
+| `hacker-terminal` | Terminal/hacker aesthetic with green text on black background | [404](https://tarampampam.github.io/error-pages/hacker-terminal/404.html) \| [503](https://tarampampam.github.io/error-pages/hacker-terminal/503.html) |
+| `l7` | Layer 7 network theme with modern tech styling | [404](https://tarampampam.github.io/error-pages/l7/404.html) \| [503](https://tarampampam.github.io/error-pages/l7/503.html) |
+| `lost-in-space` | Space-themed pages with cosmic backgrounds and animations | [404](https://tarampampam.github.io/error-pages/lost-in-space/404.html) \| [503](https://tarampampam.github.io/error-pages/lost-in-space/503.html) |
+| `noise` | Glitch/static effect theme with digital distortion | [404](https://tarampampam.github.io/error-pages/noise/404.html) \| [503](https://tarampampam.github.io/error-pages/noise/503.html) |
+| `orient` | Eastern-inspired design with elegant typography | [404](https://tarampampam.github.io/error-pages/orient/404.html) \| [503](https://tarampampam.github.io/error-pages/orient/503.html) |
+| `shuffle` | Playing card theme with colorful, playful design | [404](https://tarampampam.github.io/error-pages/shuffle/404.html) \| [503](https://tarampampam.github.io/error-pages/shuffle/503.html) |
+| `win98` | Windows 98 nostalgic theme with classic dialog boxes | [404](https://tarampampam.github.io/error-pages/win98/404.html) \| [503](https://tarampampam.github.io/error-pages/win98/503.html) |
 
 ## How It Works
 
@@ -92,7 +195,6 @@ python3 scripts/update-error-pages.py
 ```
 
 This will:
-
 - Download the latest templates from [tarampampam/error-pages](https://github.com/tarampampam/error-pages)
 - Update all template files
 - Refresh this README with current template information
@@ -135,13 +237,11 @@ These error pages integrate with OpenShift's ingress controllers. The ConfigMap 
 ### Error Pages Not Showing
 
 1. Verify the ConfigMap exists:
-
    ```bash
    oc get configmap custom-error-code-pages -n openshift-config
    ```
 
 2. Check the OpenShift router configuration:
-
    ```bash
    oc get ingresscontroller default -n openshift-ingress-operator -o yaml
    ```
@@ -170,4 +270,4 @@ This chart uses error pages from [tarampampam/error-pages](https://github.com/ta
 
 ---
 
-_Last updated: Generated automatically by `scripts/update-error-pages.py`_
+*Last updated: Generated automatically by `scripts/update-error-pages.py`*
