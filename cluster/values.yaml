@@ -28,3 +28,9 @@ config:
   plex:
     network:
       ip: 192.168.1.10
+
+  certificates:
+    letsencrypt:
+      issuer: production
+    aws:
+      region: us-east-1

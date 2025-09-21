@@ -10,6 +10,8 @@ spec:
   generators:
     - list:
         elements:
+        - name: certificates
+          group: infrastructure
         - name: custom-error-pages
           group: infrastructure
         - name: external-secrets-operator
