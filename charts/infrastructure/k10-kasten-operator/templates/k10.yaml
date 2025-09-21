@@ -34,6 +34,8 @@ spec:
     - kube-public
     - kube-system
     - startpunkt
+    - metallb-system
+    - openwebui
     # OpenShift system namespaces (auto-generated from cluster)
 {{- $openshiftExclusions := .Files.Get "openshift-excluded-apps.yaml" | fromYaml }}
 {{- range $openshiftExclusions.excludedApps }}

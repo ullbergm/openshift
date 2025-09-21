@@ -28,6 +28,7 @@ tasks:
         msg: 'NAMESPACE parameter is required. Usage: task kasten:add-system-exclusion NAMESPACE=my-namespace'
       - sh: '[ -f "{{.TEMPLATE_FILE}}" ]'
         msg: 'k10.yaml template file not found: {{.TEMPLATE_FILE}}'
+    silent: true
     cmds:
       - |
         echo "Adding namespace '{{.NAMESPACE}}' to static system exclusions..."
@@ -71,6 +72,7 @@ tasks:
         msg: 'NAMESPACE parameter is required. Usage: task kasten:remove-system-exclusion NAMESPACE=my-namespace'
       - sh: '[ -f "{{.TEMPLATE_FILE}}" ]'
         msg: 'k10.yaml template file not found: {{.TEMPLATE_FILE}}'
+    silent: true
     cmds:
       - |
         echo "Removing namespace '{{.NAMESPACE}}' from static system exclusions..."
@@ -116,6 +118,7 @@ tasks:
         task kasten:update-openshift-exclusions DRY_RUN=true   # Preview changes
     vars:
       DRY_RUN: '{{.DRY_RUN | default "false"}}'
+    silent: true
     cmds:
       - |
         ARGS=""
