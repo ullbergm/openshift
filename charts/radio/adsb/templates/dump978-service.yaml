@@ -1,0 +1,36 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-dump978
+  annotations:
+    keepalived-operator.redhat-cop.io/keepalivedgroup: "keepalived-operator/lan"
+spec:
+  type: ClusterIP
+  externalIPs:
+    - {{ .Values.plex.network.ip }}
+  ports:
+    - name: http
+      port: 8080
+      targetPort: 8080
+      protocol: TCP
+    - name: json-output
+      port: 30979
+      targetPort: 30979
+      protocol: TCP
+    - name: raw-output
+      port: 30978
+      targetPort: 30978
+      protocol: TCP
+    - name: readsb-output
+      port: 37981
+      targetPort: 37981
+      protocol: TCP
+    - name: beast-output
+      port: 37982
+      targetPort: 37982
+      protocol: TCP
+  selector:
+    app.kubernetes.io/controller: dump978
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}

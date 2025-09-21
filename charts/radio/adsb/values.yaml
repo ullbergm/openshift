@@ -17,7 +17,6 @@ pods:
       repository: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder
       # renovate: datasource=docker depName=ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder versioning=loose
       tag: latest-build-803
-      pullPolicy: IfNotPresent
     env:
       LOGLEVEL: error
       HTTP_PORT: '8080'
@@ -67,3 +66,14 @@ pods:
       TAR1090_RANGERINGSCOLORS: "'#1A237E','#0D47A1','#42A5F5','#64B5F6'"
       TAR1090_USEROUTEAPI: 'true'
       GRAPHS1090_DARKMODE: 'true'
+
+  dump978:
+    image:
+      repository: ghcr.io/ullbergm/docker-dump978
+      # renovate: datasource=docker depName=ghcr.io/ullbergm/docker-dump978 versioning=loose
+      tag: 2
+    env:
+      HTTP_PORT: '8080'
+      READSB_DEVICE_TYPE: rtlsdr
+      DUMP978_SDR_GAIN: 'autogain'
+      DUMP978_SDR_PPM: '14'
