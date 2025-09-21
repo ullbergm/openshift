@@ -85,3 +85,13 @@ pods:
       tag: v0.0.4
     env:
       BEASTHOST: 'adsb-ultrafeeder'
+
+  flightaware:
+    image:
+      repository: ghcr.io/sdr-enthusiasts/docker-piaware
+      # renovate: datasource=docker depName=ghcr.io/sdr-enthusiasts/docker-piaware versioning=semver
+      tag: v9.0.1
+    env:
+      BEASTHOST: 'adsb-ultrafeeder'
+      UAT_RECEIVER_TYPE: 'relay'
+      UAT_RECEIVER_HOST: 'adsb-dump978'
