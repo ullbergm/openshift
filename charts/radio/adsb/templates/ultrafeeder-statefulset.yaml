@@ -46,5 +46,10 @@ spec:
                 name: {{ .Release.Name }}
           securityContext:
             privileged: true
+          resources:
+            requests:
+                squat.ai/adsb1090: '1'
+            limits:
+                squat.ai/adsb1090: '1'
           image: {{ .Values.pods.ultrafeeder.image.repository }}:{{ .Values.pods.ultrafeeder.image.tag }}
           imagePullPolicy: IfNotPresent

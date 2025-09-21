@@ -20,7 +20,6 @@ pods:
       pullPolicy: IfNotPresent
     env:
       LOGLEVEL: error
-      TZ: America/New_York
       HTTP_PORT: '8080'
       READSB_DEVICE_TYPE: rtlsdr
       READSB_RTLSDR_DEVICE: '1090'
@@ -68,8 +67,3 @@ pods:
       TAR1090_RANGERINGSCOLORS: "'#1A237E','#0D47A1','#42A5F5','#64B5F6'"
       TAR1090_USEROUTEAPI: 'true'
       GRAPHS1090_DARKMODE: 'true'
-    resources:
-      requests:
-          squat.ai/adsb1090: '1'
-      limits:
-          squat.ai/adsb1090: '1'
