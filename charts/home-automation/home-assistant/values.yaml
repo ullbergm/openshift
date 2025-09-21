@@ -15,8 +15,9 @@ application:
   name: Home Assistant
   group: Home Automation
   icon: mdi:home-assistant
+  iconColor: skyblue
   image: https://upload.wikimedia.org/wikipedia/commons/6/6e/Home_Assistant_Logo.svg
-  description: "Home Assistant integration."
+  description: "Home Automation"
   port: 8123
   location: 100
 
