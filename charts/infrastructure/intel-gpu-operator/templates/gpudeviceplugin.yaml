@@ -1,0 +1,14 @@
+apiVersion: deviceplugin.intel.com/v1
+kind: GpuDevicePlugin
+metadata:
+  name: gpudeviceplugin
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  nodeSelector:
+    intel.feature.node.kubernetes.io/gpu: 'true'
+  enableMonitoring: true
+  image: 'registry.connect.redhat.com/intel/intel-gpu-plugin@sha256:963caf1e6e16b5e297671c536eec04dc57cf45f5cc5cf458bdcafa56bdb97972'
+  preferredAllocationPolicy: none
+  logLevel: 4
+  sharedDevNum: 2

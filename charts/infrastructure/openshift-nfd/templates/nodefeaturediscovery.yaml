@@ -3,6 +3,8 @@ kind: NodeFeatureDiscovery
 metadata:
   name: nfd-instance
   namespace: openshift-nfd
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
 spec:
   operand:
     image: 'registry.redhat.io/openshift4/ose-node-feature-discovery-rhel9@sha256:b2c67faebc94b5fea1c2df64e475d3ede1c0e3f58b5c711ebcd00a51b6069d97'
