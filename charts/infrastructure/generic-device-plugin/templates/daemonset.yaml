@@ -87,8 +87,8 @@ spec:
         - name: dev
           hostPath:
             path: /dev
-            type: ''
+            type: hostPath
         - name: device-plugins
           hostPath:
             path: /var/lib/kubelet/device-plugins
-            type: ''
+            type: hostPath
