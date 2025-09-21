@@ -1,0 +1,20 @@
+{{- if .Capabilities.APIVersions.Has "machineconfiguration.openshift.io/v1" }}
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  name: 50-master-system-reserved
+  labels:
+    machineconfiguration.openshift.io/role: master
+spec:
+  config:
+    ignition:
+      version: 3.4.0
+    storage:
+      files:
+        - contents:
+            source: 'data:,NODE_SIZING_ENABLED%3D{{ .Values.systemReservation.nodeSizingEnabled }}%0ASYSTEM_RESERVED_MEMORY%3D{{ .Values.systemReservation.systemReservedMemory }}%0ASYSTEM_RESERVED_CPU%3D{{ .Values.systemReservation.systemReservedCpu }}%0ASYSTEM_RESERVED_ES%3D{{ .Values.systemReservation.systemReservedEphemeralStorage }}'
+          mode: 420
+          overwrite: true
+          path: /etc/node-sizing-enabled.env
+{{- end }}

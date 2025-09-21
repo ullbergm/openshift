@@ -33,6 +33,9 @@ spec:
           group: infrastructure
         - name: openshift-nfd
           group: infrastructure
+        - name: system-reservation
+          group: infrastructure
+          createNamespace: false
   template:
     metadata:
       name: '{{ "{{" }} .name {{ "}}" }}'

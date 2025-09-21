@@ -1,0 +1,24 @@
+cluster:
+  top_level_domain: example.com
+  name: cluster
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+# System reservation configuration
+systemReservation:
+  # Enable or disable node sizing
+  nodeSizingEnabled: false
+
+  # System reserved memory
+  systemReservedMemory: "2Gi"
+
+  # System reserved CPU
+  systemReservedCpu: "1"
+
+  # System reserved ephemeral storage
+  systemReservedEphemeralStorage: "2Gi"
