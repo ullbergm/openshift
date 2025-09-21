@@ -1,0 +1,6 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: kasten-io
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"

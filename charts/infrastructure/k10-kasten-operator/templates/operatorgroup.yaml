@@ -1,0 +1,14 @@
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  generateName: kasten-io-
+  annotations:
+    olm.providedAPIs: 'K10.v1alpha1.apik10.kasten.io,K10restore.v1alpha1.apik10.kasten.io'
+    argocd.argoproj.io/sync-wave: "2"
+  name: kasten-io
+  namespace: kasten-io
+spec:
+  targetNamespaces:
+    - kasten-io
+  upgradeStrategy: Default

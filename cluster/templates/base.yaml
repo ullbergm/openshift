@@ -23,6 +23,9 @@ spec:
         - name: intel-gpu-operator
           group: infrastructure
           createNamespace: false
+        - name: k10-kasten-operator
+          group: infrastructure
+          createNamespace: false
         - name: keepalived-operator
           group: infrastructure
         - name: openshift-nfd
