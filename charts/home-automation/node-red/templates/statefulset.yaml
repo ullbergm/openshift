@@ -44,7 +44,7 @@ spec:
           image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
           imagePullPolicy: IfNotPresent
           volumeMounts:
-          - mountPath: /config
+          - mountPath: /data
             name: config
           - mountPath: /data/settings.js
             name: settings
