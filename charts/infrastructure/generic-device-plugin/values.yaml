@@ -1,0 +1,20 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+pods:
+  main:
+    image:
+      repository: ghcr.io/squat/generic-device-plugin
+      # renovate: datasource=docker depName=ghcr.io/squat/generic-device-plugin versioning=semver
+      tag: latest
+      pullPolicy: IfNotPresent

@@ -1,0 +1,22 @@
+{{- if .Capabilities.APIVersions.Has "security.openshift.io/v1" }}
+---
+kind: SecurityContextConstraints
+apiVersion: security.openshift.io/v1
+metadata:
+  name: generic-device-plugin-scc
+fsGroup:
+  type: RunAsAny
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+supplementalGroups:
+  type: RunAsAny
+allowPrivilegedContainer: true
+allowHostNetwork: true
+allowHostPorts: true
+allowHostDirVolumePlugin: true
+allowPrivilegeEscalation: true
+users:
+  - system:serviceaccount:{{ .Release.Namespace }}:{{ .Release.Name }}
+{{- end }}

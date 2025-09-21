@@ -17,6 +17,8 @@ spec:
           createNamespace: false
         - name: external-secrets-operator
           group: security
+        - name: generic-device-plugin
+          group: infrastructure
         - name: goldilocks
           group: infrastructure
         - name: gatus

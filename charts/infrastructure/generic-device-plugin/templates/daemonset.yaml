@@ -1,0 +1,94 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    kasten/backup: "true"
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  revisionHistoryLimit: 1
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/controller: main
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/controller: main
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+    spec:
+      enableServiceLinks: false
+      serviceAccountName: {{ .Release.Name }}
+      automountServiceAccountToken: true
+      securityContext:
+        fsGroup: 0
+        runAsGroup: 0
+        runAsUser: 0
+      containers:
+        - name: main
+          env:
+          - name: TZ
+            value: {{ .Values.cluster.timezone }}
+          {{- range $key, $value := .Values.pods.main.env }}
+          - name: {{ $key }}
+            value: "{{ $value }}"
+          {{- end }}
+          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
+          imagePullPolicy: IfNotPresent
+          securityContext:
+            privileged: true
+          args:
+              - --log-level
+              - info
+              - --device
+              - |
+                name: zwave
+                groups:
+                  - paths:
+                      - path: /dev/serial/by-id/usb-0658_0200-if00
+              - --device
+              - |
+                name: adsb1090
+                count: 1
+                groups:
+                  - usb:
+                    - vendor: 0bda
+                      product: 2838
+                      serial: 1090
+              - --device
+              - |
+                name: adsb978
+                count: 1
+                groups:
+                  - usb:
+                    - vendor: 0bda
+                      product: 2838
+                      serial: 978
+              - --device
+              - |
+                name: rtlsdr
+                count: 1
+                groups:
+                  - usb:
+                    - vendor: 0bda
+                      product: 00000001
+          volumeMounts:
+          - mountPath: /var/lib/kubelet/device-plugins
+            name: device-plugins
+          - mountPath: /dev
+            name: dev
+      volumes:
+        - name: dev
+          hostPath:
+            path: /dev
+            type: Directory
+        - name: device-plugins
+          hostPath:
+            path: /var/lib/kubelet/device-plugins
+            type: DirectoryOrCreate
