@@ -1,0 +1,20 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-planewatch
+  annotations:
+    keepalived-operator.redhat-cop.io/keepalivedgroup: "keepalived-operator/lan"
+spec:
+  type: ClusterIP
+  externalIPs:
+    - {{ .Values.plex.network.ip }}
+  ports:
+    - name: mlat-beast-output
+      port: 31005
+      targetPort: 31005
+      protocol: TCP
+  selector:
+    app.kubernetes.io/controller: planewatch
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}

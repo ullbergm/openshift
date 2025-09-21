@@ -77,3 +77,11 @@ pods:
       READSB_DEVICE_TYPE: rtlsdr
       DUMP978_SDR_GAIN: 'autogain'
       DUMP978_SDR_PPM: '14'
+
+  planewatch:
+    image:
+      repository: ghcr.io/plane-watch/docker-plane-watch
+      # renovate: datasource=docker depName=ghcr.io/plane-watch/docker-plane-watch versioning=semver
+      tag: v0.0.4
+    env:
+      BEASTHOST: 'adsb-ultrafeeder'
