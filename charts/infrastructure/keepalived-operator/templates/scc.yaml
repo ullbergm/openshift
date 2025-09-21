@@ -1,0 +1,22 @@
+---
+kind: SecurityContextConstraints
+apiVersion: security.openshift.io/v1
+metadata:
+  name: controller-manager
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+fsGroup:
+  type: RunAsAny
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+supplementalGroups:
+  type: RunAsAny
+allowPrivilegedContainer: true
+allowHostNetwork: true
+allowHostPorts: true
+allowHostDirVolumePlugin: true
+allowPrivilegeEscalation: true
+users:
+- system:serviceaccount:{{ .Release.Namespace }}:default

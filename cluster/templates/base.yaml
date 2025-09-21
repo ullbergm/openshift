@@ -23,6 +23,8 @@ spec:
         - name: intel-gpu-operator
           group: infrastructure
           createNamespace: false
+        - name: keepalived-operator
+          group: infrastructure
         - name: openshift-nfd
           group: infrastructure
   template:

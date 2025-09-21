@@ -1,0 +1,16 @@
+---
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    operators.coreos.com/keepalived-operator.keepalived-operator: ''
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+  name: keepalived-operator
+spec:
+  channel: alpha
+  installPlanApproval: Automatic
+  name: keepalived-operator
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: keepalived-operator.v1.5.4

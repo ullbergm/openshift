@@ -1,0 +1,15 @@
+{{- range $networkName, $networkConfig := .Values.network }}
+---
+kind: KeepalivedGroup
+apiVersion: redhatcop.redhat.io/v1alpha1
+metadata:
+  name: {{ $networkName }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
+spec:
+  image: registry.redhat.io/openshift4/ose-keepalived-ipfailover
+  interface: br-ex
+  interfaceFromIP: {{ $networkConfig.defaultGateway }}
+  nodeSelector:
+    node-role.kubernetes.io/master: ''
+{{- end }}

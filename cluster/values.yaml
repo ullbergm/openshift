@@ -14,10 +14,10 @@ config:
     storage:
       democratic-csi:
         httpConnection:
-          host: nas.ullberg.family
+          host: nas
           port: 5000
         iscsi:
-          targetPortal: nas.ullberg.family
+          targetPortal: nas
       config:
         storageClassName: synology-iscsi
       media:
@@ -34,3 +34,7 @@ config:
       issuer: production
     aws:
       region: us-east-1
+
+  network:
+    lan:
+      defaultGateway: 192.168.1.1

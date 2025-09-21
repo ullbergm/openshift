@@ -1,0 +1,21 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+network:
+  lan:
+    defaultGateway: 192.168.1.1
+  # Example of additional networks that would be processed by the loop:
+  # dmz:
+  #   defaultGateway: 192.168.10.1
+  # mgmt:
+  #   defaultGateway: 192.168.100.1

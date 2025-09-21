@@ -1,0 +1,11 @@
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  generateName: keepalived-operator-
+  annotations:
+    olm.providedAPIs: KeepalivedGroup.v1alpha1.redhatcop.redhat.io
+    argocd.argoproj.io/sync-wave: "2"
+  name: keepalived-operator
+spec:
+  upgradeStrategy: Default
