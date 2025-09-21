@@ -1,0 +1,13 @@
+---
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  generateName: cert-manager-operator-
+  name: cert-manager-operator
+  namespace: cert-manager-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "2"
+spec:
+  targetNamespaces:
+    - cert-manager-operator
+  upgradeStrategy: Default

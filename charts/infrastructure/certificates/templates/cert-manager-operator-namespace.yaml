@@ -1,0 +1,7 @@
+---
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: cert-manager-operator
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"

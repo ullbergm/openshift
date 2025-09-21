@@ -4,6 +4,8 @@ kind: Certificate
 metadata:
   name: apps-wildcard-cert-tls
   namespace: openshift-ingress
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   secretName: apps-wildcard-cert-tls
   issuerRef:

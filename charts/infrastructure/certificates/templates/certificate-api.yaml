@@ -4,6 +4,8 @@ kind: Certificate
 metadata:
   name: api-cert-tls
   namespace: openshift-config
+  annotations:
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   secretName: api-cert-tls
   issuerRef:
