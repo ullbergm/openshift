@@ -17,7 +17,7 @@ spec:
           - {{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
       dns01:
         route53:
-          region: {{ .Values.aws.region }}
+          region: {{ .Values.certificates.aws.region }}
           accessKeyIDSecretRef:
             name: {{ .Release.Name }}-secret
             key: accessKeyID
