@@ -12,7 +12,7 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 15Gi
+      storage: 45Gi
 {{- if and .Values.cluster.storage .Values.cluster.storage.config .Values.cluster.storage.config.storageClassName }}
   storageClassName: {{ .Values.cluster.storage.config.storageClassName }}
 {{- end }}
