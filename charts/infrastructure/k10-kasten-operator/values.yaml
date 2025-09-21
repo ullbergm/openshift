@@ -14,5 +14,4 @@ cluster:
 kasten:
   # Custom applications to exclude from Kasten K10 backups
   # OpenShift system namespaces are automatically excluded via openshift-excluded-apps.yaml
-  #excludedApps:
-  # - myapp
+  excludedApps: []
