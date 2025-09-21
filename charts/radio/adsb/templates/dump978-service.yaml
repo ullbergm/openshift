@@ -5,8 +5,6 @@ metadata:
   name: {{ .Release.Name }}-dump978
 spec:
   type: ClusterIP
-  externalIPs:
-    - {{ .Values.plex.network.ip }}
   ports:
     - name: http
       port: 8080

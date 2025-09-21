@@ -5,8 +5,6 @@ metadata:
   name: {{ .Release.Name }}-planewatch
 spec:
   type: ClusterIP
-  externalIPs:
-    - {{ .Values.plex.network.ip }}
   ports:
     - name: mlat-beast-output
       port: 31005

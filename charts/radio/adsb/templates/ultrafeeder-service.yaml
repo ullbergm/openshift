@@ -5,8 +5,6 @@ metadata:
   name: {{ .Release.Name }}-ultrafeeder
 spec:
   type: ClusterIP
-  externalIPs:
-    - {{ .Values.plex.network.ip }}
   ports:
     - name: http
       port: 80
