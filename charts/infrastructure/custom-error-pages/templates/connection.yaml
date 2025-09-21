@@ -21,7 +21,6 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>404 | Not Found</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
       <meta name="title" content="404: Not Found">
       <meta name="description" content="The server can not find the requested page">
       <meta property="og:title" content="404: Not Found">
@@ -42,7 +41,6 @@ data:
           --color-bg-warning: #fef7e0;
           --icon-size: 48px;
         }
-
         @media (prefers-color-scheme: dark) {
           :root {
             --color-bg-primary: #111;
@@ -54,7 +52,6 @@ data:
             --color-bg-warning: #392605;
           }
         }
-
         /** Idea author: https://github.com/186526/CloudflareCustomErrorPage */
         html, body {
           margin: 0;
@@ -66,39 +63,32 @@ data:
           font-size: 16px;
           word-break: keep-all;
         }
-
         @media screen and (min-width: 2000px) {
           html, body {
             font-size: 20px;
           }
         }
-
         body {
           margin: 2em 2em;
         }
-
         header {
           margin-left: 1em;
         }
-
         header .error-code {
           font-size: 3.2em;
           font-family: monospace;
           font-weight: 400;
           margin: 0 0 0 10px;
         }
-
         header .error-description {
           font-family: sans-serif;
           font-size: 1.4em;
           color: var(--color-text-secondary);
           margin: 0 0 0 10px;
         }
-
         code {
           font-family: monospace;
         }
-
         .status {
           margin-top: 2.5em;
           display: flex;
@@ -107,7 +97,6 @@ data:
           justify-content: center;
           align-items: center;
         }
-
         .card {
           background-color: var(--ui-card-color-bg);
           padding: 2em;
@@ -116,71 +105,55 @@ data:
           border-radius: 9px;
           flex-grow: 1;
         }
-
         .arrows svg {
           fill: var(--color-text-secondary);
         }
-
         .icon svg {
           width: var(--icon-size);
           height: auto;
           fill: var(--color-text-primary);
         }
-
         .card.ok {
           background-color: var(--color-bg-ok);
         }
-
         .card.ok .status-text {
           color: var(--color-text-ok);
         }
-
         .card.ok svg {
           fill: var(--color-text-ok);
         }
-
         .card.error {
           background-color: var(--color-bg-error);
         }
-
         .card.error .status-text {
           color: var(--color-text-error);
         }
-
         .card.error svg {
           fill: var(--color-text-error);
         }
-
         .card.warning {
           background-color: var(--color-bg-warning);
         }
-
         .card.warning .status-text {
           color: var(--color-text-warning);
         }
-
         .card.warning svg {
           fill: var(--color-text-warning);
         }
-
         .card .caption {
           font-size: 1.37em;
         }
-
         .card .status-text, .reason p {
           margin: 0;
           font-family: sans-serif;
         }
-
         .reason p {
           line-height: 125%;
         }
-
         a {
           text-decoration: none;
           color: #1967d2;
         }
-
         .reason {
           display: flex;
           flex-direction: row;
@@ -188,44 +161,35 @@ data:
           justify-content: space-between;
           align-items: baseline;
         }
-
         .reason > * {
           display: block;
           margin: 1em;
           flex-grow: 1;
           max-width: 40%;
         }
-
         .reason h2 {
           font-size: 1.45em;
           margin: 0 0 .6em 0;
           font-weight: normal;
         }
-
         footer {
           margin: 1em;
           color: var(--color-text-secondary);
         }
-
-        /*  */
-
         @media screen and (max-width: 820px) {
           .arrows {
             display: none;
           }
         }
-
         @media screen and (max-width: 480px) {
           .reason > * {
             max-width: 100%;
           }
         }
-
         @media screen and (min-width: 768px) {
           body {
             margin: 8% 10%;
           }
-
           header > * {
             display: inline-block;
             margin-left: 1%;
@@ -249,7 +213,6 @@ data:
         <div class="caption">Your Client</div>
         <p class="status-text">Unknown</p>
       </div>
-
       <div class="arrows">
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#000000">
           <defs>
@@ -262,7 +225,6 @@ data:
           <use href="#arrows-horizontal"/>
         </svg>
       </div>
-
       <div class="card ok" id="network-status-card">
         <i class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
@@ -276,13 +238,11 @@ data:
         <div class="caption">Network</div>
         <p class="status-text">Working</p>
       </div>
-
       <div class="arrows">
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#000000">
           <use href="#arrows-horizontal"/>
         </svg>
       </div>
-
       <div class="card warning" id="server-status-card">
         <i class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
@@ -308,11 +268,9 @@ data:
       </div>
     </div>
     <footer>
-
     </footer>
     <script>
       const errorCode = parseInt(`404`, 10);
-
       if (errorCode && !isNaN(errorCode)) {
         /**
          * @param {HTMLElement} $card
@@ -322,20 +280,17 @@ data:
         const setCardState = ($card, state, statusText) => {
           const [okClass, warnClass, errClass] = ['ok', 'warning', 'error'];
           const $statusText = $card.querySelectorAll('.status-text');
-
           switch (true) {
             case state.isOk === true:
               $card.classList.remove(errClass, warnClass);
               $card.classList.add(okClass);
               $statusText.forEach(($statusText) => $statusText.innerText = statusText);
               break;
-
             case state.isWarning === true:
               $card.classList.remove(okClass, errClass);
               $card.classList.add(warnClass);
               $statusText.forEach(($statusText) => $statusText.innerText = statusText);
               break;
-
             case state.isError === true:
               $card.classList.remove(okClass, warnClass);
               $card.classList.add(errClass);
@@ -343,11 +298,9 @@ data:
               break;
           }
         };
-
         /** @param { {whatHappened?: string, whatToDo?: string} } reasons */
         const setReasons = (reasons) => {
           const descSelector = '.description';
-
           [...document.getElementsByClassName('what-happened')].forEach(($el) => {
             if (typeof reasons.whatHappened === 'string' && reasons.whatHappened.length > 0) {
               [...$el.querySelectorAll(descSelector)].forEach(($desc) => $desc.innerText = reasons.whatHappened);
@@ -355,7 +308,6 @@ data:
               $el.remove();
             }
           });
-
           [...document.getElementsByClassName('what-can-i-do')].forEach(($el) => {
             if (typeof reasons.whatToDo === 'string' && reasons.whatToDo.length > 0) {
               [...$el.querySelectorAll(descSelector)].forEach(($desc) => $desc.innerText = reasons.whatToDo);
@@ -364,23 +316,19 @@ data:
             }
           });
         };
-
         /**
          * @param {string} text
          */
         const setErrorDescription = function (text) {
           [...document.getElementsByClassName('error-description')].forEach(($el) => $el.innerHTML = text);
         };
-
         const message = `Not Found`.trim();
         const cards = {
           $client: document.getElementById('client-status-card'),
           $network: document.getElementById('network-status-card'),
           $server: document.getElementById('server-status-card'),
         };
-
         let whatToDo = 'Please try again in a few minutes';
-
         switch (true) {
           case errorCode >= 400 && errorCode <= 499:
             switch (errorCode) {
@@ -404,20 +352,17 @@ data:
                 whatToDo = '¯\\_(ツ)_/¯';
                 break;
             }
-
             setErrorDescription(`<span>${message}</span> (<span>client-side error</span>)`);
             setCardState(cards.$client, {isError: true}, message)
             setCardState(cards.$network, {isOk: true}, 'Working')
             setCardState(cards.$server, {isOk: true}, 'Working')
             break;
-
           case errorCode >= 500 && errorCode <= 599:
             setErrorDescription(`<span>${message}</span> (<span>server-side error</span>)`);
             setCardState(cards.$client, {isOk: true}, 'Working')
             setCardState(cards.$network, {isOk: true}, 'Working')
             setCardState(cards.$server, {isError: true}, message)
             break;
-
           default:
             setErrorDescription(message);
             setCardState(cards.$client, {isWarning: true}, 'Unknown')
@@ -425,16 +370,11 @@ data:
             setCardState(cards.$server, {isWarning: true}, 'Unknown')
             break;
         }
-
         setReasons({whatHappened: `The server can not find the requested page`.trim(), whatToDo: whatToDo.trim()});
       } else {
         console.warn('Cannot parse the error code:', errorCode);
       }
     </script>
-
-
-
-
     </body>
     </html>
 
@@ -451,9 +391,7 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>503 | Service Unavailable</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
       <meta http-equiv="refresh" content="30">
-
       <meta name="title" content="503: Service Unavailable">
       <meta name="description" content="The server is temporarily overloading or down">
       <meta property="og:title" content="503: Service Unavailable">
@@ -474,7 +412,6 @@ data:
           --color-bg-warning: #fef7e0;
           --icon-size: 48px;
         }
-
         @media (prefers-color-scheme: dark) {
           :root {
             --color-bg-primary: #111;
@@ -486,7 +423,6 @@ data:
             --color-bg-warning: #392605;
           }
         }
-
         /** Idea author: https://github.com/186526/CloudflareCustomErrorPage */
         html, body {
           margin: 0;
@@ -498,39 +434,32 @@ data:
           font-size: 16px;
           word-break: keep-all;
         }
-
         @media screen and (min-width: 2000px) {
           html, body {
             font-size: 20px;
           }
         }
-
         body {
           margin: 2em 2em;
         }
-
         header {
           margin-left: 1em;
         }
-
         header .error-code {
           font-size: 3.2em;
           font-family: monospace;
           font-weight: 400;
           margin: 0 0 0 10px;
         }
-
         header .error-description {
           font-family: sans-serif;
           font-size: 1.4em;
           color: var(--color-text-secondary);
           margin: 0 0 0 10px;
         }
-
         code {
           font-family: monospace;
         }
-
         .status {
           margin-top: 2.5em;
           display: flex;
@@ -539,7 +468,6 @@ data:
           justify-content: center;
           align-items: center;
         }
-
         .card {
           background-color: var(--ui-card-color-bg);
           padding: 2em;
@@ -548,71 +476,55 @@ data:
           border-radius: 9px;
           flex-grow: 1;
         }
-
         .arrows svg {
           fill: var(--color-text-secondary);
         }
-
         .icon svg {
           width: var(--icon-size);
           height: auto;
           fill: var(--color-text-primary);
         }
-
         .card.ok {
           background-color: var(--color-bg-ok);
         }
-
         .card.ok .status-text {
           color: var(--color-text-ok);
         }
-
         .card.ok svg {
           fill: var(--color-text-ok);
         }
-
         .card.error {
           background-color: var(--color-bg-error);
         }
-
         .card.error .status-text {
           color: var(--color-text-error);
         }
-
         .card.error svg {
           fill: var(--color-text-error);
         }
-
         .card.warning {
           background-color: var(--color-bg-warning);
         }
-
         .card.warning .status-text {
           color: var(--color-text-warning);
         }
-
         .card.warning svg {
           fill: var(--color-text-warning);
         }
-
         .card .caption {
           font-size: 1.37em;
         }
-
         .card .status-text, .reason p {
           margin: 0;
           font-family: sans-serif;
         }
-
         .reason p {
           line-height: 125%;
         }
-
         a {
           text-decoration: none;
           color: #1967d2;
         }
-
         .reason {
           display: flex;
           flex-direction: row;
@@ -620,44 +532,35 @@ data:
           justify-content: space-between;
           align-items: baseline;
         }
-
         .reason > * {
           display: block;
           margin: 1em;
           flex-grow: 1;
           max-width: 40%;
         }
-
         .reason h2 {
           font-size: 1.45em;
           margin: 0 0 .6em 0;
           font-weight: normal;
         }
-
         footer {
           margin: 1em;
           color: var(--color-text-secondary);
         }
-
-        /*  */
-
         @media screen and (max-width: 820px) {
           .arrows {
             display: none;
           }
         }
-
         @media screen and (max-width: 480px) {
           .reason > * {
             max-width: 100%;
           }
         }
-
         @media screen and (min-width: 768px) {
           body {
             margin: 8% 10%;
           }
-
           header > * {
             display: inline-block;
             margin-left: 1%;
@@ -681,7 +584,6 @@ data:
         <div class="caption">Your Client</div>
         <p class="status-text">Unknown</p>
       </div>
-
       <div class="arrows">
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#000000">
           <defs>
@@ -694,7 +596,6 @@ data:
           <use href="#arrows-horizontal"/>
         </svg>
       </div>
-
       <div class="card ok" id="network-status-card">
         <i class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
@@ -708,13 +609,11 @@ data:
         <div class="caption">Network</div>
         <p class="status-text">Working</p>
       </div>
-
       <div class="arrows">
         <svg xmlns="http://www.w3.org/2000/svg" height="24px" width="24px" fill="#000000">
           <use href="#arrows-horizontal"/>
         </svg>
       </div>
-
       <div class="card warning" id="server-status-card">
         <i class="icon">
           <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 0 24 24" width="24px" fill="#000000">
@@ -740,11 +639,9 @@ data:
       </div>
     </div>
     <footer>
-
     </footer>
     <script>
       const errorCode = parseInt(`503`, 10);
-
       if (errorCode && !isNaN(errorCode)) {
         /**
          * @param {HTMLElement} $card
@@ -754,20 +651,17 @@ data:
         const setCardState = ($card, state, statusText) => {
           const [okClass, warnClass, errClass] = ['ok', 'warning', 'error'];
           const $statusText = $card.querySelectorAll('.status-text');
-
           switch (true) {
             case state.isOk === true:
               $card.classList.remove(errClass, warnClass);
               $card.classList.add(okClass);
               $statusText.forEach(($statusText) => $statusText.innerText = statusText);
               break;
-
             case state.isWarning === true:
               $card.classList.remove(okClass, errClass);
               $card.classList.add(warnClass);
               $statusText.forEach(($statusText) => $statusText.innerText = statusText);
               break;
-
             case state.isError === true:
               $card.classList.remove(okClass, warnClass);
               $card.classList.add(errClass);
@@ -775,11 +669,9 @@ data:
               break;
           }
         };
-
         /** @param { {whatHappened?: string, whatToDo?: string} } reasons */
         const setReasons = (reasons) => {
           const descSelector = '.description';
-
           [...document.getElementsByClassName('what-happened')].forEach(($el) => {
             if (typeof reasons.whatHappened === 'string' && reasons.whatHappened.length > 0) {
               [...$el.querySelectorAll(descSelector)].forEach(($desc) => $desc.innerText = reasons.whatHappened);
@@ -787,7 +679,6 @@ data:
               $el.remove();
             }
           });
-
           [...document.getElementsByClassName('what-can-i-do')].forEach(($el) => {
             if (typeof reasons.whatToDo === 'string' && reasons.whatToDo.length > 0) {
               [...$el.querySelectorAll(descSelector)].forEach(($desc) => $desc.innerText = reasons.whatToDo);
@@ -796,23 +687,19 @@ data:
             }
           });
         };
-
         /**
          * @param {string} text
          */
         const setErrorDescription = function (text) {
           [...document.getElementsByClassName('error-description')].forEach(($el) => $el.innerHTML = text);
         };
-
         const message = `Service Unavailable`.trim();
         const cards = {
           $client: document.getElementById('client-status-card'),
           $network: document.getElementById('network-status-card'),
           $server: document.getElementById('server-status-card'),
         };
-
         let whatToDo = 'Please try again in a few minutes';
-
         switch (true) {
           case errorCode >= 400 && errorCode <= 499:
             switch (errorCode) {
@@ -836,20 +723,17 @@ data:
                 whatToDo = '¯\\_(ツ)_/¯';
                 break;
             }
-
             setErrorDescription(`<span>${message}</span> (<span>client-side error</span>)`);
             setCardState(cards.$client, {isError: true}, message)
             setCardState(cards.$network, {isOk: true}, 'Working')
             setCardState(cards.$server, {isOk: true}, 'Working')
             break;
-
           case errorCode >= 500 && errorCode <= 599:
             setErrorDescription(`<span>${message}</span> (<span>server-side error</span>)`);
             setCardState(cards.$client, {isOk: true}, 'Working')
             setCardState(cards.$network, {isOk: true}, 'Working')
             setCardState(cards.$server, {isError: true}, message)
             break;
-
           default:
             setErrorDescription(message);
             setCardState(cards.$client, {isWarning: true}, 'Unknown')
@@ -857,16 +741,11 @@ data:
             setCardState(cards.$server, {isWarning: true}, 'Unknown')
             break;
         }
-
         setReasons({whatHappened: `The server is temporarily overloading or down`.trim(), whatToDo: whatToDo.trim()});
       } else {
         console.warn('Cannot parse the error code:', errorCode);
       }
     </script>
-
-
-
-
     </body>
     </html>
 

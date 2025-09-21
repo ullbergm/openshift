@@ -21,7 +21,6 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>Not Found</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
       <meta name="title" content="404: Not Found">
       <meta name="description" content="The server can not find the requested page">
       <meta property="og:title" content="404: Not Found">
@@ -41,7 +40,6 @@ data:
           overflow: hidden;
           word-break: keep-all;
         }
-
         body {
           box-sizing: border-box;
           background-color: #000;
@@ -51,7 +49,6 @@ data:
           color: rgba(128, 255, 128, 0.8);
           text-shadow: 0 0 11px rgba(51, 255, 51, 1), 0 0 2px rgba(255, 255, 255, 0.8);
         }
-
         .overlay {
           pointer-events: none;
           position: absolute;
@@ -65,7 +62,6 @@ data:
           background-size: auto 4px;
           z-index: 1;
         }
-
         .overlay::before {
           content: '';
           pointer-events: none;
@@ -87,7 +83,6 @@ data:
           background-repeat: no-repeat;
           animation: scan 7.5s linear 0s infinite;
         }
-
         @keyframes scan {
           0% {
             background-position: 0 -100vh;
@@ -96,7 +91,6 @@ data:
             background-position: 0 100vh;
           }
         }
-
         main {
           box-sizing: inherit;
           position: absolute;
@@ -106,58 +100,42 @@ data:
           padding: 64px;
           text-transform: uppercase;
         }
-
         h1 {
           font-size: 48px;
         }
-
         p {
           font-size: 24px;
         }
-
         .output {
           color: rgba(128, 255, 128, 0.8);
           text-shadow: 0 0 1px rgba(51, 255, 51, 0.4),
           0 0 2px rgba(255, 255, 255, 0.8);
         }
-
         .output::before {
           content: "> ";
         }
-
         a {
           color: #fff;
           text-decoration: none;
         }
-
         a::before {
           content: "[";
         }
-
         a::after {
           content: "]";
         }
-
         .error_code {
           color: white;
         }
-
-        /*  */
       </style>
     </head>
     <body>
     <div class="overlay"></div>
-
     <main>
       <h1><span>Error</span> <span class="error_code">404</span></h1>
       <p class="output">The server can not find the requested page.</p>
       <p class="output"><span>Good luck</span>.</p>
-
     </main>
-
-
-
-
     </body>
     </html>
 
@@ -174,9 +152,7 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>Service Unavailable</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
       <meta http-equiv="refresh" content="30">
-
       <meta name="title" content="503: Service Unavailable">
       <meta name="description" content="The server is temporarily overloading or down">
       <meta property="og:title" content="503: Service Unavailable">
@@ -196,7 +172,6 @@ data:
           overflow: hidden;
           word-break: keep-all;
         }
-
         body {
           box-sizing: border-box;
           background-color: #000;
@@ -206,7 +181,6 @@ data:
           color: rgba(128, 255, 128, 0.8);
           text-shadow: 0 0 11px rgba(51, 255, 51, 1), 0 0 2px rgba(255, 255, 255, 0.8);
         }
-
         .overlay {
           pointer-events: none;
           position: absolute;
@@ -220,7 +194,6 @@ data:
           background-size: auto 4px;
           z-index: 1;
         }
-
         .overlay::before {
           content: '';
           pointer-events: none;
@@ -242,7 +215,6 @@ data:
           background-repeat: no-repeat;
           animation: scan 7.5s linear 0s infinite;
         }
-
         @keyframes scan {
           0% {
             background-position: 0 -100vh;
@@ -251,7 +223,6 @@ data:
             background-position: 0 100vh;
           }
         }
-
         main {
           box-sizing: inherit;
           position: absolute;
@@ -261,58 +232,42 @@ data:
           padding: 64px;
           text-transform: uppercase;
         }
-
         h1 {
           font-size: 48px;
         }
-
         p {
           font-size: 24px;
         }
-
         .output {
           color: rgba(128, 255, 128, 0.8);
           text-shadow: 0 0 1px rgba(51, 255, 51, 0.4),
           0 0 2px rgba(255, 255, 255, 0.8);
         }
-
         .output::before {
           content: "> ";
         }
-
         a {
           color: #fff;
           text-decoration: none;
         }
-
         a::before {
           content: "[";
         }
-
         a::after {
           content: "]";
         }
-
         .error_code {
           color: white;
         }
-
-        /*  */
       </style>
     </head>
     <body>
     <div class="overlay"></div>
-
     <main>
       <h1><span>Error</span> <span class="error_code">503</span></h1>
       <p class="output">The server is temporarily overloading or down.</p>
       <p class="output"><span>Good luck</span>.</p>
-
     </main>
-
-
-
-
     </body>
     </html>
 

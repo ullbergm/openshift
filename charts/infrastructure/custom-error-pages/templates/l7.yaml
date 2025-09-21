@@ -21,7 +21,6 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>Not Found</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
       <meta name="title" content="404: Not Found">
       <meta name="description" content="The server can not find the requested page">
       <meta property="og:title" content="404: Not Found">
@@ -33,14 +32,12 @@ data:
           --color-primary: #f7fafc;
           --color-inverted: #a0aec0;
         }
-
         @media (prefers-color-scheme: dark) {
           :root {
             --color-primary: #222526;
             --color-inverted: #fff;
           }
         }
-
         html, body {
           margin: 0;
           padding: 0;
@@ -53,78 +50,60 @@ data:
           font-size: 16px;
           word-break: keep-all;
         }
-
         @media screen and (min-width: 2000px) {
           html, body {
             font-size: 20px;
           }
         }
-
         body {
           display: flex;
           justify-content: center;
           align-items: center;
         }
-
         main {
           display: flex;
           flex-direction: column;
         }
-
         article {
           display: flex;
           align-items: center;
           justify-content: center;
         }
-
         article .code h1, article .desc p {
           font-size: 1.7em;
           margin: 0;
           padding: 0;
         }
-
         article .code {
           border-right: 2px solid;
           padding: 0.12em 0.7em;
           margin: 0;
           text-align: right;
         }
-
         article .code h1 {
           font-weight: normal;
         }
-
         article .desc {
           text-align: left;
           padding: 0.7em;
         }
-
         article .desc p {
           font-weight: lighter;
           text-transform: uppercase;
         }
-
-        /*  */
       </style>
     </head>
     <body>
-
     <main>
       <article>
         <div class="code">
           <h1>404</h1>
-
         </div>
         <div class="desc">
           <p>Not Found</p>
-
         </div>
       </article>
     </main>
-
-
-
-
     </body>
     </html>
 
@@ -141,9 +120,7 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>Service Unavailable</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
       <meta http-equiv="refresh" content="30">
-
       <meta name="title" content="503: Service Unavailable">
       <meta name="description" content="The server is temporarily overloading or down">
       <meta property="og:title" content="503: Service Unavailable">
@@ -155,14 +132,12 @@ data:
           --color-primary: #f7fafc;
           --color-inverted: #a0aec0;
         }
-
         @media (prefers-color-scheme: dark) {
           :root {
             --color-primary: #222526;
             --color-inverted: #fff;
           }
         }
-
         html, body {
           margin: 0;
           padding: 0;
@@ -175,78 +150,60 @@ data:
           font-size: 16px;
           word-break: keep-all;
         }
-
         @media screen and (min-width: 2000px) {
           html, body {
             font-size: 20px;
           }
         }
-
         body {
           display: flex;
           justify-content: center;
           align-items: center;
         }
-
         main {
           display: flex;
           flex-direction: column;
         }
-
         article {
           display: flex;
           align-items: center;
           justify-content: center;
         }
-
         article .code h1, article .desc p {
           font-size: 1.7em;
           margin: 0;
           padding: 0;
         }
-
         article .code {
           border-right: 2px solid;
           padding: 0.12em 0.7em;
           margin: 0;
           text-align: right;
         }
-
         article .code h1 {
           font-weight: normal;
         }
-
         article .desc {
           text-align: left;
           padding: 0.7em;
         }
-
         article .desc p {
           font-weight: lighter;
           text-transform: uppercase;
         }
-
-        /*  */
       </style>
     </head>
     <body>
-
     <main>
       <article>
         <div class="code">
           <h1>503</h1>
-
         </div>
         <div class="desc">
           <p>Service Unavailable</p>
-
         </div>
       </article>
     </main>
-
-
-
-
     </body>
     </html>
 

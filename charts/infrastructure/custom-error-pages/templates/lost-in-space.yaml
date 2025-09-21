@@ -21,7 +21,6 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>Not Found</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
       <meta name="title" content="404: Not Found">
       <meta name="description" content="The server can not find the requested page">
       <meta property="og:title" content="404: Not Found">
@@ -30,14 +29,12 @@ data:
       <meta property="twitter:description" content="The server can not find the requested page">
       <style>
         /** Codepen: https://codepen.io/kdbkapsere/pen/oNXLbqQ */
-
         :root {
           --color-bg-primary: #fff;
           --color-text-primary: #0e0620;
           --color-ui-bg-primary: #0e0620;
           --color-ui-bg-inverted: #fff;
         }
-
         @media (prefers-color-scheme: dark) {
           :root {
             --color-bg-primary: #212121;
@@ -46,7 +43,6 @@ data:
             --color-ui-bg-inverted: #212121;
           }
         }
-
         html, body {
           margin: 0;
           padding: 0;
@@ -59,166 +55,132 @@ data:
           font-size: 16px;
           word-break: keep-all;
         }
-
         @media screen and (min-width: 2000px) {
           html, body {
             font-size: 20px;
           }
         }
-
         body {
           align-items: center;
           display: flex;
           justify-content: center;
           height: 100%;
         }
-
         main {
           width: 100%;
           max-width: 1140px;
           display: flex;
           justify-content: space-between;
         }
-
         .picture, .content {
           box-sizing: border-box;
           width: 50%;
         }
-
         .content {
           padding: 0 40px;
         }
-
         svg .dark {
           stroke: var(--color-ui-bg-primary);
         }
-
         svg .fill-dark {
           fill: var(--color-ui-bg-primary);
         }
-
         svg .fill-light {
           fill: var(--color-ui-bg-inverted);
         }
-
         h1 {
           font-size: 9em;
           margin: 0.1em 0;
           font-weight: bold;
         }
-
         h2 {
           font-size: 2em;
           font-weight: bold;
         }
-
-        /*  */
-
         @media screen and (max-width: 768px) {
           main {
             display: block;
           }
-
           .picture, .content {
             width: 100%;
             text-align: center;
           }
-
           .content {
             padding: 0 20px;
           }
-
           .picture svg {
             max-width: 60%;
           }
         }
       </style>
-
       <style>
         @keyframes moveAndRotate {
           0% { transform: translateY(0) rotate(0); }
           50% { transform: translateY(1px) rotate(1deg); }
           100% { transform: translateY(0) rotate(0); }
         }
-
         svg #spaceman {
           animation: moveAndRotate 2.5s ease-in-out infinite alternate;
         }
-
         @keyframes moveXLeft {
           0%, 100% { transform: translateX(0); }
           50% { transform: translateX(-3px); }
         }
-
         svg #craterSmall {
           animation: moveXLeft 1.7s ease-in-out infinite alternate;
         }
-
         @keyframes moveXRight {
           0%, 100% { transform: translateX(0); }
           50% { transform: translateX(3px); }
         }
-
         svg #craterBig {
           animation: moveXRight 2s ease-in-out infinite alternate;
         }
-
         @keyframes rotatePlanet {
           0%, 100% { transform: rotate(0); }
           50% { transform: rotate(-2deg); }
         }
-
         svg #planet {
           animation: rotatePlanet 2.2s ease-in-out infinite alternate;
           transform-origin: 70% 30%;
         }
-
         @keyframes rotateStars {
           0%, 100% { transform: rotate(0); }
           50% { transform: rotate(calc(0.8deg)); }
         }
-
         svg #starsBig g {
           animation: rotateStars 1s ease-in-out infinite alternate;
           transform-origin: 40% 60%;
         }
-
         @keyframes scaleStars {
           0% { transform: scale(0.96); }
           50% { transform: scale(1); }
           100% { transform: scale(0.98); }
         }
-
         svg #starsSmall g {
           animation: scaleStars 1.7s ease-in-out infinite alternate;
           transform-origin: 50% 50%;
         }
-
         @keyframes moveYSmall {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-4px); }
         }
-
         svg #circlesSmall circle {
           animation: moveYSmall 1.85s ease-in-out infinite alternate;
         }
-
         @keyframes moveYBig {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-3px); }
         }
-
         svg #circlesBig circle {
           animation: moveYBig 2s ease-in-out infinite alternate;
         }
-
         svg #glassShine {
           opacity: 0;
         }
       </style>
     </head>
     <body>
-
     <main>
       <div class="picture">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
@@ -421,14 +383,8 @@ data:
         <h1>404</h1>
         <h2><span>UH OH</span>! <span>Not Found</span></h2>
         <p>The server can not find the requested page</p>
-
-
       </div>
     </main>
-
-
-
-
     </body>
     </html>
 
@@ -445,9 +401,7 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>Service Unavailable</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
       <meta http-equiv="refresh" content="30">
-
       <meta name="title" content="503: Service Unavailable">
       <meta name="description" content="The server is temporarily overloading or down">
       <meta property="og:title" content="503: Service Unavailable">
@@ -456,14 +410,12 @@ data:
       <meta property="twitter:description" content="The server is temporarily overloading or down">
       <style>
         /** Codepen: https://codepen.io/kdbkapsere/pen/oNXLbqQ */
-
         :root {
           --color-bg-primary: #fff;
           --color-text-primary: #0e0620;
           --color-ui-bg-primary: #0e0620;
           --color-ui-bg-inverted: #fff;
         }
-
         @media (prefers-color-scheme: dark) {
           :root {
             --color-bg-primary: #212121;
@@ -472,7 +424,6 @@ data:
             --color-ui-bg-inverted: #212121;
           }
         }
-
         html, body {
           margin: 0;
           padding: 0;
@@ -485,166 +436,132 @@ data:
           font-size: 16px;
           word-break: keep-all;
         }
-
         @media screen and (min-width: 2000px) {
           html, body {
             font-size: 20px;
           }
         }
-
         body {
           align-items: center;
           display: flex;
           justify-content: center;
           height: 100%;
         }
-
         main {
           width: 100%;
           max-width: 1140px;
           display: flex;
           justify-content: space-between;
         }
-
         .picture, .content {
           box-sizing: border-box;
           width: 50%;
         }
-
         .content {
           padding: 0 40px;
         }
-
         svg .dark {
           stroke: var(--color-ui-bg-primary);
         }
-
         svg .fill-dark {
           fill: var(--color-ui-bg-primary);
         }
-
         svg .fill-light {
           fill: var(--color-ui-bg-inverted);
         }
-
         h1 {
           font-size: 9em;
           margin: 0.1em 0;
           font-weight: bold;
         }
-
         h2 {
           font-size: 2em;
           font-weight: bold;
         }
-
-        /*  */
-
         @media screen and (max-width: 768px) {
           main {
             display: block;
           }
-
           .picture, .content {
             width: 100%;
             text-align: center;
           }
-
           .content {
             padding: 0 20px;
           }
-
           .picture svg {
             max-width: 60%;
           }
         }
       </style>
-
       <style>
         @keyframes moveAndRotate {
           0% { transform: translateY(0) rotate(0); }
           50% { transform: translateY(1px) rotate(1deg); }
           100% { transform: translateY(0) rotate(0); }
         }
-
         svg #spaceman {
           animation: moveAndRotate 2.5s ease-in-out infinite alternate;
         }
-
         @keyframes moveXLeft {
           0%, 100% { transform: translateX(0); }
           50% { transform: translateX(-3px); }
         }
-
         svg #craterSmall {
           animation: moveXLeft 1.7s ease-in-out infinite alternate;
         }
-
         @keyframes moveXRight {
           0%, 100% { transform: translateX(0); }
           50% { transform: translateX(3px); }
         }
-
         svg #craterBig {
           animation: moveXRight 2s ease-in-out infinite alternate;
         }
-
         @keyframes rotatePlanet {
           0%, 100% { transform: rotate(0); }
           50% { transform: rotate(-2deg); }
         }
-
         svg #planet {
           animation: rotatePlanet 2.2s ease-in-out infinite alternate;
           transform-origin: 70% 30%;
         }
-
         @keyframes rotateStars {
           0%, 100% { transform: rotate(0); }
           50% { transform: rotate(calc(0.8deg)); }
         }
-
         svg #starsBig g {
           animation: rotateStars 1s ease-in-out infinite alternate;
           transform-origin: 40% 60%;
         }
-
         @keyframes scaleStars {
           0% { transform: scale(0.96); }
           50% { transform: scale(1); }
           100% { transform: scale(0.98); }
         }
-
         svg #starsSmall g {
           animation: scaleStars 1.7s ease-in-out infinite alternate;
           transform-origin: 50% 50%;
         }
-
         @keyframes moveYSmall {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-4px); }
         }
-
         svg #circlesSmall circle {
           animation: moveYSmall 1.85s ease-in-out infinite alternate;
         }
-
         @keyframes moveYBig {
           0%, 100% { transform: translateY(0); }
           50% { transform: translateY(-3px); }
         }
-
         svg #circlesBig circle {
           animation: moveYBig 2s ease-in-out infinite alternate;
         }
-
         svg #glassShine {
           opacity: 0;
         }
       </style>
     </head>
     <body>
-
     <main>
       <div class="picture">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
@@ -847,14 +764,8 @@ data:
         <h1>503</h1>
         <h2><span>UH OH</span>! <span>Service Unavailable</span></h2>
         <p>The server is temporarily overloading or down</p>
-
-
       </div>
     </main>
-
-
-
-
     </body>
     </html>
 

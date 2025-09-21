@@ -21,7 +21,6 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>404 - Not Found</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
       <meta name="title" content="404: Not Found">
       <meta name="description" content="The server can not find the requested page">
       <meta property="og:title" content="404: Not Found">
@@ -33,14 +32,12 @@ data:
           --color-primary: #eee;
           --color-inverted: #222;
         }
-
         @media (prefers-color-scheme: dark) {
           :root {
             --color-primary: #222;
             --color-inverted: #aaa;
           }
         }
-
         html, body {
           margin: 0;
           padding: 0;
@@ -53,38 +50,31 @@ data:
           font-size: 16px;
           word-break: keep-all;
         }
-
         @media screen and (min-width: 2000px) {
           html, body {
             font-size: 20px;
           }
         }
-
         body {
           display: flex;
           justify-content: center;
           align-items: center;
         }
-
         main {
           display: flex;
         }
-
         article {
           display: flex;
           align-items: center;
           justify-content: center;
           flex-direction: column;
         }
-
         article #error_text h1 {
           font-size: 2em;
           font-weight: normal;
           padding: 0;
           margin: 0;
         }
-
-        /*  */
       </style>
     </head>
     <body>
@@ -94,14 +84,10 @@ data:
           <h1 class="source">404: <span>Not Found</span></h1>
           <h1 class="target"></h1>
         </div>
-
-
       </article>
     </main>
-
     <script>
       'use strict';
-
       /**
        * @param {HTMLElement} $el
        */
@@ -109,7 +95,6 @@ data:
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=+<>,./?[{()}]!@#$%^&*~`\|'.split('');
         const $source = $el.querySelector('.source');
         const $target = $el.querySelector('.target');
-
         let cursor = 0;
         /** @type {Number|undefined} */
         let scrambleInterval;
@@ -117,73 +102,56 @@ data:
         let cursorDelayInterval;
         /** @type {Number|undefined} */
         let cursorInterval;
-
         /**
          * @param {Number} len
          * @return {string}
          */
         const getRandomizedString = function (len) {
           let s = '';
-
           for (let i = 0; i < len; i++) {
             s += chars[Math.floor(Math.random() * chars.length)];
           }
-
           return s;
         };
-
         this.start = function () {
           $source.style.display = 'none';
           $target.style.display = 'block';
-
           scrambleInterval = window.setInterval(() => {
             if (cursor <= $source.innerText.length) {
               $target.innerText = $source.innerText.substring(0, cursor) + getRandomizedString($source.innerText.length - cursor);
             }
           }, 450 / 30);
-
           cursorDelayInterval = window.setTimeout(() => {
             cursorInterval = window.setInterval(() => {
               if (cursor > $source.innerText.length - 1) {
                 this.stop();
               }
-
               cursor++;
             }, 70);
           }, 350);
         };
-
         this.stop = function () {
           $source.style.display = 'block';
           $target.style.display = 'none';
           $target.innerText = '';
           cursor = 0;
-
           if (scrambleInterval !== undefined) {
             window.clearInterval(scrambleInterval);
             scrambleInterval = undefined;
           }
-
           if (cursorInterval !== undefined) {
             window.clearInterval(cursorInterval);
             cursorInterval = undefined;
           }
-
           if (cursorDelayInterval !== undefined) {
             window.clearInterval(cursorDelayInterval);
             cursorDelayInterval = undefined;
           }
         };
       };
-
       (new Shuffle(document.getElementById('error_text'))).start();
-
       //
     </script>
-
-
-
-
     </body>
     </html>
 
@@ -200,9 +168,7 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>503 - Service Unavailable</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
       <meta http-equiv="refresh" content="30">
-
       <meta name="title" content="503: Service Unavailable">
       <meta name="description" content="The server is temporarily overloading or down">
       <meta property="og:title" content="503: Service Unavailable">
@@ -214,14 +180,12 @@ data:
           --color-primary: #eee;
           --color-inverted: #222;
         }
-
         @media (prefers-color-scheme: dark) {
           :root {
             --color-primary: #222;
             --color-inverted: #aaa;
           }
         }
-
         html, body {
           margin: 0;
           padding: 0;
@@ -234,38 +198,31 @@ data:
           font-size: 16px;
           word-break: keep-all;
         }
-
         @media screen and (min-width: 2000px) {
           html, body {
             font-size: 20px;
           }
         }
-
         body {
           display: flex;
           justify-content: center;
           align-items: center;
         }
-
         main {
           display: flex;
         }
-
         article {
           display: flex;
           align-items: center;
           justify-content: center;
           flex-direction: column;
         }
-
         article #error_text h1 {
           font-size: 2em;
           font-weight: normal;
           padding: 0;
           margin: 0;
         }
-
-        /*  */
       </style>
     </head>
     <body>
@@ -275,14 +232,10 @@ data:
           <h1 class="source">503: <span>Service Unavailable</span></h1>
           <h1 class="target"></h1>
         </div>
-
-
       </article>
     </main>
-
     <script>
       'use strict';
-
       /**
        * @param {HTMLElement} $el
        */
@@ -290,7 +243,6 @@ data:
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-=+<>,./?[{()}]!@#$%^&*~`\|'.split('');
         const $source = $el.querySelector('.source');
         const $target = $el.querySelector('.target');
-
         let cursor = 0;
         /** @type {Number|undefined} */
         let scrambleInterval;
@@ -298,73 +250,56 @@ data:
         let cursorDelayInterval;
         /** @type {Number|undefined} */
         let cursorInterval;
-
         /**
          * @param {Number} len
          * @return {string}
          */
         const getRandomizedString = function (len) {
           let s = '';
-
           for (let i = 0; i < len; i++) {
             s += chars[Math.floor(Math.random() * chars.length)];
           }
-
           return s;
         };
-
         this.start = function () {
           $source.style.display = 'none';
           $target.style.display = 'block';
-
           scrambleInterval = window.setInterval(() => {
             if (cursor <= $source.innerText.length) {
               $target.innerText = $source.innerText.substring(0, cursor) + getRandomizedString($source.innerText.length - cursor);
             }
           }, 450 / 30);
-
           cursorDelayInterval = window.setTimeout(() => {
             cursorInterval = window.setInterval(() => {
               if (cursor > $source.innerText.length - 1) {
                 this.stop();
               }
-
               cursor++;
             }, 70);
           }, 350);
         };
-
         this.stop = function () {
           $source.style.display = 'block';
           $target.style.display = 'none';
           $target.innerText = '';
           cursor = 0;
-
           if (scrambleInterval !== undefined) {
             window.clearInterval(scrambleInterval);
             scrambleInterval = undefined;
           }
-
           if (cursorInterval !== undefined) {
             window.clearInterval(cursorInterval);
             cursorInterval = undefined;
           }
-
           if (cursorDelayInterval !== undefined) {
             window.clearInterval(cursorDelayInterval);
             cursorDelayInterval = undefined;
           }
         };
       };
-
       (new Shuffle(document.getElementById('error_text'))).start();
-
       //
     </script>
-
-
-
-
     </body>
     </html>
 

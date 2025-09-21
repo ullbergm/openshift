@@ -55,7 +55,7 @@ Content-Type: text/html
     return http_response
 
 def strip_non_english_localization(html_content):
-    """Remove all non-English localization data to reduce file size."""
+    """Remove all non-English localization data and clean up HTML to reduce file size."""
     import re
 
     # Remove the entire localization script block
@@ -70,8 +70,18 @@ def strip_non_english_localization(html_content):
     # Remove all data-l10n attributes since we don't need them for English-only
     html_content = re.sub(r'\s*data-l10n(?:="[^"]*")?', '', html_content)
 
-    # Remove empty comments
+    # Remove empty HTML comments
     html_content = re.sub(r'<!--\s*-->', '', html_content)
+
+    # Remove empty CSS comments
+    html_content = re.sub(r'/\*\s*\*/', '', html_content)
+
+    # Clean up trailing whitespace on lines
+    html_content = re.sub(r'[ \t]+$', '', html_content, flags=re.MULTILINE)
+
+    # Remove all empty lines (including lines with only whitespace) - apply multiple times to catch all
+    while re.search(r'\n\s*\n', html_content):
+        html_content = re.sub(r'\n\s*\n', '\n', html_content)
 
     return html_content
 
@@ -89,6 +99,7 @@ def get_available_templates(error_pages_dir):
 
 def generate_template_file(template_name, error_pages_dir, output_dir):
     """Generate a Helm template file for a specific error page template."""
+    import re
     template_dir = error_pages_dir / template_name
 
     # Read 404 and 503 HTML files
@@ -122,6 +133,9 @@ data:
 {{{{- end }}}}
 '''
 
+    # Strip spaces for empty lines in the template content
+    template_content = re.sub(r'^\s+$', '', template_content, flags=re.MULTILINE)
+
     # Write template file
     output_file = output_dir / f"{template_name}.yaml"
     output_file.write_text(template_content, encoding="utf-8")
@@ -145,16 +159,23 @@ def update_values_yaml(templates, values_file):
     updated_lines = []
     in_custom_error_pages = False
     found_template_line = False
+    added_comment = False
 
     for line in lines:
         if line.strip().startswith("custom-error-pages:"):
             in_custom_error_pages = True
             updated_lines.append(line)
-            # Add comment with available templates
+        elif in_custom_error_pages and line.strip().startswith("# Available templates:"):
+            # Update existing comment instead of adding a new one
             updated_lines.append(f"  # Available templates: {', '.join(templates)}")
+            added_comment = True
         elif in_custom_error_pages and line.strip().startswith("template:"):
             found_template_line = True
-            # Keep existing template selection, just add the line
+            # Add comment if we haven't added it yet
+            if not added_comment:
+                updated_lines.append(f"  # Available templates: {', '.join(templates)}")
+                added_comment = True
+            # Keep existing template selection
             updated_lines.append(line)
             in_custom_error_pages = False
         else:

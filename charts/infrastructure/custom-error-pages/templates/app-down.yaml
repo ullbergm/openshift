@@ -21,7 +21,6 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>Not Found</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
       <meta name="title" content="404: Not Found">
       <meta name="description" content="The server can not find the requested page">
       <meta property="og:title" content="404: Not Found">
@@ -39,7 +38,6 @@ data:
           --color-img-primary: #7990a1;
           --color-img-secondary: #00baff;
         }
-
         @media (prefers-color-scheme: dark) {
           :root {
             --color-bg-primary: #222526;
@@ -52,7 +50,6 @@ data:
             --color-img-secondary: #dedede
           }
         }
-
         body, html {
           background-color: var(--color-bg-primary);
           color: var(--color-text-primary);
@@ -66,19 +63,16 @@ data:
           font-size: 16px;
           word-break: keep-all;
         }
-
         @media screen and (min-width: 2000px) {
           body, html {
             font-size: 20px;
           }
         }
-
         body {
           display: flex;
           align-items: center;
           justify-content: center;
         }
-
         main {
           width: 100%;
           max-width: 1024px;
@@ -86,11 +80,9 @@ data:
           display: flex;
           justify-content: space-between;
         }
-
         article, .pic {
           box-sizing: border-box;
         }
-
         article {
           display: flex;
           flex-direction: column;
@@ -99,43 +91,34 @@ data:
           width: 45%;
           z-index: 1;
         }
-
         article h1 {
           font-size: 2.8em;
           margin: 0 0 30px;
           width: 130%;
         }
-
         .subtitle {
           display: flex;
           flex-direction: column;
           justify-content: center;
           margin: 16px 0;
         }
-
         ul {
           padding: 0;
           list-style: none;
           line-height: 1.4em;
         }
-
         ul li::before {
           content: '•';
           padding-right: 7px;
           color: var(--color-img-secondary);
         }
-
-        /*  */
-
         a {
           text-decoration: underline;
           color: var(--color-img-secondary);
         }
-
         .hidden {
           display: none;
         }
-
         .pic {
           display: flex;
           align-items: center;
@@ -144,11 +127,9 @@ data:
           user-select: none;
           z-index: 0;
         }
-
         .pic svg {
           width: 100%;
         }
-
         .pic svg .st10, .pic svg .st11, .pic svg .st12, .pic svg .st13,
         .pic svg .st14, .pic svg .st15, .pic svg .st16, .pic svg .st17,
         .pic svg .st3, .pic svg .st6, .pic svg .st9 {
@@ -156,29 +137,23 @@ data:
           stroke-linejoin: round;
           stroke-miterlimit: 10;
         }
-
         .pic svg .st0 {
           fill: var(--color-bg-primary);
         }
-
         .pic svg .st1 {
           fill: url(#svg-background-gradient);
         }
-
         .pic svg .st2 {
           fill: var(--color-bg-secondary);
         }
-
         .pic svg .st3 {
           fill: var(--color-bg-primary);
           stroke: var(--color-img-primary);
           stroke-width: 3.5;
         }
-
         .pic svg .st4 {
           fill: var(--color-img-secondary);
         }
-
         .pic svg .st5 {
           fill: none;
           stroke: var(--color-img-secondary);
@@ -186,17 +161,14 @@ data:
           stroke-linejoin: round;
           stroke-miterlimit: 10;
         }
-
         .pic svg .st6 {
           fill: var(--color-bg-primary);
           stroke: var(--color-img-primary);
           stroke-width: 3;
         }
-
         .pic svg .st7 {
           fill: var(--color-img-primary);
         }
-
         .pic svg .st8 {
           fill: none;
           stroke: var(--color-img-primary);
@@ -204,61 +176,51 @@ data:
           stroke-linecap: round;
           stroke-miterlimit: 10;
         }
-
         .pic svg .st9 {
           fill: none;
           stroke: var(--color-img-primary);
           stroke-width: 3;
         }
-
         .pic svg .st10 {
           fill: none;
           stroke: var(--color-img-primary);
           stroke-width: 3.5;
         }
-
         .pic svg .st11 {
           fill: none;
           stroke: var(--color-img-secondary);
           stroke-width: 4;
         }
-
         .pic svg .st12 {
           fill: var(--color-bg-primary);
           stroke: var(--color-img-primary);
           stroke-width: 4;
         }
-
         .pic svg .st13 {
           fill: none;
           stroke: var(--color-img-primary);
           stroke-width: 4;
         }
-
         .pic svg .st14 {
           fill: none;
           stroke: var(--color-img-secondary);
           stroke-width: 4.5;
         }
-
         .pic svg .st15 {
           fill: none;
           stroke: var(--color-img-secondary);
           stroke-width: 5;
         }
-
         .pic svg .st16 {
           fill: none;
           stroke: var(--color-img-primary);
           stroke-width: 5;
         }
-
         .pic svg .st17 {
           fill: var(--color-bg-primary);
           stroke: var(--color-img-details);
           stroke-width: 3.5;
         }
-
         .pic svg .st19 {
           fill: none;
           stroke: var(--color-img-details);
@@ -266,21 +228,17 @@ data:
           stroke-linecap: round;
           stroke-miterlimit: 10;
         }
-
         .pic svg .error-code {
           font: bold 40px sans-serif;
           fill: var(--color-img-details);
         }
-
         @media (max-width: 800px) {
           body, html {
             font-size: 14px;
           }
-
           article, .pic, article h1 {
             width: 100%;
           }
-
           .pic {
             position: absolute;
             top: 0;
@@ -290,17 +248,14 @@ data:
             width: 100%;
             height: 100%;
           }
-
           .pic svg {
             max-width: 70%;
           }
         }
-
         @media (max-width: 600px) {
           body, html {
             font-size: 12px;
           }
-
           .pic svg {
             max-width: 90%;
           }
@@ -324,7 +279,6 @@ data:
           <span>Double-check the URL</span>.
           <a class="go-back hidden">Alternatively, go back</a>
         </p>
-
       </article>
       <div class="pic">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480" x="0px" y="0px" xml:space="preserve">
@@ -451,37 +405,27 @@ data:
         </svg>
       </div>
     </main>
-
     <script>
       [...document.getElementsByClassName('if-not-found')].forEach(($el) => {
         $el.style.display = '404' === '404' ? 'block' : 'none';
       });
-
       [...document.getElementsByClassName('if-maybe-wrong-uri')].forEach(($el) => {
         $el.style.display = ['401', '403', '404', '418', '505'].includes('404') ? 'block' : 'none';
       });
-
       [...document.getElementsByClassName('go-back')].forEach(($el) => {
         if (document.referrer || history.length) {
           $el.setAttribute('href', '#back-to-the-future');
-
           $el.addEventListener('click', event => {
             history.back();
             event.preventDefault();
-
             return false;
           }, false);
-
           $el.style.display = 'inline-block';
         } else {
           $el.style.display = 'none';
         }
       });
     </script>
-
-
-
-
     </body>
     </html>
 
@@ -498,9 +442,7 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>Service Unavailable</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
       <meta http-equiv="refresh" content="30">
-
       <meta name="title" content="503: Service Unavailable">
       <meta name="description" content="The server is temporarily overloading or down">
       <meta property="og:title" content="503: Service Unavailable">
@@ -518,7 +460,6 @@ data:
           --color-img-primary: #7990a1;
           --color-img-secondary: #00baff;
         }
-
         @media (prefers-color-scheme: dark) {
           :root {
             --color-bg-primary: #222526;
@@ -531,7 +472,6 @@ data:
             --color-img-secondary: #dedede
           }
         }
-
         body, html {
           background-color: var(--color-bg-primary);
           color: var(--color-text-primary);
@@ -545,19 +485,16 @@ data:
           font-size: 16px;
           word-break: keep-all;
         }
-
         @media screen and (min-width: 2000px) {
           body, html {
             font-size: 20px;
           }
         }
-
         body {
           display: flex;
           align-items: center;
           justify-content: center;
         }
-
         main {
           width: 100%;
           max-width: 1024px;
@@ -565,11 +502,9 @@ data:
           display: flex;
           justify-content: space-between;
         }
-
         article, .pic {
           box-sizing: border-box;
         }
-
         article {
           display: flex;
           flex-direction: column;
@@ -578,43 +513,34 @@ data:
           width: 45%;
           z-index: 1;
         }
-
         article h1 {
           font-size: 2.8em;
           margin: 0 0 30px;
           width: 130%;
         }
-
         .subtitle {
           display: flex;
           flex-direction: column;
           justify-content: center;
           margin: 16px 0;
         }
-
         ul {
           padding: 0;
           list-style: none;
           line-height: 1.4em;
         }
-
         ul li::before {
           content: '•';
           padding-right: 7px;
           color: var(--color-img-secondary);
         }
-
-        /*  */
-
         a {
           text-decoration: underline;
           color: var(--color-img-secondary);
         }
-
         .hidden {
           display: none;
         }
-
         .pic {
           display: flex;
           align-items: center;
@@ -623,11 +549,9 @@ data:
           user-select: none;
           z-index: 0;
         }
-
         .pic svg {
           width: 100%;
         }
-
         .pic svg .st10, .pic svg .st11, .pic svg .st12, .pic svg .st13,
         .pic svg .st14, .pic svg .st15, .pic svg .st16, .pic svg .st17,
         .pic svg .st3, .pic svg .st6, .pic svg .st9 {
@@ -635,29 +559,23 @@ data:
           stroke-linejoin: round;
           stroke-miterlimit: 10;
         }
-
         .pic svg .st0 {
           fill: var(--color-bg-primary);
         }
-
         .pic svg .st1 {
           fill: url(#svg-background-gradient);
         }
-
         .pic svg .st2 {
           fill: var(--color-bg-secondary);
         }
-
         .pic svg .st3 {
           fill: var(--color-bg-primary);
           stroke: var(--color-img-primary);
           stroke-width: 3.5;
         }
-
         .pic svg .st4 {
           fill: var(--color-img-secondary);
         }
-
         .pic svg .st5 {
           fill: none;
           stroke: var(--color-img-secondary);
@@ -665,17 +583,14 @@ data:
           stroke-linejoin: round;
           stroke-miterlimit: 10;
         }
-
         .pic svg .st6 {
           fill: var(--color-bg-primary);
           stroke: var(--color-img-primary);
           stroke-width: 3;
         }
-
         .pic svg .st7 {
           fill: var(--color-img-primary);
         }
-
         .pic svg .st8 {
           fill: none;
           stroke: var(--color-img-primary);
@@ -683,61 +598,51 @@ data:
           stroke-linecap: round;
           stroke-miterlimit: 10;
         }
-
         .pic svg .st9 {
           fill: none;
           stroke: var(--color-img-primary);
           stroke-width: 3;
         }
-
         .pic svg .st10 {
           fill: none;
           stroke: var(--color-img-primary);
           stroke-width: 3.5;
         }
-
         .pic svg .st11 {
           fill: none;
           stroke: var(--color-img-secondary);
           stroke-width: 4;
         }
-
         .pic svg .st12 {
           fill: var(--color-bg-primary);
           stroke: var(--color-img-primary);
           stroke-width: 4;
         }
-
         .pic svg .st13 {
           fill: none;
           stroke: var(--color-img-primary);
           stroke-width: 4;
         }
-
         .pic svg .st14 {
           fill: none;
           stroke: var(--color-img-secondary);
           stroke-width: 4.5;
         }
-
         .pic svg .st15 {
           fill: none;
           stroke: var(--color-img-secondary);
           stroke-width: 5;
         }
-
         .pic svg .st16 {
           fill: none;
           stroke: var(--color-img-primary);
           stroke-width: 5;
         }
-
         .pic svg .st17 {
           fill: var(--color-bg-primary);
           stroke: var(--color-img-details);
           stroke-width: 3.5;
         }
-
         .pic svg .st19 {
           fill: none;
           stroke: var(--color-img-details);
@@ -745,21 +650,17 @@ data:
           stroke-linecap: round;
           stroke-miterlimit: 10;
         }
-
         .pic svg .error-code {
           font: bold 40px sans-serif;
           fill: var(--color-img-details);
         }
-
         @media (max-width: 800px) {
           body, html {
             font-size: 14px;
           }
-
           article, .pic, article h1 {
             width: 100%;
           }
-
           .pic {
             position: absolute;
             top: 0;
@@ -769,17 +670,14 @@ data:
             width: 100%;
             height: 100%;
           }
-
           .pic svg {
             max-width: 70%;
           }
         }
-
         @media (max-width: 600px) {
           body, html {
             font-size: 12px;
           }
-
           .pic svg {
             max-width: 90%;
           }
@@ -803,7 +701,6 @@ data:
           <span>Double-check the URL</span>.
           <a class="go-back hidden">Alternatively, go back</a>
         </p>
-
       </article>
       <div class="pic">
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 480" x="0px" y="0px" xml:space="preserve">
@@ -930,37 +827,27 @@ data:
         </svg>
       </div>
     </main>
-
     <script>
       [...document.getElementsByClassName('if-not-found')].forEach(($el) => {
         $el.style.display = '503' === '404' ? 'block' : 'none';
       });
-
       [...document.getElementsByClassName('if-maybe-wrong-uri')].forEach(($el) => {
         $el.style.display = ['401', '403', '404', '418', '505'].includes('503') ? 'block' : 'none';
       });
-
       [...document.getElementsByClassName('go-back')].forEach(($el) => {
         if (document.referrer || history.length) {
           $el.setAttribute('href', '#back-to-the-future');
-
           $el.addEventListener('click', event => {
             history.back();
             event.preventDefault();
-
             return false;
           }, false);
-
           $el.style.display = 'inline-block';
         } else {
           $el.style.display = 'none';
         }
       });
     </script>
-
-
-
-
     </body>
     </html>
 

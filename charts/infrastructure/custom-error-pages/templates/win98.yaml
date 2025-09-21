@@ -21,7 +21,6 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>404: Not Found</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-
       <meta name="title" content="404: Not Found">
       <meta name="description" content="The server can not find the requested page">
       <meta property="og:title" content="404: Not Found">
@@ -32,13 +31,11 @@ data:
         :root {
           --color-desktop: #008080;
         }
-
         @media (prefers-color-scheme: dark) {
           :root {
             --color-desktop: #1a1a1a;
           }
         }
-
         html, body {
           margin: 0;
           padding: 0;
@@ -48,26 +45,22 @@ data:
           font-family: sans-serif;
           font-size: 16px;
         }
-
         @media screen and (min-width: 2000px) {
           html, body {
             font-size: 18px;
           }
         }
-
         body {
           display: flex;
           justify-content: center;
           align-items: center;
         }
-
         main {
           display: flex;
           flex-direction: column;
           width: 100%;
           height: 100%;
         }
-
         .desktop {
           background-color: var(--color-desktop);
           flex: 1;
@@ -79,7 +72,6 @@ data:
           overflow: hidden;
           position: relative;
         }
-
         .desktop .desktop-icon {
           display: flex;
           flex-direction: column;
@@ -89,18 +81,15 @@ data:
           user-select: none;
           padding: 10px 10px 0 20px;
         }
-
         .desktop .desktop-icon svg {
           width: 48px;
           height: 48px;
         }
-
         .desktop .desktop-icon p {
           margin: 0;
           font-size: 0.85em;
           padding-top: 0.5em;
         }
-
         dialog {
           position: fixed;
           top: 50%;
@@ -115,19 +104,16 @@ data:
           background-color: #c0c0c0;
           max-width: 95%;
         }
-
         dialog.blink header {
           background: linear-gradient(90deg, #000080, #1084d0);
           animation: blink 350ms infinite;
         }
-
         @keyframes blink {
           0% { background: linear-gradient(90deg, #808080, #b5b5b5); }
           49.99% { background: linear-gradient(90deg, #808080, #b5b5b5); }
           50% { background: linear-gradient(90deg, #000080, #1084d0); }
           100% { background: linear-gradient(90deg, #000080, #1084d0); }
         }
-
         dialog header {
           display: flex;
           flex-direction: row;
@@ -136,7 +122,6 @@ data:
           justify-content: space-between;
           background: linear-gradient(90deg, #000080, #1084d0);
         }
-
         dialog header p {
           margin: 0 5px 0 2px;
           color: #fff;
@@ -145,12 +130,10 @@ data:
           user-select: none;
           white-space: nowrap;
         }
-
         dialog header .controls {
           display: flex;
           padding-right: 2px;
         }
-
         dialog header .controls .button {
           display: flex;
           align-items: center;
@@ -163,31 +146,25 @@ data:
             inset 2px 2px 0 #dfdfdf,
             inset -2px -2px 0 #808080;
         }
-
         dialog section {
           display: flex;
           flex-direction: row;
         }
-
         dialog section .icon {
           padding: 12px;
         }
-
         dialog section .content {
           padding: 18px 0;
           margin-right: 10px;
         }
-
         dialog section .content p {
           margin: 0;
         }
-
         dialog section .content .details {
           font-size: 0.8em;
           padding-top: 1em;
           color: #252525;
         }
-
         dialog .actions {
           display: flex;
           flex-direction: row;
@@ -195,7 +172,6 @@ data:
           justify-content: center;
           padding: 0 0 8px 0;
         }
-
         dialog .actions button {
           background-color: #c0c0c0;
           padding: 4px 8px;
@@ -212,11 +188,9 @@ data:
           border-radius: 0;
           user-select: none;
         }
-
         dialog .actions button:focus {
           outline: none;
         }
-
         .taskbar {
           background-color: #c0c0c0;
           box-sizing: border-box;
@@ -233,14 +207,12 @@ data:
           z-index: 1000;
           user-select: none;
         }
-
         .taskbar .group {
           display: flex;
           align-items: center;
           justify-content: center;
           height: 100%;
         }
-
         .taskbar .start {
           display: flex;
           align-items: center;
@@ -257,18 +229,15 @@ data:
             inset -2px -2px 0 #808080;
           font-family: 'Tahoma', sans-serif;
         }
-
         .taskbar .start svg {
           margin-right: 1px;
         }
-
         .taskbar .spacer {
           width: 2px;
           height: 100%;
           box-shadow: inset 1px 0 0 #808080, inset -1px 0 0 #fff;
           margin-left: 2px;
         }
-
         .taskbar .tray {
           display: flex;
           align-items: center;
@@ -281,11 +250,9 @@ data:
             inset 1px 1px 0 #808080,
             inset -1px -1px 0 #fff;
         }
-
         .taskbar .tray svg {
           margin-right: 4px;
         }
-
         .taskbar .tray .clock {
           font-size: 0.75em;
           white-space: nowrap;
@@ -332,7 +299,6 @@ data:
           </svg>
           <p>My Documents</p>
         </div>
-
         <dialog open>
           <header>
             <p>404: <span>Not Found</span></p>
@@ -356,7 +322,6 @@ data:
             </div>
             <div class="content">
               <p><span>The server can not find the requested page</span></p>
-
             </div>
           </section>
           <div class="actions">
@@ -399,7 +364,6 @@ data:
     </main>
     <script>
       'use strict';
-
       /**
        * Set the clock to the current time in HH:MM AM/PM format.
        *
@@ -411,12 +375,9 @@ data:
         const minutes = String(now.getMinutes()).padStart(2, '0');
         const ampm = hours24 >= 12 ? 'PM' : 'AM';
         const formattedTime = `${(hours24 % 12) || 12}:${minutes} ${ampm}`;
-
         document.querySelectorAll('.clock').forEach($el => $el.textContent = formattedTime);
       };
-
       const $dialog = document.querySelector('dialog');
-
       /**
        * Triggers a blinking effect on the dialog.
        *
@@ -426,22 +387,17 @@ data:
         if ($dialog.classList.contains('blink') || !$dialog.open) {
           return; // prevent multiple triggers
         }
-
         $dialog.classList.add('blink');
         window.setTimeout(() => $dialog.classList.remove('blink'), 350 * 4 - 50);
       };
-
       /** Centers the dialog in the viewport. */
       const centerDialog = () => {
         $dialog.style.transform = 'none';
-
         let [prevTop, prevLeft] = ['', ''];
-
         // dirty hack to ensure the dialog is centered
         while (true) {
           $dialog.style.top = `calc(50% - ${$dialog.offsetHeight / 2}px)`;
           $dialog.style.left = `calc(50% - ${$dialog.offsetWidth / 2}px)`;
-
           if (prevTop !== $dialog.style.top || prevLeft !== $dialog.style.left) {
             prevTop = $dialog.style.top;
             prevLeft = $dialog.style.left;
@@ -450,16 +406,13 @@ data:
           }
         }
       };
-
       { // add event listeners
         // blink the dialog when clicking on outside the dialog
         [document.querySelector('.desktop'), document.querySelector('.taskbar')].forEach(($el) => {
           $el.addEventListener('click', blinkDialog);
         });
-
         // prevent event propagation from the dialog to the desktop and taskbar
         $dialog.addEventListener('click', (e) => e.stopPropagation());
-
         /**
          * Get the client coordinates of the event, handling both mouse and touch events.
          *
@@ -473,61 +426,44 @@ data:
             return { x: e.clientX, y: e.clientY };
           }
         };
-
         const onStart = (e) => {
           e.preventDefault();
           e.stopPropagation();
-
           const { x: startX, y: startY } = getClientCoords(e);
           const dialogStyle = window.getComputedStyle($dialog);
           const offsetX = startX - parseInt(dialogStyle.left, 10);
           const offsetY = startY - parseInt(dialogStyle.top, 10);
-
           const onMove = (e) => {
             const { x: clientX, y: clientY } = getClientCoords(e);
-
             let top = Math.max(clientY - offsetY, 0);
             let left = Math.max(clientX - offsetX, 0);
-
             // prevent overflow
             if (left + $dialog.clientWidth > window.innerWidth) {
               left = window.innerWidth - $dialog.clientWidth;
             }
-
             if (top + $dialog.clientHeight > window.innerHeight) {
               top = window.innerHeight - $dialog.clientHeight;
             }
-
             $dialog.style.top = top + 'px';
             $dialog.style.left = left + 'px';
-
             e.preventDefault();
           };
-
           const onEnd = () => {
             ['mousemove', 'touchmove'].forEach(eventType => document.removeEventListener(eventType, onMove));
             ['mouseup', 'touchend'].forEach(eventType => document.removeEventListener(eventType, onEnd));
           };
-
           ['mousemove', 'touchmove'].forEach(eventType => document.addEventListener(eventType, onMove, { passive: false }));
           ['mouseup', 'touchend'].forEach(eventType => document.addEventListener(eventType, onEnd));
         };
-
         ['mousedown', 'touchstart'].forEach(eventType => {
           $dialog.querySelector('header').addEventListener(eventType, onStart, { passive: false });
         });
-
         window.addEventListener('resize', centerDialog);
         window.setInterval(updateClock, 1000);
       }
-
       updateClock();
       centerDialog();
     </script>
-
-
-
-
     </body>
     </html>
 
@@ -544,9 +480,7 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>503: Service Unavailable</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-
       <meta http-equiv="refresh" content="30">
-
       <meta name="title" content="503: Service Unavailable">
       <meta name="description" content="The server is temporarily overloading or down">
       <meta property="og:title" content="503: Service Unavailable">
@@ -557,13 +491,11 @@ data:
         :root {
           --color-desktop: #008080;
         }
-
         @media (prefers-color-scheme: dark) {
           :root {
             --color-desktop: #1a1a1a;
           }
         }
-
         html, body {
           margin: 0;
           padding: 0;
@@ -573,26 +505,22 @@ data:
           font-family: sans-serif;
           font-size: 16px;
         }
-
         @media screen and (min-width: 2000px) {
           html, body {
             font-size: 18px;
           }
         }
-
         body {
           display: flex;
           justify-content: center;
           align-items: center;
         }
-
         main {
           display: flex;
           flex-direction: column;
           width: 100%;
           height: 100%;
         }
-
         .desktop {
           background-color: var(--color-desktop);
           flex: 1;
@@ -604,7 +532,6 @@ data:
           overflow: hidden;
           position: relative;
         }
-
         .desktop .desktop-icon {
           display: flex;
           flex-direction: column;
@@ -614,18 +541,15 @@ data:
           user-select: none;
           padding: 10px 10px 0 20px;
         }
-
         .desktop .desktop-icon svg {
           width: 48px;
           height: 48px;
         }
-
         .desktop .desktop-icon p {
           margin: 0;
           font-size: 0.85em;
           padding-top: 0.5em;
         }
-
         dialog {
           position: fixed;
           top: 50%;
@@ -640,19 +564,16 @@ data:
           background-color: #c0c0c0;
           max-width: 95%;
         }
-
         dialog.blink header {
           background: linear-gradient(90deg, #000080, #1084d0);
           animation: blink 350ms infinite;
         }
-
         @keyframes blink {
           0% { background: linear-gradient(90deg, #808080, #b5b5b5); }
           49.99% { background: linear-gradient(90deg, #808080, #b5b5b5); }
           50% { background: linear-gradient(90deg, #000080, #1084d0); }
           100% { background: linear-gradient(90deg, #000080, #1084d0); }
         }
-
         dialog header {
           display: flex;
           flex-direction: row;
@@ -661,7 +582,6 @@ data:
           justify-content: space-between;
           background: linear-gradient(90deg, #000080, #1084d0);
         }
-
         dialog header p {
           margin: 0 5px 0 2px;
           color: #fff;
@@ -670,12 +590,10 @@ data:
           user-select: none;
           white-space: nowrap;
         }
-
         dialog header .controls {
           display: flex;
           padding-right: 2px;
         }
-
         dialog header .controls .button {
           display: flex;
           align-items: center;
@@ -688,31 +606,25 @@ data:
             inset 2px 2px 0 #dfdfdf,
             inset -2px -2px 0 #808080;
         }
-
         dialog section {
           display: flex;
           flex-direction: row;
         }
-
         dialog section .icon {
           padding: 12px;
         }
-
         dialog section .content {
           padding: 18px 0;
           margin-right: 10px;
         }
-
         dialog section .content p {
           margin: 0;
         }
-
         dialog section .content .details {
           font-size: 0.8em;
           padding-top: 1em;
           color: #252525;
         }
-
         dialog .actions {
           display: flex;
           flex-direction: row;
@@ -720,7 +632,6 @@ data:
           justify-content: center;
           padding: 0 0 8px 0;
         }
-
         dialog .actions button {
           background-color: #c0c0c0;
           padding: 4px 8px;
@@ -737,11 +648,9 @@ data:
           border-radius: 0;
           user-select: none;
         }
-
         dialog .actions button:focus {
           outline: none;
         }
-
         .taskbar {
           background-color: #c0c0c0;
           box-sizing: border-box;
@@ -758,14 +667,12 @@ data:
           z-index: 1000;
           user-select: none;
         }
-
         .taskbar .group {
           display: flex;
           align-items: center;
           justify-content: center;
           height: 100%;
         }
-
         .taskbar .start {
           display: flex;
           align-items: center;
@@ -782,18 +689,15 @@ data:
             inset -2px -2px 0 #808080;
           font-family: 'Tahoma', sans-serif;
         }
-
         .taskbar .start svg {
           margin-right: 1px;
         }
-
         .taskbar .spacer {
           width: 2px;
           height: 100%;
           box-shadow: inset 1px 0 0 #808080, inset -1px 0 0 #fff;
           margin-left: 2px;
         }
-
         .taskbar .tray {
           display: flex;
           align-items: center;
@@ -806,11 +710,9 @@ data:
             inset 1px 1px 0 #808080,
             inset -1px -1px 0 #fff;
         }
-
         .taskbar .tray svg {
           margin-right: 4px;
         }
-
         .taskbar .tray .clock {
           font-size: 0.75em;
           white-space: nowrap;
@@ -857,7 +759,6 @@ data:
           </svg>
           <p>My Documents</p>
         </div>
-
         <dialog open>
           <header>
             <p>503: <span>Service Unavailable</span></p>
@@ -881,7 +782,6 @@ data:
             </div>
             <div class="content">
               <p><span>The server is temporarily overloading or down</span></p>
-
             </div>
           </section>
           <div class="actions">
@@ -924,7 +824,6 @@ data:
     </main>
     <script>
       'use strict';
-
       /**
        * Set the clock to the current time in HH:MM AM/PM format.
        *
@@ -936,12 +835,9 @@ data:
         const minutes = String(now.getMinutes()).padStart(2, '0');
         const ampm = hours24 >= 12 ? 'PM' : 'AM';
         const formattedTime = `${(hours24 % 12) || 12}:${minutes} ${ampm}`;
-
         document.querySelectorAll('.clock').forEach($el => $el.textContent = formattedTime);
       };
-
       const $dialog = document.querySelector('dialog');
-
       /**
        * Triggers a blinking effect on the dialog.
        *
@@ -951,22 +847,17 @@ data:
         if ($dialog.classList.contains('blink') || !$dialog.open) {
           return; // prevent multiple triggers
         }
-
         $dialog.classList.add('blink');
         window.setTimeout(() => $dialog.classList.remove('blink'), 350 * 4 - 50);
       };
-
       /** Centers the dialog in the viewport. */
       const centerDialog = () => {
         $dialog.style.transform = 'none';
-
         let [prevTop, prevLeft] = ['', ''];
-
         // dirty hack to ensure the dialog is centered
         while (true) {
           $dialog.style.top = `calc(50% - ${$dialog.offsetHeight / 2}px)`;
           $dialog.style.left = `calc(50% - ${$dialog.offsetWidth / 2}px)`;
-
           if (prevTop !== $dialog.style.top || prevLeft !== $dialog.style.left) {
             prevTop = $dialog.style.top;
             prevLeft = $dialog.style.left;
@@ -975,16 +866,13 @@ data:
           }
         }
       };
-
       { // add event listeners
         // blink the dialog when clicking on outside the dialog
         [document.querySelector('.desktop'), document.querySelector('.taskbar')].forEach(($el) => {
           $el.addEventListener('click', blinkDialog);
         });
-
         // prevent event propagation from the dialog to the desktop and taskbar
         $dialog.addEventListener('click', (e) => e.stopPropagation());
-
         /**
          * Get the client coordinates of the event, handling both mouse and touch events.
          *
@@ -998,61 +886,44 @@ data:
             return { x: e.clientX, y: e.clientY };
           }
         };
-
         const onStart = (e) => {
           e.preventDefault();
           e.stopPropagation();
-
           const { x: startX, y: startY } = getClientCoords(e);
           const dialogStyle = window.getComputedStyle($dialog);
           const offsetX = startX - parseInt(dialogStyle.left, 10);
           const offsetY = startY - parseInt(dialogStyle.top, 10);
-
           const onMove = (e) => {
             const { x: clientX, y: clientY } = getClientCoords(e);
-
             let top = Math.max(clientY - offsetY, 0);
             let left = Math.max(clientX - offsetX, 0);
-
             // prevent overflow
             if (left + $dialog.clientWidth > window.innerWidth) {
               left = window.innerWidth - $dialog.clientWidth;
             }
-
             if (top + $dialog.clientHeight > window.innerHeight) {
               top = window.innerHeight - $dialog.clientHeight;
             }
-
             $dialog.style.top = top + 'px';
             $dialog.style.left = left + 'px';
-
             e.preventDefault();
           };
-
           const onEnd = () => {
             ['mousemove', 'touchmove'].forEach(eventType => document.removeEventListener(eventType, onMove));
             ['mouseup', 'touchend'].forEach(eventType => document.removeEventListener(eventType, onEnd));
           };
-
           ['mousemove', 'touchmove'].forEach(eventType => document.addEventListener(eventType, onMove, { passive: false }));
           ['mouseup', 'touchend'].forEach(eventType => document.addEventListener(eventType, onEnd));
         };
-
         ['mousedown', 'touchstart'].forEach(eventType => {
           $dialog.querySelector('header').addEventListener(eventType, onStart, { passive: false });
         });
-
         window.addEventListener('resize', centerDialog);
         window.setInterval(updateClock, 1000);
       }
-
       updateClock();
       centerDialog();
     </script>
-
-
-
-
     </body>
     </html>
 

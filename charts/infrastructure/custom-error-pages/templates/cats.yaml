@@ -21,7 +21,6 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>Not Found</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
       <meta name="title" content="404: Not Found">
       <meta name="description" content="The server can not find the requested page">
       <meta property="og:title" content="404: Not Found">
@@ -33,14 +32,12 @@ data:
           --color-primary: #fff;
           --color-inverted: #202020;
         }
-
         @media (prefers-color-scheme: dark) {
           :root {
             --color-primary: #000;
             --color-inverted: #fff;
           }
         }
-
         html, body {
           margin: 0;
           padding: 0;
@@ -53,13 +50,11 @@ data:
           font-size: 16px;
           word-break: keep-all;
         }
-
         @media screen and (min-width: 2000px) {
           html, body {
             font-size: 22px;
           }
         }
-
         body {
           display: flex;
           justify-content: center;
@@ -67,26 +62,17 @@ data:
           flex-direction: column;
           height: 100%;
         }
-
         article img {
           width: 100%;
           max-width: 750px;
           box-shadow: 0 30px 0 -20px rgba(0, 0, 0, 0.2);
         }
-
-        /*  */
       </style>
     </head>
     <body>
     <article>
       <img src="https://http.cat/404.jpg" alt="Not Found">
     </article>
-
-
-
-
-
-
     </body>
     </html>
 
@@ -103,9 +89,7 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>Service Unavailable</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
       <meta http-equiv="refresh" content="30">
-
       <meta name="title" content="503: Service Unavailable">
       <meta name="description" content="The server is temporarily overloading or down">
       <meta property="og:title" content="503: Service Unavailable">
@@ -117,14 +101,12 @@ data:
           --color-primary: #fff;
           --color-inverted: #202020;
         }
-
         @media (prefers-color-scheme: dark) {
           :root {
             --color-primary: #000;
             --color-inverted: #fff;
           }
         }
-
         html, body {
           margin: 0;
           padding: 0;
@@ -137,13 +119,11 @@ data:
           font-size: 16px;
           word-break: keep-all;
         }
-
         @media screen and (min-width: 2000px) {
           html, body {
             font-size: 22px;
           }
         }
-
         body {
           display: flex;
           justify-content: center;
@@ -151,26 +131,17 @@ data:
           flex-direction: column;
           height: 100%;
         }
-
         article img {
           width: 100%;
           max-width: 750px;
           box-shadow: 0 30px 0 -20px rgba(0, 0, 0, 0.2);
         }
-
-        /*  */
       </style>
     </head>
     <body>
     <article>
       <img src="https://http.cat/503.jpg" alt="Service Unavailable">
     </article>
-
-
-
-
-
-
     </body>
     </html>
 

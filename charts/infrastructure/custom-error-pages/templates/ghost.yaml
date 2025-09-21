@@ -21,7 +21,6 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>404: Not Found</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
       <meta name="title" content="404: Not Found">
       <meta name="description" content="The server can not find the requested page">
       <meta property="og:title" content="404: Not Found">
@@ -34,7 +33,6 @@ data:
           --color-inverted: #202020;
           --color-ghost: #efefef;
         }
-
         @media (prefers-color-scheme: dark) {
           :root {
             --color-primary: #1a1a1a;
@@ -42,7 +40,6 @@ data:
             --color-ghost: #eee;
           }
         }
-
         html, body {
           margin: 0;
           padding: 0;
@@ -55,45 +52,37 @@ data:
           font-size: 16px;
           word-break: keep-all;
         }
-
         @media screen and (min-width: 2000px) {
           html, body {
             font-size: 20px;
           }
         }
-
         body {
           display: flex;
           justify-content: center;
           align-items: center;
           height: 100%;
         }
-
         article {
           text-align: center;
           width: 100%;
         }
-
         article .ghost {
           animation: float 3s ease-out infinite;
         }
-
         @keyframes float {
           50% {
             transform: translate(0, 20px);
           }
         }
-
         article .shadowFrame {
           width: 130px;
           margin: 10px auto 0 auto;
         }
-
         article .shadowFrame .shadow {
           animation: shrink 3s ease-out infinite;
           transform-origin: center center;
         }
-
         @keyframes shrink {
           0% {
             width: 90%;
@@ -108,19 +97,15 @@ data:
             margin: 0 5%;
           }
         }
-
         article h3 {
           font-size: 1.5em;
           text-transform: uppercase;
           margin: 0.3em auto;
         }
-
         article .description {
           font-size: 0.9em;
           opacity: .9;
         }
-
-        /*  */
       </style>
     </head>
     <body>
@@ -158,23 +143,15 @@ data:
                    c7.636,0,15.336,1.684,22.887,5.004c26.766,11.771,29.011,39.047,29.027,39.251V121.405z"
               stroke-miterlimit="10" style="fill: var(--color-ghost); stroke: var(--color-ghost)"></path>
         </svg>
-
       <p class="shadowFrame">
         <svg class="shadow" xmlns="http://www.w3.org/2000/svg" x="61px" y="20px" width="122.436px" height="39.744px"
              viewBox="0 0 122.436 39.744" xml:space="preserve">
             <ellipse style="fill: var(--color-ghost); opacity: 0.1" cx="61.128" cy="19.872" rx="49.25" ry="8.916"></ellipse>
           </svg>
       </p>
-
       <h3><span>Error</span> 404</h3>
       <p class="description">The server can not find the requested page</p>
-
-
     </article>
-
-
-
-
     </body>
     </html>
 
@@ -191,9 +168,7 @@ data:
       <meta name="robots" content="nofollow,noarchive,noindex">
       <title>503: Service Unavailable</title>
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
       <meta http-equiv="refresh" content="30">
-
       <meta name="title" content="503: Service Unavailable">
       <meta name="description" content="The server is temporarily overloading or down">
       <meta property="og:title" content="503: Service Unavailable">
@@ -206,7 +181,6 @@ data:
           --color-inverted: #202020;
           --color-ghost: #efefef;
         }
-
         @media (prefers-color-scheme: dark) {
           :root {
             --color-primary: #1a1a1a;
@@ -214,7 +188,6 @@ data:
             --color-ghost: #eee;
           }
         }
-
         html, body {
           margin: 0;
           padding: 0;
@@ -227,45 +200,37 @@ data:
           font-size: 16px;
           word-break: keep-all;
         }
-
         @media screen and (min-width: 2000px) {
           html, body {
             font-size: 20px;
           }
         }
-
         body {
           display: flex;
           justify-content: center;
           align-items: center;
           height: 100%;
         }
-
         article {
           text-align: center;
           width: 100%;
         }
-
         article .ghost {
           animation: float 3s ease-out infinite;
         }
-
         @keyframes float {
           50% {
             transform: translate(0, 20px);
           }
         }
-
         article .shadowFrame {
           width: 130px;
           margin: 10px auto 0 auto;
         }
-
         article .shadowFrame .shadow {
           animation: shrink 3s ease-out infinite;
           transform-origin: center center;
         }
-
         @keyframes shrink {
           0% {
             width: 90%;
@@ -280,19 +245,15 @@ data:
             margin: 0 5%;
           }
         }
-
         article h3 {
           font-size: 1.5em;
           text-transform: uppercase;
           margin: 0.3em auto;
         }
-
         article .description {
           font-size: 0.9em;
           opacity: .9;
         }
-
-        /*  */
       </style>
     </head>
     <body>
@@ -330,23 +291,15 @@ data:
                    c7.636,0,15.336,1.684,22.887,5.004c26.766,11.771,29.011,39.047,29.027,39.251V121.405z"
               stroke-miterlimit="10" style="fill: var(--color-ghost); stroke: var(--color-ghost)"></path>
         </svg>
-
       <p class="shadowFrame">
         <svg class="shadow" xmlns="http://www.w3.org/2000/svg" x="61px" y="20px" width="122.436px" height="39.744px"
              viewBox="0 0 122.436 39.744" xml:space="preserve">
             <ellipse style="fill: var(--color-ghost); opacity: 0.1" cx="61.128" cy="19.872" rx="49.25" ry="8.916"></ellipse>
           </svg>
       </p>
-
       <h3><span>Error</span> 503</h3>
       <p class="description">The server is temporarily overloading or down</p>
-
-
     </article>
-
-
-
-
     </body>
     </html>
 
