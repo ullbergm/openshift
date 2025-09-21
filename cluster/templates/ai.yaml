@@ -35,7 +35,7 @@ spec:
           prune: true
           selfHeal: true
         syncOptions:
-          - CreateNamespace=true
+          - CreateNamespace={{ "{{" }} if hasKey . "createNamespace" {{ "}}" }}{{ "{{" }} .createNamespace {{ "}}" }}{{ "{{" }} else {{ "}}" }}true{{ "{{" }} end {{ "}}" }}
       source:
         repoURL: {{ .Values.spec.source.repoURL }}
         path: charts/{{ "{{" }} default "ai" .group {{ "}}" }}/{{ "{{" }} .name {{ "}}" }}
