@@ -118,4 +118,4 @@ pods:
       # renovate: datasource=docker depName=ghcr.io/sdr-enthusiasts/docker-opensky-network versioning=loose
       tag: 2.1.7-1
     env:
-      SBSHOST: 'adsb-ultrafeeder'
+      BEASTHOST: 'adsb-ultrafeeder'
