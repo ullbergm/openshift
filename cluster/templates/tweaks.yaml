@@ -11,6 +11,7 @@ spec:
     - list:
         elements:
         - name: disable-worker-secondary-interfaces
+        - name: disable-master-secondary-interfaces
   template:
     metadata:
       name: '{{ "{{" }} .name {{ "}}" }}'
