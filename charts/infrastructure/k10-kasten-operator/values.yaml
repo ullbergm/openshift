@@ -11,6 +11,15 @@ cluster:
         server: nas
         path: /volume1/media
 
+application:
+  name: Kasten K10
+  group: Media
+  icon: backup
+  iconColor: ""
+  image: "https://docs.kasten.io/img/favicon_228x228px.png"
+  description: "Manages backups and disaster recovery"
+  location: 0
+
 kasten:
   # Custom applications to exclude from Kasten K10 backups
   # OpenShift system namespaces are automatically excluded via openshift-excluded-apps.yaml
