@@ -1,0 +1,3 @@
+interface:
+  disable: enp4s
+  role: worker
