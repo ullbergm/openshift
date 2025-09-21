@@ -9,7 +9,7 @@ spec:
     - port: 3000
       targetPort: 3000
       protocol: TCP
-      name: http
+      name: ws
   selector:
     app.kubernetes.io/controller: main
     app.kubernetes.io/instance: {{ .Release.Name }}
