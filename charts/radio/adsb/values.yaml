@@ -27,7 +27,7 @@ pods:
       READSB_RX_LOCATION_ACCURACY: '2'
       READSB_STATS_RANGE: 'true'
       ULTRAFEEDER_CONFIG: |
-        adsb,adsb-dump978-raw-output,30978,uat_in;
+        adsb,adsb-dump978,30978,uat_in;
         mlathub,adsb-flightaware-mlat-beast-output,30105,beast_in;
         mlathub,adsb-planewatch-mlat-beast-output,30105,beast_in;
         adsb,feed1.adsbexchange.com,30004,beast_reduce_plus_out;
