@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: {{ .Release.Name }}-home-automation
+spec:
+  ignoreApplicationDifferences:
+    - jsonPointers:
+        - /spec/syncPolicy
+  goTemplate: true
+  generators:
+    - list:
+        elements:
+        - name: node-red
+  template:
+    metadata:
+      name: '{{ "{{" }} .name {{ "}}" }}'
+      namespace: "openshift-gitops"
+    spec:
+      ignoreDifferences:
+      - kind: Application
+        group: argoproj.io
+        jsonPointers:
+        - /spec/syncPolicy/automated
+      project: default
+      destination:
+        server: {{ .Values.spec.destination.server }}
+        namespace: '{{ "{{" }} .name {{ "}}" }}'
+      syncPolicy:
+        managedNamespaceMetadata:
+          labels:
+            goldilocks.fairwinds.com/enabled: "true"
+        automated:
+          prune: true
+          selfHeal: true
+        syncOptions:
+          - CreateNamespace={{ "{{" }} if hasKey . "createNamespace" {{ "}}" }}{{ "{{" }} .createNamespace {{ "}}" }}{{ "{{" }} else {{ "}}" }}true{{ "{{" }} end {{ "}}" }}
+      source:
+        repoURL: {{ .Values.spec.source.repoURL }}
+        path: charts/{{ "{{" }} default "home-automation" .group {{ "}}" }}/{{ "{{" }} .name {{ "}}" }}
+        targetRevision: {{ .Values.spec.source.targetRevision }}
+        helm:
+          valuesObject:
+            spec:
+{{ .Values.spec | toYaml | nindent 14 }}
+{{ .Values.config | toYaml | nindent 12 }}

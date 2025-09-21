@@ -1,0 +1,90 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Node-RED
+  group: Automation
+  icon: simple-icons:nodered
+  image: https://raw.githubusercontent.com/node-red/node-red.github.io/master/images/node-red.png
+  description: "A flow-based development tool."
+  port: 1880
+
+pods:
+  main:
+    image:
+      repository: docker.io/nodered/node-red
+      # renovate: datasource=docker depName=docker.io/nodered/node-red versioning=semver
+      tag: 4.1.0
+      pullPolicy: IfNotPresent
+
+settings: |-
+  settings.js: |-
+    module.exports = {
+      flowFile: "flows.json",
+      credentialSecret: process.env.NODE_RED_CREDENTIAL_SECRET,
+      flowFilePretty: true,
+
+      uiPort: process.env.PORT || 1880,
+
+      diagnostics: {
+        enabled: true,
+        ui: true,
+      },
+
+      runtimeState: {
+        enabled: true,
+        ui: true,
+      },
+
+      logging: {
+        console: {
+          level: "info",
+          metrics: false,
+          audit: false,
+        },
+      },
+
+      contextStorage: {
+        default: {
+          module: "localfilesystem",
+        },
+      },
+
+      exportGlobalContextKeys: false,
+
+      externalModules: {},
+
+      editorTheme: {
+        tours: false,
+
+        projects: {
+          enabled: false,
+          workflow: {
+            mode: "manual",
+          },
+        },
+
+        codeEditor: {
+          lib: "monaco",
+          options: {},
+        },
+      },
+
+      functionExternalModules: true,
+      functionGlobalContext: {},
+
+      debugMaxLength: 1000,
+
+      mqttReconnectTime: 15000,
+      serialReconnectTime: 15000,
+    }
