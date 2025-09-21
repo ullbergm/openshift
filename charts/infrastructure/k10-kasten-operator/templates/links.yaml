@@ -9,7 +9,7 @@ spec:
   location: NamespaceDashboard
   namespaceDashboard:
     namespaces:
-      - {{ .Release.Namespace }}
+      - kasten-io
   text: 'Access Application'
 ---
 apiVersion: console.openshift.io/v1
@@ -30,6 +30,7 @@ apiVersion: startpunkt.ullberg.us/v1alpha2
 kind: Application
 metadata:
   name: {{ .Release.Name }}
+  namespace: kasten-io
 spec:
   name: {{ .Values.application.name | quote }}
   group: {{ .Values.application.group | quote }}
