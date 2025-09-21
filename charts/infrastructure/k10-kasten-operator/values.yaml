@@ -10,3 +10,9 @@ cluster:
       nfs:
         server: nas
         path: /volume1/media
+
+kasten:
+  # Custom applications to exclude from Kasten K10 backups
+  # OpenShift system namespaces are automatically excluded via openshift-excluded-apps.yaml
+  #excludedApps:
+  # - myapp

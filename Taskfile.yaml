@@ -8,6 +8,7 @@ shopt: [globstar]
 includes:
   git: .taskfiles/git
   helm: .taskfiles/helm
+  kasten: .taskfiles/kasten
   validate: .taskfiles/validate
 
 tasks:

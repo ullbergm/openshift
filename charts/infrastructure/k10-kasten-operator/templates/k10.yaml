@@ -1,0 +1,45 @@
+apiVersion: apik10.kasten.io/v1alpha1
+kind: K10
+metadata:
+  name: k10
+  namespace: kasten-io
+spec:
+  auth:
+    basicAuth:
+      enabled: false
+    tokenAuth:
+      enabled: true
+  global:
+    persistence:
+      storageClass: synology-iscsi
+  metering:
+    mode: airgap
+  route:
+    enabled: true
+    # host: k10.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+    tls:
+      enabled: true
+  excludedApps:
+    # Static system exclusions (non-OpenShift Kubernetes and infrastructure)
+    - bookmarks
+    - certificates
+    - cert-manager
+    - cert-manager-operator
+    - cluster-democratic-csi
+    - default
+    - democratic-csi
+    - external-secrets-operator
+    - keepalived-operator
+    - kube-node-lease
+    - kube-public
+    - kube-system
+    - startpunkt
+    # OpenShift system namespaces (auto-generated from cluster)
+{{- $openshiftExclusions := .Files.Get "openshift-excluded-apps.yaml" | fromYaml }}
+{{- range $openshiftExclusions.excludedApps }}
+    - {{ . }}
+{{- end }}
+    # Custom user-defined exclusions
+{{- range .Values.kasten.excludedApps }}
+    - {{ . }}
+{{- end }}

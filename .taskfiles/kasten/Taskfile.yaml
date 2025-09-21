@@ -1,0 +1,123 @@
+---
+# yaml-language-server: $schema=https://taskfile.dev/schema.json
+version: "3"
+
+tasks:
+  add-system-exclusion:
+    desc: Add a custom system namespace to the static exclusions list
+    summary: |
+      Adds a new namespace to the static system exclusions in the k10.yaml template.
+      This is for system namespaces that should always be excluded but are not
+      OpenShift-specific (e.g., custom operators, infrastructure namespaces).
+
+      This task will:
+      - Add the namespace to the static exclusions list in the Helm template
+      - Provide guidance on when to use this vs. custom exclusions in values.yaml
+
+      Arguments:
+        NAMESPACE: The namespace to add to static system exclusions
+
+      Examples:
+        task kasten:add-system-exclusion NAMESPACE=my-operator-system
+        task kasten:add-system-exclusion NAMESPACE=infrastructure-namespace
+    vars:
+      NAMESPACE: '{{.NAMESPACE}}'
+      TEMPLATE_FILE: '{{.ROOT_DIR}}/charts/infrastructure/k10-kasten-operator/templates/k10.yaml'
+    preconditions:
+      - sh: '[ -n "{{.NAMESPACE}}" ]'
+        msg: 'NAMESPACE parameter is required. Usage: task kasten:add-system-exclusion NAMESPACE=my-namespace'
+      - sh: '[ -f "{{.TEMPLATE_FILE}}" ]'
+        msg: 'k10.yaml template file not found: {{.TEMPLATE_FILE}}'
+    cmds:
+      - |
+        echo "Adding namespace '{{.NAMESPACE}}' to static system exclusions..."
+
+        # Check if namespace already exists
+        if grep -q "^\s*- {{.NAMESPACE}}$" "{{.TEMPLATE_FILE}}"; then
+          echo "⚠️  Namespace '{{.NAMESPACE}}' already exists in static exclusions"
+          exit 1
+        fi
+
+        # Add the namespace to the static exclusions section (before OpenShift comment)
+        sed -i '/# OpenShift system namespaces (auto-generated from cluster)/i\    - {{.NAMESPACE}}' "{{.TEMPLATE_FILE}}"
+
+        echo "✅ Successfully added '{{.NAMESPACE}}' to static system exclusions"
+        echo "📝 Remember to commit this change to version control"
+        echo ""
+        echo "ℹ️  Note: This adds to STATIC exclusions. For custom app exclusions, use values.yaml instead."
+
+  remove-system-exclusion:
+    desc: Remove a custom system namespace from the static exclusions list
+    summary: |
+      Removes a namespace from the static system exclusions in the k10.yaml template.
+      This is for removing namespaces that were previously added to static exclusions
+      but are no longer needed.
+
+      This task will:
+      - Remove the namespace from the static exclusions list in the Helm template
+      - Provide confirmation of the removal
+
+      Arguments:
+        NAMESPACE: The namespace to remove from static system exclusions
+
+      Examples:
+        task kasten:remove-system-exclusion NAMESPACE=my-operator-system
+        task kasten:remove-system-exclusion NAMESPACE=infrastructure-namespace
+    vars:
+      NAMESPACE: '{{.NAMESPACE}}'
+      TEMPLATE_FILE: '{{.ROOT_DIR}}/charts/infrastructure/k10-kasten-operator/templates/k10.yaml'
+    preconditions:
+      - sh: '[ -n "{{.NAMESPACE}}" ]'
+        msg: 'NAMESPACE parameter is required. Usage: task kasten:remove-system-exclusion NAMESPACE=my-namespace'
+      - sh: '[ -f "{{.TEMPLATE_FILE}}" ]'
+        msg: 'k10.yaml template file not found: {{.TEMPLATE_FILE}}'
+    cmds:
+      - |
+        echo "Removing namespace '{{.NAMESPACE}}' from static system exclusions..."
+
+        # Check if namespace exists
+        if ! grep -q "^\s*- {{.NAMESPACE}}$" "{{.TEMPLATE_FILE}}"; then
+          echo "⚠️  Namespace '{{.NAMESPACE}}' not found in static exclusions"
+          exit 1
+        fi
+
+        # Remove the namespace from the static exclusions section
+        sed -i '/^\s*- {{.NAMESPACE}}$/d' "{{.TEMPLATE_FILE}}"
+
+        echo "✅ Successfully removed '{{.NAMESPACE}}' from static system exclusions"
+        echo "📝 Remember to commit this change to version control"
+
+  update-openshift-exclusions:
+    desc: Update OpenShift-specific namespace exclusions from cluster
+    summary: |
+      Automatically updates the OpenShift-specific namespace exclusions by fetching
+      current namespaces from the cluster and writing them to the separate
+      openshift-excluded-apps.yaml file.
+
+      This task will:
+      - Query the cluster for all namespaces starting with "openshift"
+      - Write them to the separate openshift-excluded-apps.yaml file
+      - Create timestamped backups before changes
+      - Leave custom exclusions in values.yaml completely untouched
+
+      The script maintains clean separation between:
+      - OpenShift System Namespaces: Auto-managed in openshift-excluded-apps.yaml
+      - Custom Exclusions: User-managed in values.yaml
+      - Static System Exclusions: Template-managed (cert-manager, kube-system, etc.)
+
+      This should be run periodically or after OpenShift upgrades to ensure
+      new system namespaces are automatically excluded from backups.
+
+      Options:
+        DRY_RUN: Show what would be done without making changes [default: false]
+
+      Examples:
+        task kasten:update-openshift-exclusions                 # Update the exclusions
+        task kasten:update-openshift-exclusions DRY_RUN=true   # Preview changes
+    vars:
+      DRY_RUN: '{{.DRY_RUN | default "false"}}'
+    cmds:
+      - |
+        ARGS=""
+        {{if eq .DRY_RUN "true"}}ARGS="$ARGS --dry-run"{{end}}
+        bash {{.ROOT_DIR}}/scripts/update-kasten-excluded-apps.sh $ARGS
