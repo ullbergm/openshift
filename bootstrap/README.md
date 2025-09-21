@@ -44,7 +44,28 @@ Wait for the operator to be installed and the `openshift-gitops` namespace to be
 oc get pods -n openshift-gitops
 ```
 
-## Step 2: Create the Cluster Application
+## Step 2: Give ArgoCD Cluster Admin rights
+
+Create ClusterRoleBinding for ArgoCD
+
+```bash
+oc apply -f - <<EOF
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: openshift-gitops-argocd-application-controller-cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: openshift-gitops-argocd-application-controller
+    namespace: openshift-gitops
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+EOF
+```
+
+## Step 3: Create the Cluster Application
 
 Create the main cluster Application that will manage all other applications:
 
@@ -89,7 +110,7 @@ spec:
 EOF
 ```
 
-## Step 3: Customize Configuration
+## Step 4: Customize Configuration
 
 Replace the following placeholder values in the Application manifest above:
 
@@ -100,7 +121,7 @@ Replace the following placeholder values in the Application manifest above:
 - `YOUR_USERNAME`: Your GitHub username
 - `your-storage-class`: Your preferred storage class (or omit the parameter to use cluster default)
 
-## Step 4: Deploy and Verify
+## Step 5: Deploy and Verify
 
 After applying the cluster Application, Argo CD will:
 
@@ -124,62 +145,3 @@ oc get applicationsets -n openshift-gitops
 # Monitor application sync status
 oc get applications -n openshift-gitops -w
 ```
-
-## Step 5: Access Argo CD UI
-
-Get the Argo CD admin password:
-
-```bash
-oc get secret openshift-gitops-cluster -n openshift-gitops -o jsonpath='{.data.admin\.password}' | base64 -d
-```
-
-Access the Argo CD UI via the OpenShift route:
-
-```bash
-oc get route openshift-gitops-server -n openshift-gitops
-```
-
-Login with username `admin` and the password from above.
-
-## Troubleshooting
-
-### Application Sync Issues
-
-If applications fail to sync:
-
-1. Check the Application status: `oc describe application APP_NAME -n openshift-gitops`
-2. Verify the source repository is accessible
-3. Check for RBAC issues in the application namespace
-4. Review the Argo CD application controller logs
-
-### Storage Class Issues
-
-If applications fail due to storage class issues:
-
-1. List available storage classes: `oc get storageclass`
-2. Update the cluster configuration to use an available storage class
-3. Or omit the storage class parameter to use the cluster default
-
-### Network Policy Issues
-
-If applications can't communicate:
-
-1. Check if network policies are blocking traffic
-2. Verify the applications are deployed in the correct namespaces
-3. Check OpenShift Routes are created and accessible
-
-## Post-Bootstrap Configuration
-
-After successful bootstrap, you may want to:
-
-1. Configure external secrets if using the External Secrets Operator
-2. Set up backup schedules for applications with persistent data
-3. Configure monitoring and alerting through the infrastructure applications
-4. Customize application configurations by modifying their respective Helm charts
-
-## Security Considerations
-
-- Ensure your Git repository is private if it contains sensitive configuration
-- Use external secret management for sensitive data (External Secrets Operator is included)
-- Regularly update the Argo CD operator and applications
-- Monitor the cluster for security vulnerabilities using the included security tools
