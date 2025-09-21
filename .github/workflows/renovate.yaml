@@ -4,7 +4,7 @@ name: "Renovate"
 
 on:
   push:
-    branches: ["main"]
+    branches: ["v2"]
     paths:
       - renovate.json5
       - .renovate/**.json5

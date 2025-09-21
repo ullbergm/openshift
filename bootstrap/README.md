@@ -95,12 +95,12 @@ spec:
         - name: spec.source.repoURL
           value: "https://github.com/YOUR_USERNAME/openshift"
         - name: spec.source.targetRevision
-          value: "main"
+          value: "v2"
         - name: config.cluster.storage.config.storageClassName
           value: "your-storage-class"
     path: cluster
     repoURL: "https://github.com/YOUR_USERNAME/openshift"
-    targetRevision: main
+    targetRevision: v2
   syncPolicy:
     automated:
       prune: true

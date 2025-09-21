@@ -1,0 +1,80 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-ultrafeeder
+  annotations:
+    keepalived-operator.redhat-cop.io/keepalivedgroup: "keepalived-operator/lan"
+spec:
+  type: ClusterIP
+  externalIPs:
+    - {{ .Values.plex.network.ip }}
+  ports:
+    - name: http
+      port: 80
+      targetPort: 80
+      protocol: TCP
+    - name: raw-input
+      port: 30001
+      targetPort: 30001
+      protocol: TCP
+    - name: raw-output
+      port: 30002
+      targetPort: 30002
+      protocol: TCP
+    - name: sbs-output
+      port: 30003
+      targetPort: 30003
+      protocol: TCP
+    - name: sbs-input
+      port: 32006
+      targetPort: 32006
+      protocol: TCP
+    - name: beast-input
+      port: 30004
+      targetPort: 30004
+      protocol: TCP
+    - name: beast-input2
+      port: 30104
+      targetPort: 30104
+      protocol: TCP
+    - name: beast-output
+      port: 30005
+      targetPort: 30005
+      protocol: TCP
+    - name: beast-reduce-output
+      port: 30006
+      targetPort: 30006
+      protocol: TCP
+    - name: json-output
+      port: 30047
+      targetPort: 30047
+      protocol: TCP
+    - name: mlat-sbs-output
+      port: 31003
+      targetPort: 31003
+      protocol: TCP
+    - name: mlat-beast-input
+      port: 31004
+      targetPort: 31004
+      protocol: TCP
+    - name: mlat-beast-output
+      port: 31005
+      targetPort: 31005
+      protocol: TCP
+    - name: mlat-beast-reduce-output
+      port: 31006
+      targetPort: 31006
+      protocol: TCP
+    - name: prometheus
+      port: 9273
+      targetPort: 9273
+      protocol: TCP
+    - name: telegraf
+      port: 9274
+      targetPort: 9274
+      protocol: TCP
+  selector:
+    app.kubernetes.io/controller: ultrafeeder
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}
