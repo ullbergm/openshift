@@ -11,6 +11,7 @@ spec:
     - list:
         elements:
         - name: node-red
+        - name: zwavejs2mqtt
   template:
     metadata:
       name: '{{ "{{" }} .name {{ "}}" }}'
