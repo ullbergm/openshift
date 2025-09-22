@@ -53,9 +53,9 @@ spec:
             value: {{ .Release.Name }}-redis
           - name: REDIS_PORT
             value: "6379"
-          {{ range $key, $value := .Values.pods.main.env }}- name: {{ $key }}
-            value: {{ $value }}
-          {{ end }}
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}
           image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
           imagePullPolicy: IfNotPresent
           args:

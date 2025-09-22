@@ -28,10 +28,10 @@ spec:
       enableServiceLinks: false
       serviceAccountName: {{ .Release.Name }}
       automountServiceAccountToken: true
-      # securityContext:
-      #   fsGroup: 0
-      #   runAsGroup: 0
-      #   runAsUser: 0
+      securityContext:
+         fsGroup: 0
+        runAsGroup: 0
+        runAsUser: 0
       containers:
         - env:
           - name: TZ
@@ -50,14 +50,14 @@ spec:
           {{ if .Values.pods.main.env.OPENAI_API_BASE_URL }}- name: OPENAI_API_BASE_URL
             value: {{ .Values.pods.main.env.OPENAI_API_BASE_URL | quote }}
           {{ end }}
-          {{ if .Values.pods.main.env.OPENAI_API_KEY }}- name: OPENAI_API_KEY
-            value: {{ .Values.pods.main.env.OPENAI_API_KEY | quote }}
-          {{ end }}
           {{ range $key, $value := .Values.pods.main.env }}
           {{- if not (has $key (list "WEBUI_NAME" "WEBUI_URL" "OPENAI_API_BASE_URL" "OPENAI_API_KEY" "ENABLE_SIGNUP" "DEFAULT_USER_ROLE" "ENABLE_COMMUNITY_SHARING")) }}- name: {{ $key }}
             value: {{ $value | quote }}
           {{ end }}
           {{ end }}
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}
           image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
           imagePullPolicy: IfNotPresent
           name: main
