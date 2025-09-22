@@ -13,6 +13,7 @@ cluster:
 
 application:
   group: ADSB
+  iconColor: ''
 
 pods:
   ultrafeeder:

@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ .Release.Name }}-private
+  namespace: "openshift-gitops"
+spec:
+  ignoreDifferences:
+  - kind: Application
+    group: argoproj.io
+    jsonPointers:
+    - /spec/syncPolicy
+  project: default
+  destination:
+    server: {{ .Values.spec.destination.server }}
+    namespace: "openshift-gitops"
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+  source:
+    repoURL: {{ .Values.spec.source.repoURL }}-private
+    path: cluster
+    targetRevision: {{ .Values.spec.source.targetRevision }}
+    helm:
+      valuesObject:
+{{ .Values | toYaml | nindent 8 }}
