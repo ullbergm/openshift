@@ -4,8 +4,8 @@
 # For find-icons.py
 aiohttp>=3.8.0,<4.0.0
 click>=8.0.0,<9.0.0
-rich>=13.0.0,<14.0.0
+rich>=14.1.0,<14.2.0
 
 # For vpa-goldilocks-reporter.py
-kubernetes>=28.0.0,<29.0.0
+kubernetes>=33.1.0,<33.2.0
 PyYAML>=6.0.0,<7.0.0
