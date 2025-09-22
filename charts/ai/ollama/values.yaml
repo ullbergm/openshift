@@ -60,7 +60,7 @@ pods:
     image:
       repository: ollama/ollama
       # renovate: datasource=docker depName=ollama/ollama versioning=semver
-      tag: "0.3.14"
+      tag: "0.12.0"
     resources:
       requests:
         cpu: "1"
