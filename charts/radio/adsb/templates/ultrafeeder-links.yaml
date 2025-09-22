@@ -3,13 +3,13 @@
 apiVersion: startpunkt.ullberg.us/v1alpha2
 kind: Application
 metadata:
-  name: {{ .Release.Name }}-flightaware
+  name: {{ .Release.Name }}-ultrafeeder
 spec:
   name: "Ultrafeeder"
   group: {{ .Values.application.group | quote }}
   icon: arcticons:flightaware
   iconColor: {{ .Values.application.iconColor | quote }}
-  url: https://{{ .Release.Name }}-flightaware.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  url: https://{{ .Release.Name }}-ultrafeeder.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   info: "View planes over your area using tar1090"
   location: 0
 {{- end }}
