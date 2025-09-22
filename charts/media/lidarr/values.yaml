@@ -26,5 +26,5 @@ pods:
     image:
       repository: ghcr.io/home-operations/lidarr
       # renovate: datasource=docker depName=ghcr.io/home-operations/lidarr versioning=semver
-      tag: 2.14.1.4755
+      tag: 2.14.3.4791
       pullPolicy: IfNotPresent
