@@ -21,4 +21,4 @@ pods:
     image:
       repository: ghcr.io/fscorrupt/posterizarr
       # renovate: datasource=docker depName=ghcr.io/fscorrupt/posterizarr versioning=semver
-      tag: 1.9.89
+      tag: 1.9.91
