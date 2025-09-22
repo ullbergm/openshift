@@ -26,5 +26,5 @@ pods:
     image:
       repository: ghcr.io/flaresolverr/flaresolverr
       # renovate: datasource=docker depName=ghcr.io/flaresolverr/flaresolverr versioning=semver
-      tag: v3.3.21
+      tag: v3.4.1
       pullPolicy: IfNotPresent
