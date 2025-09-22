@@ -26,5 +26,5 @@ pods:
     image:
       repository: ghcr.io/plexguide/huntarr
       # renovate: datasource=docker depName=ghcr.io/plexguide/huntarr versioning=semver
-      tag: 8.2.1
+      tag: 8.2.10
       pullPolicy: IfNotPresent
