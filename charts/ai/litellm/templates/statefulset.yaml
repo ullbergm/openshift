@@ -34,7 +34,7 @@ spec:
         runAsNonRoot: true
       initContainers:
         - name: config-setup
-          image: busybox:1.35
+          image: busybox:1.37
           command: ['sh', '-c', 'chown 1000:150 /app/.config']
           volumeMounts:
           - mountPath: /app/.config
