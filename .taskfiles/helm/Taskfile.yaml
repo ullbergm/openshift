@@ -8,6 +8,73 @@ vars:
   TEST_TIMEZONE: "UTC"
 
 tasks:
+  dependencies:
+    desc: Build helm chart dependencies for charts that have them
+    summary: |
+      Builds helm chart dependencies by running helm dependency build
+      on all charts that have a dependencies section in their Chart.yaml.
+      Uses checksum-based caching to avoid unnecessary rebuilds.
+    sources:
+      - charts/**/Chart.yaml
+    generates:
+      - .task-cache/helm-dependencies.txt
+    method: checksum
+    silent: true
+    cmds:
+      - echo "🔄 Building helm chart dependencies..."
+      - |
+        dependency_found=false
+        repos_added=()
+
+        for category in charts/*/; do
+          if [ -d "$category" ]; then
+            for chart_dir in "$category"*/; do
+              if [ -f "$chart_dir/Chart.yaml" ]; then
+                chart_name=$(basename "$chart_dir")
+                chart_path=${chart_dir%/}
+
+                # Check if the chart has dependencies
+                if grep -q "^dependencies:" "$chart_path/Chart.yaml"; then
+                  dependency_found=true
+
+                  # Extract repository URLs and add them if not already added
+                  while IFS= read -r repo_url; do
+                    if [ -n "$repo_url" ] && [[ ! " ${repos_added[@]} " =~ " ${repo_url} " ]]; then
+                      repo_name=$(echo "$repo_url" | sed 's|https://||' | sed 's|/|-|g' | sed 's|\.|-|g')
+                      echo "  � Adding helm repository: $repo_name ($repo_url)"
+                      helm repo add "$repo_name" "$repo_url" > /dev/null 2>&1 || true
+                      repos_added+=("$repo_url")
+                    fi
+                  done < <(grep -A 10 "^dependencies:" "$chart_path/Chart.yaml" | grep "repository:" | sed 's/.*repository: *"\?\([^"]*\)"\?.*/\1/')
+
+                  echo "  �🔄 Building dependencies for $chart_name..."
+                  if helm dependency build "$chart_path" > /dev/null 2>&1; then
+                    echo "  ✅ $chart_name dependencies built successfully"
+                  else
+                    echo "  ❌ $chart_name dependency build failed"
+                    echo "  Running helm dependency build for debugging:"
+                    helm dependency build "$chart_path"
+                    exit 1
+                  fi
+                fi
+              fi
+            done
+          fi
+        done
+
+        # Update repositories if any were added
+        if [ ${#repos_added[@]} -gt 0 ]; then
+          echo "  🔄 Updating helm repositories..."
+          helm repo update > /dev/null 2>&1
+        fi
+
+        if [ "$dependency_found" = true ]; then
+          echo "✅ All chart dependencies built successfully!"
+        else
+          echo "ℹ️  No charts with dependencies found"
+        fi
+      - mkdir -p .task-cache && touch .task-cache/helm-dependencies.txt
+
   validation:
     desc: Validate all helm charts by running helm template
     summary: |
@@ -142,10 +209,12 @@ tasks:
   validate-all:
     desc: Run all validation tasks on helm charts (online by default)
     summary: |
-      Comprehensive validation that runs helm template validation,
-      helm lint, and online icon validation (Iconify + URL) on all charts.
+      Comprehensive validation that runs helm dependency build,
+      helm template validation, helm lint, and online icon validation
+      (Iconify + URL) on all charts.
     silent: true
     cmds:
+      - task: dependencies
       - task: validation
       - task: lint
       - task: validate-icons
@@ -153,10 +222,12 @@ tasks:
   validate-all-offline:
     desc: Run all validation tasks on helm charts (offline mode)
     summary: |
-      Comprehensive validation that runs helm template validation,
-      helm lint, and offline icon validation on all charts.
+      Comprehensive validation that runs helm dependency build,
+      helm template validation, helm lint, and offline icon validation
+      on all charts.
     silent: true
     cmds:
+      - task: dependencies
       - task: validation
       - task: lint
       - task: validate-icons-offline

@@ -6,3 +6,6 @@ kubeconfig
 .task
 .task-cache/
 /node_modules
+
+# Helm chart dependencies
+charts/*/*/charts/

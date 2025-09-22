@@ -14,7 +14,7 @@ cluster:
 application:
   name: Kasten K10
   group: Media
-  icon: backup
+  icon: material-symbols:backup-outline
   iconColor: ""
   image: "https://docs.kasten.io/img/favicon_228x228px.png"
   description: "Manages backups and disaster recovery"

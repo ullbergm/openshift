@@ -16,7 +16,7 @@ application:
   group: Home Automation
   icon: mdi:home-assistant
   iconColor: skyblue
-  image: https://upload.wikimedia.org/wikipedia/commons/6/6e/Home_Assistant_Logo.svg
+  image: https://upload.wikimedia.org/wikipedia/en/4/49/Home_Assistant_logo_%282023%29.svg
   description: "Home Automation"
   port: 8123
   location: 100

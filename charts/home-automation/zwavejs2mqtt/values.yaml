@@ -14,8 +14,8 @@ cluster:
 application:
   name: Z-Wave JS to MQTT
   group: Home Automation
-  icon: mdi:zwave
-  image: https://upload.wikimedia.org/wikipedia/commons/6/6e/Home_Assistant_Logo.svg
+  icon: cbi:zwavejs
+  image: https://avatars.githubusercontent.com/u/54627315
   description: "Z-Wave JS to MQTT integration."
   port: 8091
 
