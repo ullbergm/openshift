@@ -1,0 +1,15 @@
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha2" }}
+---
+apiVersion: startpunkt.ullberg.us/v1alpha2
+kind: Application
+metadata:
+  name: {{ .Release.Name }}-dump978
+spec:
+  name: "SkyAware"
+  group: {{ .Values.application.group | quote }}
+  icon: material-symbols-light:flightsmode
+  iconColor: {{ .Values.application.iconColor | quote }}
+  url: https://{{ .Release.Name }}-dump978.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  info: "View planes over your area using dump978"
+  location: 0
+{{- end }}

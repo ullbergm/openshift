@@ -11,6 +11,9 @@ cluster:
         server: nas
         path: /volume1/media
 
+application:
+  group: ADSB
+
 pods:
   ultrafeeder:
     image:
