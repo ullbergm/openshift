@@ -30,7 +30,7 @@ pods:
     image:
       repository: lscr.io/linuxserver/plex
       # renovate: datasource=docker depName=lscr.io/linuxserver/plex versioning=semver
-      tag: 1.42.1
+      tag: 1.42.2
   imagemaid:
     image:
       repository: docker.io/kometateam/imagemaid
