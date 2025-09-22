@@ -5,11 +5,16 @@
       description: "AI/ML Group",
       groupName: "AI/ML Applications",
       matchDatasources: ["docker"],
-      matchPackageNames: [
-        "/litellm-non_root/",
-        "/ollama/",
-        "/open-webui/",
-      ],
+      matchPackageNames: ["/litellm-non_root/", "/ollama/", "/open-webui/"],
+      group: {
+        commitMessageTopic: "{{{groupName}}} group",
+      },
+    },
+    {
+      description: "Python Packages Group",
+      groupName: "Python Packages",
+      matchDatasources: ["pypi"],
+      matchManagers: ["pip_requirements"],
       group: {
         commitMessageTopic: "{{{groupName}}} group",
       },

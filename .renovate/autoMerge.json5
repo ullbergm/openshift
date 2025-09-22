@@ -99,5 +99,15 @@
       minimumReleaseAge: "1 minute",
       ignoreTests: true,
     },
+    {
+      description: "Auto-merge Python packages",
+      matchDatasources: ["pypi"],
+      matchManagers: ["pip_requirements"],
+      automerge: true,
+      automergeType: "pr",
+      matchUpdateTypes: ["minor", "patch"],
+      minimumReleaseAge: "1 day",
+      ignoreTests: true,
+    },
   ],
 }
