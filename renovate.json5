@@ -18,7 +18,7 @@
   dependencyDashboardTitle: "Renovate Dashboard 🤖",
   suppressNotifications: ["prEditedNotification", "prIgnoreNotification"],
   ignorePaths: ["**/*.sops.*", "**/resources/**"],
-  ignoreDeps: ["registry.redhat.com/**"],
+  ignoreDeps: ["registry.connect.redhat.com/**", "registry.redhat.io/**"],
   flux: {
     managerFilePatterns: [
       "/(^|/)charts/.+\\.ya?ml$/",
