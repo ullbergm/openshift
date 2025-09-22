@@ -2,13 +2,13 @@
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   packageRules: [
     {
-      "description": "Auto merge Pre-Commit Hooks",
-      "matchManagers": ["pre-commit"],
-      "matchDatasources": ["github-tags"],
-      "automerge": true,
-      "ignoreTests": true,
-      "automergeType": "branch",
-      "matchUpdateTypes": ["minor", "patch"]
+      description: "Auto merge Pre-Commit Hooks",
+      matchManagers: ["pre-commit"],
+      matchDatasources: ["github-tags"],
+      automerge: true,
+      ignoreTests: true,
+      automergeType: "branch",
+      matchUpdateTypes: ["minor", "patch"],
     },
     {
       description: "Auto-merge trusted container digests",
@@ -23,7 +23,7 @@
         "/bjw-s/",
         "bjw-s-labs/",
         "/ghcr.io/",
-        "/linuxserver/"
+        "/linuxserver/",
       ],
       ignoreTests: false,
     },
@@ -36,12 +36,37 @@
       matchPackageNames: [
         // Media apps
         "/bazarr/",
+        "/flaresolverr/",
         "/gaps/",
+        "/huntarr/",
+        "/kapowarr/",
+        "/kavita/",
+        "/lidarr/",
+        "/metube/",
+        "/overseerr/",
+        "/pinchflat/",
+        "/plex/",
+        "/posterizarr/",
+        "/prowlarr/",
+        "/radarr/",
+        "/readarr/",
+        "/sabnzbd/",
         "/sonarr/",
+        "/tautulli/",
         // AI apps
         "/ollama/",
         "/open-webui/",
         "/litellm/",
+        // Home automation apps
+        "/home-assistant/",
+        "/node-red/",
+        "/zwavejs2mqtt/",
+        // Productivity apps
+        "/bookmarks/",
+        "/cyberchef/",
+        "/excalidraw/",
+        "/it-tools/",
+        "/startpunkt/",
       ],
       minimumReleaseAge: "12 hours",
       ignoreTests: false,
@@ -67,15 +92,12 @@
     {
       description: "Auto-merge trusted GitHub Actions",
       matchManagers: ["github-actions"],
-      matchPackageNames: [
-        "/^actions\//",
-        "/^renovatebot\//",
-      ],
+      matchPackageNames: ["/^actions//", "/^renovatebot//"],
       automerge: true,
       automergeType: "branch",
       matchUpdateTypes: ["minor", "patch", "digest"],
       minimumReleaseAge: "1 minute",
       ignoreTests: true,
-    }
+    },
   ],
 }
