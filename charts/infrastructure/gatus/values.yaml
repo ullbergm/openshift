@@ -33,7 +33,7 @@ pods:
     image:
       repository: twinproduction/gatus
       # renovate: datasource=docker depName=twinproduction/gatus versioning=semver
-      tag: v5.24.1
+      tag: v5.24.3
       pullPolicy: IfNotPresent
 
 config:
