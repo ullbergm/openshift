@@ -9,7 +9,7 @@
     {
       matchDatasources: ["docker"],
       matchPackageNames: ["ghcr.io/home-operations/radarr"],
-      allowedVersions: "<5",
+      allowedVersions: "<6",
     },
   ],
 }
