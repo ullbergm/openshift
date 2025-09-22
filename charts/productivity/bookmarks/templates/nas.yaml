@@ -1,6 +1,6 @@
-{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha2" }}
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha3" }}
 ---
-apiVersion: startpunkt.ullberg.us/v1alpha2
+apiVersion: startpunkt.ullberg.us/v1alpha3
 kind: Application
 metadata:
   name: nas
@@ -10,4 +10,5 @@ spec:
   icon: nas
   url: http://nas.{{ .Values.cluster.top_level_domain }}
   info: Storage
+  tags: admin
 {{- end }}

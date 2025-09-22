@@ -18,6 +18,7 @@ application:
   image: https://avatars.githubusercontent.com/u/54627315
   description: "Z-Wave JS to MQTT integration."
   port: 8091
+  tags: admin
 
 pods:
   main:

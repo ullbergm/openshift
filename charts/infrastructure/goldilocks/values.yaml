@@ -20,6 +20,7 @@ application:
   description: "Kubernetes Resource Recommendations"
   port: 8080
   location: 0
+  tags: admin
 
 pods:
   main:

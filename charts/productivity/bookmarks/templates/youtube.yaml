@@ -1,6 +1,6 @@
-{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha2" }}
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha3" }}
 ---
-apiVersion: startpunkt.ullberg.us/v1alpha2
+apiVersion: startpunkt.ullberg.us/v1alpha3
 kind: Bookmark
 metadata:
   name: youtube

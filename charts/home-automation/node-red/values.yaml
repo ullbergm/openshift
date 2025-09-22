@@ -18,6 +18,7 @@ application:
   image: https://raw.githubusercontent.com/node-red/node-red.github.io/master/images/node-red.png
   description: "A flow-based development tool."
   port: 1880
+  tags: admin
 
 pods:
   main:

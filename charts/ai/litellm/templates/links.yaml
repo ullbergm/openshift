@@ -24,9 +24,9 @@ spec:
     imageURL: {{ .Values.application.image | quote }}
   text: {{ .Values.application.name | quote }}
 {{- end }}
-{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha2" }}
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha3" }}
 ---
-apiVersion: startpunkt.ullberg.us/v1alpha2
+apiVersion: startpunkt.ullberg.us/v1alpha3
 kind: Application
 metadata:
   name: {{ .Release.Name }}
@@ -38,4 +38,5 @@ spec:
   url: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}/ui
   info: {{ .Values.application.description | quote }}
   location: {{ .Values.application.location }}
+  tags: {{ .Values.application.tags | quote }}
 {{- end }}
