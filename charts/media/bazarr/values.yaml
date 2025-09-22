@@ -26,5 +26,5 @@ pods:
     image:
       # renovate custom-docker versioning=semver
       repository: ghcr.io/home-operations/bazarr
-      tag: 1.5.2
+      tag: 1.5.3
       pullPolicy: IfNotPresent
