@@ -26,5 +26,5 @@ pods:
     image:
       repository: ghcr.io/home-operations/prowlarr
       # renovate: datasource=docker depName=ghcr.io/home-operations/prowlarr versioning=semver
-      tag: 1.37.0.5076
+      tag: 2.0.5.5160
       pullPolicy: IfNotPresent
