@@ -36,11 +36,4 @@
       "/(^|/)role/.+\\.ya?ml$/",
     ],
   },
-  kubernetes: {
-    managerFilePatterns: [
-      "/(^|/)charts/.+\\.ya?ml$/",
-      "/(^|/)cluster/.+\\.ya?ml$/",
-      "/(^|/)role/.+\\.ya?ml$/",
-    ],
-  },
 }
