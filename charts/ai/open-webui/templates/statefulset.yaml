@@ -29,7 +29,7 @@ spec:
       serviceAccountName: {{ .Release.Name }}
       automountServiceAccountToken: true
       securityContext:
-         fsGroup: 0
+        fsGroup: 0
         runAsGroup: 0
         runAsUser: 0
       containers:
