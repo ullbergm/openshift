@@ -23,4 +23,11 @@ spec:
     targetRevision: {{ .Values.spec.source.targetRevision }}
     helm:
       valuesObject:
-{{ .Values | toYaml | nindent 8 }}
+        spec:
+          source:
+            repoURL: {{ .Values.spec.source.repoURL }}-private
+            targetRevision: {{ .Values.spec.source.targetRevision }}
+          destination:
+{{ .Values.spec.destination | toYaml | nindent 12 }}
+        config:
+{{ .Values.config | toYaml | nindent 10 }}
