@@ -78,6 +78,38 @@ spec:
             name: config-files
           - mountPath: /data
             name: data
+        {{- if .Values.webhook.enabled }}
+        - name: webhook
+          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
+          imagePullPolicy: IfNotPresent
+          command: ["python3", "/app/config-file/webhook-server.py"]
+          env:
+          - name: TZ
+            value: {{ .Values.cluster.timezone }}
+          - name: WEBHOOK_PORT
+            value: "{{ .Values.webhook.port }}"
+          ports:
+          - name: webhook
+            containerPort: {{ .Values.webhook.port }}
+            protocol: TCP
+          volumeMounts:
+            - name: config
+              mountPath: /config
+            - name: config-files
+              mountPath: /app/config-file
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: webhook
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: webhook
+            initialDelaySeconds: 15
+            periodSeconds: 20
+        {{- end }}
       volumes:
         - name: config
           persistentVolumeClaim:

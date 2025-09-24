@@ -1,0 +1,17 @@
+{{- if .Values.webhook.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}
+  namespace: {{ .Release.Namespace }}
+spec:
+  type: ClusterIP
+  ports:
+  - name: webhook
+    port: {{ .Values.webhook.port }}
+    protocol: TCP
+    targetPort: webhook
+  selector:
+    app.kubernetes.io/name: {{ .Release.Name }}
+    app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
