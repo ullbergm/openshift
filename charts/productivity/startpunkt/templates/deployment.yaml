@@ -47,7 +47,7 @@ spec:
             value: "{{ $value }}"
           {{- end }}
           image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: {{ .Values.pods.main.image.pullPolicy }}
           volumeMounts:
           - mountPath: /work/application.yaml
             name: config
