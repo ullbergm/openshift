@@ -20,8 +20,8 @@ pods:
     image:
       repository: ghcr.io/ullbergm/startpunkt
       # renovate: datasource=docker depName=ghcr.io/ullbergm/startpunkt versioning=semver
-      tag: 2.0.0
-      pullPolicy: IfNotPresent
+      tag: main # 2.0.0
+      pullPolicy: Always
 
 startpunkt:
   # Default protocol for links if not specified in the resource
