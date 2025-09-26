@@ -21,9 +21,8 @@ spec:
         service: db
     spec:
       containers:
-        # renovate: datasource=docker depName=postgres versioning=docker
-        - image: postgres:17.6
-          name: postgres
+        - name: postgres
+          image: {{ .Values.pods.db.image.repository }}:{{ .Values.pods.db.image.tag }}
           resources:
             limits:
               cpu: "4"

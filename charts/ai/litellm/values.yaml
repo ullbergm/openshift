@@ -25,6 +25,12 @@ pods:
       # renovate: datasource=docker depName=ghcr.io/berriai/litellm-non_root versioning=loose
       tag: main-v1.75.8-stable
 
+  db:
+    image:
+      repository: postgres
+      # renovate: datasource=docker depName=postgres versioning=docker
+      tag: 17.6
+
   redis:
     image:
       repository: redis
