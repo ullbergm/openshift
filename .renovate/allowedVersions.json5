@@ -11,5 +11,10 @@
       matchPackageNames: ["ghcr.io/home-operations/radarr"],
       allowedVersions: "<6",
     },
+    {
+      matchDatasources: ["docker"],
+      matchPackageNames: ["postgres"],
+      allowedVersions: "<18",
+    },
   ],
 }
