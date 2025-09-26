@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         # renovate: datasource=docker depName=postgres versioning=docker
-        - image: postgres:17.5
+        - image: postgres:18.0
           name: postgres
           resources:
             limits:
