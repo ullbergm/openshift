@@ -16,5 +16,10 @@
       matchPackageNames: ["postgres"],
       allowedVersions: "<18",
     },
+    {
+      matchDatasources: ["helm", "docker"],
+      matchPackageNames: ["postgres"],
+      allowedVersions: "<18",
+    },
   ],
 }
