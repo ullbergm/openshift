@@ -6,7 +6,7 @@ data:
   recyclarr.yaml: |-
     sonarr:
       web-1080p-v4:
-        base_url: https://sonarr.sonarr
+        base_url: http://sonarr.sonarr:8989
         api_key: !env_var SONARR_API_KEY
         delete_old_custom_formats: true
         replace_existing_custom_formats: true
@@ -44,7 +44,7 @@ data:
 
     radarr:
       hd-bluray-web:
-        base_url: https://radarr.radarr
+        base_url: http://radarr.radarr:7878
         api_key: !env_var RADARR_API_KEY
         delete_old_custom_formats: true
         replace_existing_custom_formats: true
