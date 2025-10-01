@@ -40,10 +40,14 @@ spec:
               args:
                 - sync
               volumeMounts:
-              - name: config
+              - name: config-file
                 mountPath: /config/recyclarr.yaml
                 subPath: recyclarr.yaml
                 readOnly: true
+              - name: config
+                mountPath: /config
+              - name: tmp-dir
+                mountPath: /tmp
               resources:
                 limits:
                   cpu: 500m
@@ -52,6 +56,10 @@ spec:
                   cpu: 100m
                   memory: 128Mi
           volumes:
-          - name: config
+          - name: config-file
             configMap:
               name: {{ .Release.Name }}
+          - name: config
+            emptyDir: {}
+          - name: tmp-dir
+            emptyDir: {}
