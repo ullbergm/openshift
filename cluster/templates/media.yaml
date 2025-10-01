@@ -24,6 +24,7 @@ spec:
         - name: prowlarr
         - name: radarr
         - name: readarr
+        - name: recyclarr
         - name: sabnzbd
         - name: sonarr
         - name: tautulli

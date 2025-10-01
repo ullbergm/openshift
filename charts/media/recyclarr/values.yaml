@@ -1,0 +1,24 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+pods:
+  main:
+    type: cronjob
+    cronjob:
+      schedule: 0 0 * * *
+    containers:
+      app:
+        image:
+          repository: ghcr.io/recyclarr/recyclarr
+          # renovate: datasource=docker depName=ghcr.io/recyclarr/recyclarr versioning=semver
+          tag: 7.4.1
