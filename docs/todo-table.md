@@ -192,6 +192,13 @@ This document lists applications that could be considered for addition to the ho
 | **InvoiceNinja** | 🔄 Planned | Low      | Invoicing and billing platform |
 | **Kimai**        | 🔄 Planned | Low      | Time tracking application      |
 
+## Radio & Aviation
+
+| Application | Status      | Priority | Notes                                                                           |
+| ----------- | ----------- | -------- | ------------------------------------------------------------------------------- |
+| **ADSB**    | ✅ Deployed | -        | ADS-B aircraft tracking and monitoring                                          |
+| **ACARS**   | 🔄 Planned  | Medium   | Aircraft Communications Addressing and Reporting System decoder using SDR radio |
+
 ## Network Services
 
 | Application             | Status     | Priority | Notes                                                  |
@@ -255,4 +262,4 @@ This document lists applications that could be considered for addition to the ho
 
 ## Last Updated
 
-September 21, 2025
+October 2, 2025
