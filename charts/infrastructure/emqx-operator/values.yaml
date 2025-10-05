@@ -30,12 +30,3 @@ emqx-operator:
   image:
     repository: emqx/emqx-operator-controller
     pullPolicy: IfNotPresent
-
-  # Resources
-  resources:
-    limits:
-      cpu: 500m
-      memory: 128Mi
-    requests:
-      cpu: 100m
-      memory: 64Mi
