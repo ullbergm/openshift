@@ -1,0 +1,14 @@
+apiVersion: v2
+description: A Helm chart for managing EMQX Operator
+name: emqx-operator
+version: 1.0.0
+kubeVersion: ">=1.31.0-0"
+
+maintainers:
+  - name: Magnus Ullberg
+    email: magnus@ullberg.us
+
+dependencies:
+- name: emqx-operator
+  version: "2.2.29"
+  repository: "https://repos.emqx.io/charts"

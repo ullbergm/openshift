@@ -1,0 +1,41 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: EMQX
+  group: Infrastructure
+  icon: cbi:mqtt
+  iconColor: "#3C5280"
+  image: "https://www.emqx.com/images/logo.png"
+  description: "MQTT broker"
+  tags: admin
+
+emqx-operator:
+  # Operator configuration
+  singleNamespace: false  # Watch all namespaces
+  development: false
+  replicaCount: 3
+
+  # Image configuration
+  image:
+    repository: emqx/emqx-operator-controller
+    pullPolicy: IfNotPresent
+
+  # Resources
+  resources:
+    limits:
+      cpu: 500m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 64Mi
