@@ -18,6 +18,7 @@ application:
   iconColor: "#3C5280"
   image: "https://www.emqx.com/images/logo.png"
   description: "MQTT broker"
+  port: 18083
   tags: admin
 
 emqx-operator:
