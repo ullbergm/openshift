@@ -37,6 +37,15 @@ spec:
       annotations:
         reloader.stakater.com/auto: "true"
     spec:
+      volumeClaimTemplates:
+        {{- if .Values.cluster.storage.config.storageClassName }}
+        storageClassName: {{ .Values.cluster.storage.config.storageClassName }}
+        {{- end }}
+        resources:
+          requests:
+            storage: 1Gi
+        accessModes:
+        - ReadWriteOnce
       replicas: 3
       envFrom:
         - secretRef:
