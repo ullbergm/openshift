@@ -1,0 +1,73 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    kasten/backup: "true"
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  revisionHistoryLimit: 1
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/controller: main
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  serviceName: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/controller: main
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+    spec:
+      enableServiceLinks: false
+      serviceAccountName: {{ .Release.Name }}
+      automountServiceAccountToken: true
+      securityContext:
+        fsGroup: 568
+        fsGroupChangePolicy: OnRootMismatch
+        runAsGroup: 0
+        runAsUser: 0
+        supplementalGroups:
+        - 44
+        - 109
+        - 100
+        - 65535
+      containers:
+        - name: main
+          env:
+          - name: TZ
+            value: {{ .Values.cluster.timezone }}
+          {{- range $key, $value := .Values.pods.main.env }}
+          - name: {{ $key }}
+            value: "{{ $value }}"
+          {{- end }}
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}
+          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - mountPath: /app/config
+            name: config
+          - mountPath: /app/config/cache
+            name: cache
+          - mountPath: /app/config/logs
+            name: logs
+          - mountPath: /tmp
+            name: tmp
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-config
+        - name: cache
+          emptyDir: {}
+        - name: logs
+          emptyDir: {}
+        - name: tmp
+          emptyDir: {}

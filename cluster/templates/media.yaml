@@ -13,11 +13,11 @@ spec:
         - name: bazarr
         - name: flaresolverr
         - name: huntarr
+        - name: jellyseerr
         - name: kapowarr
         - name: kavita
         - name: lidarr
         - name: metube
-        - name: overseerr
         - name: pinchflat
         - name: plex
         - name: posterizarr
