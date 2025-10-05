@@ -14,7 +14,7 @@ cluster:
 application:
   name: Bazarr
   group: Media
-  icon: subtitles
+  icon: cbi:bazarr
   iconColor: ""
   image: "https://www.bazarr.media/assets/img/logo.png"
   description: "Manages subtitles"

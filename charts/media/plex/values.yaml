@@ -14,7 +14,7 @@ cluster:
 application:
   name: Plex
   group: Media
-  icon: mdi:plex
+  icon: cbi:plex
   iconColor: "orange"
   image: "https://upload.wikimedia.org/wikipedia/commons/7/7b/Plex_logo_2022.svg"
   description: "Manages your movie library"

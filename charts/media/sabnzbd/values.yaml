@@ -14,7 +14,7 @@ cluster:
 application:
   name: Sabnzbd
   group: Media
-  icon: download-box
+  icon: cbi:sabnzbd
   image: "https://raw.githubusercontent.com/sabnzbd/sabnzbd/develop/icons/logo-arrow.svg"
   description: "Efficient Usenet downloader"
   port: &port 8080

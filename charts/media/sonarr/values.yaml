@@ -14,7 +14,7 @@ cluster:
 application:
   name: Sonarr
   group: Media
-  icon: simple-icons:sonarr
+  icon: cbi:sonarr
   iconColor: ""
   image: "https://raw.githubusercontent.com/Sonarr/Sonarr/v5-develop/Logo/256.png"
   description: "TV Series management"

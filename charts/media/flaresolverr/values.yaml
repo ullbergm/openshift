@@ -14,7 +14,7 @@ cluster:
 application:
   name: Flaresolverr
   group: Media
-  icon: simple-icons:cloudflare
+  icon: cbi:flaresolverr
   iconColor: ""
   image: ""
   description: "Cloudflare bypass tool"

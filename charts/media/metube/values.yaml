@@ -14,7 +14,7 @@ cluster:
 application:
   name: MeTube
   group: Media
-  icon: simple-icons:youtube
+  icon: cbi:metube
   iconColor: ""
   image: ""
   description: "Web UI for yt-dlp/youtube-dl downloads"

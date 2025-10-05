@@ -14,7 +14,7 @@ cluster:
 application:
   name: Prowlarr
   group: Media
-  icon: cloud-search
+  icon: cbi:prowlarr
   iconColor: ""
   image: "https://raw.githubusercontent.com/Prowlarr/Prowlarr/develop/Logo/400.png"
   description: "Indexer management"

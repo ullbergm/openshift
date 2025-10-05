@@ -14,7 +14,7 @@ cluster:
 application:
   name: Overseerr
   group: Media
-  icon: eye-circle
+  icon: cbi:overseerr
   iconColor: ""
   image: "https://raw.githubusercontent.com/sct/overseerr/develop/public/logo_full.svg"
   description: "Helps you find media you want to watch"
