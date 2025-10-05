@@ -24,7 +24,7 @@ emqx-operator:
   # Operator configuration
   singleNamespace: false  # Watch all namespaces
   development: false
-  replicaCount: 3
+  replicaCount: 1
 
   # Image configuration
   image:
