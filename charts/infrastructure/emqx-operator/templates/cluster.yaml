@@ -50,3 +50,11 @@ spec:
         - name: init-user
           secret:
             secretName: {{ .Release.Name }}-init-user
+  listenersServiceTemplate:
+    metadata:
+      annotations:
+        keepalived-operator.redhat-cop.io/keepalivedgroup: "keepalived-operator/lan"
+    spec:
+      type: ClusterIP
+      externalIPs:
+        - {{ .Values.emqx.network.ip }}

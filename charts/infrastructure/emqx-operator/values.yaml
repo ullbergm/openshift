@@ -21,6 +21,10 @@ application:
   port: 18083
   tags: admin
 
+emqx:
+  network:
+    ip: 192.168.1.11
+
 emqx-operator:
   # Operator configuration
   singleNamespace: false  # Watch all namespaces
