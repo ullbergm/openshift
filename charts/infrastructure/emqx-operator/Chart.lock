@@ -1,0 +1,6 @@
+dependencies:
+- name: emqx-operator
+  repository: https://repos.emqx.io/charts
+  version: 2.2.29
+digest: sha256:94956e73990046179e86f5ff568fb83169e73d12a50c65ef8a7e170437bb159c
+generated: "2025-10-07T00:22:57.435967933Z"
