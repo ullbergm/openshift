@@ -296,6 +296,12 @@ for category in charts/*/; do
                 chart_name=$(basename "$chart_dir")
                 values_file="$chart_dir/values.yaml"
 
+                # Check if values.yaml has an application section
+                if ! grep -q "^application:" "$values_file"; then
+                    # No application section, skip icon/image validation for this chart
+                    continue
+                fi
+
                 # Extract icon and image values from values.yaml
                 icon_line=$(grep -n "^  icon:" "$values_file" || echo "")
                 image_line=$(grep -n "^  image:" "$values_file" || echo "")
