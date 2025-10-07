@@ -16,7 +16,7 @@ application:
   group: Media
   icon: cbi:jellyseerr
   iconColor: ""
-  image: "https://raw.githubusercontent.com/sct/jellyseerr/develop/public/logo_full.svg"
+  image: "https://raw.githubusercontent.com/seerr-team/seerr/refs/heads/develop/public/os_logo_square.png"
   description: "Helps you find media you want to watch"
   port: 5055
   location: 0

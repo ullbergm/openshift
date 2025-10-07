@@ -16,7 +16,7 @@ application:
   group: Infrastructure
   icon: cbi:mqtt
   iconColor: "#3C5280"
-  image: "https://www.emqx.com/images/logo.png"
+  image: "https://avatars.githubusercontent.com/u/25221711"
   description: "MQTT broker"
   port: 18083
   tags: admin
