@@ -8,7 +8,7 @@ spec:
   name: Load Balancer
   group: Infrastructure
   icon: cbi:nginx
-  url: http://{{ .Values.cluster.top_level_domain }}:9000/server-status
+  url: http://apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}:9000/server-status
   info: Load Balancer status
   tag: admin
 {{- end }}
