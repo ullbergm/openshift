@@ -1,0 +1,14 @@
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha3" }}
+---
+apiVersion: startpunkt.ullberg.us/v1alpha3
+kind: Application
+metadata:
+  name: loadbalancer
+spec:
+  name: Load Balancer
+  group: Infrastructure
+  icon: cbi:nginx
+  url: http://{{ .Values.cluster.top_level_domain }}:9000/server-status
+  info: Load Balancer status
+  tag: admin
+{{- end }}
