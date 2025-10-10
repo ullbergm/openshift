@@ -26,5 +26,5 @@ pods:
     image:
       repository: ghcr.io/home-assistant/home-assistant
       # renovate: datasource=docker depName=ghcr.io/home-assistant/home-assistant versioning=semver
-      tag: 2025.10.1
+      tag: 2025.10.2
       pullPolicy: IfNotPresent
