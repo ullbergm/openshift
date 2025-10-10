@@ -4,6 +4,8 @@
     "config:recommended",
     "docker:enableMajor",
     "helpers:pinGitHubActionDigests",
+    "workarounds:doNotUpgradeFromAlpineStableToEdge",
+    "workarounds:supportRedHatImageVersion",
     "github>ullbergm/openshift//.renovate/autoMerge.json5",
     "github>ullbergm/openshift//.renovate/customManagers.json5",
     "github>ullbergm/openshift//.renovate/groups.json5",
@@ -21,7 +23,7 @@
   ignorePaths: ["**/*.sops.*", "**/resources/**"],
   ignoreDeps: [
     "registry.connect.redhat.com/intel/intel-gpu-plugin",
-    "registry.redhat.io/openshift4/ose-node-feature-discovery-rhel9",
+    "registry.redhat.io/**",
   ],
   flux: {
     managerFilePatterns: [
