@@ -1,8 +1,8 @@
 # Cronjob configuration
 cronjob:
   # Schedule for the cronjob (cron format)
-  # Default: every 15 minutes
-  schedule: "*/15 * * * *"
+  # Default: every hour
+  schedule: "0 * * * *"
 
 # Container image configuration
 image:
