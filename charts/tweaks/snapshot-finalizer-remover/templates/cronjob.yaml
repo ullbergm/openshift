@@ -24,15 +24,28 @@ spec:
               args:
                 - |
                   set -euo pipefail
-                  # gather VolumeSnapshotContent names from cluster events
-                  names="$(oc get events -A -o go-template='{{range .items}}{{if or (eq .reason "SnapshotDeleteError") (contains .message "Failed to delete snapshot")}}{{if eq .involvedObject.kind "VolumeSnapshotContent"}}{{println .involvedObject.name}}{{end}}{{end}}{{end}}')"
+
+                  # Collect names where reason == SnapshotDeleteError
+                  mapfile -t A < <(oc get events -A \
+                    --field-selector reason=SnapshotDeleteError \
+                    -o go-template='{{range .items}}{{if eq .involvedObject.kind "VolumeSnapshotContent"}}{{.involvedObject.name}}{{"\n"}}{{end}}{{end}}' | sort -u)
+
+                  # Collect names where message contains "Failed to delete snapshot"
+                  mapfile -t B < <(oc get events -A \
+                    -o custom-columns=KIND:.involvedObject.kind,NAME:.involvedObject.name,MSG:.message --no-headers \
+                    | grep -i "Failed to delete snapshot" \
+                    | awk '$1=="VolumeSnapshotContent"{print $2}' | sort -u)
+
+                  # Merge and dedupe
+                  names=$(printf "%s\n" "${A[@]}" "${B[@]}" | sed '/^$/d' | sort -u)
+
                   if [[ -z "${names}" ]]; then
                     echo "No failed snapshot deletions found"
                     exit 0
                   fi
-                  echo "${names}" | sort -u | while read -r vsc; do
-                    if [[ -n "${vsc}" ]]; then
-                      echo "Patching ${vsc}"
-                      oc patch volumesnapshotcontent "${vsc}" --type=json -p '[{"op":"remove","path":"/metadata/finalizers"}]'
-                    fi
+
+                  echo "${names}" | while read -r vsc; do
+                    [[ -z "${vsc}" ]] && continue
+                    echo "Patching ${vsc}"
+                    oc patch volumesnapshotcontent "${vsc}" --type=json -p '[{"op":"remove","path":"/metadata/finalizers"}]' || true
                   done
