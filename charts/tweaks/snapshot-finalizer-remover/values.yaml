@@ -1,0 +1,11 @@
+# Cronjob configuration
+cronjob:
+  # Schedule for the cronjob (cron format)
+  # Default: every 15 minutes
+  schedule: "*/15 * * * *"
+
+# Container image configuration
+image:
+  repository: registry.redhat.io/openshift4/ose-cli
+  tag: v4.15
+  pullPolicy: IfNotPresent

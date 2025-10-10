@@ -1,0 +1,37 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  schedule: {{ .Values.cronjob.schedule | quote }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        spec:
+          serviceAccountName: {{ .Release.Name }}
+          restartPolicy: Never
+          containers:
+            - name: cleaner
+              image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+              imagePullPolicy: {{ .Values.image.pullPolicy }}
+              command: ["/bin/bash","-c"]
+              args:
+                - |
+                  set -euo pipefail
+                  # gather VolumeSnapshotContent names from cluster events
+                  names="$(oc get events -A -o go-template='{{range .items}}{{if or (eq .reason "SnapshotDeleteError") (contains .message "Failed to delete snapshot")}}{{if eq .involvedObject.kind "VolumeSnapshotContent"}}{{println .involvedObject.name}}{{end}}{{end}}{{end}}')"
+                  if [[ -z "${names}" ]]; then
+                    echo "No failed snapshot deletions found"
+                    exit 0
+                  fi
+                  echo "${names}" | sort -u | while read -r vsc; do
+                    if [[ -n "${vsc}" ]]; then
+                      echo "Patching ${vsc}"
+                      oc patch volumesnapshotcontent "${vsc}" --type=json -p '[{"op":"remove","path":"/metadata/finalizers"}]'
+                    fi
+                  done

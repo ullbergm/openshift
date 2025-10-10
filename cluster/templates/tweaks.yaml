@@ -12,6 +12,7 @@ spec:
         elements:
         - name: disable-worker-secondary-interfaces
         - name: disable-master-secondary-interfaces
+        - name: snapshot-finalizer-remover
   template:
     metadata:
       name: '{{ "{{" }} .name {{ "}}" }}'
