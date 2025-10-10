@@ -23,6 +23,7 @@
   ignorePaths: ["**/*.sops.*", "**/resources/**"],
   ignoreDeps: [
     "registry.connect.redhat.com/intel/intel-gpu-plugin",
+    "registry.redhat.io/openshift4/ose-node-feature-discovery-rhel9",
     "registry.redhat.io/openshift4/ose-cli",
   ],
   flux: {
