@@ -16,7 +16,7 @@ pods:
     image:
       repository: docker.io/mikefarah/yq
       # renovate: datasource=docker depName=docker.io/mikefarah/yq versioning=semver
-      tag: 4.47.2
+      tag: 4.48.1
   main:
     image:
       repository: ghcr.io/fscorrupt/posterizarr
