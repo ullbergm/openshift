@@ -13,6 +13,11 @@
     },
     {
       matchManagers: ["helm", "helm-values"],
+      matchPackageNames: ["ghcr.io/home-operations/lidarr"],
+      allowedVersions: "<3",
+    },
+    {
+      matchManagers: ["helm", "helm-values"],
       matchPackageNames: ["postgres"],
       allowedVersions: "<18",
     },
