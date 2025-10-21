@@ -27,14 +27,14 @@ pods:
     image:
       repository: ghcr.io/kiwigrid/k8s-sidecar
       # renovate: datasource=docker depName=ghcr.io/kiwigrid/k8s-sidecar versioning=semver
-      tag: 1.30.9
+      tag: 1.30.9@sha256:8c06e1ba643a4625de14b2db65c356f5db6b1482a25fce4754380a2936207338
       pullPolicy: IfNotPresent
 
   main:
     image:
       repository: twinproduction/gatus
       # renovate: datasource=docker depName=twinproduction/gatus versioning=semver
-      tag: v5.27.0
+      tag: v5.27.0@sha256:5091320d752756d7ac0a094d26ac38eb8216d7ed5857642b305522d1c6641f72
       pullPolicy: IfNotPresent
 
 config:
