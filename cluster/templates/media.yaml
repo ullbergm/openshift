@@ -22,7 +22,6 @@ spec:
         - name: posterizarr
         - name: prowlarr
         - name: radarr
-        - name: readarr
         - name: recyclarr
         - name: sabnzbd
         - name: sonarr
