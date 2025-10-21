@@ -26,7 +26,7 @@ pods:
     image:
       repository: ghcr.io/home-operations/sonarr
       # renovate: datasource=docker depName=ghcr.io/home-operations/sonarr versioning=semver
-      tag: 4.0.15
+      tag: 4.0.15@sha256:ca6c735014bdfb04ce043bf1323a068ab1d1228eea5bab8305ca0722df7baf78
       pullPolicy: IfNotPresent
     env:
       COMPlus_EnableDiagnostics: "0"

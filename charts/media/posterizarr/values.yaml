@@ -16,12 +16,12 @@ pods:
     image:
       repository: docker.io/mikefarah/yq
       # renovate: datasource=docker depName=docker.io/mikefarah/yq versioning=semver
-      tag: 4.48.1
+      tag: 4.48.1@sha256:75b3a60dce1fa4641b0f02bdb4465eddc5da95e62028118a292239ca8e3921e5
   main:
     image:
       repository: ghcr.io/fscorrupt/posterizarr
       # renovate: datasource=docker depName=ghcr.io/fscorrupt/posterizarr versioning=semver
-      tag: 1.9.98
+      tag: 1.9.98@sha256:67f5c8ca2378854fd3a241fc43db46acce25ad02066ded43eff93c48443bc921
 
 webhook:
   enabled: true

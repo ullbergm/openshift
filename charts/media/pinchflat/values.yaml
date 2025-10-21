@@ -26,5 +26,5 @@ pods:
     image:
       repository: ghcr.io/kieraneglin/pinchflat
       # renovate: datasource=docker depName=ghcr.io/kieraneglin/pinchflat versioning=semver
-      tag: v2025.6.6
+      tag: v2025.6.6@sha256:4e975edf58f0861a5cbfe8fc6aac4851ff5a02dfc3f05ffeea4982e3084a5a4a
       pullPolicy: IfNotPresent
