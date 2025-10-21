@@ -12,7 +12,6 @@ spec:
         elements:
         - name: bazarr
         - name: flaresolverr
-        - name: huntarr
         - name: jellyseerr
         - name: kapowarr
         - name: kavita
