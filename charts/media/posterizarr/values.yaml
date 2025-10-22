@@ -21,7 +21,7 @@ pods:
     image:
       repository: ghcr.io/fscorrupt/posterizarr
       # renovate: datasource=docker depName=ghcr.io/fscorrupt/posterizarr versioning=semver
-      tag: 1.9.98@sha256:67f5c8ca2378854fd3a241fc43db46acce25ad02066ded43eff93c48443bc921
+      tag: 1.9.99@sha256:4d95f76b6cdfb32ce4950179f7465ca590146513302e768cfa2c5fb739cbeb79
 
 webhook:
   enabled: true
