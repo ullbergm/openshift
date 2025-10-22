@@ -48,3 +48,7 @@ spec:
           image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
           imagePullPolicy: IfNotPresent
           name: main
+          resources:
+            requests:
+              cpu: 25m
+              memory: 263M

@@ -52,6 +52,13 @@ spec:
           - mountPath: /work/application.yaml
             name: config
             subPath: application.yaml
+          resources:
+            requests:
+              cpu: 25m
+              memory: 263M
+            limits:
+              cpu: 25m
+              memory: 263M
       volumes:
         - name: config
           configMap:

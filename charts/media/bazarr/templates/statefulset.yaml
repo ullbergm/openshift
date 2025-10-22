@@ -56,6 +56,10 @@ spec:
             name: config
           - mountPath: /data
             name: data
+          resources:
+            requests:
+              cpu: 25m
+              memory: 477M
       volumes:
         - name: config
           persistentVolumeClaim:

@@ -78,6 +78,10 @@ spec:
             name: config-files
           - mountPath: /data
             name: data
+          resources:
+            requests:
+              cpu: 12m
+              memory: 549M
         {{- if .Values.webhook.enabled }}
         - name: webhook
           image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
@@ -109,6 +113,13 @@ spec:
               port: webhook
             initialDelaySeconds: 15
             periodSeconds: 20
+          resources:
+            requests:
+              cpu: 12m
+              memory: 132M
+            limits:
+              cpu: 12m
+              memory: 132M
         {{- end }}
       volumes:
         - name: config

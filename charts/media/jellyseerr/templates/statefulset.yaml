@@ -61,6 +61,10 @@ spec:
             name: logs
           - mountPath: /tmp
             name: tmp
+          resources:
+            requests:
+              cpu: 25m
+              memory: 324M
       volumes:
         - name: config
           persistentVolumeClaim:

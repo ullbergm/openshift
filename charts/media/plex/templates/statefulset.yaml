@@ -67,6 +67,8 @@ spec:
           resources:
             requests:
               gpu.intel.com/i915: 1
+              cpu: 12m
+              memory: 979M
             limits:
               gpu.intel.com/i915: 1
 
@@ -94,6 +96,10 @@ spec:
             name: config
           - mountPath: /config/Library/Application Support/Plex Media Server/Cache
             name: cache
+          resources:
+            requests:
+              cpu: 12m
+              memory: 132M
       volumes:
         - name: config
           persistentVolumeClaim:
