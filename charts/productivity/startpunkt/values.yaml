@@ -19,8 +19,7 @@ pods:
   main:
     image:
       repository: ghcr.io/ullbergm/startpunkt
-      # renovate: datasource=docker depName=ghcr.io/ullbergm/startpunkt versioning=loose
-      tag: main@sha256:fab9b69606a0a989309eb3a5e2ffea5b4be75fceca575097295579563a0017d3
+      tag: main
       pullPolicy: Always
 
 startpunkt:
