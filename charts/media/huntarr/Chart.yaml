@@ -1,8 +1,25 @@
 apiVersion: v2
 description: A Helm chart for Huntarr
 name: huntarr
-version: 1.0.0
+version: 1.0.1
+appVersion: "8.2.10"
 kubeVersion: ">=1.31.0-0"
+home: https://huntarr.io
+icon: https://raw.githubusercontent.com/plexguide/Huntarr.io/main/frontend/static/logo/128.png
+sources:
+  - https://github.com/plexguide/Huntarr.io
+  - https://github.com/ullbergm/openshift
+keywords:
+  - huntarr
+  - movies
+  - tv
+  - automation
+annotations:
+  charts.openshift.io/name: huntarr
+  charts.openshift.io/provider: ullberg
+  charts.openshift.io/providerType: community
+  category: Media
+  licenses: GPL-3.0-only
 
 maintainers:
   - name: Magnus Ullberg
