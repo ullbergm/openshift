@@ -1,0 +1,69 @@
+name: Release Helm Charts
+
+on:
+  push:
+    branches:
+      - v2
+    paths:
+      - 'charts/**'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Configure Git
+        run: |
+          git config user.name "$GITHUB_ACTOR"
+          git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+
+      - name: Install Helm
+        uses: azure/setup-helm@v4
+        with:
+          version: v3.14.0
+
+      - name: Package Helm Charts
+        run: |
+          mkdir -p .deploy
+
+          # Find all Chart.yaml files and package each chart
+          for chart_file in $(find charts -name 'Chart.yaml' -type f); do
+            chart_dir=$(dirname "$chart_file")
+            echo "Packaging chart: $chart_dir"
+            helm package "$chart_dir" --destination .deploy
+          done
+
+      - name: Generate Helm Repository Index
+        run: |
+          cd .deploy
+          helm repo index . --url https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: .deploy
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: release
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
