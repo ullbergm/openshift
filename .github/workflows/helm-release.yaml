@@ -37,6 +37,28 @@ jobs:
         with:
           version: v3.14.0
 
+      - name: Add Helm Repositories
+        run: |
+          # Find all unique repository URLs from Chart.yaml files
+          repos=$(find charts -name 'Chart.yaml' -type f -exec grep -h "repository:" {} \; | \
+                  grep -v "^#" | \
+                  awk '{print $2}' | \
+                  tr -d '"' | \
+                  sort -u)
+
+          # Add each repository
+          for repo_url in $repos; do
+            if [[ -n "$repo_url" && "$repo_url" != "file://"* ]]; then
+              # Extract a simple name from the URL for the repo
+              repo_name=$(echo "$repo_url" | sed 's|https://||' | sed 's|http://||' | sed 's|/|-|g' | sed 's|\.|-|g')
+              echo "Adding Helm repo: $repo_name -> $repo_url"
+              helm repo add "$repo_name" "$repo_url" || true
+            fi
+          done
+
+          # Update all repositories
+          helm repo update
+
       - name: Package Helm Charts
         run: |
           mkdir -p .deploy
