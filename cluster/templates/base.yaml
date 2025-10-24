@@ -21,8 +21,6 @@ spec:
           group: security
         - name: generic-device-plugin
           group: infrastructure
-        - name: goldilocks
-          group: infrastructure
         - name: gatus
           group: infrastructure
         - name: intel-gpu-operator
