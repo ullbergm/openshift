@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Sabnzbd Helm Chart Values",
+  "description": "Configuration values for the Sabnzbd Helm chart",
+  "properties": {
+    "cluster": {
+      "type": "object",
+      "title": "Cluster Configuration",
+      "description": "Global cluster configuration inherited from parent chart",
+      "properties": {
+        "top_level_domain": {
+          "type": "string",
+          "description": "Top-level domain for the cluster"
+        },
+        "name": {
+          "type": "string",
+          "description": "Name of the cluster"
+        },
+        "admin_email": {
+          "type": "string",
+          "format": "email",
+          "description": "Administrator email address"
+        },
+        "timezone": {
+          "type": "string",
+          "description": "Timezone for the cluster (e.g., America/New_York)"
+        },
+        "storage": {
+          "type": "object",
+          "description": "Storage configuration",
+          "properties": {
+            "config": {
+              "type": "object",
+              "description": "Configuration storage settings (optional)",
+              "properties": {
+                "storageClassName": {
+                  "type": ["string", "null"],
+                  "description": "Storage class name for config volumes (optional, uses cluster default if not specified)"
+                }
+              }
+            },
+            "media": {
+              "type": "object",
+              "properties": {
+                "nfs": {
+                  "type": "object",
+                  "properties": {
+                    "server": {
+                      "type": "string",
+                      "description": "NFS server hostname or IP"
+                    },
+                    "path": {
+                      "type": "string",
+                      "description": "NFS export path"
+                    }
+                  },
+                  "required": ["server", "path"]
+                }
+              }
+            }
+          }
+        }
+      },
+      "required": ["top_level_domain", "name", "admin_email", "timezone"]
+    }
+  },
+  "required": ["cluster"]
+}
