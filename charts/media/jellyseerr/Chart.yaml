@@ -1,8 +1,25 @@
 apiVersion: v2
 description: A Helm chart for Jellyseerr
 name: jellyseerr
-version: 1.0.0
+version: 1.0.1
+appVersion: "2.7.3"
 kubeVersion: ">=1.31.0-0"
+home: https://github.com/Fallenbagel/jellyseerr
+icon: https://raw.githubusercontent.com/seerr-team/seerr/refs/heads/develop/public/os_logo_square.png
+sources:
+  - https://github.com/Fallenbagel/jellyseerr
+  - https://github.com/ullbergm/openshift
+keywords:
+  - jellyseerr
+  - media
+  - requests
+  - jellyfin
+annotations:
+  charts.openshift.io/name: jellyseerr
+  charts.openshift.io/provider: ullberg
+  charts.openshift.io/providerType: community
+  category: Media
+  licenses: MIT
 
 maintainers:
   - name: Magnus Ullberg
