@@ -29,7 +29,7 @@ pods:
     image:
       repository: postgres
       # renovate: datasource=docker depName=postgres versioning=docker
-      tag: 17.6@sha256:603395c235c99984271a59a6476eed9db4f584e85ba64f9f49a65ba835882f33
+      tag: 17.6@sha256:b480430782a9bd1c8a6835fb5b70f89f34a70132c2f6182e534f65688bce063b
 
   redis:
     image:
