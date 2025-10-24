@@ -1,8 +1,11 @@
 {
   $schema: "https://docs.renovatebot.com/renovate-schema.json",
   extends: [
-    "config:best-practices",
     "config:recommended",
+    "helpers:pinGitHubActionDigests",
+    ":configMigration",
+    ":pinDevDependencies",
+    "abandonments:recommended",
     "docker:enableMajor",
     "workarounds:doNotUpgradeFromAlpineStableToEdge",
     "workarounds:supportRedHatImageVersion",
