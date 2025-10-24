@@ -63,7 +63,27 @@
         }
       },
       "required": ["top_level_domain", "name", "admin_email", "timezone"]
+    },
+    "plex": {
+      "type": "object",
+      "title": "Plex Configuration",
+      "description": "Plex-specific configuration",
+      "properties": {
+        "network": {
+          "type": "object",
+          "description": "Network configuration for Plex",
+          "properties": {
+            "ip": {
+              "type": "string",
+              "description": "IP address for Plex network access",
+              "pattern": "^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$"
+            }
+          },
+          "required": ["ip"]
+        }
+      },
+      "required": ["network"]
     }
   },
-  "required": ["cluster"]
+  "required": ["cluster", "plex"]
 }
