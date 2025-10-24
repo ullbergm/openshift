@@ -16,7 +16,7 @@ application:
   group: Media
   icon: television-box
   iconColor: ""
-  image: ""
+  image: "https://raw.githubusercontent.com/kieraneglin/pinchflat/refs/heads/master/priv/static/images/icon-2024-03-20.png"
   description: "Your next YouTube media manager"
   port: 8945
   location: 0
