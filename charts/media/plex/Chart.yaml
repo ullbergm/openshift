@@ -1,8 +1,25 @@
 apiVersion: v2
 description: A Helm chart for Plex
 name: plex
-version: 1.0.0
+version: 1.0.1
+appVersion: "1.42.2"
 kubeVersion: ">=1.31.0-0"
+home: https://www.plex.tv
+icon: https://upload.wikimedia.org/wikipedia/commons/7/7b/Plex_logo_2022.svg
+sources:
+  - https://github.com/plexinc/pms-docker
+  - https://github.com/ullbergm/openshift
+keywords:
+  - plex
+  - media
+  - server
+  - streaming
+annotations:
+  charts.openshift.io/name: plex
+  charts.openshift.io/provider: ullberg
+  charts.openshift.io/providerType: community
+  category: Media
+  licenses: Proprietary
 
 maintainers:
   - name: Magnus Ullberg
