@@ -1,0 +1,26 @@
+cluster:
+  top_level_domain: example.com
+  name: cluster
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+# Set Bond MAC Address configuration
+setBondMac:
+  # Role to apply the MachineConfig to (e.g., master, worker)
+  role: master
+
+  # Interface configuration
+  interfaces:
+    # Bond interface name
+    bond: bond0
+
+    # Primary network interface (will be used as the active for the bond)
+    primary: eno1
+
+    # Secondary network interface (will be used as the backup for the bond)
+    secondary: enp3s0

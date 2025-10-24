@@ -1,0 +1,101 @@
+{{- if .Capabilities.APIVersions.Has "machineconfiguration.openshift.io/v1" }}
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: {{ .Values.setBondMac.role }}
+  name: 99-{{ .Values.setBondMac.role }}-set-bond-mac
+spec:
+  config:
+    ignition:
+      version: 3.4.0
+    storage:
+      files:
+        - contents:
+            source: data:text/plain;charset=utf-8;base64,{{ printf `[connection]
+id=%s
+type=bond
+interface-name=%s
+autoconnect=true
+connection.autoconnect-slaves=1
+autoconnect-priority=20
+
+[bond]
+mode=active-backup
+primary=%s
+miimon=100
+
+[ethernet]
+cloned-mac-address=ba:ad:be:ef:ba:ad
+
+[ipv6]
+method=auto` .Values.setBondMac.interfaces.bond .Values.setBondMac.interfaces.bond .Values.setBondMac.interfaces.primary | b64enc }}
+          mode: 384
+          overwrite: false
+          path: /etc/NetworkManager/system-connections/{{ .Values.setBondMac.interfaces.bond }}.template
+        - contents:
+            source: data:text/plain;charset=utf-8;base64,{{ printf `[connection]
+id=%s
+type=ethernet
+interface-name=%s
+master=%s
+slave-type=bond
+autoconnect=true
+autoconnect-priority=20
+` .Values.setBondMac.interfaces.primary .Values.setBondMac.interfaces.primary .Values.setBondMac.interfaces.bond | b64enc }}
+          mode: 384
+          overwrite: true
+          path: /etc/NetworkManager/system-connections/{{ .Values.setBondMac.interfaces.primary }}.nmconnection
+        - contents:
+            source: data:text/plain;charset=utf-8;base64,{{ printf `[connection]
+id=%s
+type=ethernet
+interface-name=%s
+master=%s
+slave-type=bond
+autoconnect=true
+autoconnect-priority=20` .Values.setBondMac.interfaces.secondary .Values.setBondMac.interfaces.secondary .Values.setBondMac.interfaces.bond | b64enc }}
+          mode: 384
+          overwrite: true
+          path: /etc/NetworkManager/system-connections/{{ .Values.setBondMac.interfaces.secondary }}.nmconnection
+        - contents:
+            source: data:text/plain;charset=utf-8;base64,{{ printf `[Unit]
+Description=Set %s MAC to %s MAC before NetworkManager
+Before=NetworkManager.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/sbin/fix-mac.sh
+
+[Install]
+WantedBy=multi-user.target` .Values.setBondMac.interfaces.bond .Values.setBondMac.interfaces.primary | b64enc }}
+          mode: 420
+          overwrite: true
+          path: /etc/systemd/system/fix-mac.service
+        - contents:
+            source: data:text/plain;charset=utf-8;base64,{{ printf `#!/bin/bash
+
+TEMPLATE="/etc/NetworkManager/system-connections/%s.template"
+TARGET="/etc/NetworkManager/system-connections/%s.nmconnection"
+
+# Copy the template
+cp "$TEMPLATE" "$TARGET"
+
+# Get current MAC of %s
+ENO1_MAC=$(cat /sys/class/net/%s/address)
+
+# Set the MAC in the config file
+sed -i "s/^cloned-mac-address=.*/cloned-mac-address=$ENO1_MAC/" "$TARGET"
+
+# (Optional) Set correct permissions
+chmod 600 "$TARGET"
+` .Values.setBondMac.interfaces.bond .Values.setBondMac.interfaces.bond .Values.setBondMac.interfaces.primary .Values.setBondMac.interfaces.primary | b64enc }}
+          mode: 493
+          overwrite: true
+          path: /usr/local/sbin/fix-mac.sh
+    systemd:
+      units:
+        - enabled: true
+          name: fix-mac.service
+{{- end }}
