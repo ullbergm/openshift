@@ -6,6 +6,7 @@ on:
       - v2
     paths:
       - 'charts/**'
+      - '.github/workflows/helm-release.yaml'
   workflow_dispatch:
 
 permissions:
@@ -44,6 +45,13 @@ jobs:
           for chart_file in $(find charts -name 'Chart.yaml' -type f); do
             chart_dir=$(dirname "$chart_file")
             echo "Packaging chart: $chart_dir"
+
+            # Build dependencies if Chart.yaml has dependencies
+            if grep -q "^dependencies:" "$chart_file"; then
+              echo "Building dependencies for $chart_dir"
+              helm dependency build "$chart_dir"
+            fi
+
             helm package "$chart_dir" --destination .deploy
           done
 
