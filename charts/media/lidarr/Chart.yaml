@@ -1,8 +1,25 @@
 apiVersion: v2
 description: A Helm chart for Lidarr
 name: lidarr
-version: 1.0.0
+version: 1.0.1
+appVersion: "2.14.5"
 kubeVersion: ">=1.31.0-0"
+home: https://lidarr.audio
+icon: https://raw.githubusercontent.com/Lidarr/Lidarr/develop/Logo/400.png
+sources:
+  - https://github.com/Lidarr/Lidarr
+  - https://github.com/ullbergm/openshift
+keywords:
+  - lidarr
+  - music
+  - media
+  - pvr
+annotations:
+  charts.openshift.io/name: lidarr
+  charts.openshift.io/provider: ullberg
+  charts.openshift.io/providerType: community
+  category: Media
+  licenses: GPL-3.0-only
 
 maintainers:
   - name: Magnus Ullberg
