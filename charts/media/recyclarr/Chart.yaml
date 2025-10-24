@@ -1,8 +1,26 @@
 apiVersion: v2
 description: A Helm chart for recyclarr
 name: recyclarr
-version: 1.0.0
+version: 1.0.1
+appVersion: "7.4.1"
 kubeVersion: ">=1.31.0-0"
+home: https://recyclarr.dev
+icon: https://raw.githubusercontent.com/recyclarr/recyclarr/master/logo/logo.svg
+sources:
+  - https://github.com/recyclarr/recyclarr
+  - https://github.com/ullbergm/openshift
+keywords:
+  - recyclarr
+  - radarr
+  - sonarr
+  - media
+  - automation
+annotations:
+  charts.openshift.io/name: recyclarr
+  charts.openshift.io/provider: ullberg
+  charts.openshift.io/providerType: community
+  category: Media
+  licenses: MIT
 
 maintainers:
   - name: Magnus Ullberg
