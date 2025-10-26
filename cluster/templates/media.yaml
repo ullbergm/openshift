@@ -15,7 +15,6 @@ spec:
         - name: jellyseerr
         - name: kapowarr
         - name: kavita
-        - name: lidarr
         - name: metube
         - name: pinchflat
         - name: plex
