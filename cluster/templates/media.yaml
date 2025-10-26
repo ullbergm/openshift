@@ -10,21 +10,8 @@ spec:
   generators:
     - list:
         elements:
-        - name: bazarr
-        - name: flaresolverr
-        - name: jellyseerr
-        - name: kapowarr
-        - name: kavita
         - name: metube
         - name: pinchflat
-        - name: plex
-        - name: posterizarr
-        - name: prowlarr
-        - name: radarr
-        - name: recyclarr
-        - name: sabnzbd
-        - name: sonarr
-        - name: tautulli
   template:
     metadata:
       name: '{{ "{{" }} .name {{ "}}" }}'
