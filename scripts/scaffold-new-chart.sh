@@ -1,17 +1,17 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-# Scaffold a new chart by copying charts/media/sonarr and customizing.
+# Scaffold a new chart by copying charts/media/pinchflat and customizing.
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")"/.. && pwd)"
-SRC_CHART_DIR="$ROOT_DIR/charts/media/sonarr"
+SRC_CHART_DIR="$ROOT_DIR/charts/media/pinchflat"
 
 if [[ ! -d "$SRC_CHART_DIR" ]]; then
   echo "Source chart not found: $SRC_CHART_DIR" >&2
   exit 1
 fi
 
-echo "This wizard will scaffold a new chart based on Sonarr."
+echo "This wizard will scaffold a new chart based on Pinchflat."
 
 # Ask for the group first
 echo "Available groups:"

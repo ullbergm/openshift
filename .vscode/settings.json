@@ -74,8 +74,7 @@
   },
   "yaml.schemas": {
     "https://www.schemastore.org/yamllint.json": [
-      "file:///workspaces/openshift-v2.0/cluster.yaml",
-      "file:///workspaces/openshift/charts/media/sonarr/templates/service.yaml"
+      "file:///workspaces/openshift-v2.0/cluster.yaml"
     ]
   },
   "[jsonc]": {

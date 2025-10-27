@@ -93,11 +93,10 @@ timezone: YOUR_TIMEZONE
 
 ### Role Configuration Compliance
 
-| Role      | Chart.yaml | Templates | Applications                     |
-| --------- | ---------- | --------- | -------------------------------- |
-| ai        | ✅         | ✅        | 3 (litellm, ollama, open-webui)  |
-| media     | ✅         | ✅        | 4 (bazarr, gaps, radarr, sonarr) |
-| utilities | ✅         | ✅        | 1 (excalidraw)                   |
+| Role      | Chart.yaml | Templates | Applications                    |
+| --------- | ---------- | --------- | ------------------------------- |
+| ai        | ✅         | ✅        | 3 (litellm, ollama, open-webui) |
+| utilities | ✅         | ✅        | 1 (excalidraw)                  |
 
 ### Configuration Pattern Compliance
 
@@ -130,8 +129,7 @@ timezone: YOUR_TIMEZONE
 
 ### Media Applications
 
-- **bazarr, radarr, sonarr**: Consistent implementation with NFS data volumes properly configured
-- **gaps**: Simple utility app with minimal requirements, properly implemented
+- **metube, pinchflat**: Consistent implementation with NFS data volumes properly configured
 
 ### Utilities
 

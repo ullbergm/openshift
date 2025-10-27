@@ -24,7 +24,7 @@ tasks:
     cmd: rm -rf .task-cache
 
   new-chart:
-    desc: Scaffold a new chart by copying charts/media/sonarr
+    desc: Scaffold a new chart by copying charts/media/pinchflat
     summary: |
       Interactively prompts for chart details (name, image repo/tag, description,
       port, icon, group, iconColor, etc.) and creates a new chart under charts/media/.

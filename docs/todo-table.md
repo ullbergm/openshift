@@ -41,38 +41,13 @@ This document lists applications that could be considered for addition to the ho
 
 ## Media & Entertainment
 
-| Application        | Status      | Priority | Notes                                                                    |
-| ------------------ | ----------- | -------- | ------------------------------------------------------------------------ |
-| **Bazarr**         | ✅ Deployed | -        | Subtitle management for Radarr/Sonarr                                    |
-| **FlareSolverr**   | ✅ Deployed | -        | Proxy server to bypass Cloudflare protection for \*arr applications      |
-| **Gaps**           | ✅ Deployed | -        | Media gap detection                                                      |
-| **Huntarr**        | ✅ Deployed | -        | Subtitle downloading and management                                      |
-| **Kapowarr**       | ✅ Deployed | -        | Software to build and manage a comic book library                        |
-| **Kavita**         | ✅ Deployed | -        | Manga reader                                                             |
-| **Lidarr**         | ✅ Deployed | -        | Music collection manager                                                 |
-| **MeTube**         | ✅ Deployed | -        | Web GUI for youtube-dl                                                   |
-| **Overseerr**      | ✅ Deployed | -        | Request management for Plex/Jellyfin, improves user experience           |
-| **Pinchflat**      | ✅ Deployed | -        | Your next YouTube media manager                                          |
-| **Plex**           | ✅ Deployed | -        | Media server, industry standard with excellent client support            |
-| **Posterizarr**    | ✅ Deployed | -        | Media poster and artwork management                                      |
-| **Prowlarr**       | ✅ Deployed | -        | Indexer manager for \*arr applications                                   |
-| **Radarr**         | ✅ Deployed | -        | Movie collection manager                                                 |
-| **Readarr**        | ✅ Deployed | -        | Book collection manager                                                  |
-| **SABnzbd**        | ✅ Deployed | -        | Efficient Usenet downloader                                              |
-| **Sonarr**         | ✅ Deployed | -        | TV series collection manager                                             |
-| **Tautulli**       | ✅ Deployed | -        | Plex monitoring and analytics                                            |
-| **Recommendarr**   | 🔄 Planned  | High     | Generates personalized TV show and movie recommendations                 |
-| **Stash**          | 🔄 Planned  | High     | Manages your 'stuff'                                                     |
-| **Recyclarr**      | 🔄 Planned  | High     | TRaSH guides automation for \*arr apps, essential for quality management |
-| **Jellyfin**       | 🔄 Planned  | High     | Open-source media server alternative to Plex                             |
-| **PhotoPrism**     | 🔄 Planned  | High     | Photo management and organization with AI features                       |
-| **Immich**         | 🔄 Planned  | High     | Modern photo and video backup solution, Google Photos alternative        |
-| **Audiobookshelf** | 🔄 Planned  | Medium   | Audiobook and podcast server                                             |
-| **Navidrome**      | 🔄 Planned  | Medium   | Music streaming server (subsonic-compatible)                             |
-| **Komga**          | 🔄 Planned  | Medium   | Comic/manga server                                                       |
-| **YouTube-DL**     | 🔄 Planned  | Medium   | Video downloading service                                                |
-| **Emby**           | 🔄 Planned  | Medium   | Media server with premium features                                       |
-| **LibrePhotos**    | 🔄 Planned  | Medium   | Photo management with facial recognition                                 |
+| Application     | Status      | Priority | Notes                                                             |
+| --------------- | ----------- | -------- | ----------------------------------------------------------------- |
+| **MeTube**      | ✅ Deployed | -        | Web GUI for youtube-dl                                            |
+| **Pinchflat**   | ✅ Deployed | -        | Your next YouTube media manager                                   |
+| **PhotoPrism**  | 🔄 Planned  | High     | Photo management and organization with AI features                |
+| **Immich**      | 🔄 Planned  | High     | Modern photo and video backup solution, Google Photos alternative |
+| **LibrePhotos** | 🔄 Planned  | Medium   | Photo management with facial recognition                          |
 
 ## Communication & Social
 
@@ -242,7 +217,6 @@ This document lists applications that could be considered for addition to the ho
 
 - **Authentication**: Implement Authelia or Authentik early for SSO across applications
 - **Monitoring Stack**: Prometheus + Grafana + Loki should be deployed together
-- **Media Stack**: Prowlarr → Sonarr/Radarr → Plex/Jellyfin → Overseerr workflow
 
 ### Security Considerations
 

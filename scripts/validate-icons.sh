@@ -246,15 +246,7 @@ suggest_default_icon() {
             ;;
         "media")
             case "$app_name" in
-                *sonarr*) echo "simple-icons:sonarr" ;;
-                *radarr*) echo "simple-icons:radarr" ;;
-                *lidarr*) echo "music-box" ;;
-                *prowlarr*) echo "cloud-search" ;;
-                *bazarr*|*subtitles*) echo "subtitles" ;;
-                *book*|*read*|*kavita*) echo "book" ;;
                 *youtube*|*tube*) echo "simple-icons:youtube" ;;
-                *plex*) echo "simple-icons:plex" ;;
-                *jellyfin*) echo "simple-icons:jellyfin" ;;
                 *) echo "play-circle" ;;
             esac
             ;;

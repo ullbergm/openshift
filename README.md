@@ -33,23 +33,8 @@ The deployment model follows a two-tier architecture:
     │   ├── gatus/             # Service monitoring and health checks
     │   └── goldilocks/        # VPA recommendations dashboard
     ├── media/
-    │   ├── bazarr/            # Subtitle management
-    │   ├── flaresolverr/      # Cloudflare proxy solver
-    │   ├── gaps/              # Media gap detection
-    │   ├── huntarr/           # Wanted movie management
-    │   ├── kapowarr/          # Comic book management
-    │   ├── kavita/            # Digital library and comic reader
-    │   ├── lidarr/            # Music collection management
     │   ├── metube/            # YouTube downloader web UI
-    │   ├── overseerr/         # Media request management
-    │   ├── pinchflat/         # YouTube channel archiver
-    │   ├── plex/              # Media server
-    │   ├── prowlarr/          # Indexer management
-    │   ├── radarr/            # Movie collection management
-    │   ├── readarr/           # Book and audiobook management
-    │   ├── sabnzbd/           # Usenet downloader
-    │   ├── sonarr/            # TV series management
-    │   └── tautulli/          # Plex analytics and monitoring
+    │   └── pinchflat/         # YouTube channel archiver
     ├── productivity/
     │   ├── bookmarks/         # Bookmark management
     │   ├── cyberchef/         # Data manipulation toolkit
@@ -108,23 +93,8 @@ Each application in the `/charts` directory is a complete Helm chart with:
 
 ### Media Applications
 
-- **Bazarr**: Subtitle management for movies and TV shows
-- **FlareSolverr**: Cloudflare proxy solver for web scraping
-- **Gaps**: Tool for finding missing movies in collections
-- **Huntarr**: Wanted movie management and automation
-- **Kapowarr**: Comic book collection management
-- **Kavita**: Digital library server and comic/book reader
-- **Lidarr**: Music collection management and automation
-- **Metube**: Web-based YouTube downloader
-- **Overseerr**: Media request management for Plex users
+- **MeTube**: Video download tool
 - **Pinchflat**: YouTube channel archiver and downloader
-- **Plex**: Media server for streaming movies, TV shows, and music
-- **Prowlarr**: Indexer management for \*arr applications
-- **Radarr**: Movie collection management and automation
-- **Readarr**: Book and audiobook collection management
-- **SABnzbd**: Usenet newsreader and downloader
-- **Sonarr**: TV series collection management and automation
-- **Tautulli**: Plex media server analytics and monitoring
 
 ### Productivity Applications
 

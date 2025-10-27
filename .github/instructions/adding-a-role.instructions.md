@@ -81,7 +81,7 @@ When the user asks to "add a role", "create a role", "add a new role", or mentio
 ## Example Functional Group Categories
 
 - `ai` - AI/ML applications (LLMs, training tools, inference servers)
-- `media` - Media management (Plex, Sonarr, Radarr, etc.)
+- `media` - Media management (Metube, Pinchflat, etc.)
 - `monitoring` - Observability tools (Prometheus, Grafana, etc.)
 - `development` - Dev tools (IDEs, CI/CD, code quality)
 - `security` - Security tools (scanners, secrets management)

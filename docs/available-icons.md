@@ -15,18 +15,9 @@ This document lists the available icons found for applications in this repositor
 
 The following applications have icons available in the CBI collection:
 
-| Application  | Icon Reference     | Notes                       |
-| ------------ | ------------------ | --------------------------- |
-| bazarr       | `cbi:bazarr`       | Media subtitle management   |
-| flaresolverr | `cbi:flaresolverr` | Proxy server for Cloudflare |
-| jellyseerr   | `cbi:jellyseerr`   | Media request management    |
-| metube       | `cbi:metube`       | YouTube downloader          |
-| overseerr    | `cbi:overseerr`    | Media request management    |
-| plex         | `cbi:plex`         | Media server                |
-| prowlarr     | `cbi:prowlarr`     | Indexer manager             |
-| radarr       | `cbi:radarr`       | Movie collection manager    |
-| sabnzbd      | `cbi:sabnzbd`      | Usenet binary downloader    |
-| sonarr       | `cbi:sonarr`       | TV series management        |
+| Application | Icon Reference | Notes              |
+| ----------- | -------------- | ------------------ |
+| metube      | `cbi:metube`   | YouTube downloader |
 
 ## Applications WITHOUT CBI Icons (Alternative Icons Available)
 
@@ -42,18 +33,9 @@ For applications without CBI icons, here are some alternatives found in other ic
 
 ### Media Applications
 
-| Application | Best Alternative            | Collection | Notes                    |
-| ----------- | --------------------------- | ---------- | ------------------------ |
-| lidarr      | No direct match found       | -          | May need custom icon     |
-| readarr     | _(search needed)_           | -          |                          |
-| tautulli    | `arcticons:tautulli-remote` | Arcticons  | Remote variant available |
-| kavita      | _(search needed)_           | -          |                          |
-| kapowarr    | _(search needed)_           | -          |                          |
-| pinchflat   | _(search needed)_           | -          |                          |
-| posterizarr | _(search needed)_           | -          |                          |
-| recyclarr   | _(search needed)_           | -          |                          |
-| gaps        | _(search needed)_           | -          |                          |
-| huntarr     | _(search needed)_           | -          |                          |
+| Application | Best Alternative  | Collection | Notes |
+| ----------- | ----------------- | ---------- | ----- |
+| pinchflat   | _(search needed)_ | -          |       |
 
 ### Productivity
 

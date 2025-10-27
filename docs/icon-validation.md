@@ -127,7 +127,7 @@ The validator provides intelligent defaults based on:
 For example:
 
 - AI/ML applications: `robot`, `brain`
-- Media applications: Service-specific icons like `simple-icons:sonarr`
+- Media applications: Service-specific icons like `simple-icons:youtube`
 - Utilities: Context-appropriate icons like `mdi:draw-pen` for drawing apps
 
 ## Example Output
@@ -140,7 +140,6 @@ For example:
   ✅ ollama: Image URL 'https://ollama.ai/public/apple-touch-icon.png' format is valid
   ⚠️  metube: No icon field found, suggested: simple-icons:youtube
   ⚠️  metube (line 19): Image field is empty
-  ❌ sonarr (line 17): Invalid simple-icons format. Should be 'simple-icons:iconname' with lowercase letters, numbers, hyphens, and dots only.
 
 — Icon validation summary —
 ⚠️  Icon validation completed with warnings
@@ -156,7 +155,6 @@ For example:
   ✅ ollama: Image URL 'https://ollama.ai/public/apple-touch-icon.png' is accessible (verified online)
   ❌ radarr (line 19): Image URL 'https://example.com/broken-image.png' returned HTTP error (404, 403, etc.)
   ⚠️  metube (line 17): Icon 'nonexistent-icon' not found in Iconify database
-  ⚠️  sonarr: Icon 'timeout-test' format valid (online check failed - network error)
 
 — Icon validation summary —
 ❌ Icon validation failed - fix the errors above
