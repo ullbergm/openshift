@@ -69,6 +69,25 @@ jobs:
             chart_dir=$(dirname "$chart_file")
             echo "Packaging chart: $chart_dir"
 
+            # Extract category from directory structure (charts/CATEGORY/APP_NAME)
+            category=$(echo "$chart_dir" | cut -d'/' -f2)
+
+            # Capitalize first letter of category
+            category_display=$(echo "$category" | sed 's/-/ /g' | sed 's/\b\(.\)/\u\1/g')
+
+            # Add category annotation if it doesn't exist
+            if ! grep -q "category:" "$chart_file"; then
+              echo "Adding category annotation: $category_display"
+              # Create a temporary file with the category annotation
+              if grep -q "^annotations:" "$chart_file"; then
+                # annotations section exists, add to it
+                sed -i "/^annotations:/a\  category: \"$category_display\"" "$chart_file"
+              else
+                # no annotations section, add one before maintainers
+                sed -i "/^maintainers:/i annotations:\n  category: \"$category_display\"\n" "$chart_file"
+              fi
+            fi
+
             # Build dependencies if Chart.yaml has dependencies
             if grep -q "^dependencies:" "$chart_file"; then
               echo "Building dependencies for $chart_dir"
@@ -76,6 +95,9 @@ jobs:
             fi
 
             helm package "$chart_dir" --destination .deploy
+
+            # Revert Chart.yaml changes to avoid committing them
+            git checkout "$chart_file" 2>/dev/null || true
           done
 
       - name: Generate Helm Repository Index

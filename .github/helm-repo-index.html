@@ -336,6 +336,7 @@
         const lines = yaml.split("\n");
         let currentChart = null;
         let currentVersion = null;
+        let inAnnotations = false;
 
         for (let i = 0; i < lines.length; i++) {
           const line = lines[i];
@@ -347,6 +348,7 @@
             if (!charts[currentChart]) {
               charts[currentChart] = { versions: [] };
             }
+            inAnnotations = false;
             continue;
           }
 
@@ -356,6 +358,7 @@
             if (currentChart) {
               charts[currentChart].versions.push(currentVersion);
             }
+            inAnnotations = false;
             continue;
           }
 
@@ -368,6 +371,22 @@
             if (versionMatch) currentVersion.version = versionMatch[1];
             if (descMatch) currentVersion.description = descMatch[1];
             if (nameMatch) currentVersion.name = nameMatch[1];
+
+            // Check for annotations section
+            if (line.match(/^\s{4}annotations:/)) {
+              inAnnotations = true;
+              continue;
+            }
+
+            // Extract category from annotations
+            if (inAnnotations) {
+              const categoryMatch = line.match(
+                /^\s{6}category:\s*["']?([^"'\n]+)["']?/
+              );
+              if (categoryMatch) {
+                currentVersion.category = categoryMatch[1];
+              }
+            }
           }
         }
 
@@ -393,8 +412,8 @@
           const chart = charts[chartName];
           const latestVersion = chart.versions[0] || {};
 
-          // Infer category from path structure (if available) or use 'General'
-          const category = inferCategory(chartName);
+          // Get category from annotations, or infer from chart name as fallback
+          const category = latestVersion.category || inferCategory(chartName);
 
           // Track categories
           if (!categories[category]) {
@@ -442,22 +461,74 @@
       }
 
       function inferCategory(chartName) {
-        // Map of known prefixes or patterns to categories
+        // Map of known chart names or patterns to categories based on directory structure
         const categoryMap = {
-          ai: "AI",
-          media: "Media",
-          home: "Home Automation",
-          infrastructure: "Infrastructure",
-          productivity: "Productivity",
-          security: "Security",
-          storage: "Storage",
-          radio: "Radio",
-          tweaks: "Tweaks",
+          // AI charts
+          litellm: "Ai",
+          ollama: "Ai",
+          "open-webui": "Ai",
+
+          // Media charts
+          metube: "Media",
+          pinchflat: "Media",
+
+          // Home Automation charts
+          "home-assistant": "Home Automation",
+          "node-red": "Home Automation",
+          zwavejs2mqtt: "Home Automation",
+
+          // Infrastructure charts
+          certificates: "Infrastructure",
+          "custom-error-pages": "Infrastructure",
+          "emqx-operator": "Infrastructure",
+          gatus: "Infrastructure",
+          "generic-device-plugin": "Infrastructure",
+          goldilocks: "Infrastructure",
+          "intel-gpu-operator": "Infrastructure",
+          "k10-kasten-operator": "Infrastructure",
+          "keepalived-operator": "Infrastructure",
+          "openshift-nfd": "Infrastructure",
+          "set-bond-mac": "Infrastructure",
+          "system-reservation": "Infrastructure",
+
+          // Productivity charts
+          bookmarks: "Productivity",
+          cyberchef: "Productivity",
+          excalidraw: "Productivity",
+          "it-tools": "Productivity",
+          startpunkt: "Productivity",
+
+          // Radio charts
+          adsb: "Radio",
+
+          // Security charts
+          "external-secrets-operator": "Security",
+
+          // Storage charts
+          "democratic-csi": "Storage",
+
+          // Tweaks
+          "disable-master-secondary-interfaces": "Tweaks",
+          "disable-worker-secondary-interfaces": "Tweaks",
+          "snapshot-finalizer-remover": "Tweaks",
         };
 
-        for (const [key, value] of Object.entries(categoryMap)) {
-          if (chartName.includes(key)) {
-            return value;
+        // Direct chart name lookup
+        if (categoryMap[chartName]) {
+          return categoryMap[chartName];
+        }
+
+        // Pattern matching as fallback
+        const patterns = {
+          operator: "Infrastructure",
+          csi: "Storage",
+          plugin: "Infrastructure",
+          disable: "Tweaks",
+        };
+
+        for (const [pattern, category] of Object.entries(patterns)) {
+          if (chartName.includes(pattern)) {
+            return category;
           }
         }
 
