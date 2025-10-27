@@ -421,8 +421,13 @@
           }
           categories[category].push(chartName);
 
+          // Build GitHub URL to chart directory
+          const categoryFolder = getCategoryFolder(category);
+          const githubUrl = `https://github.com/GITHUB_OWNER/REPO_NAME/tree/v2/charts/${categoryFolder}/${chartName}`;
+
           const card = document.createElement("div");
           card.className = "chart-card";
+          card.style.cursor = "pointer";
           card.innerHTML = `
                     <div class="chart-category">${category}</div>
                     <h3>${chartName}</h3>
@@ -435,7 +440,16 @@
                     <p style="margin-top: 0.5rem; font-size: 0.85rem; color: #718096;">
                         Latest: v${latestVersion.version || "N/A"}
                     </p>
+                    <p style="margin-top: 0.75rem; font-size: 0.8rem; color: #667eea; font-weight: 600;">
+                        📂 View on GitHub →
+                    </p>
                 `;
+
+          // Add click handler to open GitHub directory
+          card.addEventListener("click", () => {
+            window.open(githubUrl, "_blank");
+          });
+
           chartsContainer.appendChild(card);
         });
 
@@ -458,6 +472,27 @@
                 `;
             categoriesContainer.appendChild(categoryCard);
           });
+      }
+
+      function getCategoryFolder(categoryName) {
+        // Map display category names back to folder names
+        const folderMap = {
+          Ai: "ai",
+          Media: "media",
+          "Home Automation": "home-automation",
+          Infrastructure: "infrastructure",
+          Productivity: "productivity",
+          Radio: "radio",
+          Security: "security",
+          Storage: "storage",
+          Tweaks: "tweaks",
+          General: "general",
+        };
+
+        return (
+          folderMap[categoryName] ||
+          categoryName.toLowerCase().replace(/\s+/g, "-")
+        );
       }
 
       function inferCategory(chartName) {
