@@ -8,7 +8,7 @@ spec:
   name: UniFi
   group: Infrastructure
   icon: arcticons:unifi-network
-  url: http://unifi.{{ .Values.cluster.top_level_domain }}:8443
+  url: http://unifi.{{ .Values.cluster.top_level_domain }}:8443/
   info: Manage WIFI
   tags: admin
 {{- end }}
