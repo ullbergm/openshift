@@ -5,7 +5,7 @@ kind: ConsoleLink
 metadata:
   name: {{ .Release.Name }}-namespace-dashboard-link
 spec:
-  href: https://k10-route-kasten-io.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  href: https://k10-route-kasten-io.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}/k10/
   location: NamespaceDashboard
   namespaceDashboard:
     namespaces:
@@ -36,7 +36,7 @@ spec:
   group: {{ .Values.application.group | quote }}
   icon: {{ .Values.application.icon | quote }}
   iconColor: {{ .Values.application.iconColor | quote }}
-  url: https://k10-route-kasten-io.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  url: https://k10-route-kasten-io.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}/k10/
   info: {{ .Values.application.description | quote }}
   location: {{ .Values.application.location }}
   tags: {{ .Values.application.tags | quote }}
