@@ -17,7 +17,7 @@ kind: ConsoleLink
 metadata:
   name: "{{ .Release.Name }}-application-menu-link"
 spec:
-  href: https://k10-route-kasten-io.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  href: https://k10-route-kasten-io.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}/k10/
   location: ApplicationMenu
   applicationMenu:
     section: {{ .Values.application.group | quote }}
