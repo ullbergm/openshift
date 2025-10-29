@@ -1,6 +1,6 @@
-{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha3" }}
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha4" }}
 ---
-apiVersion: startpunkt.ullberg.us/v1alpha3
+apiVersion: startpunkt.ullberg.us/v1alpha4
 kind: Application
 metadata:
   name: gitops
