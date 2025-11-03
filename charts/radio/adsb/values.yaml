@@ -86,7 +86,7 @@ pods:
     image:
       repository: ghcr.io/plane-watch/docker-plane-watch
       # renovate: datasource=docker depName=ghcr.io/plane-watch/docker-plane-watch versioning=semver
-      tag: v0.0.5@sha256:0fbb5ffa4b025fa6f40aad0fb12f801608eb0e53b236ec409c4a76ee35c107ae
+      tag: v0.0.5@sha256:fd19b8b4ef16f21d35f5f982aa2e45569c59ade4981be749de127a7054842fc1
     env:
       BEASTHOST: 'adsb-ultrafeeder'
 
