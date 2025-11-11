@@ -17,7 +17,7 @@ application:
   icon: cbi:metube
   iconColor: ""
   image: ""
-  description: "Web UI for yt-dlp/youtube-dl downloads"
+  description: "Download videos"
   port: 8081
   location: 0
 
