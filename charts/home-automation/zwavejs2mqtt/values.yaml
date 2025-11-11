@@ -12,11 +12,11 @@ cluster:
         path: /volume1/media
 
 application:
-  name: Z-Wave JS to MQTT
+  name: Z-Wave
   group: Home Automation
   icon: cbi:zwavejs
   image: https://avatars.githubusercontent.com/u/54627315
-  description: "Z-Wave JS to MQTT integration."
+  description: "Z-Wave integration"
   port: 8091
   tags: admin
 

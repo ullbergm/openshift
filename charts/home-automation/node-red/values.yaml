@@ -16,7 +16,7 @@ application:
   group: Home Automation
   icon: simple-icons:nodered
   image: https://raw.githubusercontent.com/node-red/node-red.github.io/master/images/node-red.png
-  description: "A flow-based development tool."
+  description: "A flow-based tool"
   port: 1880
   tags: admin
 
