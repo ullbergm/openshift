@@ -13,15 +13,24 @@ spec:
     privateKeySecretRef:
       name: letsencrypt-staging
     solvers:
-    - selector:
-        dnsZones:
-          - {{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
-      dns01:
-        route53:
-          region: {{ .Values.certificates.aws.region }}
-          accessKeyIDSecretRef:
-            name: {{ .Release.Name }}-secret
-            key: accessKeyID
-          secretAccessKeySecretRef:
-            name: {{ .Release.Name }}-secret
-            key: secretAccessKey
+      - dns01:
+          route53:
+            accessKeyIDSecretRef:
+              key: accessKeyID
+              name: {{ .Release.Name }}-secret
+            region: {{ .Values.certificates.aws.region }}
+            secretAccessKeySecretRef:
+              key: secretAccessKey
+              name: {{ .Release.Name }}-secret
+        selector:
+          dnsZones:
+            - {{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+      - dns01:
+          cloudflare:
+            apiKeySecretRef:
+              key: cloudflare-api-key
+              name: {{ .Release.Name }}-secret
+            email: {{ .Values.cluster.admin_email }}
+        selector:
+          dnsZones:
+            - {{ .Values.cluster.external_top_level_domain }}

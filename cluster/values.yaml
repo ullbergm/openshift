@@ -11,6 +11,7 @@ config:
     name: cluster
     admin_email: YOUR_EMAIL
     timezone: YOUR_TIMEZONE
+    external_top_level_domain: "example.org"
     storage:
       democratic-csi:
         httpConnection:
