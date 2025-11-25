@@ -27,7 +27,7 @@ spec:
             - {{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
       - dns01:
           cloudflare:
-            apiKeySecretRef:
+            apiTokenSecretRef:
               key: cloudflare-api-key
               name: {{ .Release.Name }}-secret
             email: {{ .Values.cluster.admin_email }}
