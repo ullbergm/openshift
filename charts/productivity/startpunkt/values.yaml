@@ -14,11 +14,22 @@ cluster:
 application:
   name: Startpunkt
   port: 8080
+  backend_port: 8081
 
 pods:
   main:
     image:
       repository: ghcr.io/ullbergm/startpunkt
+      tag: main
+      pullPolicy: Always
+  frontend:
+    image:
+      repository: ghcr.io/ullbergm/startpunkt-frontend
+      tag: main
+      pullPolicy: Always
+  backend:
+    image:
+      repository: ghcr.io/ullbergm/startpunkt-backend
       tag: main
       pullPolicy: Always
 

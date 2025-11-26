@@ -13,14 +13,14 @@ spec:
     type: RollingUpdate
   selector:
     matchLabels:
-      app.kubernetes.io/controller: main
+      app.kubernetes.io/controller: frontend
       app.kubernetes.io/name: {{ .Release.Name }}
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
         app: {{ .Release.Name }}
-        app.kubernetes.io/controller: main
+        app.kubernetes.io/controller: frontend
         app.kubernetes.io/instance: {{ .Release.Name }}
         app.kubernetes.io/name: {{ .Release.Name }}
     spec:
@@ -38,27 +38,53 @@ spec:
         - 100
         - 65535
       containers:
-        - name: main
+        - name: frontend
           env:
           - name: TZ
             value: {{ .Values.cluster.timezone }}
-          {{- range $key, $value := .Values.pods.main.env }}
+          - name: API_BASE_URL
+            value: 'http://startpunkt-backend:8081'
+          {{- range $key, $value := .Values.pods.frontend.env }}
           - name: {{ $key }}
             value: "{{ $value }}"
           {{- end }}
-          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
-          imagePullPolicy: {{ .Values.pods.main.image.pullPolicy }}
+          image: {{ .Values.pods.frontend.image.repository }}:{{ .Values.pods.frontend.image.tag }}
+          imagePullPolicy: {{ .Values.pods.frontend.image.pullPolicy }}
           volumeMounts:
           - mountPath: /work/application.yaml
             name: config
             subPath: application.yaml
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            timeoutSeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            timeoutSeconds: 3
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
           resources:
-            requests:
-              cpu: 25m
-              memory: 263M
             limits:
-              cpu: 25m
-              memory: 263M
+              cpu: 200m
+              memory: 64Mi
+            requests:
+              cpu: 50m
+              memory: 32Mi
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
       volumes:
         - name: config
           configMap:

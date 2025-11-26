@@ -5,17 +5,17 @@ metadata:
   name: {{ .Release.Name }}
 rules:
 - apiGroups: ["", "extensions", "networking.k8s.io", "discovery.k8s.io"]
-  resources: ["ingresses", "namespaces", "endpointslices", "routes"]
-  verbs: ["get", "list"]
+  resources: ["ingresses", "namespaces", "endpointslices", "routes", "nodes"]
+  verbs: ["get", "list", "watch"]
 - apiGroups: ["hajimari.io"]
   resources: ["applications", "bookmarks"]
-  verbs: ["get", "list"]
+  verbs: ["get", "list", "watch"]
 - apiGroups: ["startpunkt.ullberg.us"]
   resources: ["applications", "bookmarks"]
-  verbs: ["get", "list", "create", "update", "delete"]
+  verbs: ["get", "list", "watch", "create", "update", "delete"]
 - apiGroups: ["gateway.networking.k8s.io"]
   resources: ["httproutes"]
-  verbs: ["get", "list"]
+  verbs: ["get", "list", "watch"]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
