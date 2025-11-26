@@ -35,16 +35,6 @@ spec:
       enableServiceLinks: false
       serviceAccountName: {{ .Release.Name }}
       automountServiceAccountToken: true
-      securityContext:
-        fsGroup: 568
-        fsGroupChangePolicy: OnRootMismatch
-        runAsGroup: 0
-        runAsUser: 0
-        supplementalGroups:
-        - 44
-        - 109
-        - 100
-        - 65535
       containers:
         - name: backend
           env:

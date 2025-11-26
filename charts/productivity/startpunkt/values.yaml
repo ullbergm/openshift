@@ -40,6 +40,15 @@ startpunkt:
   # Default language for the web UI
   defaultLanguage: "en-US"
 
+  # Cluster configurations to connect to
+  clusters:
+    local:
+      enabled: true
+    remote:
+      - name: "patrick"
+        graphql-url: "https://apps.openshift.registerfam.net/graphql"
+        enabled: true
+
   # Namespace selector determines which namespaces to look for resources in
   namespaceSelector:
     any: true  # If true, look for resources in all namespaces
