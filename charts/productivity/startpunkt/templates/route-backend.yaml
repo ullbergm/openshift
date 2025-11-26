@@ -1,0 +1,20 @@
+---
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  annotations:
+    route.openshift.io/termination: "edge"
+  name: {{ .Release.Name }}-backend
+spec:
+  host: "apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+  path: /graphql
+  to:
+    kind: Service
+    name: {{ .Release.Name }}-backend
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None
