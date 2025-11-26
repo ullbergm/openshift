@@ -3,7 +3,6 @@ cluster:
   name: openshift
   admin_email: admin@example.com
   timezone: America/New_York
-  external_top_level_domain: "example.org"
   storage:
     #config:
     #  storageClassName: synology-iscsi
@@ -17,3 +16,7 @@ certificates:
     issuer: staging
   aws:
     region: us-west-1
+
+cloudflare:
+  enabled: 'false'
+  top_level_domain: "example.org"

@@ -25,6 +25,7 @@ spec:
         selector:
           dnsZones:
             - {{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+{{ if .Values.cloudflare.enabled }}
       - dns01:
           cloudflare:
             apiTokenSecretRef:
@@ -33,4 +34,5 @@ spec:
             email: {{ .Values.cluster.admin_email }}
         selector:
           dnsZones:
-            - {{ .Values.cluster.external_top_level_domain }}
+            - {{ .Values.cloudflare.top_level_domain }}
+{{ end }}
