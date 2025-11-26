@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name }}
+  name: {{ .Release.Name }}-backend
   labels:
     kasten/backup: "false"
   annotations:
@@ -18,15 +18,15 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/controller: backend
-      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/name: {{ .Release.Name }}-backend
       app.kubernetes.io/instance: {{ .Release.Name }}
   template:
     metadata:
       labels:
         app: {{ .Release.Name }}
         app.kubernetes.io/controller: backend
+        app.kubernetes.io/name: {{ .Release.Name }}-backend
         app.kubernetes.io/instance: {{ .Release.Name }}
-        app.kubernetes.io/name: {{ .Release.Name }}
         prometheus.io/path: /q/metrics
         prometheus.io/port: '8081'
         prometheus.io/scheme: http
