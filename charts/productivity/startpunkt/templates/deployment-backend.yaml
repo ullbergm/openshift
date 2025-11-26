@@ -6,7 +6,7 @@ metadata:
     kasten/backup: "false"
   annotations:
     reloader.stakater.com/auto: "true"
-    prometheus.io/path: /q/metrics
+    prometheus.io/path: '/q/metrics'
     prometheus.io/port: '8081'
     prometheus.io/scheme: http
     prometheus.io/scrape: 'true'
@@ -27,7 +27,7 @@ spec:
         app.kubernetes.io/controller: backend
         app.kubernetes.io/name: {{ .Release.Name }}-backend
         app.kubernetes.io/instance: {{ .Release.Name }}
-        prometheus.io/path: /q/metrics
+        prometheus.io/path: '/q/metrics'
         prometheus.io/port: '8081'
         prometheus.io/scheme: http
         prometheus.io/scrape: 'true'
