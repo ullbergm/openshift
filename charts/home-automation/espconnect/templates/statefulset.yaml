@@ -93,6 +93,10 @@ spec:
           volumeMounts:
             - name: html
               mountPath: /usr/share/nginx/html
+            - name: nginx-cache
+              mountPath: /var/cache/nginx
+            - name: nginx-run
+              mountPath: /var/run
           resources:
             requests:
               cpu: 10m
@@ -101,4 +105,8 @@ spec:
         - name: app
           emptyDir: {}
         - name: html
+          emptyDir: {}
+        - name: nginx-cache
+          emptyDir: {}
+        - name: nginx-run
           emptyDir: {}
