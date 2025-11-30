@@ -46,6 +46,9 @@ spec:
           image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
           imagePullPolicy: IfNotPresent
           workingDir: /app
+          env:
+            - name: npm_config_cache
+              value: /app/.npm-cache
           command:
             - /bin/sh
             - -c
