@@ -82,6 +82,10 @@ spec:
           {{- end }}
           image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
           imagePullPolicy: IfNotPresent
+          command:
+            - nginx
+            - -g
+            - daemon off;
           ports:
             - containerPort: {{ .Values.application.port }}
               name: http
