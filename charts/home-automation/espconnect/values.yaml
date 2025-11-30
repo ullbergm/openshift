@@ -28,7 +28,7 @@ pods:
   init:
     image:
       repository: docker.io/library/node
-      tag: 20-alpine
+      tag: 24-alpine
   main:
     image:
       repository: docker.io/library/nginx
