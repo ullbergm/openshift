@@ -50,7 +50,7 @@ spec:
             - /bin/sh
             - -c
             - |
-              npm install
+              sudo chown -R `id -u`:0 "/.npm" && npm install
           volumeMounts:
             - name: app
               mountPath: /app
