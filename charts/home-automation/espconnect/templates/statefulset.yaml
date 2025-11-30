@@ -42,8 +42,8 @@ spec:
           volumeMounts:
             - name: app
               mountPath: /app
-        - name: npm-install
-          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
+        - name: npm-build
+          image: {{ .Values.pods.init.image.repository }}:{{ .Values.pods.init.image.tag }}
           imagePullPolicy: IfNotPresent
           workingDir: /app
           env:
@@ -54,9 +54,23 @@ spec:
             - -c
             - |
               npm install
+              npm run build
           volumeMounts:
             - name: app
               mountPath: /app
+        - name: copy-dist
+          image: docker.io/library/busybox:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+            - |
+              cp -r /app/dist/* /usr/share/nginx/html/
+          volumeMounts:
+            - name: app
+              mountPath: /app
+            - name: html
+              mountPath: /usr/share/nginx/html
       containers:
         - name: main
           env:
@@ -68,23 +82,19 @@ spec:
           {{- end }}
           image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
           imagePullPolicy: IfNotPresent
-          workingDir: /app
-          command:
-            - /bin/sh
-            - -c
-            - |
-              npm run dev -- --host 0.0.0.0
           ports:
             - containerPort: {{ .Values.application.port }}
               name: http
               protocol: TCP
           volumeMounts:
-            - name: app
-              mountPath: /app
+            - name: html
+              mountPath: /usr/share/nginx/html
           resources:
             requests:
-              cpu: 50m
-              memory: 256M
+              cpu: 10m
+              memory: 32M
       volumes:
         - name: app
+          emptyDir: {}
+        - name: html
           emptyDir: {}
