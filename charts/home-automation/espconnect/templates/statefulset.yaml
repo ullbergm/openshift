@@ -1,0 +1,87 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    kasten/backup: "true"
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  revisionHistoryLimit: 1
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/controller: main
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  serviceName: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/controller: main
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+    spec:
+      enableServiceLinks: false
+      initContainers:
+        - name: git-clone
+          image: docker.io/alpine/git:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+            - |
+              if [ ! -d /app/.git ]; then
+                git clone --depth 1 --branch {{ .Values.git.ref }} {{ .Values.git.repository }} /app
+              else
+                cd /app && git fetch origin {{ .Values.git.ref }} && git checkout {{ .Values.git.ref }}
+              fi
+          volumeMounts:
+            - name: app
+              mountPath: /app
+        - name: npm-install
+          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
+          imagePullPolicy: IfNotPresent
+          workingDir: /app
+          command:
+            - /bin/sh
+            - -c
+            - |
+              npm install
+          volumeMounts:
+            - name: app
+              mountPath: /app
+      containers:
+        - name: main
+          env:
+          - name: TZ
+            value: {{ .Values.cluster.timezone }}
+          {{- range $key, $value := .Values.pods.main.env }}
+          - name: {{ $key }}
+            value: "{{ $value }}"
+          {{- end }}
+          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
+          imagePullPolicy: IfNotPresent
+          workingDir: /app
+          command:
+            - /bin/sh
+            - -c
+            - |
+              npm run dev -- --host 0.0.0.0
+          ports:
+            - containerPort: {{ .Values.application.port }}
+              name: http
+              protocol: TCP
+          volumeMounts:
+            - name: app
+              mountPath: /app
+          resources:
+            requests:
+              cpu: 50m
+              memory: 256M
+      volumes:
+        - name: app
+          emptyDir: {}

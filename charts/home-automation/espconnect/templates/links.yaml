@@ -1,0 +1,42 @@
+{{- if .Capabilities.APIVersions.Has "console.openshift.io/v1" }}
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: "{{ .Release.Name }}-namespace-dashboard-link"
+spec:
+  href: "https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+  location: NamespaceDashboard
+  namespaceDashboard:
+    namespaces:
+      - {{ .Release.Namespace }}
+  text: "Access Application"
+---
+apiVersion: console.openshift.io/v1
+kind: ConsoleLink
+metadata:
+  name: "{{ .Release.Name }}-application-menu-link"
+spec:
+  href: "https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+  location: ApplicationMenu
+  applicationMenu:
+    section: {{ .Values.application.group | quote }}
+    imageURL: {{ .Values.application.image | quote }}
+  text: {{ .Values.application.name | quote }}
+{{- end }}
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha4" }}
+---
+apiVersion: startpunkt.ullberg.us/v1alpha4
+kind: Application
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  name: {{ .Values.application.name | quote }}
+  group: {{ .Values.application.group | quote }}
+  icon: {{ .Values.application.icon | quote }}
+  iconColor: {{ .Values.application.iconColor | quote }}
+  url: "https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+  info: {{ .Values.application.description | quote }}
+  location: {{ .Values.application.location }}
+  tags: {{ .Values.application.tags | quote }}
+{{- end }}

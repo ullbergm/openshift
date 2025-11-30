@@ -1,0 +1,9 @@
+apiVersion: v2
+description: A Helm chart for ESPConnect - Browser-based ESP32/ESP8266 management tool
+name: espconnect
+version: 1.0.0
+kubeVersion: ">=1.31.0-0"
+
+maintainers:
+  - name: Magnus Ullberg
+    email: magnus@ullberg.us
