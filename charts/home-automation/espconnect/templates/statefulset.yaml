@@ -27,22 +27,7 @@ spec:
     spec:
       enableServiceLinks: false
       initContainers:
-        - name: git-clone
-          image: docker.io/alpine/git:latest
-          imagePullPolicy: IfNotPresent
-          command:
-            - /bin/sh
-            - -c
-            - |
-              if [ ! -d /app/.git ]; then
-                git clone --depth 1 --branch {{ .Values.git.ref }} {{ .Values.git.repository }} /app
-              else
-                cd /app && git fetch origin {{ .Values.git.ref }} && git checkout {{ .Values.git.ref }}
-              fi
-          volumeMounts:
-            - name: app
-              mountPath: /app
-        - name: npm-build
+        - name: build
           image: {{ .Values.pods.init.image.repository }}:{{ .Values.pods.init.image.tag }}
           imagePullPolicy: IfNotPresent
           workingDir: /app
@@ -53,18 +38,16 @@ spec:
             - /bin/sh
             - -c
             - |
+              # Clone or update repository
+              if [ ! -d /app/.git ]; then
+                git clone --depth 1 --branch {{ .Values.git.ref }} {{ .Values.git.repository }} /app
+              else
+                cd /app && git fetch origin {{ .Values.git.ref }} && git checkout {{ .Values.git.ref }}
+              fi
+              # Build
               npm install
               npm run build
-          volumeMounts:
-            - name: app
-              mountPath: /app
-        - name: copy-dist
-          image: docker.io/library/busybox:latest
-          imagePullPolicy: IfNotPresent
-          command:
-            - /bin/sh
-            - -c
-            - |
+              # Copy dist to html directory
               cp -r /app/dist/* /usr/share/nginx/html/
           volumeMounts:
             - name: app
