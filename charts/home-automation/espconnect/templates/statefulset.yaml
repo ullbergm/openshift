@@ -82,10 +82,6 @@ spec:
           {{- end }}
           image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
           imagePullPolicy: IfNotPresent
-          command:
-            - nginx
-            - -g
-            - daemon off;
           ports:
             - containerPort: {{ .Values.application.port }}
               name: http
@@ -93,10 +89,6 @@ spec:
           volumeMounts:
             - name: html
               mountPath: /usr/share/nginx/html
-            - name: nginx-cache
-              mountPath: /var/cache/nginx
-            - name: nginx-run
-              mountPath: /var/run
           resources:
             requests:
               cpu: 10m
@@ -105,8 +97,4 @@ spec:
         - name: app
           emptyDir: {}
         - name: html
-          emptyDir: {}
-        - name: nginx-cache
-          emptyDir: {}
-        - name: nginx-run
           emptyDir: {}

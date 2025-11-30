@@ -17,7 +17,7 @@ application:
   icon: mdi:chip
   image: "https://raw.githubusercontent.com/thelastoutpostworkshop/ESPConnect/refs/heads/main/public/favicon.ico"
   description: "ESP32 management tool"
-  port: 80
+  port: 8080
 
 git:
   repository: https://github.com/thelastoutpostworkshop/ESPConnect.git
@@ -31,6 +31,6 @@ pods:
       tag: 20-alpine
   main:
     image:
-      repository: docker.io/library/nginx
+      repository: docker.io/nginxinc/nginx-unprivileged
       tag: alpine
       pullPolicy: IfNotPresent
