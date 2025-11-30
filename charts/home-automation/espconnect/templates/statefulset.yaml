@@ -38,6 +38,8 @@ spec:
             - /bin/sh
             - -c
             - |
+              # Install git
+              apk add --no-cache git
               # Clone or update repository
               if [ ! -d /app/.git ]; then
                 git clone --depth 1 --branch {{ .Values.git.ref }} {{ .Values.git.repository }} /app
