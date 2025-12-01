@@ -27,6 +27,21 @@ spec:
     spec:
       enableServiceLinks: false
       initContainers:
+        - name: git-clone
+          image: docker.io/alpine/git:latest
+          imagePullPolicy: IfNotPresent
+          command:
+            - /bin/sh
+            - -c
+            - |
+              if [ ! -d /app/.git ]; then
+                git clone --depth 1 --branch {{ .Values.git.ref }} {{ .Values.git.repository }} /app
+              else
+                cd /app && git fetch origin {{ .Values.git.ref }} && git checkout {{ .Values.git.ref }}
+              fi
+          volumeMounts:
+            - name: app
+              mountPath: /app
         - name: build
           image: {{ .Values.pods.init.image.repository }}:{{ .Values.pods.init.image.tag }}
           imagePullPolicy: IfNotPresent
@@ -38,18 +53,8 @@ spec:
             - /bin/sh
             - -c
             - |
-              # Install git
-              apk add --no-cache git
-              # Clone or update repository
-              if [ ! -d /app/.git ]; then
-                git clone --depth 1 --branch {{ .Values.git.ref }} {{ .Values.git.repository }} /app
-              else
-                cd /app && git fetch origin {{ .Values.git.ref }} && git checkout {{ .Values.git.ref }}
-              fi
-              # Build
               npm install
               npm run build
-              # Copy dist to html directory
               cp -r /app/dist/* /usr/share/nginx/html/
           volumeMounts:
             - name: app
