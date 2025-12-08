@@ -14,7 +14,7 @@
       description: "Auto-merge trusted container digests",
       matchDatasources: ["docker"],
       automerge: true,
-      automergeType: "pr",
+      automergeType: "branch",
       matchUpdateTypes: ["digest"],
       matchPackageNames: [
         "/home-operations/",
@@ -31,7 +31,7 @@
       description: "Auto-merge container minor and patch updates for standard apps",
       matchDatasources: ["docker"],
       automerge: true,
-      automergeType: "pr",
+      automergeType: "branch",
       matchUpdateTypes: ["minor", "patch"],
       matchPackageNames: [
         // Media apps
@@ -59,7 +59,7 @@
       description: "Auto-merge Helm chart minor and patch updates",
       matchManagers: ["helm-values"],
       automerge: true,
-      automergeType: "pr",
+      automergeType: "branch",
       matchUpdateTypes: ["minor", "patch"],
       minimumReleaseAge: "1 day",
       ignoreTests: false,
@@ -88,7 +88,7 @@
       matchDatasources: ["pypi"],
       matchManagers: ["pip_requirements"],
       automerge: true,
-      automergeType: "pr",
+      automergeType: "branch",
       matchUpdateTypes: ["minor", "patch"],
       minimumReleaseAge: "1 day",
       ignoreTests: true,
