@@ -26,7 +26,7 @@ pods:
     image:
       repository: ghcr.io/alexta69/metube
       # renovate: datasource=docker depName=ghcr.io/alexta69/metube versioning=loose
-      tag: 2025.12.09@sha256:153c71f0d7ec031d8e1a3c5dfc501745c2557867a6c40d8c2ce9ab829e5a8708
+      tag: 2025.12.30@sha256:ad242a4808f72a760b9a56e8d0b89785d3b7e8e57588bde67b4f0111ac0fdc27
       pullPolicy: IfNotPresent
     env:
       DOWNLOAD_DIR: /data/media/metube
