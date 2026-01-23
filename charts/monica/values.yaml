@@ -95,6 +95,8 @@ monica:
   mariadb:
     enabled: true
     architecture: standalone
+    image:
+      tag: latest
     auth:
       database: monica
       username: monica
@@ -123,3 +125,4 @@ monica:
   podSecurityContext:
     # -- Volume group permissions
     fsGroup: 82
+
