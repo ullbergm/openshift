@@ -70,17 +70,17 @@ spec:
             repository: ghcr.io/coder/code-server
             tag: 4.108.2@sha256:31ad23cda720476e7eb3371a9b02fd7a5738843f6ef43beef97e9edf1960fc47
           args:
-            - "--auth"
-            - "none"
+            - --auth
+            - none
             - --disable-telemetry
             - --disable-update-check
-            - "--user-data-dir"
-            - "/config/.vscode"
-            - "--extensions-dir"
-            - "/config/.vscode"
-            - "--port"
-            - "12321"
-            - "/config"
+            - --user-data-dir
+            - /config/.vscode
+            - --extensions-dir
+            - /config/.vscode
+            - --port
+            - 12321
+            - /config
           volumeMounts:
           - mountPath: /config
             name: config
