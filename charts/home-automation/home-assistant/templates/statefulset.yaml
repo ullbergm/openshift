@@ -55,7 +55,17 @@ spec:
           volumeMounts:
           - mountPath: /config
             name: config
-        - name: code-server
+        - name: codeserver
+          env:
+          - name: TZ
+            value: {{ .Values.cluster.timezone }}
+          {{- range $key, $value := .Values.pods.main.env }}
+          - name: {{ $key }}
+            value: "{{ $value }}"
+          {{- end }}
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}
           image:
             repository: ghcr.io/coder/code-server
             tag: 4.108.2@sha256:31ad23cda720476e7eb3371a9b02fd7a5738843f6ef43beef97e9edf1960fc47
