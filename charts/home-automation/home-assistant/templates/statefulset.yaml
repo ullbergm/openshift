@@ -79,7 +79,7 @@ spec:
               cpu: 10m
             limits:
               memory: 512Mi
-    volumes:
-        - name: config
-          persistentVolumeClaim:
-            claimName: {{ .Release.Name }}-config
+      volumes:
+          - name: config
+            persistentVolumeClaim:
+              claimName: {{ .Release.Name }}-config
