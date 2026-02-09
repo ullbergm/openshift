@@ -79,7 +79,7 @@ spec:
             - --extensions-dir
             - /config/.vscode
             - --port
-            - 12321
+            - '12321'
             - /config
           volumeMounts:
           - mountPath: /config
