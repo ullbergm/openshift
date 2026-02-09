@@ -10,6 +10,10 @@ spec:
       targetPort: {{ .Values.application.port }}
       protocol: TCP
       name: http
+    - port: 12321
+      targetPort: 12321
+      protocol: TCP
+      name: code-server
   selector:
     app.kubernetes.io/controller: main
     app.kubernetes.io/instance: {{ .Release.Name }}
