@@ -66,9 +66,7 @@ spec:
           envFrom:
             - secretRef:
                 name: {{ .Release.Name }}
-          image:
-            repository: ghcr.io/coder/code-server
-            tag: 4.108.2@sha256:31ad23cda720476e7eb3371a9b02fd7a5738843f6ef43beef97e9edf1960fc47
+          image: ghcr.io/coder/code-server:4.108.2
           args:
             - --auth
             - none
