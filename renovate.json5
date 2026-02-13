@@ -21,6 +21,7 @@
     ":semanticCommits",
     ":timezone(America/New_York)",
   ],
+  minimumReleaseAge: "timestamp-optional",
   dependencyDashboardTitle: "Renovate Dashboard 🤖",
   suppressNotifications: ["prEditedNotification", "prIgnoreNotification"],
   ignorePaths: ["**/*.sops.*", "**/resources/**"],
