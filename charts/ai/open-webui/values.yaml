@@ -44,7 +44,7 @@ pods:
     image:
       repository: ghcr.io/open-webui/open-webui
       # renovate: datasource=docker depName=ghcr.io/open-webui/open-webui versioning=semver
-      tag: "main@sha256:fa5747ca0e121c83be4f8e86e61ad7d2ca2c22c9cc4e0e7c541d9e13f967de10"
+      tag: "main@sha256:2b9d2bec40ff30eb71216065f5244c2861d30b75b4e49c40e39973ee64218cde"
     env:
       # OpenWebUI environment variables
       WEBUI_NAME: "Open WebUI"
