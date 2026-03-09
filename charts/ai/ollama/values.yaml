@@ -24,6 +24,7 @@ ollama:
       - llama3.2:3b
       - deepseek-r1:7b
       - deepseek-r1:1.5b
+      - qwen3.5:35b-a3b
 
     # -- List of models to load in memory at container startup
     run: []
