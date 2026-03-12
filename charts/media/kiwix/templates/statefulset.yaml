@@ -48,7 +48,7 @@ spec:
             - "-M"
             - "-k"
             - "-z"
-            - "/data"
+            - "/data/library.xml"
           ports:
             - name: http
               containerPort: {{ .Values.application.port }}
