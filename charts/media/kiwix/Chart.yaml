@@ -1,0 +1,27 @@
+apiVersion: v2
+description: A Helm chart for Kiwix - offline knowledge server with scheduled ZIM file updates
+name: kiwix
+version: 1.0.0
+appVersion: "3.7.0"
+kubeVersion: ">=1.31.0-0"
+home: https://www.kiwix.org/
+icon: https://www.kiwix.org/wp-content/uploads/2019/07/cropped-Kiwix_icon-192x192.png
+sources:
+  - https://github.com/kiwix/kiwix-tools
+  - https://github.com/ullbergm/openshift
+keywords:
+  - kiwix
+  - offline
+  - knowledge
+  - wikipedia
+  - zim
+annotations:
+  charts.openshift.io/name: kiwix
+  charts.openshift.io/provider: ullberg
+  charts.openshift.io/providerType: community
+  category: Media
+  licenses: GPL-3.0-only
+
+maintainers:
+  - name: Magnus Ullberg
+    email: magnus@ullberg.us

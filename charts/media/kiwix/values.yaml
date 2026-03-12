@@ -1,0 +1,55 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Kiwix
+  group: Media
+  icon: book-open-variant
+  iconColor: ""
+  image: "https://www.kiwix.org/wp-content/uploads/2019/07/cropped-Kiwix_icon-192x192.png"
+  description: "Offline knowledge server"
+  port: 8080
+  location: 0
+
+pods:
+  main:
+    image:
+      # renovate: datasource=docker depName=ghcr.io/kiwix/kiwix-tools
+      repository: ghcr.io/kiwix/kiwix-serve
+      tag: "3.8.2"
+      pullPolicy: IfNotPresent
+
+zimUpdater:
+  enabled: true
+  # Cron schedule for checking and downloading updated ZIM files.
+  # Default: every Sunday at 02:00.
+  schedule: "0 2 * * 0"
+  image:
+    # renovate: datasource=docker depName=python versioning=docker
+    repository: python
+    tag: "3.12-alpine"
+    pullPolicy: IfNotPresent
+  # List of Kiwix book names to keep up to date.
+  # Names use underscores and match the "name" attribute in the Kiwix library catalog:
+  #   https://download.kiwix.org/library/library_zim.xml
+  # Examples: wikipedia_en_all_mini, wiktionary_en_all, ifixit_mul_all
+  books:
+    - wikipedia_en_all
+    - wikipedia_sw_all
+    - wiktionary_en_all
+    - wiktionary_sv_all
+    - wikivoyage_en_all
+    - wikivoyage_sv_all
+    - wikiversity_en_all
+    - wikiversity_sv_all
+    - wikisource_en_all

@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gatus-config
+  labels:
+    gatus.io/enabled: "true"
+data:
+  config.yaml: |-
+    endpoints:
+      - name: {{ .Values.application.name | quote }}
+        group: {{ .Values.application.group | default "other" | quote }}
+        url: https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+        interval: 60s
+        conditions:
+{{- if .Values.gatus }}
+  {{- if .Values.gatus.responseCode }}
+          - "[STATUS] == {{ .Values.gatus.responseCode }}"
+  {{- else }}
+          - "[STATUS] == 200"
+  {{- end }}
+{{- else }}
+          - "[STATUS] == 200"
+{{- end }}

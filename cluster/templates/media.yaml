@@ -10,6 +10,7 @@ spec:
   generators:
     - list:
         elements:
+        - name: kiwix
         - name: metube
         - name: pinchflat
   template:

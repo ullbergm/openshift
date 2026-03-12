@@ -1,0 +1,58 @@
+{{- if .Values.zimUpdater.enabled }}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name }}-zim-updater
+  namespace: {{ .Release.Namespace }}
+spec:
+  schedule: {{ .Values.zimUpdater.schedule | quote }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      # ZIM files can be very large (several GB each); allow up to 24 hours.
+      activeDeadlineSeconds: 86400
+      backoffLimit: 0
+      template:
+        spec:
+          serviceAccountName: {{ .Release.Name }}
+          restartPolicy: Never
+          securityContext:
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 0
+            runAsUser: 0
+          containers:
+            - name: zim-updater
+              image: "{{ .Values.zimUpdater.image.repository }}:{{ .Values.zimUpdater.image.tag }}"
+              imagePullPolicy: {{ .Values.zimUpdater.image.pullPolicy }}
+              command: ["/bin/sh", "-c"]
+              args:
+                - "python3 /scripts/update-zims.py"
+              env:
+                - name: TZ
+                  value: {{ .Values.cluster.timezone }}
+                - name: ZIM_DATA_DIR
+                  value: /data
+                - name: ZIM_BOOKS
+                  value: {{ .Values.zimUpdater.books | join "," | quote }}
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+                - name: scripts
+                  mountPath: /scripts
+              resources:
+                requests:
+                  cpu: 50m
+                  memory: 128Mi
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: {{ .Release.Name }}-data-volume
+            - name: scripts
+              configMap:
+                name: {{ .Release.Name }}-updater-script
+                defaultMode: 0755
+{{- end }}
