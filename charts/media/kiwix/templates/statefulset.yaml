@@ -44,7 +44,7 @@ spec:
               value: {{ .Values.cluster.timezone }}
           command: ["/bin/sh", "-c"]
           args:
-            - "exec kiwix-serve -M -k -z $(find /data -type f -iname '*.zim' | tr '\n' ' ')"
+            - "exec kiwix-serve -p {{ .Values.application.port }} -M -k -z $(find /data -type f -iname '*.zim' | tr '\n' ' ')"
           ports:
             - name: http
               containerPort: {{ .Values.application.port }}
