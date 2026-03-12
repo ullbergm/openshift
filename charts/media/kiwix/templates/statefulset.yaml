@@ -48,7 +48,7 @@ spec:
             - "-M"
             - "-k"
             - "-z"
-            - "$(find /data -type f -iname '*.zim')
+            - "$(find /data -type f -iname '*.zim')"
           ports:
             - name: http
               containerPort: {{ .Values.application.port }}
