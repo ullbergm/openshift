@@ -9,3 +9,6 @@ kubeconfig
 
 # Helm chart dependencies
 charts/*/*/charts/
+
+# python
+__pycache__/
