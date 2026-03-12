@@ -113,7 +113,6 @@ zimUpdater:
     - phet_sv_all                                  # 90.8M
 
     # Books & Literature
-    - gutenberg_en_all                             # 206.1G
     - gutenberg_mul_all                            # 235.7G
     - gutenberg_sv_all                             # 210.2M
 
