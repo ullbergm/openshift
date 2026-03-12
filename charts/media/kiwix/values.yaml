@@ -102,6 +102,7 @@ zimUpdater:
     - maps_en_europe                          # 39G
     - ted_mul_all                             # 79G
     - stackoverflow.com_en_all                # 75G
+    - survivors_en_all
     - survivorlibrary.com_en_all              # 232G
     - gutenberg_mul_all                       # 236G
     # - devdocs_en_scikit-learn
