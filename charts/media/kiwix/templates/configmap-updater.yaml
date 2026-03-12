@@ -25,7 +25,11 @@ data:
     DATA_DIR = Path(os.environ.get("ZIM_DATA_DIR", "/data"))
     ZIM_BOOKS = [b.strip() for b in os.environ.get("ZIM_BOOKS", "").split(",") if b.strip()]
 
-    METALINK_NS = "urn:ietf:params:xml:ns:metalink"
+    # Clark-notation tag strings for the Metalink 4 namespace.
+    # Written as plain literals (not f-strings) so Helm does not mistake
+    # the triple-brace pattern f"{{{NS}}}tag" for a template action.
+    _ML_FILE = "{urn:ietf:params:xml:ns:metalink}file"
+    _ML_URL  = "{urn:ietf:params:xml:ns:metalink}url"
 
 
     def fetch_latest_entries(book_names):
@@ -92,8 +96,8 @@ data:
 
         root = tree.getroot()
         candidates = []
-        for file_elem in root.findall(f"{{{METALINK_NS}}}file"):
-            for url_elem in file_elem.findall(f"{{{METALINK_NS}}}url"):
+        for file_elem in root.findall(_ML_FILE):
+            for url_elem in file_elem.findall(_ML_URL):
                 href = (url_elem.text or "").strip()
                 if not href.startswith("http"):
                     continue

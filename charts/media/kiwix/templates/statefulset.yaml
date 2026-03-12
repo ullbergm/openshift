@@ -69,7 +69,7 @@ spec:
           volumeMounts:
             - mountPath: /data
               name: data
-              subPath: media/kiwix
+              subPath: kiwix
           resources:
             requests:
               cpu: 25m
