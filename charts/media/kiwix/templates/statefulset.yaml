@@ -48,6 +48,7 @@ spec:
             - "-M"
             - "-k"
             - "-z"
+            - "--library"
             - "library.xml"
           ports:
             - name: http
