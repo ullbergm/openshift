@@ -42,13 +42,9 @@ spec:
           env:
             - name: TZ
               value: {{ .Values.cluster.timezone }}
-          # kiwix-serve 3.6+ serves all ZIM files found in the given directory.
-          # It watches the directory and picks up new files automatically.
+          command: ["/bin/sh", "-c"]
           args:
-            - "-M"
-            - "-k"
-            - "-z"
-            - "$(find /data -type f -iname '*.zim')"
+            - "exec kiwix-serve -M -k -z $(find /data -type f -iname '*.zim' | tr '\n' ' ')"
           ports:
             - name: http
               containerPort: {{ .Values.application.port }}
