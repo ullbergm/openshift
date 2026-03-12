@@ -63,8 +63,6 @@ zimUpdater:
     - wikinews_sv_all                         # 12M
     - wikibooks_en_all                        # 5G
     - wikibooks_sv_all                        # 39M
-    - wikida_en_all                           # 66M
-    - wikida_eu_all                           # 74M
     - wikiquote_en_all                        # 880M
     - wikiquote_sv_all                        # 13M
     - phet_mul_all                            # 227M
@@ -97,10 +95,10 @@ zimUpdater:
     - medlineplus.gov_en_all
     - foss.cooking_en_all
     - based.cooking_en_all
-    - canadian_prepper_bugoutconcepts         # 3G
+    - canadian_prep_bugoutconcepts            # 3G
     - urban-prepper_en_all                    # 2G
-    - canadian_prepper_preppingfood_en        # 2G
-    - canadian_prepper_winterprepping         # 1G
+    - canadian_prep_preppingfood_en           # 2G
+    - canadian_prep_winterprepping            # 1G
     - canadian_prepper_bugoutroll_en          # 1G
     - quickguidesformedicine_en_all           # 500M
     - maps_en_north-america                   # 30G
