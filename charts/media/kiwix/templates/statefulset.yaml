@@ -45,7 +45,10 @@ spec:
           # kiwix-serve 3.6+ serves all ZIM files found in the given directory.
           # It watches the directory and picks up new files automatically.
           args:
-            - "--port"
+            - "-M"
+            - "-k"
+            - "-z"
+            - "-p"
             - {{ .Values.application.port | toString | quote }}
             - "/data"
           ports:
