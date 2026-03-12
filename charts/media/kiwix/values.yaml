@@ -35,10 +35,15 @@ zimUpdater:
   # Default: every Sunday at 02:00.
   schedule: "0 2 * * 0"
   image:
-    # renovate: datasource=docker depName=ghcr.io/kiwix/kiwix-tools
-    repository: ghcr.io/kiwix/kiwix-tools
-    tag: "3.8.2"
+    # renovate: datasource=docker depName=python versioning=docker
+    repository: python
+    tag: "3.12-slim"
     pullPolicy: IfNotPresent
+  kiwixTools:
+    version: "3.8.2"
+    # Optional SHA-256 checksum for the downloaded archive.
+    # Leave empty to skip checksum verification.
+    sha256: ""
   # List of Kiwix book names to keep up to date.
   # Names use underscores and match the "name" attribute in the Kiwix library catalog:
   #   https://download.kiwix.org/library/library_zim.xml

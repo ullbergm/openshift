@@ -30,7 +30,94 @@ spec:
               imagePullPolicy: {{ .Values.zimUpdater.image.pullPolicy }}
               command: ["/bin/sh", "-c"]
               args:
-                - "python3 /scripts/update-zims.py"
+                - |
+                  set -eu
+
+                  KIWIX_TOOLS_DIR="/data/.kiwix-tools"
+                  KIWIX_TOOLS_BIN_DIR="${KIWIX_TOOLS_DIR}/bin"
+
+                  if [ ! -x "${KIWIX_TOOLS_BIN_DIR}/kiwix-manage" ]; then
+                    echo "Bootstrapping kiwix-tools..."
+                    python3 - <<'PY'
+                  import hashlib
+                  import os
+                  import pathlib
+                  import tarfile
+                  import urllib.request
+
+                  arch_map = {
+                      "x86_64": "x86_64",
+                      "amd64": "x86_64",
+                      "aarch64": "aarch64",
+                      "arm64": "aarch64",
+                  }
+
+                  machine = os.uname().machine.lower()
+                  arch = arch_map.get(machine)
+                  if not arch:
+                      raise SystemExit(f"Unsupported architecture for kiwix-tools bootstrap: {machine}")
+
+                  version = os.environ["KIWIX_TOOLS_VERSION"]
+                  base_url = "https://download.kiwix.org/release/kiwix-tools"
+                  filename = f"kiwix-tools_linux-{arch}-{version}.tar.gz"
+                  url = f"{base_url}/{filename}"
+
+                  tools_dir = pathlib.Path(os.environ["KIWIX_TOOLS_DIR"])
+                  bin_dir = pathlib.Path(os.environ["KIWIX_TOOLS_BIN_DIR"])
+                  archive_path = tools_dir / filename
+                  download_path = tools_dir / f"{filename}.part"
+                  checksum = os.environ.get("KIWIX_TOOLS_SHA256", "").strip().lower()
+
+                  tools_dir.mkdir(parents=True, exist_ok=True)
+                  print(f"Downloading {url}")
+
+                  with urllib.request.urlopen(url, timeout=300) as resp, open(download_path, "wb") as out:
+                      while True:
+                          chunk = resp.read(4 * 1024 * 1024)
+                          if not chunk:
+                              break
+                          out.write(chunk)
+
+                  if checksum:
+                      digest = hashlib.sha256(download_path.read_bytes()).hexdigest()
+                      if digest != checksum:
+                          raise SystemExit(
+                              f"Checksum mismatch for {filename}: expected {checksum}, got {digest}"
+                          )
+                  else:
+                      print("WARNING: KIWIX_TOOLS_SHA256 is empty; skipping checksum verification")
+
+                  with tarfile.open(download_path, "r:gz") as tar:
+                      tar.extractall(tools_dir)
+
+                  download_path.rename(archive_path)
+
+                  kiwix_manage_candidates = [
+                      p for p in tools_dir.rglob("kiwix-manage") if p.is_file()
+                  ]
+                  if not kiwix_manage_candidates:
+                      raise SystemExit("kiwix-manage not found after extracting kiwix-tools")
+
+                  source = kiwix_manage_candidates[0]
+                  source.chmod(0o755)
+                  bin_dir.mkdir(parents=True, exist_ok=True)
+
+                  target = bin_dir / "kiwix-manage"
+                  if target.exists() or target.is_symlink():
+                      target.unlink()
+                  target.symlink_to(source)
+
+                  print(f"kiwix-manage ready at {target}")
+                  PY
+                  fi
+
+                  if [ ! -x "${KIWIX_TOOLS_BIN_DIR}/kiwix-manage" ]; then
+                    echo "ERROR: kiwix-manage is unavailable after bootstrap"
+                    exit 1
+                  fi
+
+                  export PATH="${KIWIX_TOOLS_BIN_DIR}:${PATH}"
+                  exec python3 /scripts/update-zims.py
               env:
                 - name: TZ
                   value: {{ .Values.cluster.timezone }}
@@ -38,6 +125,14 @@ spec:
                   value: /data
                 - name: ZIM_BOOKS
                   value: {{ .Values.zimUpdater.books | join "," | quote }}
+                - name: KIWIX_TOOLS_VERSION
+                  value: {{ .Values.zimUpdater.kiwixTools.version | quote }}
+                - name: KIWIX_TOOLS_SHA256
+                  value: {{ .Values.zimUpdater.kiwixTools.sha256 | quote }}
+                - name: KIWIX_TOOLS_DIR
+                  value: /data/.kiwix-tools
+                - name: KIWIX_TOOLS_BIN_DIR
+                  value: /data/.kiwix-tools/bin
               volumeMounts:
                 - name: data
                   mountPath: /data
