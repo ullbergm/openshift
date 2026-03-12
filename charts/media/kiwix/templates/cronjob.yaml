@@ -41,6 +41,7 @@ spec:
               volumeMounts:
                 - name: data
                   mountPath: /data
+                  subPath: kiwix
                 - name: scripts
                   mountPath: /scripts
               resources:
