@@ -33,6 +33,8 @@ pods:
       tag: main
       pullPolicy: Always
 
+tagLinks: true
+
 startpunkt:
   # Default protocol for links if not specified in the resource
   defaultProtocol: "http"

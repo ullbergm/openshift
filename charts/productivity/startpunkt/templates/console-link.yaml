@@ -12,5 +12,7 @@ spec:
   url: http://console-openshift-console.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}/dashboards
   info: OpenShift console
   location: 100
+  {{- if .Values.tagLinks }}
   tags: admin
+  {{- end }}
 {{- end }}
