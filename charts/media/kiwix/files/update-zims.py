@@ -8,6 +8,7 @@ removes outdated versions.
 """
 import os
 import ssl
+import subprocess
 import sys
 import urllib.request
 import xml.etree.ElementTree as ET
@@ -141,6 +142,26 @@ def download_file(url, dest):
         return False
 
 
+def update_library(zim_path):
+    """
+    Register a ZIM file with the Kiwix library XML via kiwix-manage.
+    The library file is stored alongside the ZIM files in DATA_DIR.
+    """
+    library_xml = DATA_DIR / "library.xml"
+    cmd = ["kiwix-manage", str(library_xml), "add", str(zim_path)]
+    print(f"  Updating library: kiwix-manage library.xml add {zim_path.name}")
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+        if result.returncode != 0:
+            print(f"  WARNING: kiwix-manage failed: {result.stderr.strip()}")
+        else:
+            print("  Library updated successfully.")
+    except FileNotFoundError:
+        print("  WARNING: kiwix-manage not found; skipping library update")
+    except Exception as e:
+        print(f"  WARNING: kiwix-manage error: {e}")
+
+
 def main():
     if not ZIM_BOOKS:
         print("No ZIM books configured. Set ZIM_BOOKS environment variable.")
@@ -180,6 +201,7 @@ def main():
         old_versions = [f for f in DATA_DIR.glob(f"{book}_*.zim") if f != dest]
 
         if download_file(download_url, dest):
+            update_library(dest)
             for old in old_versions:
                 print(f"  Removing old version: {old.name}")
                 old.unlink(missing_ok=True)
