@@ -35,9 +35,9 @@ zimUpdater:
   # Default: every Sunday at 02:00.
   schedule: "0 2 * * 0"
   image:
-    # renovate: datasource=docker depName=python versioning=docker
-    repository: python
-    tag: "3.12-alpine"
+    # renovate: datasource=docker depName=ghcr.io/kiwix/kiwix-tools
+    repository: ghcr.io/kiwix/kiwix-tools
+    tag: "3.8.2"
     pullPolicy: IfNotPresent
   # List of Kiwix book names to keep up to date.
   # Names use underscores and match the "name" attribute in the Kiwix library catalog:
@@ -87,15 +87,15 @@ zimUpdater:
     - gutenberg_sv_all                        # 210M
     - freecodecamp_en_all                     # 7M
     - nhs.uk_en_medicines
-    - fas-military-medicine
+    - fas-military-medicine_en
     - wwwnc.cdc.gov_en_all
     - medlineplus.gov_en_all
     - foss.cooking_en_all
     - based.cooking_en_all
-    - canadian_prepper_bugoutconcepts_en      # 3G
+    - canadian_prepper_bugoutconcepts         # 3G
     - urban-prepper_en_all                    # 2G
     - canadian_prepper_preppingfood_en        # 2G
-    - canadian_prepper_winterprepping_en      # 1G
+    - canadian_prepper_winterprepping         # 1G
     - canadian_prepper_bugoutroll_en          # 1G
     - quickguidesformedicine_en_all           # 500M
     - maps_en_north-america                   # 30G

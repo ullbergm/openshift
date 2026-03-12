@@ -142,11 +142,8 @@ def download_file(url, dest):
         return False
 
 
-def update_library(zim_path):
-    """
-    Register a ZIM file with the Kiwix library XML via kiwix-manage.
-    The library file is stored alongside the ZIM files in DATA_DIR.
-    """
+def add_to_library(zim_path):
+    """Register a ZIM file with the Kiwix library XML via kiwix-manage."""
     library_xml = DATA_DIR / "library.xml"
     cmd = ["kiwix-manage", str(library_xml), "add", str(zim_path)]
     print(f"  Updating library: kiwix-manage library.xml add {zim_path.name}")
@@ -160,6 +157,23 @@ def update_library(zim_path):
         print("  WARNING: kiwix-manage not found; skipping library update")
     except Exception as e:
         print(f"  WARNING: kiwix-manage error: {e}")
+
+
+def remove_from_library(zim_path):
+    """Remove a ZIM file entry from the Kiwix library XML via kiwix-manage."""
+    library_xml = DATA_DIR / "library.xml"
+    cmd = ["kiwix-manage", str(library_xml), "remove", str(zim_path)]
+    print(f"  Updating library: kiwix-manage library.xml remove {zim_path.name}")
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+        if result.returncode != 0:
+            print(f"  WARNING: kiwix-manage remove failed: {result.stderr.strip()}")
+        else:
+            print("  Library entry removed successfully.")
+    except FileNotFoundError:
+        print("  WARNING: kiwix-manage not found; skipping library cleanup")
+    except Exception as e:
+        print(f"  WARNING: kiwix-manage remove error: {e}")
 
 
 def main():
@@ -197,12 +211,25 @@ def main():
             print(f"  Already present: {filename} (catalog date: {entry['date']})")
             continue
 
-        # Find old versions of this book to remove after a successful download
+        # Find old versions; keep one previous file as rollback cache after update.
         old_versions = [f for f in DATA_DIR.glob(f"{book}_*.zim") if f != dest]
 
         if download_file(download_url, dest):
-            update_library(dest)
-            for old in old_versions:
+            add_to_library(dest)
+
+            keep_previous = None
+            removable_old_versions = []
+            if old_versions:
+                old_versions_sorted = sorted(old_versions, key=lambda p: p.stat().st_mtime, reverse=True)
+                keep_previous = old_versions_sorted[0]
+                removable_old_versions = old_versions_sorted[1:]
+
+                # Keep one rollback file on disk, but ensure it is not served from library.xml.
+                print(f"  Keeping one previous version on disk: {keep_previous.name}")
+                remove_from_library(keep_previous)
+
+            for old in removable_old_versions:
+                remove_from_library(old)
                 print(f"  Removing old version: {old.name}")
                 old.unlink(missing_ok=True)
         else:
