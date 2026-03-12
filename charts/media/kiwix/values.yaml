@@ -60,13 +60,9 @@ zimUpdater:
     - wikibooks_sv_all                        # 39M
     - wikida_en_all                           # 66M
     - wikida_eu_all                           # 74M
-    - stackoverflow.com_en_all                # 75G
-    - survivorlibrary.com_en_all              # 232G
     - wikiquote_en_all                        # 880M
     - wikiquote_sv_all                        # 13M
     - phet_mul_all                            # 227M
-    - maps_en_north-america                   # 30G
-    - maps_en_europe                          # 39G
     - libretexts.org_en_bio                   # 2G
     - libretexts.org_en_biz                   # 771M
     - libretexts.org_en_biz                   # 801M
@@ -88,7 +84,6 @@ zimUpdater:
     - libretexts.org_en_workforce             # 368M
     - libretexts.org_en_workforce             # 490M
     - ifixit_en_all                           # 3G
-    - gutenberg_mul_all                       # 236G
     - gutenberg_sv_all                        # 210M
     - freecodecamp_en_all                     # 7M
     - nhs.uk_en_medicines
@@ -97,13 +92,18 @@ zimUpdater:
     - medlineplus.gov_en_all
     - foss.cooking_en_all
     - based.cooking_en_all
-    - ted_mul_all                             # 79G
     - canadian_prepper_bugoutconcepts_en      # 3G
     - urban-prepper_en_all                    # 2G
     - canadian_prepper_preppingfood_en        # 2G
     - canadian_prepper_winterprepping_en      # 1G
     - canadian_prepper_bugoutroll_en          # 1G
     - quickguidesformedicine_en_all           # 500M
+    - maps_en_north-america                   # 30G
+    - maps_en_europe                          # 39G
+    - ted_mul_all                             # 79G
+    - stackoverflow.com_en_all                # 75G
+    - survivorlibrary.com_en_all              # 232G
+    - gutenberg_mul_all                       # 236G
     # - devdocs_en_scikit-learn
     # - devdocs_en_qt
     # - devdocs_en_matplotlib
