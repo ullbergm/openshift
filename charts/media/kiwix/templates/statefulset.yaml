@@ -48,8 +48,6 @@ spec:
             - "-M"
             - "-k"
             - "-z"
-            - "-p"
-            - {{ .Values.application.port | toString | quote }}
             - "/data"
           ports:
             - name: http
