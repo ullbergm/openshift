@@ -141,13 +141,13 @@ zimUpdater:
     - canadian_prep_winterprepping                 # 1.2G
     - canadian_prepper_bugoutroll_en               # 929.4M
     - survivorlibrary.com_en_all                   # 2.7G
-    - survivors_en_all                             # 117.7M
     - urban-prepper_en_all                         # 2.1G
 
     # Talks & Media
     - ted_mul_all                                  # 78.7G
 
     # Other
+    - khanacademy_en_all                           # 167.6G
     - theworldfactbook_en_all                      # 388.5M
     - usda-2015_en                                 # 18.9M
     - vikidia_en_all                               # 66.1M
