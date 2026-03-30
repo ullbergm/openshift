@@ -16,7 +16,7 @@ application:
   group: Media
   icon: book-open-variant
   iconColor: ""
-  image: "https://www.kiwix.org/wp-content/uploads/2019/07/cropped-Kiwix_icon-192x192.png"
+  image: "https://en.wikipedia.org/wiki/Kiwix#/media/File:Kiwix_logo_v3.svg"
   description: "Offline knowledge server"
   port: 8080
   location: 0
