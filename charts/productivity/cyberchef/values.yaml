@@ -26,5 +26,5 @@ pods:
     image:
       repository: ghcr.io/gchq/cyberchef
       # renovate: datasource=docker depName=ghcr.io/gchq/cyberchef versioning=semver
-      tag: 10.20.0@sha256:925058eb6af4bcc6300d529ab5d5d4dc40abdf1aa80919e1fb6e1d9694b15bc5
+      tag: 10.23.0@sha256:9a3449fc564dcf86ba0165dadffe0eb95f207bfb1123672ec739eaa99aace050
       pullPolicy: IfNotPresent
