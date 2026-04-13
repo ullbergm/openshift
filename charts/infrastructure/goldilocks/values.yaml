@@ -27,5 +27,5 @@ pods:
     image:
       repository: us-docker.pkg.dev/fairwinds-ops/oss/goldilocks
       # renovate: datasource=docker depName=us-docker.pkg.dev/fairwinds-ops/oss/goldilocks versioning=semver
-      tag: v4.14.9@sha256:0b76f31f3d3e4c9fe5a397548208aea648d686e587b863f427debe94d74b7f73
+      tag: v4.14.18@sha256:3e966778faf47518535496d6a53d33ddc44bfc70a1ac2e8c8a524d4eb2305904
       pullPolicy: IfNotPresent
