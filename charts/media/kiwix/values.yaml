@@ -124,8 +124,8 @@ zimUpdater:
     - wwwnc.cdc.gov_en_all                         # 170.1M
 
     # Maps
-    - maps_en_europe                               # 39.5G
-    - maps_en_north-america                        # 29.5G
+    #- maps_en_europe                               # 39.5G
+    #- maps_en_north-america                        # 29.5G
     - openstreetmap-wiki_en_all                    # 995.6M
 
     # Cooking
