@@ -5,31 +5,61 @@
       matchManagers: ["helm", "helm-values"],
       matchPackageNames: ["ghcr.io/linuxserver/calibre-web"],
       allowedVersions: "<1",
+      description: [
+        "RATIONALE: calibre-web v1 introduced breaking changes that have not been validated against this cluster's library and reading state.",
+        "REVISIT: 2026-11-15 (or when calibre-web v1.x ships a stable LTS release).",
+        "OWNER: magnus",
+      ],
     },
     {
       matchManagers: ["helm", "helm-values"],
       matchPackageNames: ["ghcr.io/home-operations/radarr"],
       allowedVersions: "<6",
+      description: [
+        "RATIONALE: radarr v6 introduced breaking changes (database schema + indexer config) that have not been validated against this cluster's library.",
+        "REVISIT: 2026-11-15 (or when migration guide is reviewed and indexer reconfiguration is planned).",
+        "OWNER: magnus",
+      ],
     },
     {
       matchManagers: ["helm", "helm-values"],
       matchPackageNames: ["ghcr.io/home-operations/lidarr"],
       allowedVersions: "<3",
+      description: [
+        "RATIONALE: lidarr v3 introduced breaking changes that have not been validated against this cluster's library.",
+        "REVISIT: 2026-11-15 (or when v3 migration is planned alongside the radarr v6 work).",
+        "OWNER: magnus",
+      ],
     },
     {
       matchManagers: ["helm", "helm-values"],
       matchPackageNames: ["postgres"],
       allowedVersions: "<18",
+      description: [
+        "RATIONALE: pinned to <18 because LiteLLM's bundled Postgres client compatibility lags upstream Postgres major versions; bumping ahead of LiteLLM produces connection failures.",
+        "REVISIT: 2027-05-15 (or when LiteLLM upstream documents Postgres 18 client support).",
+        "OWNER: magnus",
+      ],
     },
     {
       matchDatasources: ["helm", "docker"],
       matchPackageNames: ["postgres"],
       allowedVersions: "<18",
+      description: [
+        "RATIONALE: duplicate carrier for the docker datasource — same constraint as the helm/helm-values rule above. Pinned to <18 to match LiteLLM Postgres client support.",
+        "REVISIT: 2027-05-15 (or when LiteLLM upstream documents Postgres 18 client support).",
+        "OWNER: magnus",
+      ],
     },
     {
       matchManagers: ["helm", "helm-values"],
       matchPackageNames: ["ghcr.io/kiwigrid/k8s-sidecar"],
       allowedVersions: "<=1.30.9",
+      description: [
+        "RATIONALE: pinned to <=1.30.9 because this exact version is the one tested against the current chart bundles; bumping is expected to be safe but unverified.",
+        "REVISIT: 2027-05-15 (safe to attempt bump — re-run helm template on consuming charts and remove the pin if clean).",
+        "OWNER: magnus",
+      ],
     },
   ],
 }
