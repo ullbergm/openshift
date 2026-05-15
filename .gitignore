@@ -3,9 +3,12 @@ Thumbs.db
 kubeconfig
 *.pub
 *.key
+.planning
+.claude
 .task
 .task-cache/
 /node_modules
+CLAUDE.md
 
 # Helm chart dependencies
 charts/*/*/charts/
