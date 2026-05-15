@@ -28,7 +28,7 @@ spec:
       enableServiceLinks: false
       initContainers:
         - name: git-clone
-          image: docker.io/alpine/git:latest
+          image: {{ .Values.pods.gitClone.image.repository }}:{{ .Values.pods.gitClone.image.tag }}
           imagePullPolicy: IfNotPresent
           command:
             - /bin/sh
