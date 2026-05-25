@@ -16,5 +16,5 @@ pods:
     image:
       repository: ghcr.io/squat/generic-device-plugin
       # renovate: datasource=docker depName=ghcr.io/squat/generic-device-plugin versioning=semver
-      tag: latest@sha256:d9e098e33a20c32a561adb1ef8cace7d5912cd5ffb38f07dd9f83af4bdf38505
+      tag: latest@sha256:dc192e164c69b03f156765793a1be62ca437709ae477b27ca7d8f3dcf5021576
       pullPolicy: IfNotPresent
