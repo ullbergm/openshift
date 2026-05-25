@@ -7,5 +7,5 @@ click>=8.0.0,<9.0.0
 rich>=15.0.0,<15.1.0
 
 # For vpa-goldilocks-reporter.py
-kubernetes>=35.0.0,<35.1.0
+kubernetes>=36.0.0,<36.1.0
 PyYAML>=6.0.0,<7.0.0
