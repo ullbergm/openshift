@@ -48,8 +48,8 @@ spec:
             privileged: true
           resources:
             requests:
-                squat.ai/adsb978: '1'
+                devic.es/adsb978: '1'
             limits:
-                squat.ai/adsb978: '1'
+                devic.es/adsb978: '1'
           image: {{ .Values.pods.dump978.image.repository }}:{{ .Values.pods.dump978.image.tag }}
           imagePullPolicy: IfNotPresent

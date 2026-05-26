@@ -52,9 +52,9 @@ spec:
             privileged: true
           resources:
             requests:
-              squat.ai/zwave: 1
+              devic.es/zwave: 1
             limits:
-              squat.ai/zwave: 1
+              devic.es/zwave: 1
       volumes:
         - name: config
           persistentVolumeClaim:
