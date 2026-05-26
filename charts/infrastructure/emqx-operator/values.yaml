@@ -37,4 +37,4 @@ emqx-operator:
     pullPolicy: IfNotPresent
 
   upgrade:
-    preUpgradeCheck: true
+    preUpgradeCheck: false
