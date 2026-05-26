@@ -33,7 +33,7 @@ emqx-operator:
 
   # Image configuration
   image:
-    repository: emqx/emqx-operator-controller
+    repository: ghcr.io/emqx/emqx-operator
     pullPolicy: IfNotPresent
 
   upgrade:
