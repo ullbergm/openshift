@@ -35,3 +35,6 @@ emqx-operator:
   image:
     repository: emqx/emqx-operator-controller
     pullPolicy: IfNotPresent
+
+  upgrade:
+    preUpgradeCheck: true
