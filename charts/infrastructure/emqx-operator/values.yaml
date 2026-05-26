@@ -20,6 +20,7 @@ application:
   description: "MQTT broker"
   port: 18083
   tags: admin
+  location: 0
 
 emqx:
   network:
