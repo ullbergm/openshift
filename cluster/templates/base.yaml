@@ -17,6 +17,7 @@ spec:
           createNamespace: false
         - name: emqx-operator
           group: infrastructure
+          serverSideApply: true
         - name: external-secrets-operator
           group: security
         - name: generic-device-plugin
@@ -56,6 +57,7 @@ spec:
           selfHeal: true
         syncOptions:
           - CreateNamespace={{ "{{" }} if hasKey . "createNamespace" {{ "}}" }}{{ "{{" }} .createNamespace {{ "}}" }}{{ "{{" }} else {{ "}}" }}true{{ "{{" }} end {{ "}}" }}
+          - ServerSideApply={{ "{{" }} if hasKey . "serverSideApply" {{ "}}" }}{{ "{{" }} .serverSideApply {{ "}}" }}{{ "{{" }} else {{ "}}" }}false{{ "{{" }} end {{ "}}" }}
       source:
         repoURL: {{ .Values.spec.source.repoURL }}
         path: charts/{{ "{{" }} default "base" .group {{ "}}" }}/{{ "{{" }} .name {{ "}}" }}
