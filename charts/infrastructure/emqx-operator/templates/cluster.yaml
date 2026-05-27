@@ -46,7 +46,7 @@ spec:
             storage: 1Gi
         accessModes:
         - ReadWriteOnce
-      replicas: 3
+      replicas: 1
       envFrom:
         - secretRef:
             name: {{ .Release.Name }}
