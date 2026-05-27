@@ -5,7 +5,7 @@ kind: EMQX
 metadata:
   name: emqx
 spec:
-  image: public.ecr.aws/emqx/emqx:5.8.8
+  image: docker.io/emqx/emqx:5.9.2
   serviceAccountName: {{ .Release.Name }}
   config:
     data: |
