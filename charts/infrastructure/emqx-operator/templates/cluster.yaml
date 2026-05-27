@@ -61,7 +61,7 @@ spec:
             secretName: {{ .Release.Name }}-init-user
       resources:
         limits:
-          memory: 500Mi
+          memory: 1Gi
         requests:
           memory: 256Mi
   listenersServiceTemplate:
