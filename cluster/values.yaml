@@ -37,6 +37,10 @@ config:
     network:
       ip: 192.168.1.11
 
+  neolink:
+    network:
+      ip: 192.168.1.12
+
   certificates:
     letsencrypt:
       issuer: production

@@ -40,4 +40,4 @@ pods:
       tag: latest
       pullPolicy: IfNotPresent
     env:
-      NEO_LINK_MODE: mqtt-rtsp
+      NEO_LINK_MODE: rtsp
