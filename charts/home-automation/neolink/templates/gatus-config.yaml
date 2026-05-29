@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gatus-config
+  labels:
+    gatus.io/enabled: "true"
+data:
+  config.yaml: |-
+    endpoints:
+      - name: {{ .Values.application.name | quote }}
+        group: {{ .Values.application.group | default "other" | quote }}
+        url: "tcp://{{ .Release.Name }}.{{ .Release.Namespace }}.svc.cluster.local:{{ .Values.application.port }}"
+        interval: 60s
+        conditions:
+          - "[CONNECTED] == true"

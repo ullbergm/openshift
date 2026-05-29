@@ -1,0 +1,20 @@
+---
+kind: SecurityContextConstraints
+apiVersion: security.openshift.io/v1
+metadata:
+  name: "{{ .Release.Name }}"
+fsGroup:
+  type: RunAsAny
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+supplementalGroups:
+  type: RunAsAny
+allowPrivilegedContainer: false
+allowHostNetwork: false
+allowHostPorts: false
+allowHostDirVolumePlugin: false
+allowPrivilegeEscalation: false
+users:
+  - system:serviceaccount:{{ .Release.Namespace }}:{{ .Release.Name }}

@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    kasten/backup: "true"
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  revisionHistoryLimit: 1
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/controller: main
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  serviceName: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/controller: main
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+    spec:
+      enableServiceLinks: false
+      serviceAccountName: {{ .Release.Name }}
+      automountServiceAccountToken: true
+      containers:
+        - name: main
+          env:
+          - name: TZ
+            value: {{ .Values.cluster.timezone }}
+          - name: RUST_LOG
+            value: "info"
+          {{- range $key, $value := .Values.pods.main.env }}
+          - name: {{ $key }}
+            value: "{{ $value }}"
+          {{- end }}
+          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
+          imagePullPolicy: {{ .Values.pods.main.image.pullPolicy }}
+          args:
+            - "--config"
+            - "/etc/neolink/neolink.toml"
+          ports:
+            - name: rtsp
+              containerPort: {{ .Values.application.port }}
+              protocol: TCP
+          volumeMounts:
+          - mountPath: /etc/neolink
+            name: config-secret
+            readOnly: true
+          - mountPath: /config
+            name: config
+          resources:
+            requests:
+              cpu: 25m
+              memory: 64Mi
+            limits:
+              memory: 256Mi
+      volumes:
+        - name: config-secret
+          secret:
+            secretName: {{ .Release.Name }}
+            items:
+              - key: neolink.toml
+                path: neolink.toml
+        - name: config
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-config

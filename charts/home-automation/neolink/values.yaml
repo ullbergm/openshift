@@ -1,0 +1,41 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Neolink
+  group: Home Automation
+  icon: mdi:cctv
+  iconColor: ""
+  image: "https://avatars.githubusercontent.com/u/56885193"
+  description: "Reolink camera to RTSP/MQTT bridge"
+  port: 8554
+  location: 0
+
+# Optional external IP exposed via keepalived (Service externalIPs).
+# Set neolink.network.ip in cluster values to expose RTSP on the LAN.
+# Leave unset to keep RTSP cluster-internal only.
+neolink:
+  network:
+    # ip: 192.168.1.12
+
+# MQTT broker address used by neolink. The cluster's emqx-operator service.
+mqtt:
+  broker: "mqtt://emqx-listeners.emqx-operator.svc.cluster.local:1883"
+
+pods:
+  main:
+    image:
+      repository: docker.io/thirtythreeforty/neolink
+      # renovate: datasource=docker depName=docker.io/thirtythreeforty/neolink versioning=semver
+      tag: 0.6.2
+      pullPolicy: IfNotPresent

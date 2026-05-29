@@ -12,6 +12,7 @@ spec:
         elements:
         - name: espconnect
         - name: home-assistant
+        - name: neolink
         - name: node-red
         - name: zwavejs2mqtt
   template:

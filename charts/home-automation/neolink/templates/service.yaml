@@ -1,0 +1,38 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  type: ClusterIP
+  ports:
+    - port: {{ .Values.application.port }}
+      targetPort: rtsp
+      protocol: TCP
+      name: rtsp
+  selector:
+    app.kubernetes.io/controller: main
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}
+{{- if and .Values.neolink .Values.neolink.network .Values.neolink.network.ip }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-lan
+  annotations:
+    keepalived-operator.redhat-cop.io/keepalivedgroup: "keepalived-operator/lan"
+spec:
+  type: ClusterIP
+  externalIPs:
+    - {{ .Values.neolink.network.ip }}
+  ports:
+    - port: {{ .Values.application.port }}
+      targetPort: rtsp
+      protocol: TCP
+      name: rtsp
+  selector:
+    app.kubernetes.io/controller: main
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}
+{{- end }}
