@@ -41,9 +41,6 @@ spec:
           {{- end }}
           image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
           imagePullPolicy: {{ .Values.pods.main.image.pullPolicy }}
-          args:
-            - "--config"
-            - "/etc/neolink/neolink.toml"
           ports:
             - name: rtsp
               containerPort: {{ .Values.application.port }}
