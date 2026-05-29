@@ -35,7 +35,7 @@ mqtt:
 pods:
   main:
     image:
-      repository: docker.io/thirtythreeforty/neolink
-      # renovate: datasource=docker depName=docker.io/thirtythreeforty/neolink versioning=semver
-      tag: 0.6.2
+      repository: docker.io/quantumentangledandy/neolink:latest
+      # renovate: datasource=docker depName=docker.io/quantumentangledandy/neolink versioning=semver
+      tag: latest
       pullPolicy: IfNotPresent
