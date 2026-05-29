@@ -46,8 +46,9 @@ spec:
               containerPort: {{ .Values.application.port }}
               protocol: TCP
           volumeMounts:
-          - mountPath: /etc/neolink
+          - mountPath: /etc/neolink.toml
             name: config-secret
+            subPath: neolink.toml
             readOnly: true
           - mountPath: /config
             name: config

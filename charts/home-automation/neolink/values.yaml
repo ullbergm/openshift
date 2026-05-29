@@ -39,3 +39,5 @@ pods:
       # renovate: datasource=docker depName=docker.io/quantumentangledandy/neolink versioning=semver
       tag: latest
       pullPolicy: IfNotPresent
+    env:
+      NEO_LINK_MODE: rtsp
