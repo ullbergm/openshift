@@ -29,7 +29,7 @@ pods:
     image:
       repository: docker.io/alpine/git
       # renovate: datasource=docker depName=alpine/git versioning=semver
-      tag: 2.52.0@sha256:3136372ed3c9e112d5a2620c66a6803e1b0b7f14a428fcbd0c5028bec4256430
+      tag: v2.54.0@sha256:113d99116e236f93f0b1f53cd46dbda662cf1136d20dc9ae2834962226654d9f
       pullPolicy: IfNotPresent
   init:
     image:
