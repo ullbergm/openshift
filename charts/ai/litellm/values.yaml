@@ -15,6 +15,7 @@ application:
   description: "Unified API to manage and deploy LLMs"
   port: 4000
   location: 0
+  path: /ui
   tags: admin
 
 pods:

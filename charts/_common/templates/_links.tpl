@@ -6,7 +6,7 @@ kind: ConsoleLink
 metadata:
   name: "{{ .Release.Name }}-namespace-dashboard-link"
 spec:
-  href: "https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+  href: "https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}{{ .Values.application.path | default "" }}"
   location: NamespaceDashboard
   namespaceDashboard:
     namespaces:
@@ -18,7 +18,7 @@ kind: ConsoleLink
 metadata:
   name: "{{ .Release.Name }}-application-menu-link"
 spec:
-  href: "https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+  href: "https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}{{ .Values.application.path | default "" }}"
   location: ApplicationMenu
   applicationMenu:
     section: {{ .Values.application.group | quote }}
@@ -36,7 +36,7 @@ spec:
   group: {{ .Values.application.group | quote }}
   icon: {{ .Values.application.icon | quote }}
   iconColor: {{ .Values.application.iconColor | quote }}
-  url: "https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+  url: "https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}{{ .Values.application.path | default "" }}"
   info: {{ .Values.application.description | quote }}
   location: {{ .Values.application.location }}
   tags: {{ .Values.application.tags | quote }}

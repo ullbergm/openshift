@@ -28,5 +28,5 @@ maintainers:
 
 dependencies:
   - name: common
-    version: 1.0.0
+    version: 1.1.0
     repository: file://../../_common
