@@ -1,0 +1,27 @@
+{{- define "common.externalsecret" -}}
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_v1beta1.json
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: external-secrets
+  target:
+    name: {{ .Release.Name }}
+    creationPolicy: Owner
+  data:
+{{- range .Values.externalSecret.data }}
+{{- if kindIs "string" . }}
+    - secretKey: {{ . }}
+      remoteRef:
+        key: {{ . }}
+{{- else }}
+    - secretKey: {{ .secretKey }}
+      remoteRef:
+        key: {{ .remoteKey | default .secretKey }}
+{{- end }}
+{{- end }}
+{{- end }}

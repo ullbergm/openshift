@@ -7,3 +7,8 @@ kubeVersion: ">=1.31.0-0"
 maintainers:
   - name: Magnus Ullberg
     email: magnus@ullberg.us
+
+dependencies:
+  - name: common
+    version: 1.2.0
+    repository: file://../../_common

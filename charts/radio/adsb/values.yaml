@@ -123,3 +123,30 @@ pods:
       tag: 2.1.7-1@sha256:fc2fe2238cf4ef20cc5cc8e53448ede36d3c753ccaaf34d914307af6ba7f3923
     env:
       BEASTHOST: 'adsb-ultrafeeder'
+
+externalSecret:
+  data:
+    - secretKey: CLIENTKEY
+      remoteKey: ADSBHUB_CLIENTKEY
+    - secretKey: FEEDER_ID
+      remoteKey: FLIGHAWARE_FEEDER_ID
+    - FR24KEY
+    - OPENSKY_USERNAME
+    - OPENSKY_SERIAL
+    - secretKey: UUID
+      remoteKey: ULTRAFEEDER_UUID
+    - TAR1090_PAGETITLE
+    - MLAT_USER
+    - HEYWHATSTHAT_ALTS
+    - HEYWHATSTHAT_PANORAMA_ID
+    - secretKey: API_KEY
+      remoteKey: PLANEWATCH_API_KEY
+    - LAT
+    - secretKey: READSB_LAT
+      remoteKey: LAT
+    - LONG
+    - secretKey: READSB_LON
+      remoteKey: LONG
+    - ALT
+    - secretKey: READSB_ALT
+      remoteKey: ALT

@@ -42,3 +42,8 @@ pods:
       limits:
         cpu: "500m"
         memory: "512Mi"
+
+externalSecret:
+  data:
+    - LITELLM_MASTER_KEY
+    - LITELLM_SALT_KEY

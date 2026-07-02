@@ -41,3 +41,8 @@ pods:
       pullPolicy: IfNotPresent
     env:
       NEO_LINK_MODE: rtsp
+
+externalSecret:
+  data:
+    - secretKey: neolink.toml
+      remoteKey: NEOLINK_CONFIG
