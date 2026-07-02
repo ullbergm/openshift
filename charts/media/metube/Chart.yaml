@@ -25,3 +25,8 @@ annotations:
 maintainers:
   - name: Magnus Ullberg
     email: magnus@ullberg.us
+
+dependencies:
+  - name: common
+    version: 1.0.0
+    repository: file://../library/common
