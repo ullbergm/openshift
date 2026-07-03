@@ -39,3 +39,10 @@ emqx-operator:
 
   upgrade:
     preUpgradeCheck: false
+
+  persistence:
+    enabled: true
+    storageClass: synology-iscsi
+
+  pdb:
+    enabled: false
