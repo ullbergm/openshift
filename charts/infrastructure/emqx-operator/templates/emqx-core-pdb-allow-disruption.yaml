@@ -1,0 +1,20 @@
+apiVersion: mutations.gatekeeper.sh/v1
+kind: Assign
+metadata:
+  name: emqx-core-pdb-allow-disruption
+spec:
+  applyTo:
+  - groups: ["policy"]
+    versions: ["v1"]
+    kinds: ["PodDisruptionBudget"]
+  match:
+    scope: Namespaced
+    namespaces: ["emqx-operator"]
+    kinds:
+    - apiGroups: ["policy"]
+      kinds: ["PodDisruptionBudget"]
+    name: emqx-core
+  location: "spec.maxUnavailable"
+  parameters:
+    assign:
+      value: 1
