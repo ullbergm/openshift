@@ -1,0 +1,13 @@
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha4" }}
+---
+apiVersion: startpunkt.ullberg.us/v1alpha4
+kind: Bookmark
+metadata:
+  name: nc-cdl
+spec:
+  name: NC CDL Practice
+  group: Education
+  icon: font-awesome:truck
+  url: https://nc-cdl.ullberg.io/
+  info: NC CDL Practice
+{{- end }}
