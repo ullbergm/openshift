@@ -1,0 +1,13 @@
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha4" }}
+---
+apiVersion: startpunkt.ullberg.us/v1alpha4
+kind: Bookmark
+metadata:
+  name: nc-pesticide
+spec:
+  name: NC Pesticide Practice
+  group: Education
+  icon: font-awesome:seedling
+  url: https://nc-cdl.ullberg.io/
+  info: NC CDL Practice
+{{- end }}
