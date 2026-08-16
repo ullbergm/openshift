@@ -7,7 +7,7 @@ metadata:
 spec:
   name: NC Pesticide Practice
   group: Education
-  icon: font-awesome:seedling
-  url: https://nc-cdl.ullberg.io/
+  icon: fa:seedling
+  url: https://nc-pesticide.ullberg.io/
   info: NC CDL Practice
 {{- end }}
