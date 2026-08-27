@@ -1,4 +1,4 @@
-{{- if eq (toString .Values.cloudflare.enabled) "true" }}
+{{- if and (eq (toString .Values.cloudflare.enabled) "true") .Values.pods.cloudflared.enabled }}
 apiVersion: v1
 kind: ConfigMap
 metadata:

@@ -178,6 +178,9 @@ pods:
         memory: 512Mi
 
   cloudflared:
+    # Second switch: the cluster passes cloudflare.enabled=true globally (plex);
+    # the tunnel only activates once OTS_CF_TUNNEL exists in Infisical and this is true.
+    enabled: false
     image:
       repository: cloudflare/cloudflared
       # renovate: datasource=docker depName=cloudflare/cloudflared versioning=loose

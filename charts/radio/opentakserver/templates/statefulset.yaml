@@ -138,7 +138,7 @@ spec:
           resources:
             {{- toYaml .Values.pods.main.resources | nindent 12 }}
         {{- end }}
-        {{- if eq (toString .Values.cloudflare.enabled) "true" }}
+        {{- if and (eq (toString .Values.cloudflare.enabled) "true") .Values.pods.cloudflared.enabled }}
         - name: cloudflared
           image: {{ .Values.pods.cloudflared.image.repository }}:{{ .Values.pods.cloudflared.image.tag }}
           imagePullPolicy: {{ .Values.pods.cloudflared.image.pullPolicy }}
@@ -160,7 +160,7 @@ spec:
         - name: config
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-config
-        {{- if eq (toString .Values.cloudflare.enabled) "true" }}
+        {{- if and (eq (toString .Values.cloudflare.enabled) "true") .Values.pods.cloudflared.enabled }}
         - name: cloudflared-config
           configMap:
             name: {{ .Release.Name }}-cloudflared
