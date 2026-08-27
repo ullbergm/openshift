@@ -33,9 +33,11 @@ application:
 pods:
   main:
     image:
-      repository: ghcr.io/milsimdk/ots-docker-image
-      # renovate: datasource=docker depName=ghcr.io/milsimdk/ots-docker-image versioning=loose
-      tag: 1.7.11@sha256:af0857b951675019acac5a8eb03f025ac607ef7371217bbbb4ede15a39fe837c
+      # Fork-built image: milsimdk 1.7.11 base + iOS-compatible p12 encryption and
+      # socketio-amqp-credentials fixes (ullbergm/OpenTAKServer branch ullberg-1.7.11).
+      repository: ghcr.io/ullbergm/opentakserver
+      # renovate: datasource=docker depName=ghcr.io/ullbergm/opentakserver versioning=loose
+      tag: 1.7.11-ullberg@sha256:adadeb23a7b50509a54f381138bff6c6859b70d74f3b7196d9b1135a84458171
       pullPolicy: IfNotPresent
     # Plaintext CoT (8088) is off by design (threat model T-OTS-01); only the TLS
     # listener (8089) is started and exposed. Set to true to also start eud-handler-tcp.
