@@ -1,0 +1,39 @@
+{{- if .Values.pods.retention.enabled }}
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name }}-retention
+spec:
+  schedule: {{ .Values.pods.retention.schedule | default "0 3 * * *" | quote }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: {{ .Release.Name }}
+            app.kubernetes.io/controller: retention
+            app.kubernetes.io/instance: {{ .Release.Name }}
+            app.kubernetes.io/name: {{ .Release.Name }}
+        spec:
+          enableServiceLinks: false
+          serviceAccountName: {{ .Release.Name }}
+          automountServiceAccountToken: false
+          restartPolicy: OnFailure
+          securityContext:
+            {{- toYaml .Values.pods.retention.securityContext | nindent 12 }}
+          containers:
+            - name: retention
+              image: {{ .Values.pods.retention.image.repository }}:{{ .Values.pods.retention.image.tag }}
+              imagePullPolicy: {{ .Values.pods.retention.image.pullPolicy }}
+              env:
+                {{- include "cloudtak.appEnv" . | nindent 16 }}
+              envFrom:
+                - secretRef:
+                    name: {{ .Release.Name }}
+              resources:
+                {{- toYaml .Values.pods.retention.resources | nindent 16 }}
+{{- end }}

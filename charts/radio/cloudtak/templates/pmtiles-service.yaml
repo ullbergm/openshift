@@ -1,0 +1,16 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-tiles
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 5002
+      targetPort: 5002
+      protocol: TCP
+  selector:
+    app.kubernetes.io/controller: tiles
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}

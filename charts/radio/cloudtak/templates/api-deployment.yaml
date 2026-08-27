@@ -1,0 +1,93 @@
+{{- define "cloudtak.appEnv" -}}
+- name: TZ
+  value: {{ .Values.cluster.timezone }}
+{{- range $key, $value := .Values.pods.api.env }}
+- name: {{ $key }}
+  value: "{{ $value }}"
+{{- end }}
+- name: POSTGRES_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Release.Name }}
+      key: POSTGRES_PASSWORD
+- name: DATABASE_URL
+  value: >-
+    postgis://{{ .Values.pods.postgis.user }}:$(POSTGRES_PASSWORD)@{{ .Release.Name }}-postgis:5432/{{ .Values.pods.postgis.database }}
+- name: MINIO_ROOT_USER
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Release.Name }}
+      key: MINIO_ROOT_USER
+- name: MINIO_ROOT_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Release.Name }}
+      key: MINIO_ROOT_PASSWORD
+- name: AWS_ACCESS_KEY_ID
+  value: "$(MINIO_ROOT_USER)"
+- name: AWS_SECRET_ACCESS_KEY
+  value: "$(MINIO_ROOT_PASSWORD)"
+- name: AWS_ENDPOINT_URL
+  value: "http://{{ .Release.Name }}-minio:9000"
+- name: ASSET_BUCKET
+  value: {{ .Values.pods.minio.bucket }}
+- name: API_URL
+  value: "https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+- name: MEDIA_URL
+  value: "https://{{ .Release.Name }}-tiles.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+{{- end }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/controller: main
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/controller: main
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+    spec:
+      enableServiceLinks: false
+      serviceAccountName: {{ .Release.Name }}
+      automountServiceAccountToken: false
+      securityContext:
+        {{- toYaml .Values.pods.api.securityContext | nindent 8 }}
+      containers:
+        - name: main
+          image: {{ .Values.pods.api.image.repository }}:{{ .Values.pods.api.image.tag }}
+          imagePullPolicy: {{ .Values.pods.api.image.pullPolicy }}
+          env:
+            {{- include "cloudtak.appEnv" . | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}
+          ports:
+            - name: http
+              containerPort: 5000
+              protocol: TCP
+          readinessProbe:
+            tcpSocket:
+              port: 5000
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 5000
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            {{- toYaml .Values.pods.api.resources | nindent 12 }}

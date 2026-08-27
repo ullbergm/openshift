@@ -1,0 +1,31 @@
+apiVersion: v2
+description: A Helm chart for CloudTAK
+name: cloudtak
+version: 1.0.0
+appVersion: "v13.75.0"
+kubeVersion: ">=1.31.0-0"
+home: https://github.com/dfpc-coe/CloudTAK
+sources:
+  - https://github.com/dfpc-coe/CloudTAK
+  - https://github.com/ullbergm/openshift
+keywords:
+  - cloudtak
+  - tak
+  - map
+  - cot
+  - radio
+annotations:
+  charts.openshift.io/name: cloudtak
+  charts.openshift.io/provider: ullberg
+  charts.openshift.io/providerType: community
+  category: Radio
+  licenses: GPL-3.0-only
+
+maintainers:
+  - name: Magnus Ullberg
+    email: magnus@ullberg.us
+
+dependencies:
+  - name: common
+    version: 1.2.0
+    repository: file://../../_common

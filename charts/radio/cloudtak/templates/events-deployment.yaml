@@ -1,0 +1,40 @@
+{{- if .Values.pods.events.enabled }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-events
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/controller: events
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/controller: events
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+    spec:
+      enableServiceLinks: false
+      serviceAccountName: {{ .Release.Name }}
+      automountServiceAccountToken: false
+      securityContext:
+        {{- toYaml .Values.pods.events.securityContext | nindent 8 }}
+      containers:
+        - name: events
+          image: {{ .Values.pods.events.image.repository }}:{{ .Values.pods.events.image.tag }}
+          imagePullPolicy: {{ .Values.pods.events.image.pullPolicy }}
+          env:
+            {{- include "cloudtak.appEnv" . | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}
+          resources:
+            {{- toYaml .Values.pods.events.resources | nindent 12 }}
+{{- end }}

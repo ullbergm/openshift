@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-tiles
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/controller: tiles
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/controller: tiles
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+    spec:
+      enableServiceLinks: false
+      serviceAccountName: {{ .Release.Name }}
+      automountServiceAccountToken: false
+      securityContext:
+        {{- toYaml .Values.pods.pmtiles.securityContext | nindent 8 }}
+      containers:
+        - name: tiles
+          image: {{ .Values.pods.pmtiles.image.repository }}:{{ .Values.pods.pmtiles.image.tag }}
+          imagePullPolicy: {{ .Values.pods.pmtiles.image.pullPolicy }}
+          env:
+            - name: TZ
+              value: {{ .Values.cluster.timezone }}
+            {{- range $key, $value := .Values.pods.pmtiles.env }}
+            - name: {{ $key }}
+              value: "{{ $value }}"
+            {{- end }}
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}
+          ports:
+            - name: http
+              containerPort: 5002
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.pods.pmtiles.resources | nindent 12 }}

@@ -1,0 +1,159 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  #storage:
+  #  config:
+  #    storageClassName: synology-iscsi
+
+application:
+  name: CloudTAK
+  group: Radio
+  icon: mdi:map-marker-radius
+  iconColor: ""
+  image: ""
+  description: "In-browser TAK client and map"
+  port: 5000
+  location: 0
+
+pods:
+  api:
+    image:
+      repository: ghcr.io/dfpc-coe/cloudtak-api
+      # renovate: datasource=docker depName=ghcr.io/dfpc-coe/cloudtak-api versioning=loose
+      tag: v13.75.0@sha256:f7b912b04e79c00f3a4bad960d5f2a4480d6d89b5e41b7607c93579bfcf92fd6
+      pullPolicy: IfNotPresent
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      runAsNonRoot: true
+    # Tunables only; DB/S3 connection details are built in the template from the
+    # postgis/minio values plus secretKeyRef-backed credentials - see api-deployment.yaml.
+    env:
+      AWS_REGION: us-east-1
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+      limits:
+        cpu: "2"
+        memory: 1Gi
+
+  postgis:
+    image:
+      repository: postgis/postgis
+      # renovate: datasource=docker depName=postgis/postgis versioning=docker
+      tag: 17-3.4-alpine@sha256:5a1dbedac34e0e6663f8b7190d393339571f1cb3ecb2ab2f724524b4f3c7956e
+      pullPolicy: IfNotPresent
+    database: cloudtak
+    user: cloudtak
+    size: 50Gi
+    securityContext:
+      runAsUser: 999
+      runAsGroup: 999
+      fsGroup: 999
+      runAsNonRoot: true
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+      limits:
+        cpu: "2"
+        memory: 2Gi
+
+  minio:
+    image:
+      repository: minio/minio
+      # renovate: datasource=docker depName=minio/minio versioning=loose
+      tag: RELEASE.2025-04-22T22-12-26Z@sha256:a1ea29fa28355559ef137d71fc570e508a214ec84ff8083e39bc5428980b015e
+      pullPolicy: IfNotPresent
+    mcImage:
+      repository: minio/mc
+      # renovate: datasource=docker depName=minio/mc versioning=loose
+      tag: RELEASE.2025-04-16T18-13-26Z@sha256:aead63c77f9db9107f1696fb08ecb0faeda23729cde94b0f663edf4fe09728e3
+      pullPolicy: IfNotPresent
+    bucket: cloudtak
+    createBucket: true
+    size: 50Gi
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      runAsNonRoot: true
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: "1"
+        memory: 1Gi
+
+  pmtiles:
+    image:
+      repository: ghcr.io/dfpc-coe/cloudtak-pmtiles
+      # renovate: datasource=docker depName=ghcr.io/dfpc-coe/cloudtak-pmtiles versioning=loose
+      tag: v13.75.0@sha256:60dcd044a32bf59ee419280cbfc8dbfdf1382574ed13fc8ff695732a56a742be
+      pullPolicy: IfNotPresent
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      runAsNonRoot: true
+    env: {}
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: "1"
+        memory: 1Gi
+
+  events:
+    enabled: true
+    image:
+      repository: ghcr.io/dfpc-coe/cloudtak-events
+      # renovate: datasource=docker depName=ghcr.io/dfpc-coe/cloudtak-events versioning=loose
+      tag: v13.75.0@sha256:b2ec39e32f967fde1caa402c0cf44ceb848649afb7ec116525899bacc1f00a70
+      pullPolicy: IfNotPresent
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      runAsNonRoot: true
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: "1"
+        memory: 1Gi
+
+  retention:
+    enabled: true
+    schedule: "0 3 * * *"
+    image:
+      repository: ghcr.io/dfpc-coe/cloudtak-retention
+      # renovate: datasource=docker depName=ghcr.io/dfpc-coe/cloudtak-retention versioning=loose
+      tag: v13.75.0@sha256:951f785501a7331e7067d90a3c302c9a707a97f822ab3fcebbff6ed5141acaa7
+      pullPolicy: IfNotPresent
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      runAsNonRoot: true
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: "1"
+        memory: 512Mi
+
+externalSecret:
+  data:
+    - secretKey: POSTGRES_PASSWORD
+      remoteKey: POSTGRES_PASSWORD
+    - secretKey: MINIO_ROOT_USER
+      remoteKey: MINIO_ROOT_USER
+    - secretKey: MINIO_ROOT_PASSWORD
+      remoteKey: MINIO_ROOT_PASSWORD
+    - secretKey: SigningSecret
+      remoteKey: SigningSecret
