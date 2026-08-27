@@ -43,15 +43,36 @@ pods:
       runAsNonRoot: true
     env:
       DOCKER_OTS_DATA_FOLDER: /app/ots
-      # The milsimdk image's baked-in config.yml points at PostgreSQL on 127.0.0.1;
-      # this chart runs OTS single-pod with SQLite on the shared config PVC instead.
-      DOCKER_SQLALCHEMY_DATABASE_URI: sqlite:////app/ots/ots.db
       DOCKER_OTS_LISTENER_PORT: "8081"
       DOCKER_OTS_TCP_STREAMING_PORT: "8088"
       DOCKER_OTS_SSL_STREAMING_PORT: "8089"
       DOCKER_OTS_ENABLE_MESHTASTIC: "true"
       DOCKER_OTS_MESHTASTIC_TOPIC: opentakserver
       DOCKER_OTS_ENABLE_MEDIAMTX: "true"
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+      limits:
+        cpu: "2"
+        memory: 2Gi
+
+  # OTS 1.7 requires PostgreSQL with PostGIS for migrations (SQLite lacks CREATE
+  # SEQUENCE support); mirrors upstream milsimdk/ots-docker's ots-db container.
+  db:
+    image:
+      repository: postgis/postgis
+      # renovate: datasource=docker depName=postgis/postgis versioning=docker
+      tag: 17-3.4-alpine@sha256:5a1dbedac34e0e6663f8b7190d393339571f1cb3ecb2ab2f724524b4f3c7956e
+      pullPolicy: IfNotPresent
+    database: ots
+    user: ots
+    size: 10Gi
+    securityContext:
+      runAsUser: 999
+      runAsGroup: 999
+      fsGroup: 999
+      runAsNonRoot: true
     resources:
       requests:
         cpu: 250m
@@ -152,6 +173,8 @@ pods:
 
 externalSecret:
   data:
+    - secretKey: POSTGRES_PASSWORD
+      remoteKey: OTS_POSTGRES_PASSWORD
     - secretKey: DOCKER_SECRET_KEY
       remoteKey: OTS_SECRET_KEY
     - secretKey: DOCKER_SECURITY_PASSWORD_SALT
