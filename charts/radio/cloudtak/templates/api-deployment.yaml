@@ -1,3 +1,30 @@
+{{/*
+Env var names must match CloudTAK's own contract (see upstream docker-compose.yml):
+POSTGRES, SigningSecret, ASSET_BUCKET, AWS_S3_Endpoint, AWS_S3_AccessKeyId,
+AWS_S3_SecretAccessKey, API_URL, PMTILES_URL. SigningSecret arrives via envFrom.
+*/}}
+{{- define "cloudtak.s3Env" -}}
+- name: MINIO_ROOT_USER
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Release.Name }}
+      key: MINIO_ROOT_USER
+- name: MINIO_ROOT_PASSWORD
+  valueFrom:
+    secretKeyRef:
+      name: {{ .Release.Name }}
+      key: MINIO_ROOT_PASSWORD
+- name: AWS_S3_AccessKeyId
+  value: "$(MINIO_ROOT_USER)"
+- name: AWS_S3_SecretAccessKey
+  value: "$(MINIO_ROOT_PASSWORD)"
+- name: AWS_S3_Endpoint
+  value: "http://{{ .Release.Name }}-minio:9000"
+- name: ASSET_BUCKET
+  value: {{ .Values.pods.minio.bucket }}
+- name: PMTILES_URL
+  value: "https://{{ .Release.Name }}-tiles.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+{{- end }}
 {{- define "cloudtak.appEnv" -}}
 - name: TZ
   value: {{ .Values.cluster.timezone }}
@@ -10,31 +37,12 @@
     secretKeyRef:
       name: {{ .Release.Name }}
       key: POSTGRES_PASSWORD
-- name: DATABASE_URL
+- name: POSTGRES
   value: >-
-    postgis://{{ .Values.pods.postgis.user }}:$(POSTGRES_PASSWORD)@{{ .Release.Name }}-postgis:5432/{{ .Values.pods.postgis.database }}
-- name: MINIO_ROOT_USER
-  valueFrom:
-    secretKeyRef:
-      name: {{ .Release.Name }}
-      key: MINIO_ROOT_USER
-- name: MINIO_ROOT_PASSWORD
-  valueFrom:
-    secretKeyRef:
-      name: {{ .Release.Name }}
-      key: MINIO_ROOT_PASSWORD
-- name: AWS_ACCESS_KEY_ID
-  value: "$(MINIO_ROOT_USER)"
-- name: AWS_SECRET_ACCESS_KEY
-  value: "$(MINIO_ROOT_PASSWORD)"
-- name: AWS_ENDPOINT_URL
-  value: "http://{{ .Release.Name }}-minio:9000"
-- name: ASSET_BUCKET
-  value: {{ .Values.pods.minio.bucket }}
+    postgres://{{ .Values.pods.postgis.user }}:$(POSTGRES_PASSWORD)@{{ .Release.Name }}-postgis:5432/{{ .Values.pods.postgis.database }}
+{{- include "cloudtak.s3Env" . }}
 - name: API_URL
   value: "https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
-- name: MEDIA_URL
-  value: "https://{{ .Release.Name }}-tiles.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
 {{- end }}
 apiVersion: apps/v1
 kind: Deployment
@@ -62,6 +70,18 @@ spec:
       automountServiceAccountToken: false
       securityContext:
         {{- toYaml .Values.pods.api.securityContext | nindent 8 }}
+      # The image's start script regenerates /etc/nginx/nginx.conf at boot and nginx
+      # needs its log/pid/temp dirs writable; none of that works under OpenShift's
+      # arbitrary UID against root-owned image paths, so seed /etc/nginx into an
+      # emptyDir and overlay the runtime-writable paths.
+      initContainers:
+        - name: seed-nginx-etc
+          image: {{ .Values.pods.api.image.repository }}:{{ .Values.pods.api.image.tag }}
+          imagePullPolicy: {{ .Values.pods.api.image.pullPolicy }}
+          command: ["sh", "-c", "cp -a /etc/nginx/. /nginx-etc/"]
+          volumeMounts:
+            - name: nginx-etc
+              mountPath: /nginx-etc
       containers:
         - name: main
           image: {{ .Values.pods.api.image.repository }}:{{ .Values.pods.api.image.tag }}
@@ -75,6 +95,17 @@ spec:
             - name: http
               containerPort: 5000
               protocol: TCP
+          volumeMounts:
+            - name: nginx-etc
+              mountPath: /etc/nginx
+            - name: nginx-log
+              mountPath: /var/log/nginx
+            - name: nginx-run
+              mountPath: /run
+            - name: nginx-cache
+              mountPath: /var/cache/nginx
+            - name: nginx-lib
+              mountPath: /var/lib/nginx
           readinessProbe:
             tcpSocket:
               port: 5000
@@ -91,3 +122,14 @@ spec:
             failureThreshold: 3
           resources:
             {{- toYaml .Values.pods.api.resources | nindent 12 }}
+      volumes:
+        - name: nginx-etc
+          emptyDir: {}
+        - name: nginx-log
+          emptyDir: {}
+        - name: nginx-run
+          emptyDir: {}
+        - name: nginx-cache
+          emptyDir: {}
+        - name: nginx-lib
+          emptyDir: {}
