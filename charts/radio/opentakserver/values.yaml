@@ -43,6 +43,9 @@ pods:
       runAsNonRoot: true
     env:
       DOCKER_OTS_DATA_FOLDER: /app/ots
+      # The milsimdk image's baked-in config.yml points at PostgreSQL on 127.0.0.1;
+      # this chart runs OTS single-pod with SQLite on the shared config PVC instead.
+      DOCKER_SQLALCHEMY_DATABASE_URI: sqlite:////app/ots/ots.db
       DOCKER_OTS_LISTENER_PORT: "8081"
       DOCKER_OTS_TCP_STREAMING_PORT: "8088"
       DOCKER_OTS_SSL_STREAMING_PORT: "8089"
