@@ -7,6 +7,12 @@ cluster:
   #  config:
   #    storageClassName: synology-iscsi
 
+# Cluster passthrough overrides this whole block (cluster/values.yaml config.cloudflare);
+# the value is a STRING ('true'/'false'), so gate on {{ eq (toString .Values.cloudflare.enabled) "true" }}.
+cloudflare:
+  enabled: false
+  top_level_domain: example.org
+
 application:
   name: OpenTAKServer
   group: Radio
@@ -170,6 +176,20 @@ pods:
       limits:
         cpu: "1"
         memory: 512Mi
+
+  cloudflared:
+    image:
+      repository: cloudflare/cloudflared
+      # renovate: datasource=docker depName=cloudflare/cloudflared versioning=loose
+      tag: 2026.8.2@sha256:0aa26e284f05e6c77ae375b8c9c11d9eb6a448fb7bcd8d40f31cb6176189eb38
+      pullPolicy: IfNotPresent
+    resources:
+      requests:
+        cpu: 10m
+        memory: 64Mi
+      limits:
+        cpu: 100m
+        memory: 128Mi
 
 externalSecret:
   data:

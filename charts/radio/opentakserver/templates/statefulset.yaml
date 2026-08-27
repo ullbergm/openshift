@@ -138,7 +138,30 @@ spec:
           resources:
             {{- toYaml .Values.pods.main.resources | nindent 12 }}
         {{- end }}
+        {{- if eq (toString .Values.cloudflare.enabled) "true" }}
+        - name: cloudflared
+          image: {{ .Values.pods.cloudflared.image.repository }}:{{ .Values.pods.cloudflared.image.tag }}
+          imagePullPolicy: {{ .Values.pods.cloudflared.image.pullPolicy }}
+          args: ["tunnel", "--config", "/etc/cloudflared/config/config.yaml", "run"]
+          env:
+            - name: TUNNEL_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: TUNNEL_TOKEN
+          volumeMounts:
+            - name: cloudflared-config
+              mountPath: /etc/cloudflared/config
+              readOnly: true
+          resources:
+            {{- toYaml .Values.pods.cloudflared.resources | nindent 12 }}
+        {{- end }}
       volumes:
         - name: config
           persistentVolumeClaim:
             claimName: {{ .Release.Name }}-config
+        {{- if eq (toString .Values.cloudflare.enabled) "true" }}
+        - name: cloudflared-config
+          configMap:
+            name: {{ .Release.Name }}-cloudflared
+        {{- end }}

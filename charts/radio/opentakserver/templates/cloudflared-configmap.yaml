@@ -1,0 +1,18 @@
+{{- if eq (toString .Values.cloudflare.enabled) "true" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-cloudflared
+data:
+  config.yaml: |-
+    # Tunnel token comes via TUNNEL_TOKEN env var
+    warp-routing:
+      enabled: true
+    ingress:
+      - hostname: {{ .Release.Name }}.{{ .Values.cloudflare.top_level_domain }}
+        path: ^/(api|Marti|socket\.io|ManagedFile|oauth)(/.*)?$
+        service: http://localhost:8081
+      - hostname: {{ .Release.Name }}.{{ .Values.cloudflare.top_level_domain }}
+        service: http://{{ .Release.Name }}-ui:8080
+      - service: http_status:404
+{{- end }}
