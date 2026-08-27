@@ -1,0 +1,17 @@
+{{- if and .Values.opentakserver .Values.opentakserver.adsb .Values.opentakserver.adsb.enabled }}
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-adsb-shim
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8080
+      targetPort: http
+      protocol: TCP
+  selector:
+    app.kubernetes.io/controller: adsb-shim
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}
+{{- end }}

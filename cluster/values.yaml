@@ -44,6 +44,10 @@ config:
   opentakserver:
     network:
       ip: 192.168.1.13
+    adsb:
+      enabled: true
+      lat: "0.0"
+      lon: "0.0"
 
   certificates:
     letsencrypt:

@@ -216,3 +216,11 @@ externalSecret:
 opentakserver:
   network:
     ip: ""
+  adsb:
+    enabled: false
+    # readsb/tar1090 aircraft.json of the local receiver
+    upstream: http://adsb-ultrafeeder.adsb.svc.cluster.local/data/aircraft.json
+    lat: "0.0"
+    lon: "0.0"
+    # nautical miles
+    radius: "25"

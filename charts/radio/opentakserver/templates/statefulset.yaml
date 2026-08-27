@@ -16,6 +16,16 @@
       key: POSTGRES_PASSWORD
 - name: DOCKER_SQLALCHEMY_DATABASE_URI
   value: postgresql+psycopg://{{ .Values.pods.db.user }}:$(POSTGRES_PASSWORD)@{{ .Release.Name }}-db:5432/{{ .Values.pods.db.database }}
+{{- if and .Values.opentakserver .Values.opentakserver.adsb .Values.opentakserver.adsb.enabled }}
+- name: DOCKER_OTS_ADSB_API_URL
+  value: http://{{ .Release.Name }}-adsb-shim:8080/point
+- name: DOCKER_OTS_ADSB_LAT
+  value: {{ .Values.opentakserver.adsb.lat | quote }}
+- name: DOCKER_OTS_ADSB_LON
+  value: {{ .Values.opentakserver.adsb.lon | quote }}
+- name: DOCKER_OTS_ADSB_RADIUS
+  value: {{ .Values.opentakserver.adsb.radius | quote }}
+{{- end }}
 {{- end }}
 apiVersion: apps/v1
 kind: StatefulSet

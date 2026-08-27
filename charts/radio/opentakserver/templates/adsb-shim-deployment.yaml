@@ -1,0 +1,67 @@
+{{- if and .Values.opentakserver .Values.opentakserver.adsb .Values.opentakserver.adsb.enabled }}
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-adsb-shim
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/controller: adsb-shim
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/controller: adsb-shim
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+    spec:
+      enableServiceLinks: false
+      serviceAccountName: {{ .Release.Name }}
+      automountServiceAccountToken: false
+      securityContext:
+        runAsUser: 1000
+        runAsGroup: 1000
+        runAsNonRoot: true
+      containers:
+        - name: shim
+          # Reuses the main OTS image (it already ships a system python3) so this
+          # shim needs no dedicated image or Renovate entry.
+          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
+          imagePullPolicy: {{ .Values.pods.main.image.pullPolicy }}
+          command: ["python3", "/shim/shim.py"]
+          env:
+            - name: TZ
+              value: {{ .Values.cluster.timezone }}
+            - name: UPSTREAM_URL
+              value: {{ .Values.opentakserver.adsb.upstream }}
+          ports:
+            - name: http
+              containerPort: 8080
+              protocol: TCP
+          readinessProbe:
+            tcpSocket:
+              port: 8080
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          volumeMounts:
+            - name: shim
+              mountPath: /shim
+          resources:
+            requests:
+              cpu: 10m
+              memory: 64Mi
+            limits:
+              cpu: 250m
+              memory: 128Mi
+      volumes:
+        - name: shim
+          configMap:
+            name: {{ .Release.Name }}-adsb-shim
+{{- end }}
