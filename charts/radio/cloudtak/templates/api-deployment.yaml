@@ -40,7 +40,7 @@ AWS_S3_SecretAccessKey, API_URL, PMTILES_URL. SigningSecret arrives via envFrom.
 - name: POSTGRES
   value: >-
     postgres://{{ .Values.pods.postgis.user }}:$(POSTGRES_PASSWORD)@{{ .Release.Name }}-postgis:5432/{{ .Values.pods.postgis.database }}
-{{- include "cloudtak.s3Env" . }}
+{{- include "cloudtak.s3Env" . | nindent 0 }}
 - name: API_URL
   value: "https://{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
 {{- end }}
