@@ -38,9 +38,15 @@ spec:
             - name: TZ
               value: {{ .Values.cluster.timezone }}
             - name: RABBITMQ_DEFAULT_USER
-              value: {{ .Values.pods.rabbitmq.auth.user | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: DOCKER_OTS_RABBITMQ_USERNAME
             - name: RABBITMQ_DEFAULT_PASS
-              value: {{ .Values.pods.rabbitmq.auth.pass | quote }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: DOCKER_OTS_RABBITMQ_PASSWORD
           ports:
             - name: amqp
               containerPort: 5672

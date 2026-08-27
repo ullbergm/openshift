@@ -95,10 +95,8 @@ pods:
       fsGroup: 999
       runAsNonRoot: true
     # AMQP (5672) and the management plugin stay ClusterIP-only; only MQTT (1883) reaches
-    # the LAN VIP for Meshtastic gateways. Override these for a hardened deployment.
-    auth:
-      user: guest
-      pass: guest
+    # the LAN VIP for Meshtastic gateways. Credentials come from the ExternalSecret
+    # (OTS_RABBITMQ_USERNAME / OTS_RABBITMQ_PASSWORD remote keys).
     config: |-
       loopback_users = none
       mqtt.listeners.tcp.default = 1883
@@ -159,6 +157,10 @@ externalSecret:
       remoteKey: OTS_CA_PASSWORD
     - secretKey: DOCKER_OTS_MEDIAMTX_TOKEN
       remoteKey: OTS_MEDIAMTX_TOKEN
+    - secretKey: DOCKER_OTS_RABBITMQ_USERNAME
+      remoteKey: OTS_RABBITMQ_USERNAME
+    - secretKey: DOCKER_OTS_RABBITMQ_PASSWORD
+      remoteKey: OTS_RABBITMQ_PASSWORD
 
 opentakserver:
   network:
