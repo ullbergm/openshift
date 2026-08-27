@@ -49,6 +49,30 @@ spec:
       automountServiceAccountToken: true
       securityContext:
         {{- toYaml .Values.pods.main.securityContext | nindent 8 }}
+      # Run the image's env-to-config.yml init before ANY process container starts.
+      # Without this, cot-parser/eud-handler can read config.yml before the api
+      # container's entrypoint has written changed DOCKER_* env values into it and
+      # then run indefinitely with stale settings (e.g. old RabbitMQ credentials).
+      initContainers:
+        - name: config-init
+          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
+          imagePullPolicy: {{ .Values.pods.main.image.pullPolicy }}
+          command: ["python3", "/etc/entrypoint.d/__init__.py", "--noinput"]
+          env:
+            {{- include "opentakserver.mainEnv" . | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}
+          volumeMounts:
+            - name: config
+              mountPath: /app/ots
+          resources:
+            requests:
+              cpu: 25m
+              memory: 128Mi
+            limits:
+              cpu: 500m
+              memory: 256Mi
       containers:
         # All OTS processes (api, cot-parser, eud-handler-*) share config.yml and the
         # generated CA on the same {release}-config PVC, so they MUST run as
