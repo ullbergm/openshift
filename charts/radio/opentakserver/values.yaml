@@ -145,7 +145,7 @@ pods:
     image:
       repository: bluenviron/mediamtx
       # renovate: datasource=docker depName=bluenviron/mediamtx versioning=loose
-      tag: 1.13.0-ffmpeg@sha256:1206e76bcbe9ced8975a0905a91a58b3a4a2577f395b6535e85595e755731cff
+      tag: 1.20.1-ffmpeg@sha256:16c56911dbd1fd7a85455042fa8320779fc8bf6575c6903f74023b202c1a620c
       pullPolicy: IfNotPresent
     securityContext:
       runAsUser: 1000
