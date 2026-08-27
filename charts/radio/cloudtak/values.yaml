@@ -150,10 +150,10 @@ pods:
 externalSecret:
   data:
     - secretKey: POSTGRES_PASSWORD
-      remoteKey: POSTGRES_PASSWORD
+      remoteKey: CLOUDTAK_POSTGRES_PASSWORD
     - secretKey: MINIO_ROOT_USER
-      remoteKey: MINIO_ROOT_USER
+      remoteKey: CLOUDTAK_MINIO_ROOT_USER
     - secretKey: MINIO_ROOT_PASSWORD
-      remoteKey: MINIO_ROOT_PASSWORD
+      remoteKey: CLOUDTAK_MINIO_ROOT_PASSWORD
     - secretKey: SigningSecret
-      remoteKey: SigningSecret
+      remoteKey: CLOUDTAK_SigningSecret
