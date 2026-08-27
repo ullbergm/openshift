@@ -1,0 +1,137 @@
+{{- define "opentakserver.mainEnv" -}}
+- name: TZ
+  value: {{ .Values.cluster.timezone }}
+{{- range $key, $value := .Values.pods.main.env }}
+- name: {{ $key }}
+  value: "{{ $value }}"
+{{- end }}
+- name: DOCKER_OTS_RABBITMQ_SERVER_ADDRESS
+  value: {{ .Release.Name }}-rabbitmq
+- name: DOCKER_OTS_MEDIAMTX_API_ADDRESS
+  value: http://{{ .Release.Name }}-mediamtx:9997
+{{- end }}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}
+  labels:
+    kasten/backup: "true"
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  revisionHistoryLimit: 1
+  podManagementPolicy: OrderedReady
+  updateStrategy:
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app.kubernetes.io/controller: main
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  serviceName: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/controller: main
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+    spec:
+      enableServiceLinks: false
+      serviceAccountName: {{ .Release.Name }}
+      automountServiceAccountToken: true
+      securityContext:
+        {{- toYaml .Values.pods.main.securityContext | nindent 8 }}
+      containers:
+        # All OTS processes (api, cot-parser, eud-handler-*) share config.yml, the SQLite
+        # DB and the generated CA on the same {release}-config PVC, so they MUST run as
+        # containers in this single-replica pod (see T-OTS-05).
+        - name: api
+          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
+          imagePullPolicy: {{ .Values.pods.main.image.pullPolicy }}
+          env:
+            {{- include "opentakserver.mainEnv" . | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}
+          ports:
+            - name: http
+              containerPort: 8081
+              protocol: TCP
+          volumeMounts:
+            - name: config
+              mountPath: /app/ots
+          readinessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          livenessProbe:
+            tcpSocket:
+              port: 8081
+            initialDelaySeconds: 30
+            periodSeconds: 20
+            timeoutSeconds: 5
+            failureThreshold: 3
+          resources:
+            {{- toYaml .Values.pods.main.resources | nindent 12 }}
+        - name: cot-parser
+          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
+          imagePullPolicy: {{ .Values.pods.main.image.pullPolicy }}
+          command: ["python3", "/app/.opentakserver_venv/bin/cot_parser"]
+          env:
+            {{- include "opentakserver.mainEnv" . | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}
+          volumeMounts:
+            - name: config
+              mountPath: /app/ots
+          resources:
+            {{- toYaml .Values.pods.main.resources | nindent 12 }}
+        - name: eud-handler-ssl
+          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
+          imagePullPolicy: {{ .Values.pods.main.image.pullPolicy }}
+          command: ["python3", "/app/.opentakserver_venv/bin/eud_handler", "--ssl"]
+          env:
+            {{- include "opentakserver.mainEnv" . | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}
+          ports:
+            - name: cot-ssl
+              containerPort: 8089
+              protocol: TCP
+          volumeMounts:
+            - name: config
+              mountPath: /app/ots
+          resources:
+            {{- toYaml .Values.pods.main.resources | nindent 12 }}
+        {{- if .Values.pods.main.tcpStreaming.enabled }}
+        # Plaintext CoT is off by default (T-OTS-01); enable pods.main.tcpStreaming.enabled
+        # only on a trusted LAN.
+        - name: eud-handler-tcp
+          image: {{ .Values.pods.main.image.repository }}:{{ .Values.pods.main.image.tag }}
+          imagePullPolicy: {{ .Values.pods.main.image.pullPolicy }}
+          command: ["python3", "/app/.opentakserver_venv/bin/eud_handler", "--no-ssl"]
+          env:
+            {{- include "opentakserver.mainEnv" . | nindent 12 }}
+          envFrom:
+            - secretRef:
+                name: {{ .Release.Name }}
+          ports:
+            - name: cot-tcp
+              containerPort: 8088
+              protocol: TCP
+          volumeMounts:
+            - name: config
+              mountPath: /app/ots
+          resources:
+            {{- toYaml .Values.pods.main.resources | nindent 12 }}
+        {{- end }}
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: {{ .Release.Name }}-config

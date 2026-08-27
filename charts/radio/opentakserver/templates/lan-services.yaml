@@ -1,0 +1,87 @@
+{{- if and .Values.opentakserver .Values.opentakserver.network .Values.opentakserver.network.ip }}
+{{/*
+TAK client CoT/TLS, Meshtastic MQTT and the video protocols are not HTTP and cannot
+traverse an edge Route, and this repo has no LoadBalancer; use the keepalived externalIPs
+pattern (see charts/home-automation/neolink). Three distinct Services are required because
+one Service can only have one selector; sharing an external IP across Services with
+disjoint ports is fine.
+*/}}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-lan
+  annotations:
+    keepalived-operator.redhat-cop.io/keepalivedgroup: "keepalived-operator/lan"
+spec:
+  type: ClusterIP
+  externalIPs:
+    - {{ .Values.opentakserver.network.ip }}
+  ports:
+    - name: cot-ssl
+      port: 8089
+      targetPort: 8089
+      protocol: TCP
+    {{- if .Values.pods.main.tcpStreaming.enabled }}
+    - name: cot-tcp
+      port: 8088
+      targetPort: 8088
+      protocol: TCP
+    {{- end }}
+  selector:
+    app.kubernetes.io/controller: main
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-rabbitmq-lan
+  annotations:
+    keepalived-operator.redhat-cop.io/keepalivedgroup: "keepalived-operator/lan"
+spec:
+  type: ClusterIP
+  externalIPs:
+    - {{ .Values.opentakserver.network.ip }}
+  ports:
+    - name: mqtt
+      port: 1883
+      targetPort: 1883
+      protocol: TCP
+  selector:
+    app.kubernetes.io/controller: rabbitmq
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-mediamtx-lan
+  annotations:
+    keepalived-operator.redhat-cop.io/keepalivedgroup: "keepalived-operator/lan"
+spec:
+  type: ClusterIP
+  externalIPs:
+    - {{ .Values.opentakserver.network.ip }}
+  ports:
+    - name: rtsp
+      port: 8554
+      targetPort: 8554
+      protocol: TCP
+    - name: rtmp
+      port: 1935
+      targetPort: 1935
+      protocol: TCP
+    - name: hls
+      port: 8888
+      targetPort: 8888
+      protocol: TCP
+    - name: srt
+      port: 8890
+      targetPort: 8890
+      protocol: UDP
+  selector:
+    app.kubernetes.io/controller: mediamtx
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}
+{{- end }}

@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-ui
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/controller: ui
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/controller: ui
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+    spec:
+      enableServiceLinks: false
+      serviceAccountName: {{ .Release.Name }}
+      automountServiceAccountToken: false
+      securityContext:
+        {{- toYaml .Values.pods.ui.securityContext | nindent 8 }}
+      containers:
+        - name: ui
+          image: {{ .Values.pods.ui.image.repository }}:{{ .Values.pods.ui.image.tag }}
+          imagePullPolicy: {{ .Values.pods.ui.image.pullPolicy }}
+          env:
+            - name: TZ
+              value: {{ .Values.cluster.timezone }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.pods.ui.containerPort | default 80 }}
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.pods.ui.resources | nindent 12 }}

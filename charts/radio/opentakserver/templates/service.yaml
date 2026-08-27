@@ -1,0 +1,46 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8081
+      targetPort: 8081
+      protocol: TCP
+    - name: cot-ssl
+      port: 8089
+      targetPort: 8089
+      protocol: TCP
+    {{- if .Values.pods.main.tcpStreaming.enabled }}
+    - name: cot-tcp
+      port: 8088
+      targetPort: 8088
+      protocol: TCP
+    {{- end }}
+  selector:
+    app.kubernetes.io/controller: main
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}
+{{- if and .Values.pods.ui.backendAlias .Values.pods.ui.backendAlias.enabled }}
+---
+# Alias Service: the ots-ui image's baked-in nginx proxies API calls to an upstream
+# named "ots"; this Service makes that resolve in-cluster without rebuilding the image.
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.pods.ui.backendAlias.name | default "ots" }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8081
+      targetPort: 8081
+      protocol: TCP
+  selector:
+    app.kubernetes.io/controller: main
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}
+{{- end }}

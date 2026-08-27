@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-rabbitmq
+data:
+  # Meshtastic gateways speak MQTT; OTS itself speaks AMQP.
+  enabled_plugins: |-
+    [rabbitmq_mqtt].
+  rabbitmq.conf: |-
+    {{- .Values.pods.rabbitmq.config | nindent 4 }}

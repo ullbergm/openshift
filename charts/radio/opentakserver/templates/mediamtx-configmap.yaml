@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-mediamtx
+data:
+  mediamtx.yml: |-
+    {{- tpl .Values.pods.mediamtx.config . | nindent 4 }}

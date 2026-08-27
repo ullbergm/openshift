@@ -1,0 +1,32 @@
+apiVersion: v2
+description: A Helm chart for OpenTAKServer
+name: opentakserver
+version: 1.0.0
+appVersion: "1.7.11"
+kubeVersion: ">=1.31.0-0"
+home: https://github.com/brian7704/OpenTAKServer
+sources:
+  - https://github.com/brian7704/OpenTAKServer
+  - https://github.com/ullbergm/openshift
+keywords:
+  - opentakserver
+  - tak
+  - atak
+  - cot
+  - meshtastic
+  - radio
+annotations:
+  charts.openshift.io/name: opentakserver
+  charts.openshift.io/provider: ullberg
+  charts.openshift.io/providerType: community
+  category: Radio
+  licenses: GPL-3.0-only
+
+maintainers:
+  - name: Magnus Ullberg
+    email: magnus@ullberg.us
+
+dependencies:
+  - name: common
+    version: 1.2.0
+    repository: file://../../_common

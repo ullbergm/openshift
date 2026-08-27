@@ -1,0 +1,165 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  #storage:
+  #  config:
+  #    storageClassName: synology-iscsi
+
+application:
+  name: OpenTAKServer
+  group: Radio
+  icon: mdi:radio-tower
+  iconColor: ""
+  image: ""
+  description: "TAK server for ATAK, iTAK and WinTAK clients"
+  port: 8081
+  location: 0
+  configSize: 25Gi
+  apiPaths:
+    - /api
+    - /Marti
+    - /socket.io
+    - /ManagedFile
+    - /oauth
+
+pods:
+  main:
+    image:
+      repository: ghcr.io/milsimdk/ots-docker-image
+      # renovate: datasource=docker depName=ghcr.io/milsimdk/ots-docker-image versioning=loose
+      tag: 1.7.11@sha256:af0857b951675019acac5a8eb03f025ac607ef7371217bbbb4ede15a39fe837c
+      pullPolicy: IfNotPresent
+    # Plaintext CoT (8088) is off by design (threat model T-OTS-01); only the TLS
+    # listener (8089) is started and exposed. Set to true to also start eud-handler-tcp.
+    tcpStreaming:
+      enabled: false
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+      runAsNonRoot: true
+    env:
+      DOCKER_OTS_DATA_FOLDER: /app/ots
+      DOCKER_OTS_LISTENER_PORT: "8081"
+      DOCKER_OTS_TCP_STREAMING_PORT: "8088"
+      DOCKER_OTS_SSL_STREAMING_PORT: "8089"
+      DOCKER_OTS_ENABLE_MESHTASTIC: "true"
+      DOCKER_OTS_MESHTASTIC_TOPIC: opentakserver
+      DOCKER_OTS_ENABLE_MEDIAMTX: "true"
+    resources:
+      requests:
+        cpu: 250m
+        memory: 512Mi
+      limits:
+        cpu: "2"
+        memory: 2Gi
+
+  ui:
+    image:
+      repository: ghcr.io/milsimdk/ots-ui-docker-image
+      # renovate: datasource=docker depName=ghcr.io/milsimdk/ots-ui-docker-image versioning=loose
+      tag: 1.7.4@sha256:9895cc66f697d99e24d33eb7afa1ab96e40a66d19975d9d60eca1afda9467168
+      pullPolicy: IfNotPresent
+    containerPort: 80
+    securityContext:
+      # The ots-ui image bundles nginx which binds :80 and requires root today.
+      # Switch to runAsUser/runAsGroup 101 or 8080 if a rootless nginx build ships upstream.
+      runAsUser: 0
+      runAsGroup: 0
+    # The ots-ui image's baked-in nginx proxies to an upstream named "ots"; this alias
+    # Service makes that resolve in-cluster without rebuilding the image.
+    backendAlias:
+      enabled: true
+      name: ots
+    resources:
+      requests:
+        cpu: 25m
+        memory: 64Mi
+      limits:
+        cpu: 250m
+        memory: 128Mi
+
+  rabbitmq:
+    image:
+      repository: rabbitmq
+      # renovate: datasource=docker depName=rabbitmq versioning=docker
+      tag: 4.1-alpine@sha256:35cbf42b607746f405db5a74137fde10c21435624fb9ddaeb26f3c42be694864
+      pullPolicy: IfNotPresent
+    size: 5Gi
+    securityContext:
+      runAsUser: 999
+      runAsGroup: 999
+      fsGroup: 999
+      runAsNonRoot: true
+    # AMQP (5672) and the management plugin stay ClusterIP-only; only MQTT (1883) reaches
+    # the LAN VIP for Meshtastic gateways. Override these for a hardened deployment.
+    auth:
+      user: guest
+      pass: guest
+    config: |-
+      loopback_users = none
+      mqtt.listeners.tcp.default = 1883
+      mqtt.allow_anonymous = false
+      mqtt.vhost = /
+      mqtt.exchange = amq.topic
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+      limits:
+        cpu: "1"
+        memory: 512Mi
+
+  mediamtx:
+    image:
+      repository: bluenviron/mediamtx
+      # renovate: datasource=docker depName=bluenviron/mediamtx versioning=loose
+      tag: 1.13.0-ffmpeg@sha256:1206e76bcbe9ced8975a0905a91a58b3a4a2577f395b6535e85595e755731cff
+      pullPolicy: IfNotPresent
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      runAsNonRoot: true
+    # OTS is MediaMTX's external auth server (shared secret: OTS_MEDIAMTX_TOKEN); rendered
+    # through `tpl` so the release name can be interpolated into authHTTPAddress.
+    config: |-
+      api: yes
+      apiAddress: :9997
+      authMethod: http
+      authHTTPAddress: http://{{ .Release.Name }}:8081/api/external_auth
+      authHTTPExclude:
+        - action: api
+        - action: metrics
+      rtsp: yes
+      rtspAddress: :8554
+      rtmp: yes
+      rtmpAddress: :1935
+      hls: yes
+      hlsAddress: :8888
+      srt: yes
+      srtAddress: :8890
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        cpu: "1"
+        memory: 512Mi
+
+externalSecret:
+  data:
+    - secretKey: DOCKER_SECRET_KEY
+      remoteKey: OTS_SECRET_KEY
+    - secretKey: DOCKER_SECURITY_PASSWORD_SALT
+      remoteKey: OTS_SECURITY_PASSWORD_SALT
+    - secretKey: DOCKER_OTS_CA_PASSWORD
+      remoteKey: OTS_CA_PASSWORD
+    - secretKey: DOCKER_OTS_MEDIAMTX_TOKEN
+      remoteKey: OTS_MEDIAMTX_TOKEN
+
+opentakserver:
+  network:
+    ip: ""

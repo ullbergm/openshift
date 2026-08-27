@@ -1,0 +1,22 @@
+---
+# Written longhand (not common.route) because the SPA and API are different Services
+# sharing one hostname split by path.
+kind: Route
+apiVersion: route.openshift.io/v1
+metadata:
+  annotations:
+    route.openshift.io/termination: "edge"
+  name: {{ .Release.Name }}
+spec:
+  host: "{{ .Release.Name }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
+  path: /
+  to:
+    kind: Service
+    name: {{ .Release.Name }}-ui
+    weight: 100
+  port:
+    targetPort: http
+  tls:
+    termination: edge
+    insecureEdgeTerminationPolicy: Redirect
+  wildcardPolicy: None

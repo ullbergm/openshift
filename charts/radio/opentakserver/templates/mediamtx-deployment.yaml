@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-mediamtx
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/controller: mediamtx
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/controller: mediamtx
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+    spec:
+      enableServiceLinks: false
+      serviceAccountName: {{ .Release.Name }}
+      automountServiceAccountToken: false
+      securityContext:
+        {{- toYaml .Values.pods.mediamtx.securityContext | nindent 8 }}
+      containers:
+        - name: mediamtx
+          image: {{ .Values.pods.mediamtx.image.repository }}:{{ .Values.pods.mediamtx.image.tag }}
+          imagePullPolicy: {{ .Values.pods.mediamtx.image.pullPolicy }}
+          env:
+            - name: TZ
+              value: {{ .Values.cluster.timezone }}
+          ports:
+            - name: api
+              containerPort: 9997
+              protocol: TCP
+            - name: rtsp
+              containerPort: 8554
+              protocol: TCP
+            - name: rtmp
+              containerPort: 1935
+              protocol: TCP
+            - name: hls
+              containerPort: 8888
+              protocol: TCP
+            - name: srt
+              containerPort: 8890
+              protocol: UDP
+          volumeMounts:
+            - name: config
+              mountPath: /mediamtx.yml
+              subPath: mediamtx.yml
+          resources:
+            {{- toYaml .Values.pods.mediamtx.resources | nindent 12 }}
+      volumes:
+        - name: config
+          configMap:
+            name: {{ .Release.Name }}-mediamtx
