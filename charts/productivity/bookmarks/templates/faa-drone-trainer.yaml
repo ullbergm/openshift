@@ -1,0 +1,13 @@
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha4" }}
+---
+apiVersion: startpunkt.ullberg.us/v1alpha4
+kind: Bookmark
+metadata:
+  name: faa-drone-trainer
+spec:
+  name: FAA Part 107 Practice
+  group: Education
+  icon: mdi:quadcopter
+  url: https://faa-drone.ullberg.io/
+  info: FAA Part 107 remote pilot practice
+{{- end }}

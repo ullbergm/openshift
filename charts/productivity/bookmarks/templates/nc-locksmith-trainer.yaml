@@ -1,0 +1,13 @@
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha4" }}
+---
+apiVersion: startpunkt.ullberg.us/v1alpha4
+kind: Bookmark
+metadata:
+  name: nc-locksmith-trainer
+spec:
+  name: NC Locksmith Practice
+  group: Education
+  icon: mdi:key-variant
+  url: https://locksmith.ullberg.io/
+  info: NC Locksmith Licensing Exam practice
+{{- end }}

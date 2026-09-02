@@ -1,0 +1,13 @@
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha4" }}
+---
+apiVersion: startpunkt.ullberg.us/v1alpha4
+kind: Bookmark
+metadata:
+  name: epa-trainer
+spec:
+  name: EPA 608/609 Practice
+  group: Education
+  icon: mdi:hvac
+  url: https://epa.ullberg.io/
+  info: EPA Section 608/609 refrigerant certification practice
+{{- end }}
