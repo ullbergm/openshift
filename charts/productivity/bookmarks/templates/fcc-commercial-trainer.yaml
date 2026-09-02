@@ -5,7 +5,7 @@ kind: Bookmark
 metadata:
   name: fcc-commercial-trainer
 spec:
-  name: FCC Commercial Practice
+  name: FCC Commercial
   group: Education
   icon: mdi:radio-tower
   url: https://fcc-commercial.ullberg.io/

@@ -5,7 +5,7 @@ kind: Bookmark
 metadata:
   name: faa-drone-trainer
 spec:
-  name: FAA Part 107 Practice
+  name: FAA Part 107
   group: Education
   icon: mdi:quadcopter
   url: https://faa-drone.ullberg.io/

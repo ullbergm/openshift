@@ -5,7 +5,7 @@ kind: Bookmark
 metadata:
   name: nc-locksmith-trainer
 spec:
-  name: NC Locksmith Practice
+  name: NC Locksmith
   group: Education
   icon: mdi:key-variant
   url: https://locksmith.ullberg.io/

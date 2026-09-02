@@ -5,7 +5,7 @@ kind: Bookmark
 metadata:
   name: epa-trainer
 spec:
-  name: EPA 608/609 Practice
+  name: EPA 608/609
   group: Education
   icon: mdi:hvac
   url: https://epa.ullberg.io/

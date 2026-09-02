@@ -5,7 +5,7 @@ kind: Bookmark
 metadata:
   name: nc-pesticide
 spec:
-  name: NC Pesticide Practice
+  name: NC Pesticide
   group: Education
   icon: fa:seedling
   url: https://nc-pesticide.ullberg.io/

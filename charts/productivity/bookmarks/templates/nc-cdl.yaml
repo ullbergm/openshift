@@ -5,7 +5,7 @@ kind: Bookmark
 metadata:
   name: nc-cdl
 spec:
-  name: NC CDL Practice
+  name: NC CDL
   group: Education
   icon: font-awesome:truck
   url: https://nc-cdl.ullberg.io/
