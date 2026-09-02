@@ -9,5 +9,5 @@ spec:
   group: Education
   icon: fa:seedling
   url: https://nc-pesticide.ullberg.io/
-  info: NC CDL Practice
+  info: NC Pesticide Practice
 {{- end }}
