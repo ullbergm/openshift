@@ -12,7 +12,7 @@ spec:
         elements:
         - name: adsb
         - name: cloudtak
-        - name: opentakserver
+        #- name: opentakserver
   template:
     metadata:
       name: '{{ "{{" }} .name {{ "}}" }}'
