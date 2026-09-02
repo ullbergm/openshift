@@ -11,7 +11,7 @@ spec:
     - list:
         elements:
         - name: adsb
-        - name: cloudtak
+        #- name: cloudtak
         #- name: opentakserver
   template:
     metadata:
