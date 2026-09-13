@@ -33,6 +33,7 @@ The deployment model follows a two-tier architecture:
     │   ├── gatus/             # Service monitoring and health checks
     │   └── goldilocks/        # VPA recommendations dashboard
     ├── media/
+    │   ├── gallery-dl-server/ # Image gallery and media downloader web UI
     │   ├── metube/            # YouTube downloader web UI
     │   └── pinchflat/         # YouTube channel archiver
     ├── productivity/
@@ -93,6 +94,7 @@ Each application in the `/charts` directory is a complete Helm chart with:
 
 ### Media Applications
 
+- **gallery-dl-server**: Web UI for gallery-dl and yt-dlp downloads
 - **MeTube**: Video download tool
 - **Pinchflat**: YouTube channel archiver and downloader
 

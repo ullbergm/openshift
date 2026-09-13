@@ -1,0 +1,40 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: gallery-dl
+  group: Media
+  icon: mdi:image-multiple
+  iconColor: ""
+  image: "https://raw.githubusercontent.com/qx6ghqkz/gallery-dl-server/main/gallery_dl_server/static/icons/android-chrome-192x192.png"
+  description: "Download image galleries and media"
+  port: 9080
+  # The web UI is served under /gallery-dl; / only redirects there.
+  path: /gallery-dl
+  location: 0
+
+pods:
+  main:
+    image:
+      repository: docker.io/qx6ghqkz/gallery-dl-server
+      # renovate: datasource=docker depName=docker.io/qx6ghqkz/gallery-dl-server versioning=semver
+      tag: 0.8.1@sha256:ece9b3e4723d228de60397372a51ec61124091f0cfcb4d5754cfe3049293e836
+      pullPolicy: IfNotPresent
+    env:
+      # Match the pod securityContext so start.sh runs the server directly
+      # (no su-exec) and keeps the pod's supplemental groups for NFS access.
+      UID: "1000"
+      GID: "1000"
+      UMASK: "002"
+      LOG_LEVEL: info
+      SERVER_LOG_LEVEL: info
