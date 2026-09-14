@@ -28,6 +28,21 @@
       ignoreTests: false,
     },
     {
+      description: "Auto-merge digest updates for Docker Hub official/sidecar images",
+      matchDatasources: ["docker"],
+      automerge: true,
+      automergeType: "branch",
+      matchUpdateTypes: ["digest"],
+      matchPackageNames: [
+        "postgres",
+        "redis",
+        "rabbitmq",
+        "python",
+        "docker.io/alpine/git",
+      ],
+      ignoreTests: false,
+    },
+    {
       description: "Auto-merge container minor and patch updates for standard apps",
       matchDatasources: ["docker"],
       automerge: true,
@@ -37,6 +52,7 @@
         // Media apps
         "/metube/",
         "/pinchflat/",
+        "/gallery-dl-server/",
         // AI apps
         "/ollama/",
         "/open-webui/",
