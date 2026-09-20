@@ -28,7 +28,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/ladle
       # renovate: datasource=docker depName=ghcr.io/ullbergm/ladle versioning=semver
-      tag: 0.1.1@sha256:cb6a70441d34ca4d6e3d6e6f080e09a45f7cfb0c1f3c11f3c5bd12a69c9076a0
+      tag: 0.2.0@sha256:4843ffca04f962f4b923243fddc212e472392445c68b58c9b7d57d750098fe3f
       pullPolicy: IfNotPresent
     env:
       LADLE_DATA_ROOT: /data
