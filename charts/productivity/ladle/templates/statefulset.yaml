@@ -53,12 +53,15 @@ spec:
             - name: http
               containerPort: {{ .Values.application.port }}
               protocol: TCP
+          # /readyz stays 503 until the index has caught up with the library
+          # folders and the job worker is alive; /healthz only says the process is up.
           readinessProbe:
             httpGet:
               path: /readyz
               port: http
             initialDelaySeconds: 5
             periodSeconds: 10
+            failureThreshold: 60
           livenessProbe:
             httpGet:
               path: /healthz
