@@ -1,0 +1,46 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Ladle
+  group: Productivity
+  icon: mdi:pot-steam
+  iconColor: ""
+  image: ""
+  description: "r/GifRecipes archive and cookbook"
+  port: 8070
+  location: 0
+  # clips are small MP4s; the whole subreddit is on the order of 50-100 GB
+  configSize: 200Gi
+
+pods:
+  main:
+    image:
+      repository: ghcr.io/ullbergm/ladle
+      # renovate: datasource=docker depName=ghcr.io/ullbergm/ladle versioning=semver
+      tag: 0.1.0@sha256:0700f43caaa46c0aba6842c0cd51a6508436d9a2fd6fe0c71d38deb20996d872
+      pullPolicy: IfNotPresent
+    env:
+      LADLE_DATA_ROOT: /data
+      LADLE_SWEEP_INTERVAL: "2"
+      LADLE_COOKIE_SECURE: "true"   # the Route terminates TLS
+
+# Pulled from Infisical by the External Secrets Operator and handed to the
+# container as environment variables. The Reddit pair comes from a "script"
+# app at reddit.com/prefs/apps; the admin pair seeds the first login.
+externalSecret:
+  data:
+    - LADLE_REDDIT_CLIENT_ID
+    - LADLE_REDDIT_CLIENT_SECRET
+    - LADLE_ADMIN_USER
+    - LADLE_ADMIN_PASSWORD
