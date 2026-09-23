@@ -13,26 +13,6 @@
     },
     {
       matchManagers: ["helm", "helm-values"],
-      matchPackageNames: ["ghcr.io/home-operations/radarr"],
-      allowedVersions: "<6",
-      description: [
-        "RATIONALE: radarr v6 introduced breaking changes (database schema + indexer config) that have not been validated against this cluster's library.",
-        "REVISIT: 2026-11-15 (or when migration guide is reviewed and indexer reconfiguration is planned).",
-        "OWNER: magnus",
-      ],
-    },
-    {
-      matchManagers: ["helm", "helm-values"],
-      matchPackageNames: ["ghcr.io/home-operations/lidarr"],
-      allowedVersions: "<3",
-      description: [
-        "RATIONALE: lidarr v3 introduced breaking changes that have not been validated against this cluster's library.",
-        "REVISIT: 2026-11-15 (or when v3 migration is planned alongside the radarr v6 work).",
-        "OWNER: magnus",
-      ],
-    },
-    {
-      matchManagers: ["helm", "helm-values"],
       matchPackageNames: ["postgres"],
       allowedVersions: "<18",
       description: [
