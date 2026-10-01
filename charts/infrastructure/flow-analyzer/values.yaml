@@ -97,14 +97,14 @@ flow-analyzer:
     # LAN address the routers send NetFlow/IPFIX to (UDP 2055), announced by
     # keepalived. Empty keeps the collector reachable only inside the cluster.
     ip: ""
-    # The keepalived LAN services in this repo SNAT incoming traffic, so the
-    # collector would see every router as a node address: it could not tell
-    # exporters apart and allowedExporters could not be used. true keeps the
-    # router's address instead: the Service becomes type LoadBalancer with
-    # externalTrafficPolicy Local (keepalived then only announces the VIP from
-    # nodes running the collector, via the health check node port) and the
-    # collector is pinned to the keepalived nodes, the masters.
-    preserveSourceIp: false
+    # A plain keepalived externalIP Service SNATs incoming traffic: OVN hands
+    # the collector every datagram from 100.64.0.x, so it cannot tell exporters
+    # apart and allowedExporters drops everything. true keeps the router's
+    # address: the Service becomes type LoadBalancer with externalTrafficPolicy
+    # Local (keepalived then only announces the VIP from nodes running the
+    # collector, via the health check node port) and the collector is pinned
+    # to the keepalived nodes, the masters.
+    preserveSourceIp: true
   # Routers allowed to send flows (addresses or CIDRs, comma-separated).
   # Empty accepts any source. Only meaningful with preserveSourceIp.
   allowedExporters: ""
