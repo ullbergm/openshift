@@ -1,6 +1,5 @@
 {{- $cfg := index .Values "flow-analyzer" }}
 {{- $lan := and $cfg.network $cfg.network.ip }}
-{{- $local := and $lan $cfg.network.preserveSourceIp }}
 {{/*
 The collector keeps NetFlow v9 / IPFIX template state in memory, so it runs as
 one replica and is replaced rather than rolled: two collectors behind one UDP
@@ -34,13 +33,6 @@ spec:
       enableServiceLinks: false
       serviceAccountName: {{ .Release.Name }}
       automountServiceAccountToken: false
-      {{- if $local }}
-      # externalTrafficPolicy Local only delivers traffic on nodes that run the
-      # pod, and keepalived only announces the VIP from those; they have to be
-      # the keepalived group's nodes.
-      nodeSelector:
-        node-role.kubernetes.io/master: ""
-      {{- end }}
       securityContext:
         runAsNonRoot: true
         seccompProfile:
@@ -105,32 +97,31 @@ spec:
           resources:
             {{- toYaml .Values.pods.collector.resources | nindent 12 }}
 ---
-# Flow exports enter here. A Route cannot carry UDP, so the Service gets a LAN
-# address from keepalived like the other non-HTTP services in this repo.
+# Flow exports enter here. A Route cannot carry UDP, so MetalLB gives the
+# Service a LAN address. externalTrafficPolicy Local makes MetalLB announce it
+# from the node running the collector, which keeps the router's source
+# address; with Cluster, OVN would SNAT every datagram to 100.64.0.x and the
+# collector could not tell exporters apart.
 apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Release.Name }}-collector
   {{- if $lan }}
   annotations:
-    keepalived-operator.redhat-cop.io/keepalivedgroup: "keepalived-operator/lan"
+    metallb.io/loadBalancerIPs: {{ $cfg.network.ip | quote }}
   {{- end }}
 spec:
-  {{- if $local }}
-  # LoadBalancer only so that Kubernetes allocates the health check node port
-  # keepalived's track script needs. The class keeps MetalLB from also handing
-  # the Service an address from its pool and announcing that one; nothing
-  # implements this class, so the LoadBalancer status stays empty.
+  {{- if $lan }}
   type: LoadBalancer
-  loadBalancerClass: keepalived-operator.redhat-cop.io/external-ip
   externalTrafficPolicy: Local
   allocateLoadBalancerNodePorts: false
-  {{- else }}
-  type: ClusterIP
-  {{- end }}
-  {{- if $lan }}
+  # OpenShift's ingress-IP controller (network.config externalIP
+  # autoAssignCIDRs) copies a LoadBalancer's status address into
+  # spec.externalIPs; declaring it here keeps the Service in sync.
   externalIPs:
     - {{ $cfg.network.ip }}
+  {{- else }}
+  type: ClusterIP
   {{- end }}
   ports:
     - name: netflow

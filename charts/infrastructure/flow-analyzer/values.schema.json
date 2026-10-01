@@ -52,11 +52,7 @@
           "properties": {
             "ip": {
               "type": "string",
-              "description": "LAN address (keepalived VIP) the routers send flows to; empty for cluster-internal only"
-            },
-            "preserveSourceIp": {
-              "type": "boolean",
-              "description": "Keep the exporter's source address (LoadBalancer + externalTrafficPolicy Local, collector pinned to the keepalived nodes)"
+              "description": "MetalLB LoadBalancer address the routers send flows to; empty for cluster-internal only"
             }
           }
         },
