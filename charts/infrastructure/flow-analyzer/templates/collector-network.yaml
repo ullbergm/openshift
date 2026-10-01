@@ -1,0 +1,30 @@
+{{- $cfg := index .Values "flow-analyzer" }}
+{{- if and $cfg.network $cfg.network.ip }}
+{{/*
+A second interface for the collector straight on the LAN (OVN-Kubernetes
+localnet topology on the physical network mapped to br-ex). The pod network
+cannot carry the router's exports: its MTU is 1400 and OVN answers larger
+packets with ICMP "fragmentation needed", which the MikroTik ignores, while
+every Service path (MetalLB, keepalived, host network) either drops those
+datagrams or SNATs away the exporter's address. On the localnet interface the
+datagrams arrive at 1500 bytes from the router's own address, and the address
+below moves with the pod. No subnets are declared, so OVN does no IPAM and the
+pod annotation assigns the address.
+*/}}
+---
+apiVersion: k8s.cni.cncf.io/v1
+kind: NetworkAttachmentDefinition
+metadata:
+  name: {{ .Release.Name }}-lan
+spec:
+  config: |
+    {
+      "cniVersion": "0.4.0",
+      "name": "{{ .Release.Name }}-lan",
+      "type": "ovn-k8s-cni-overlay",
+      "topology": "localnet",
+      "physicalNetworkName": {{ $cfg.network.physicalNetworkName | quote }},
+      "mtu": {{ $cfg.network.mtu }},
+      "netAttachDefName": "{{ .Release.Namespace }}/{{ .Release.Name }}-lan"
+    }
+{{- end }}

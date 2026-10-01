@@ -52,7 +52,20 @@
           "properties": {
             "ip": {
               "type": "string",
-              "description": "MetalLB LoadBalancer address the routers send flows to; empty for cluster-internal only"
+              "description": "Static LAN address of the collector's localnet interface; empty for cluster-internal only"
+            },
+            "prefixLength": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 32
+            },
+            "physicalNetworkName": {
+              "type": "string",
+              "description": "OVN bridge mapping name (ovn-bridge-mappings '<name>:br-ex' on every node)"
+            },
+            "mtu": {
+              "type": "integer",
+              "minimum": 576
             }
           }
         },

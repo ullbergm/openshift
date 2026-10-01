@@ -94,10 +94,17 @@ pods:
 # Site specifics; set the real values in cluster values like the other LAN IPs.
 flow-analyzer:
   network:
-    # LAN address the routers send NetFlow/IPFIX to (UDP 2055): a MetalLB
-    # LoadBalancer address, so it has to come from one of its pools. Empty
-    # keeps the collector reachable only inside the cluster.
+    # LAN address the routers send NetFlow/IPFIX to (UDP 2055). It sits on a
+    # second interface of the collector pod, directly on the LAN (OVN localnet
+    # over br-ex): the pod network's 1400-byte MTU drops the router's 1412-byte
+    # datagrams and every Service path SNATs away the exporter's address. Pick
+    # a free static address outside DHCP and MetalLB's pool. Empty keeps the
+    # collector reachable only inside the cluster.
     ip: ""
+    prefixLength: 24
+    # OVN bridge mapping name on the nodes (ovn-bridge-mappings "<name>:br-ex").
+    physicalNetworkName: lan
+    mtu: 1500
   # Routers allowed to send flows (addresses or CIDRs, comma-separated).
   # Empty accepts any source.
   allowedExporters: ""
