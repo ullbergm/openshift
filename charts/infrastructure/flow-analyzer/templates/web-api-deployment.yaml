@@ -53,8 +53,11 @@ spec:
                   key: CLICKHOUSE_PASSWORD
             - name: INTERNAL_SUBNETS
               value: {{ $cfg.internalSubnets | quote }}
+            {{- if $cfg.dnsServer }}
+            # web-api 0.2.0 rejects an empty DNS_SERVER, so only set it when given.
             - name: DNS_SERVER
-              value: {{ $cfg.dnsServer | default "" | quote }}
+              value: {{ $cfg.dnsServer | quote }}
+            {{- end }}
             - name: RUST_LOG
               value: {{ .Values.pods.webApi.logLevel | quote }}
           ports:
