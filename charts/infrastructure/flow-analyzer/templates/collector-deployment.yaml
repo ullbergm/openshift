@@ -4,6 +4,14 @@
 The collector keeps NetFlow v9 / IPFIX template state in memory, so it runs as
 one replica and is replaced rather than rolled: two collectors behind one UDP
 address would each see only some of the templates.
+
+It runs on the host network. The pod network's MTU is 1400 and OVN answers
+larger packets from the LAN with ICMP "fragmentation needed" instead of
+fragmenting them; the MikroTik fills its IPFIX datagrams to 1412 bytes and
+ignores the ICMP, so three quarters of the datagrams (and nearly all flow
+records) never reached a pod-networked collector. On the host network the
+socket sits behind the node's 1500-byte interface. Both UDP 2055 and the
+metrics port are therefore bound on the node itself.
 */}}
 ---
 apiVersion: apps/v1
@@ -31,8 +39,11 @@ spec:
         app.kubernetes.io/name: {{ .Release.Name }}
     spec:
       enableServiceLinks: false
-      serviceAccountName: {{ .Release.Name }}
+      serviceAccountName: {{ .Release.Name }}-collector
       automountServiceAccountToken: false
+      hostNetwork: true
+      # Keep resolving cluster Services (ClickHouse) from the host network.
+      dnsPolicy: ClusterFirstWithHostNet
       securityContext:
         runAsNonRoot: true
         seccompProfile:
@@ -101,7 +112,8 @@ spec:
 # Service a LAN address. externalTrafficPolicy Local makes MetalLB announce it
 # from the node running the collector, which keeps the router's source
 # address; with Cluster, OVN would SNAT every datagram to 100.64.0.x and the
-# collector could not tell exporters apart.
+# collector could not tell exporters apart. The endpoint is the node itself
+# (host network), so the datagrams never enter the 1400-byte pod network.
 apiVersion: v1
 kind: Service
 metadata:

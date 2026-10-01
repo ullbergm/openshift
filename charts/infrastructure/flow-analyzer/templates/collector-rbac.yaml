@@ -1,0 +1,24 @@
+{{/*
+The collector runs on the host network (see collector-deployment.yaml), which
+the restricted SCC forbids. hostnetwork-v2 is restricted-v2 plus hostNetwork
+and hostPorts; granting it to a ServiceAccount only the collector uses keeps
+the other pods on restricted-v2.
+*/}}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ .Release.Name }}-collector
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Release.Name }}-collector-hostnetwork
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:openshift:scc:hostnetwork-v2
+subjects:
+  - kind: ServiceAccount
+    name: {{ .Release.Name }}-collector
+    namespace: {{ .Release.Namespace }}
