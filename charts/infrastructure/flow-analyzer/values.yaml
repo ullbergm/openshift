@@ -1,0 +1,131 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+application:
+  name: Flow Analyzer
+  group: Infrastructure
+  icon: mdi:lan
+  iconColor: ""
+  image: ""
+  description: "NetFlow/IPFIX collector and traffic dashboard"
+  # The dashboard; its nginx also proxies /graphql to web-api.
+  port: 8080
+  location: 0
+  tags: admin
+  # ClickHouse data. Raw flows are kept 30 days, the per-minute rollup and
+  # interface counters a year; a home router at ~60 flows/s is a few GB.
+  configSize: 50Gi
+
+pods:
+  # Dashboard: static SPA behind nginx-unprivileged.
+  main:
+    image:
+      repository: ghcr.io/ullbergm/flow-analyzer-dashboard
+      # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer-dashboard versioning=semver
+      tag: 0.2.0@sha256:d1cbfd5f9c20728cae03511dfd5ae859a52792f9f2ad4accdeec08e8480d3ec3
+      pullPolicy: IfNotPresent
+    resources:
+      requests:
+        cpu: 10m
+        memory: 32Mi
+      limits:
+        memory: 128Mi
+
+  # GraphQL API over ClickHouse. Same image as the collector, different entrypoint.
+  webApi:
+    image:
+      repository: ghcr.io/ullbergm/flow-analyzer
+      # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
+      tag: 0.2.0@sha256:cfc27d48b864deff2cf9afbe93286dc71cd0d070ae9253fb4f4506d040b4ec56
+      pullPolicy: IfNotPresent
+    port: 8042
+    logLevel: info
+    resources:
+      requests:
+        cpu: 50m
+        memory: 64Mi
+      limits:
+        memory: 256Mi
+
+  # NetFlow v9 / IPFIX collector: UDP in, batched inserts into ClickHouse,
+  # optional SNMP polling of interface counters.
+  collector:
+    image:
+      repository: ghcr.io/ullbergm/flow-analyzer
+      # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
+      tag: 0.2.0@sha256:cfc27d48b864deff2cf9afbe93286dc71cd0d070ae9253fb4f4506d040b4ec56
+      pullPolicy: IfNotPresent
+    port: 2055
+    metricsPort: 9090
+    logLevel: info
+    resources:
+      requests:
+        cpu: 100m
+        memory: 128Mi
+      limits:
+        memory: 512Mi
+
+  clickhouse:
+    image:
+      repository: docker.io/clickhouse/clickhouse-server
+      # renovate: datasource=docker depName=docker.io/clickhouse/clickhouse-server versioning=semver
+      tag: 26.8@sha256:3043f691ec1a847f38b446ff43708893fcbf9815bd9bd88c0f84bfe064ce852f
+      pullPolicy: IfNotPresent
+    database: default
+    # Defined in the users.d file; the password comes from the external secret.
+    user: flow
+    resources:
+      requests:
+        cpu: 500m
+        memory: 2Gi
+      limits:
+        memory: 4Gi
+
+# Site specifics; set the real values in cluster values like the other LAN IPs.
+flow-analyzer:
+  network:
+    # LAN address the routers send NetFlow/IPFIX to (UDP 2055), announced by
+    # keepalived. Empty keeps the collector reachable only inside the cluster.
+    ip: ""
+    # The keepalived LAN services in this repo SNAT incoming traffic, so the
+    # collector would see every router as a node address: it could not tell
+    # exporters apart and allowedExporters could not be used. true keeps the
+    # router's address instead: the Service becomes type LoadBalancer with
+    # externalTrafficPolicy Local (keepalived then only announces the VIP from
+    # nodes running the collector, via the health check node port) and the
+    # collector is pinned to the keepalived nodes, the masters.
+    preserveSourceIp: false
+  # Routers allowed to send flows (addresses or CIDRs, comma-separated).
+  # Empty accepts any source. Only meaningful with preserveSourceIp.
+  allowedExporters: ""
+  snmp:
+    # Devices to poll for interface counters (address[:port], comma-separated).
+    # Empty disables polling; the community still has to exist in Infisical.
+    targets: ""
+    version: "2c"
+    intervalSecs: 60
+  # Address ranges treated as "inside" when classifying traffic. Add
+  # 100.64.0.0/10 or the WAN address when the router sits behind CGNAT.
+  internalSubnets: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7,fe80::/10
+  # Resolver for reverse lookups; the router usually knows the LAN hostnames.
+  # Empty uses the cluster resolver.
+  dnsServer: ""
+
+# Pulled from Infisical by the External Secrets Operator. The collector gets
+# both as environment variables; web-api and ClickHouse only the password.
+externalSecret:
+  data:
+    - secretKey: CLICKHOUSE_PASSWORD
+      remoteKey: FLOW_ANALYZER_CLICKHOUSE_PASSWORD
+    - secretKey: SNMP_COMMUNITY
+      remoteKey: FLOW_ANALYZER_SNMP_COMMUNITY

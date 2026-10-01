@@ -1,0 +1,159 @@
+{{- $cfg := index .Values "flow-analyzer" }}
+{{- $lan := and $cfg.network $cfg.network.ip }}
+{{- $local := and $lan $cfg.network.preserveSourceIp }}
+{{/*
+The collector keeps NetFlow v9 / IPFIX template state in memory, so it runs as
+one replica and is replaced rather than rolled: two collectors behind one UDP
+address would each see only some of the templates.
+*/}}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-collector
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  revisionHistoryLimit: 1
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/controller: collector
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/controller: collector
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+    spec:
+      enableServiceLinks: false
+      serviceAccountName: {{ .Release.Name }}
+      automountServiceAccountToken: false
+      {{- if $local }}
+      # externalTrafficPolicy Local only delivers traffic on nodes that run the
+      # pod, and keepalived only announces the VIP from those; they have to be
+      # the keepalived group's nodes.
+      nodeSelector:
+        node-role.kubernetes.io/master: ""
+      {{- end }}
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      # Long enough for the final flush to ClickHouse.
+      terminationGracePeriodSeconds: 30
+      containers:
+        - name: collector
+          image: {{ .Values.pods.collector.image.repository }}:{{ .Values.pods.collector.image.tag }}
+          imagePullPolicy: {{ .Values.pods.collector.image.pullPolicy }}
+          args: ["flow-analyzer", "collect"]
+          env:
+            - name: TZ
+              value: {{ .Values.cluster.timezone }}
+            - name: BIND_ADDR
+              value: "0.0.0.0:{{ .Values.pods.collector.port }}"
+            - name: HTTP_LISTEN_ADDR
+              value: "0.0.0.0:{{ .Values.pods.collector.metricsPort }}"
+            - name: CLICKHOUSE_URL
+              value: http://{{ .Release.Name }}-clickhouse:8123
+            - name: CLICKHOUSE_DB
+              value: {{ .Values.pods.clickhouse.database | quote }}
+            - name: CLICKHOUSE_USER
+              value: {{ .Values.pods.clickhouse.user | quote }}
+            - name: ALLOWED_EXPORTERS
+              value: {{ $cfg.allowedExporters | default "" | quote }}
+            - name: SNMP_TARGETS
+              value: {{ $cfg.snmp.targets | default "" | quote }}
+            - name: SNMP_VERSION
+              value: {{ $cfg.snmp.version | quote }}
+            - name: SNMP_INTERVAL_SECS
+              value: {{ $cfg.snmp.intervalSecs | quote }}
+            - name: RUST_LOG
+              value: {{ .Values.pods.collector.logLevel | quote }}
+          envFrom:
+            # CLICKHOUSE_PASSWORD and SNMP_COMMUNITY
+            - secretRef:
+                name: {{ .Release.Name }}
+          ports:
+            - name: netflow
+              containerPort: {{ .Values.pods.collector.port }}
+              protocol: UDP
+            - name: metrics
+              containerPort: {{ .Values.pods.collector.metricsPort }}
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /healthz
+              port: metrics
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: metrics
+            periodSeconds: 20
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            {{- toYaml .Values.pods.collector.resources | nindent 12 }}
+---
+# Flow exports enter here. A Route cannot carry UDP, so the Service gets a LAN
+# address from keepalived like the other non-HTTP services in this repo.
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-collector
+  {{- if $lan }}
+  annotations:
+    keepalived-operator.redhat-cop.io/keepalivedgroup: "keepalived-operator/lan"
+  {{- end }}
+spec:
+  {{- if $local }}
+  # LoadBalancer only so that Kubernetes allocates the health check node port
+  # keepalived's track script needs; nothing fills in the LoadBalancer status.
+  type: LoadBalancer
+  externalTrafficPolicy: Local
+  allocateLoadBalancerNodePorts: false
+  {{- else }}
+  type: ClusterIP
+  {{- end }}
+  {{- if $lan }}
+  externalIPs:
+    - {{ $cfg.network.ip }}
+  {{- end }}
+  ports:
+    - name: netflow
+      port: {{ .Values.pods.collector.port }}
+      targetPort: netflow
+      protocol: UDP
+  selector:
+    app.kubernetes.io/controller: collector
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-collector-metrics
+  annotations:
+    prometheus.io/scrape: "true"
+    prometheus.io/port: {{ .Values.pods.collector.metricsPort | quote }}
+spec:
+  type: ClusterIP
+  ports:
+    - name: metrics
+      port: {{ .Values.pods.collector.metricsPort }}
+      targetPort: metrics
+      protocol: TCP
+  selector:
+    app.kubernetes.io/controller: collector
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}

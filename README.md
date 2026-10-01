@@ -30,6 +30,7 @@ The deployment model follows a two-tier architecture:
     │   ├── ollama/            # Local LLM runtime
     │   └── open-webui/        # Web UI for LLMs
     ├── infrastructure/
+    │   ├── flow-analyzer/     # NetFlow/IPFIX collector and traffic dashboard
     │   ├── gatus/             # Service monitoring and health checks
     │   └── goldilocks/        # VPA recommendations dashboard
     ├── media/
@@ -89,6 +90,7 @@ Each application in the `/charts` directory is a complete Helm chart with:
 
 ### Infrastructure Applications
 
+- **Flow Analyzer**: NetFlow/IPFIX collector with ClickHouse storage and a traffic dashboard
 - **Gatus**: Service monitoring and health checks with status page
 - **Goldilocks**: VPA (Vertical Pod Autoscaler) recommendations dashboard
 

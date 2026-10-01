@@ -44,6 +44,14 @@ config:
   opentakserver:
     network:
       ip: 192.168.1.13
+
+  flow-analyzer:
+    network:
+      ip: 192.168.1.14
+    # The routers exporting NetFlow/IPFIX and polled over SNMP.
+    allowedExporters: 192.168.1.1
+    snmp:
+      targets: 192.168.1.1
     adsb:
       enabled: true
       lat: "0.0"

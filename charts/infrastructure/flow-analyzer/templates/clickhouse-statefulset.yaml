@@ -1,0 +1,158 @@
+{{/*
+Single-node ClickHouse. The official image chmods its data, log and config
+directories world-writable precisely so it can run as OpenShift's arbitrary
+UID, so the restricted SCC is enough. The flow user is defined in a users.d
+file instead of the image's CLICKHOUSE_USER/PASSWORD variables, which would
+make the entrypoint write into /etc.
+*/}}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-clickhouse-users
+data:
+  flow-analyzer.xml: |
+    <clickhouse>
+      <users>
+        <!-- The image ships `default` with no password; keep it to localhost. -->
+        <default>
+          <networks replace="replace">
+            <ip>::1</ip>
+            <ip>127.0.0.1</ip>
+          </networks>
+        </default>
+        <{{ .Values.pods.clickhouse.user }}>
+          <password from_env="CLICKHOUSE_PASSWORD"/>
+          <networks>
+            <ip>::/0</ip>
+          </networks>
+          <profile>default</profile>
+          <quota>default</quota>
+          <access_management>0</access_management>
+        </{{ .Values.pods.clickhouse.user }}>
+      </users>
+    </clickhouse>
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-clickhouse
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: 8123
+      targetPort: http
+      protocol: TCP
+    - name: native
+      port: 9000
+      targetPort: native
+      protocol: TCP
+  selector:
+    app.kubernetes.io/controller: clickhouse
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ .Release.Name }}-clickhouse
+  labels:
+    kasten/backup: "true"
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  revisionHistoryLimit: 1
+  serviceName: {{ .Release.Name }}-clickhouse
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/controller: clickhouse
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/controller: clickhouse
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+    spec:
+      enableServiceLinks: false
+      serviceAccountName: {{ .Release.Name }}
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        fsGroupChangePolicy: OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: clickhouse
+          image: {{ .Values.pods.clickhouse.image.repository }}:{{ .Values.pods.clickhouse.image.tag }}
+          imagePullPolicy: {{ .Values.pods.clickhouse.image.pullPolicy }}
+          env:
+            - name: TZ
+              value: {{ .Values.cluster.timezone }}
+            # Read by the users.d file above.
+            - name: CLICKHOUSE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: CLICKHOUSE_PASSWORD
+            # The users.d file replaces the entrypoint's user setup.
+            - name: CLICKHOUSE_SKIP_USER_SETUP
+              value: "1"
+          ports:
+            - name: http
+              containerPort: 8123
+              protocol: TCP
+            - name: native
+              containerPort: 9000
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /ping
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 20
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/clickhouse
+            - name: logs
+              mountPath: /var/log/clickhouse-server
+            - name: users
+              mountPath: /etc/clickhouse-server/users.d/flow-analyzer.xml
+              subPath: flow-analyzer.xml
+              readOnly: true
+          resources:
+            {{- toYaml .Values.pods.clickhouse.resources | nindent 12 }}
+      volumes:
+        - name: logs
+          emptyDir: {}
+        - name: users
+          configMap:
+            name: {{ .Release.Name }}-clickhouse-users
+  volumeClaimTemplates:
+    - metadata:
+        name: data
+        labels:
+          kasten/backup: "true"
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: {{ .Values.application.configSize }}
+{{- if and .Values.cluster.storage .Values.cluster.storage.config .Values.cluster.storage.config.storageClassName }}
+        storageClassName: {{ .Values.cluster.storage.config.storageClassName }}
+{{- end }}

@@ -1,0 +1,100 @@
+{{- $cfg := index .Values "flow-analyzer" }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-web-api
+  annotations:
+    reloader.stakater.com/auto: "true"
+spec:
+  revisionHistoryLimit: 1
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/controller: web-api
+      app.kubernetes.io/name: {{ .Release.Name }}
+      app.kubernetes.io/instance: {{ .Release.Name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}
+        app.kubernetes.io/controller: web-api
+        app.kubernetes.io/instance: {{ .Release.Name }}
+        app.kubernetes.io/name: {{ .Release.Name }}
+    spec:
+      enableServiceLinks: false
+      serviceAccountName: {{ .Release.Name }}
+      automountServiceAccountToken: false
+      # Static binary on distroless/static:nonroot; runs under the restricted SCC.
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: web-api
+          image: {{ .Values.pods.webApi.image.repository }}:{{ .Values.pods.webApi.image.tag }}
+          imagePullPolicy: {{ .Values.pods.webApi.image.pullPolicy }}
+          args: ["web-api"]
+          env:
+            - name: TZ
+              value: {{ .Values.cluster.timezone }}
+            - name: LISTEN_ADDR
+              value: "0.0.0.0:{{ .Values.pods.webApi.port }}"
+            - name: CLICKHOUSE_URL
+              value: http://{{ .Release.Name }}-clickhouse:8123
+            - name: CLICKHOUSE_DB
+              value: {{ .Values.pods.clickhouse.database | quote }}
+            - name: CLICKHOUSE_USER
+              value: {{ .Values.pods.clickhouse.user | quote }}
+            - name: CLICKHOUSE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Release.Name }}
+                  key: CLICKHOUSE_PASSWORD
+            - name: INTERNAL_SUBNETS
+              value: {{ $cfg.internalSubnets | quote }}
+            - name: DNS_SERVER
+              value: {{ $cfg.dnsServer | default "" | quote }}
+            - name: RUST_LOG
+              value: {{ .Values.pods.webApi.logLevel | quote }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.pods.webApi.port }}
+              protocol: TCP
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            periodSeconds: 20
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities:
+              drop:
+                - ALL
+          resources:
+            {{- toYaml .Values.pods.webApi.resources | nindent 12 }}
+---
+# The dashboard image's nginx.conf proxies /graphql to http://web-api:8042, so
+# this Service keeps that fixed name rather than the release-prefixed one. It
+# is not exposed outside the cluster.
+apiVersion: v1
+kind: Service
+metadata:
+  name: web-api
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: {{ .Values.pods.webApi.port }}
+      targetPort: http
+      protocol: TCP
+  selector:
+    app.kubernetes.io/controller: web-api
+    app.kubernetes.io/instance: {{ .Release.Name }}
+    app.kubernetes.io/name: {{ .Release.Name }}

@@ -20,6 +20,8 @@ spec:
           serverSideApply: true
         - name: external-secrets-operator
           group: security
+        - name: flow-analyzer
+          group: infrastructure
         - name: generic-device-plugin
           group: infrastructure
         - name: gatus
