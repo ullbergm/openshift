@@ -118,8 +118,11 @@ metadata:
 spec:
   {{- if $local }}
   # LoadBalancer only so that Kubernetes allocates the health check node port
-  # keepalived's track script needs; nothing fills in the LoadBalancer status.
+  # keepalived's track script needs. The class keeps MetalLB from also handing
+  # the Service an address from its pool and announcing that one; nothing
+  # implements this class, so the LoadBalancer status stays empty.
   type: LoadBalancer
+  loadBalancerClass: keepalived-operator.redhat-cop.io/external-ip
   externalTrafficPolicy: Local
   allocateLoadBalancerNodePorts: false
   {{- else }}
