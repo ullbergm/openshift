@@ -62,6 +62,7 @@ zimUpdater:
     # Wikipedia
     - wikipedia_en_all                             # 115.5G
     - wikipedia_sv_all                             # 16.4G
+    - wikipedia_en_medicine                        # 2.1G
 
     # Wiktionary
     - wiktionary_en_all                            # 8.2G
@@ -99,9 +100,254 @@ zimUpdater:
     # Stack Exchange
     - cooking.stackexchange.com_en_all             # 226.2M
     - stackoverflow.com_en_all                     # 75.0G
+    - askubuntu.com_en_all                         # 2.6G
+    - diy.stackexchange.com_en_all                 # 1.9G
+    - electronics.stackexchange.com_en_all         # 3.9G
+    - gardening.stackexchange.com_en_all           # 883.9M
+    - math.stackexchange.com_en_all                # 6.9G
+    - serverfault.com_en_all                       # 1.5G
+    - superuser.com_en_all                         # 3.7G
+    - unix.stackexchange.com_en_all                # 1.2G
 
     # Programming & Tech
     - freecodecamp_en_all                          # 7.6M
+    - archlinux_en_all                             # 34.0M
+    - docs.python.org_en_all                       # 3.7G
+    - openwrt.org_en_all                           # 495.8M
+    - www.mankier.com_en_all                       # 181.3M
+
+    # DevDocs
+    - devdocs_en_angular                           # 2.0M
+    - devdocs_en_angularjs                         # 1.0M
+    - devdocs_en_ansible                           # 29.5M
+    - devdocs_en_apache-http-server                # 1.3M
+    - devdocs_en_apache-pig                        # 505.0K
+    - devdocs_en_astro                             # 2.2M
+    - devdocs_en_async                             # 339.0K
+    - devdocs_en_axios                             # 339.0K
+    - devdocs_en_babel                             # 565.0K
+    - devdocs_en_backbone                          # 350.0K
+    - devdocs_en_bash                              # 546.0K
+    - devdocs_en_bazel                             # 433.0K
+    - devdocs_en_bluebird                          # 495.0K
+    - devdocs_en_bootstrap                         # 708.0K
+    - devdocs_en_bottle                            # 412.0K
+    - devdocs_en_bower                             # 329.0K
+    - devdocs_en_browser-support-tables            # 1.3M
+    - devdocs_en_bun                               # 1.0M
+    - devdocs_en_c                                 # 1.2M
+    - devdocs_en_cakephp                           # 2.0M
+    - devdocs_en_chai                              # 361.0K
+    - devdocs_en_chef                              # 12.9M
+    - devdocs_en_click                             # 443.0K
+    - devdocs_en_clojure                           # 426.0K
+    - devdocs_en_cmake                             # 2.5M
+    - devdocs_en_codeception                       # 830.0K
+    - devdocs_en_codeceptjs                        # 803.0K
+    - devdocs_en_codeigniter                       # 871.0K
+    - devdocs_en_coffeescript                      # 363.0K
+    - devdocs_en_composer                          # 427.0K
+    - devdocs_en_cordova                           # 1.4M
+    - devdocs_en_couchdb                           # 694.0K
+    - devdocs_en_cpp                               # 6.9M
+    - devdocs_en_crystal                           # 2.3M
+    - devdocs_en_css                               # 2.6M
+    - devdocs_en_cypress                           # 3.9M
+    - devdocs_en_d                                 # 1.7M
+    - devdocs_en_d3                                # 10.3M
+    - devdocs_en_dart                              # 9.6M
+    - devdocs_en_date-fns                          # 488.0K
+    - devdocs_en_deno                              # 2.6M
+    - devdocs_en_django                            # 2.1M
+    - devdocs_en_django-rest-framework             # 586.0K
+    - devdocs_en_docker                            # 1.7M
+    - devdocs_en_dojo                              # 717.0K
+    - devdocs_en_dom                               # 13.5M
+    - devdocs_en_drupal                            # 12.2M
+    - devdocs_en_duckdb                            # 1.9M
+    - devdocs_en_eigen3                            # 2.7M
+    - devdocs_en_electron                          # 1.6M
+    - devdocs_en_elisp                             # 1.9M
+    - devdocs_en_elixir                            # 1.2M
+    - devdocs_en_ember                             # 1.2M
+    - devdocs_en_enzyme                            # 414.0K
+    - devdocs_en_erlang                            # 3.9M
+    - devdocs_en_es-toolkit                        # 771.0K
+    - devdocs_en_esbuild                           # 444.0K
+    - devdocs_en_eslint                            # 1008.0K
+    - devdocs_en_express                           # 434.0K
+    - devdocs_en_falcon                            # 447.0K
+    - devdocs_en_fastapi                           # 2.3M
+    - devdocs_en_fish                              # 581.0K
+    - devdocs_en_flask                             # 603.0K
+    - devdocs_en_flow                              # 483.0K
+    - devdocs_en_fluture                           # 332.0K
+    - devdocs_en_gcc                               # 1.6M
+    - devdocs_en_git                               # 1.5M
+    - devdocs_en_gnu-cobol                         # 600.0K
+    - devdocs_en_gnu-fortran                       # 772.0K
+    - devdocs_en_gnu-make                          # 600.0K
+    - devdocs_en_gnuplot                           # 641.0K
+    - devdocs_en_go                                # 1.6M
+    - devdocs_en_godot                             # 1.9M
+    - devdocs_en_graphite                          # 476.0K
+    - devdocs_en_graphviz                          # 896.0K
+    - devdocs_en_groovy                            # 3.2M
+    - devdocs_en_grunt                             # 373.0K
+    - devdocs_en_gtk                               # 2.1M
+    - devdocs_en_hammerspoon                       # 873.0K
+    - devdocs_en_handlebars                        # 346.0K
+    - devdocs_en_hapi                              # 373.0K
+    - devdocs_en_haproxy                           # 867.0K
+    - devdocs_en_haskell                           # 4.1M
+    - devdocs_en_haxe                              # 667.0K
+    - devdocs_en_homebrew                          # 941.0K
+    - devdocs_en_html                              # 1.6M
+    - devdocs_en_htmx                              # 438.0K
+    - devdocs_en_http                              # 1.9M
+    - devdocs_en_i3                                # 444.0K
+    - devdocs_en_immutable                         # 385.0K
+    - devdocs_en_influxdata                        # 1.8M
+    - devdocs_en_jasmine                           # 345.0K
+    - devdocs_en_javascript                        # 2.5M
+    - devdocs_en_jekyll                            # 463.0K
+    - devdocs_en_jest                              # 546.0K
+    - devdocs_en_jinja                             # 437.0K
+    - devdocs_en_joi                               # 367.0K
+    - devdocs_en_jq                                # 377.0K
+    - devdocs_en_jquery                            # 1.1M
+    - devdocs_en_jquerymobile                      # 514.0K
+    - devdocs_en_jqueryui                          # 453.0K
+    - devdocs_en_jsdoc                             # 394.0K
+    - devdocs_en_julia                             # 1.5M
+    - devdocs_en_knockout                          # 470.0K
+    - devdocs_en_koa                               # 412.0K
+    - devdocs_en_kotlin                            # 7.8M
+    - devdocs_en_kubectl                           # 358.0K
+    - devdocs_en_kubernetes                        # 571.0K
+    - devdocs_en_laravel                           # 3.7M
+    - devdocs_en_latex                             # 766.0K
+    - devdocs_en_leaflet                           # 404.0K
+    - devdocs_en_less                              # 358.0K
+    - devdocs_en_liquid                            # 343.0K
+    - devdocs_en_lit                               # 722.0K
+    - devdocs_en_lodash                            # 362.0K
+    - devdocs_en_love                              # 1.5M
+    - devdocs_en_lua                               # 418.0K
+    - devdocs_en_man                               # 28.2M
+    - devdocs_en_mariadb                           # 9.3M
+    - devdocs_en_marionette                        # 398.0K
+    - devdocs_en_markdown                          # 326.0K
+    - devdocs_en_matplotlib                        # 31.9M
+    - devdocs_en_meteor                            # 1.3M
+    - devdocs_en_minitest                          # 369.0K
+    - devdocs_en_mocha                             # 647.0K
+    - devdocs_en_modernizr                         # 344.0K
+    - devdocs_en_moment                            # 396.0K
+    - devdocs_en_moment-timezone                   # 330.0K
+    - devdocs_en_mongoose                          # 586.0K
+    - devdocs_en_nextjs                            # 1019.0K
+    - devdocs_en_nginx                             # 797.0K
+    - devdocs_en_nginx-lua-module                  # 585.0K
+    - devdocs_en_nim                               # 2.0M
+    - devdocs_en_nix                               # 392.0K
+    - devdocs_en_node                              # 1.4M
+    - devdocs_en_nokogiri                          # 451.0K
+    - devdocs_en_npm                               # 649.0K
+    - devdocs_en_numpy                             # 5.0M
+    - devdocs_en_nushell                           # 846.0K
+    - devdocs_en_ocaml                             # 1.7M
+    - devdocs_en_octave                            # 1.9M
+    - devdocs_en_opengl                            # 971.0K
+    - devdocs_en_openjdk                           # 14.4M
+    - devdocs_en_openlayers                        # 849.0K
+    - devdocs_en_opentsdb                          # 568.0K
+    - devdocs_en_padrino                           # 496.0K
+    - devdocs_en_pandas                            # 4.7M
+    - devdocs_en_perl                              # 5.1M
+    - devdocs_en_phalcon                           # 1.0M
+    - devdocs_en_phaser                            # 918.0K
+    - devdocs_en_phoenix                           # 1.1M
+    - devdocs_en_php                               # 6.8M
+    - devdocs_en_phpunit                           # 478.0K
+    - devdocs_en_playwright                        # 829.0K
+    - devdocs_en_point-cloud-library               # 9.5M
+    - devdocs_en_pony                              # 751.0K
+    - devdocs_en_postgresql                        # 2.5M
+    - devdocs_en_prettier                          # 439.0K
+    - devdocs_en_pug                               # 347.0K
+    - devdocs_en_puppeteer                         # 387.0K
+    - devdocs_en_pygame                            # 542.0K
+    - devdocs_en_python                            # 4.2M
+    - devdocs_en_pytorch                           # 6.1M
+    - devdocs_en_q                                 # 329.0K
+    - devdocs_en_qt                                # 47.7M
+    - devdocs_en_qunit                             # 440.0K
+    - devdocs_en_r                                 # 4.7M
+    - devdocs_en_rails                             # 2.8M
+    - devdocs_en_ramda                             # 377.0K
+    - devdocs_en_react                             # 2.6M
+    - devdocs_en_react-bootstrap                   # 413.0K
+    - devdocs_en_react-native                      # 2.0M
+    - devdocs_en_react-router                      # 486.0K
+    - devdocs_en_reactivex                         # 479.0K
+    - devdocs_en_redis                             # 851.0K
+    - devdocs_en_redux                             # 331.0K
+    - devdocs_en_relay                             # 373.0K
+    - devdocs_en_requests                          # 345.0K
+    - devdocs_en_requirejs                         # 380.0K
+    - devdocs_en_rethinkdb                         # 1.6M
+    - devdocs_en_ruby                              # 2.0M
+    - devdocs_en_rust                              # 5.9M
+    - devdocs_en_rxjs                              # 1.3M
+    - devdocs_en_saltstack                         # 2.9M
+    - devdocs_en_sanctuary                         # 349.0K
+    - devdocs_en_sanctuary-def                     # 311.0K
+    - devdocs_en_sanctuary-type-classes            # 310.0K
+    - devdocs_en_sass                              # 638.0K
+    - devdocs_en_scala                             # 3.7M
+    - devdocs_en_scikit-image                      # 10.5M
+    - devdocs_en_scikit-learn                      # 54.3M
+    - devdocs_en_sequelize                         # 520.0K
+    - devdocs_en_sinon                             # 353.0K
+    - devdocs_en_socketio                          # 1.1M
+    - devdocs_en_spring-boot                       # 813.0K
+    - devdocs_en_sqlite                            # 3.3M
+    - devdocs_en_statsmodels                       # 8.0M
+    - devdocs_en_svelte                            # 531.0K
+    - devdocs_en_svg                               # 866.0K
+    - devdocs_en_symfony                           # 2.9M
+    - devdocs_en_tailwindcss                       # 586.0K
+    - devdocs_en_tcl-tk                            # 1.3M
+    - devdocs_en_tcllib                            # 1.6M
+    - devdocs_en_tensorflow                        # 6.0M
+    - devdocs_en_tensorflow-cpp                    # 1.4M
+    - devdocs_en_terraform                         # 3.0M
+    - devdocs_en_threejs                           # 857.0K
+    - devdocs_en_trio                              # 477.0K
+    - devdocs_en_twig                              # 427.0K
+    - devdocs_en_typescript                        # 971.0K
+    - devdocs_en_underscore                        # 333.0K
+    - devdocs_en_vagrant                           # 541.0K
+    - devdocs_en_varnish                           # 636.0K
+    - devdocs_en_vertx                             # 1.5M
+    - devdocs_en_vite                              # 498.0K
+    - devdocs_en_vitest                            # 895.0K
+    - devdocs_en_vue                               # 953.0K
+    - devdocs_en_vue-router                        # 512.0K
+    - devdocs_en_vueuse                            # 716.0K
+    - devdocs_en_vuex                              # 373.0K
+    - devdocs_en_vulkan                            # 534.0K
+    - devdocs_en_wagtail                           # 1.3M
+    - devdocs_en_web-extensions                    # 4.0M
+    - devdocs_en_webpack                           # 769.0K
+    - devdocs_en_werkzeug                          # 491.0K
+    - devdocs_en_wordpress                         # 12.3M
+    - devdocs_en_xslt-xpath                        # 418.0K
+    - devdocs_en_yarn                              # 594.0K
+    - devdocs_en_yii                               # 2.0M
+    - devdocs_en_zig                               # 480.0K
+    - devdocs_en_zsh                               # 764.0K
 
     # Education
     - libretexts.org_en_bio                        # 2.1G
@@ -121,6 +367,7 @@ zimUpdater:
     - phet_en_all                                  # 102.1M
     - phet_mul_all                                 # 227.3M
     - phet_sv_all                                  # 90.8M
+    - crashcourse_en_all                           # 21.5G
 
     # Books & Literature
     - gutenberg_mul_all                            # 235.7G
@@ -132,15 +379,22 @@ zimUpdater:
     - nhs.uk_en_medicines                          # 16.2M
     - quickguidesformedicine_en_all                # 503.3M
     - wwwnc.cdc.gov_en_all                         # 170.1M
+    - mdwiki_en_all                                # 10.0G
+    - wikivet.net_en_all                           # 54.3M
 
     # Maps
-    #- maps_en_europe                               # 39.5G
-    #- maps_en_north-america                        # 29.5G
     - openstreetmap-wiki_en_all                    # 995.6M
+    - maps_en_europe                               # 24.9G
+    - maps_en_nordics                              # 5.3G
+    - maps_en_north-america                        # 21.1G
+    - maps_en_sweden                               # 2.0G
+    - maps_en_united-states-of-america             # 15.5G
 
     # Cooking
     - based.cooking_en_all                         # 15.0M
     - foss.cooking_en_all                          # 22.7M
+    - grimgrains_en_all                            # 24.8M
+    - publicdomainrecipes.com_en_all               # 16.2M
 
     # How-To & Repair
     - ifixit_en_all                                # 3.3G
@@ -152,6 +406,15 @@ zimUpdater:
     - canadian-prepper_en_bugoutroll               # 838.4M
     - survivorlibrary.com_en_all                   # 2.7G
     - urban-prepper_en_all                         # 2.1G
+    - appropedia_en_all                            # 554.7M
+    - armypubs_en_all                              # 7.7G
+    - cd3wdproject.org_en_all                      # 554.2M
+    - energypedia_en_all                           # 762.7M
+    - lrnselfreliance_en_all                       # 3.7G
+    - s2underground_en_all                         # 4.6G
+    - solar.lowtechmagazine.com_mul_all            # 668.1M
+    - trueprepper.com_en_all                       # 1.3G
+    - www.ready.gov_en                             # 2.3G
 
     # Talks & Media
     - ted_mul_all                                  # 78.7G
@@ -170,3 +433,4 @@ zimUpdater:
     - zimgit-medicine_en                           # 66.9M
     - zimgit-post-disaster_en                      # 614.8M
     - zimgit-water_en                              # 20.0M
+    - gardenology_en_all                           # 107.3M

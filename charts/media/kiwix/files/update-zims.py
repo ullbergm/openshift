@@ -11,6 +11,7 @@ Books renamed upstream can be listed in ZIM_SUPERSEDED as "new=old" pairs
 old-named files are dropped from the library and deleted.
 """
 import os
+import re
 import ssl
 import subprocess
 import sys
@@ -30,17 +31,22 @@ ZIM_SUPERSEDED = dict(
 
 METALINK_NS = "urn:ietf:params:xml:ns:metalink"
 
+# Preferred flavour order when a book is published in several; lower wins.
+# Books without a flavour only come in one variant and rank with maxi.
+FLAVOUR_RANK = {"maxi": 0, "": 0, "nopic": 1, "mini": 2}
+
 
 def fetch_latest_entries(book_names):
     """
     Stream-parse the Kiwix library_zim.xml catalog and return the entry
-    with the newest date for each requested book name.
+    of the preferred flavour (maxi, then nopic, then mini) for each
+    requested book name, taking the newest date within that flavour.
 
     Book names use underscores and match the "name" XML attribute, e.g.:
       wikipedia_en_all_mini, wiktionary_en_all, ifixit_mul_all
     """
     wanted = set(book_names)
-    # best[name] = {"url": ..., "date": ..., "title": ...}
+    # best[name] = {"url": ..., "date": ..., "title": ..., "rank": ...}
     best = {}
 
     print(f"Fetching Kiwix library catalog from {LIBRARY_URL} ...")
@@ -62,11 +68,14 @@ def fetch_latest_entries(book_names):
                 if not url:
                     elem.clear()
                     continue
-                if name not in best or date > best[name]["date"]:
+                rank = FLAVOUR_RANK.get(elem.get("flavour", ""), len(FLAVOUR_RANK))
+                current = best.get(name)
+                if current is None or (rank, current["date"]) < (current["rank"], date):
                     best[name] = {
                         "url": url,
                         "date": date,
                         "title": elem.get("title", name),
+                        "rank": rank,
                     }
                 elem.clear()
     except Exception as e:
@@ -254,7 +263,13 @@ def main():
             continue
 
         # Find old versions; keep one previous file as rollback cache after update.
-        old_versions = [f for f in DATA_DIR.glob(f"{book}_*.zim") if f != dest]
+        # Match on "<book>[_<flavour>]_<YYYY-MM>.zim" so a book whose name is a
+        # prefix of another (devdocs_en_c / devdocs_en_c_...) is left alone.
+        version_re = re.compile(rf"{re.escape(book)}(_[a-z]+)?_\d{{4}}-\d{{2}}\.zim")
+        old_versions = [
+            f for f in DATA_DIR.glob(f"{book}_*.zim")
+            if f != dest and version_re.fullmatch(f.name)
+        ]
 
         if download_file(download_url, dest):
             add_to_library(dest)
