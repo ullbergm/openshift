@@ -44,6 +44,16 @@ zimUpdater:
     # Optional SHA-256 checksum for the downloaded archive.
     # Leave empty to skip checksum verification.
     sha256: ""
+  # Books renamed in the Kiwix catalog, as "<new book name>: <old filename prefix>".
+  # Once the new book is on disk, files matching "<old filename prefix>_*.zim" are
+  # removed from library.xml and deleted. Entries can be dropped after one clean run.
+  supersededBooks:
+    wiktionary_en-simple_all: wiktionary_en_simple_all
+    irp.fas.org_en_military-medicine: fas-military-medicine_en
+    canadian-prepper_en_bugoutconcepts: canadian_prepper_bugoutconcepts_en
+    canadian-prepper_en_preppingfood: canadian_prepper_preppingfood_en
+    canadian-prepper_en_winterprepping: canadian_prepper_winterprepping_en
+    canadian-prepper_en_bugoutroll: canadian_prepper_bugoutroll_en
   # List of Kiwix book names to keep up to date.
   # Names use underscores and match the "name" attribute in the Kiwix library catalog:
   #   https://download.kiwix.org/library/library_zim.xml
@@ -55,7 +65,7 @@ zimUpdater:
 
     # Wiktionary
     - wiktionary_en_all                            # 8.2G
-    - wiktionary_en_simple_all                     # 24.8M
+    - wiktionary_en-simple_all                     # 25.3M
     - wiktionary_sv_all                            # 415.2M
 
     # Wikivoyage
@@ -71,9 +81,9 @@ zimUpdater:
     - wikibooks_en_all                             # 5.1G
     - wikibooks_sv_all                             # 39.5M
 
-    # Wikinews
-    - wikinews_en_all                              # 303.0M
-    - wikinews_sv_all                              # 12.2M
+    # Wikinews (dropped from the Kiwix catalog; existing files stay on disk)
+    #- wikinews_en_all                              # 303.0M
+    #- wikinews_sv_all                              # 12.2M
 
     # Wikiquote
     - wikiquote_en_all                             # 880.2M
@@ -117,7 +127,7 @@ zimUpdater:
     - gutenberg_sv_all                             # 210.2M
 
     # Medicine & Health
-    - fas-military-medicine_en                     # 77.7M
+    - irp.fas.org_en_military-medicine             # 72.4M
     - medlineplus.gov_en_all                       # 1.8G
     - nhs.uk_en_medicines                          # 16.2M
     - quickguidesformedicine_en_all                # 503.3M
@@ -136,10 +146,10 @@ zimUpdater:
     - ifixit_en_all                                # 3.3G
 
     # Survival & Prepping
-    - canadian_prep_bugoutconcepts                 # 2.7G
-    - canadian_prep_preppingfood_en                # 2.0G
-    - canadian_prep_winterprepping                 # 1.2G
-    - canadian_prepper_bugoutroll_en               # 929.4M
+    - canadian-prepper_en_bugoutconcepts           # 2.7G
+    - canadian-prepper_en_preppingfood             # 2.0G
+    - canadian-prepper_en_winterprepping           # 1.2G
+    - canadian-prepper_en_bugoutroll               # 838.4M
     - survivorlibrary.com_en_all                   # 2.7G
     - urban-prepper_en_all                         # 2.1G
 

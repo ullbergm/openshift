@@ -5,6 +5,10 @@ Fetches the official Kiwix library catalog (library_zim.xml), finds the
 latest version of each configured book by its "name" attribute (e.g.
 wikipedia_en_all_mini), downloads any missing or updated ZIM files, and
 removes outdated versions.
+
+Books renamed upstream can be listed in ZIM_SUPERSEDED as "new=old" pairs
+(old being the previous filename prefix); once the new book is on disk the
+old-named files are dropped from the library and deleted.
 """
 import os
 import ssl
@@ -17,6 +21,12 @@ from pathlib import Path
 LIBRARY_URL = "https://download.kiwix.org/library/library_zim.xml"
 DATA_DIR = Path(os.environ.get("ZIM_DATA_DIR", "/data"))
 ZIM_BOOKS = [b.strip() for b in os.environ.get("ZIM_BOOKS", "").split(",") if b.strip()]
+# {new book name: old filename prefix} for books renamed in the catalog.
+ZIM_SUPERSEDED = dict(
+    pair.strip().split("=", 1)
+    for pair in os.environ.get("ZIM_SUPERSEDED", "").split(",")
+    if "=" in pair
+)
 
 METALINK_NS = "urn:ietf:params:xml:ns:metalink"
 
@@ -159,10 +169,30 @@ def add_to_library(zim_path):
         print(f"  WARNING: kiwix-manage error: {e}")
 
 
+def library_ids_for(zim_path):
+    """Return the library.xml book IDs whose path points at the given ZIM file."""
+    library_xml = DATA_DIR / "library.xml"
+    try:
+        root = ET.parse(library_xml).getroot()
+    except Exception as e:
+        print(f"  WARNING: could not read library.xml: {e}")
+        return []
+    return [
+        b.get("id")
+        for b in root.iter("book")
+        if b.get("id") and Path(b.get("path", "")).name == zim_path.name
+    ]
+
+
 def remove_from_library(zim_path):
     """Remove a ZIM file entry from the Kiwix library XML via kiwix-manage."""
     library_xml = DATA_DIR / "library.xml"
-    cmd = ["kiwix-manage", str(library_xml), "remove", str(zim_path)]
+    # kiwix-manage removes by ZIM ID, not by path.
+    ids = library_ids_for(zim_path)
+    if not ids:
+        print(f"  No library entry for {zim_path.name}")
+        return
+    cmd = ["kiwix-manage", str(library_xml), "remove", *ids]
     print(f"  Updating library: kiwix-manage library.xml remove {zim_path.name}")
     try:
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
@@ -174,6 +204,17 @@ def remove_from_library(zim_path):
         print("  WARNING: kiwix-manage not found; skipping library cleanup")
     except Exception as e:
         print(f"  WARNING: kiwix-manage remove error: {e}")
+
+
+def remove_superseded(book):
+    """Drop files left behind under a book's pre-rename filename prefix."""
+    old_prefix = ZIM_SUPERSEDED.get(book)
+    if not old_prefix:
+        return
+    for old in sorted(DATA_DIR.glob(f"{old_prefix}_*.zim")):
+        print(f"  Removing superseded file: {old.name}")
+        remove_from_library(old)
+        old.unlink(missing_ok=True)
 
 
 def main():
@@ -209,6 +250,7 @@ def main():
 
         if dest.exists():
             print(f"  Already present: {filename} (catalog date: {entry['date']})")
+            remove_superseded(book)
             continue
 
         # Find old versions; keep one previous file as rollback cache after update.
@@ -232,6 +274,8 @@ def main():
                 remove_from_library(old)
                 print(f"  Removing old version: {old.name}")
                 old.unlink(missing_ok=True)
+
+            remove_superseded(book)
         else:
             errors.append(book)
 

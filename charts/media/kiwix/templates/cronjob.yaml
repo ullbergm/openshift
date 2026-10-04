@@ -1,4 +1,8 @@
 {{- if .Values.zimUpdater.enabled }}
+{{- $superseded := list }}
+{{- range $new, $old := .Values.zimUpdater.supersededBooks }}
+{{- $superseded = append $superseded (printf "%s=%s" $new $old) }}
+{{- end }}
 ---
 apiVersion: batch/v1
 kind: CronJob
@@ -125,6 +129,8 @@ spec:
                   value: /data
                 - name: ZIM_BOOKS
                   value: {{ .Values.zimUpdater.books | join "," | quote }}
+                - name: ZIM_SUPERSEDED
+                  value: {{ $superseded | join "," | quote }}
                 - name: KIWIX_TOOLS_VERSION
                   value: {{ .Values.zimUpdater.kiwixTools.version | quote }}
                 - name: KIWIX_TOOLS_SHA256
