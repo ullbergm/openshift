@@ -94,6 +94,10 @@
           "type": "string",
           "description": "Comma-separated CIDRs treated as internal"
         },
+        "knownNetworks": {
+          "type": "string",
+          "description": "Comma-separated network=kind:name entries (kind router, remote or local) naming parts of the network"
+        },
         "dnsServer": {
           "type": "string",
           "description": "Resolver for reverse DNS; empty uses the cluster resolver"

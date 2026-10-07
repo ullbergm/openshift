@@ -53,6 +53,10 @@ spec:
                   key: CLICKHOUSE_PASSWORD
             - name: INTERNAL_SUBNETS
               value: {{ $cfg.internalSubnets | quote }}
+            {{- if $cfg.knownNetworks }}
+            - name: KNOWN_NETWORKS
+              value: {{ $cfg.knownNetworks | quote }}
+            {{- end }}
             {{- if $cfg.dnsServer }}
             # web-api 0.2.0 rejects an empty DNS_SERVER, so only set it when given.
             - name: DNS_SERVER
