@@ -46,7 +46,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.3.1
+      tag: 0.4.0
       pullPolicy: IfNotPresent
     port: 8042
     logLevel: info
@@ -63,7 +63,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.3.1
+      tag: 0.4.0
       pullPolicy: IfNotPresent
     port: 2055
     metricsPort: 9090
@@ -117,6 +117,11 @@ flow-analyzer:
   # Address ranges treated as "inside" when classifying traffic. Add
   # 100.64.0.0/10 or the WAN address when the router sits behind CGNAT.
   internalSubnets: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7,fe80::/10
+  # Named parts of the network, `network=kind:name` comma-separated; kind is
+  # router (outbound gateway), remote (another site over VPN/WAN) or local
+  # (a named segment, the default). Known networks also count as internal.
+  # e.g. "192.168.88.1=router:Main router,192.168.48.0/20=remote:Site 1"
+  knownNetworks: ""
   # Resolver for reverse lookups; the router usually knows the LAN hostnames.
   # Empty uses the cluster resolver.
   dnsServer: ""
