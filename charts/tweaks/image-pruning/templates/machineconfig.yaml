@@ -1,0 +1,26 @@
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: KubeletConfig
+metadata:
+  name: image-pruning
+spec:
+  machineConfigPoolSelector:
+    matchExpressions:
+      - {key: pools.operator.machineconfiguration.openshift.io/master, operator: Exists}
+  kubeletConfig:
+    imageMaximumGCAge: 168h
+    imageGCHighThresholdPercent: 70
+    imageGCLowThresholdPercent: 60
+---
+apiVersion: machineconfiguration.openshift.io/v1
+kind: KubeletConfig
+metadata:
+  name: image-pruning
+spec:
+  machineConfigPoolSelector:
+    matchExpressions:
+      - {key: pools.operator.machineconfiguration.openshift.io/worker, operator: Exists}
+  kubeletConfig:
+    imageMaximumGCAge: 168h
+    imageGCHighThresholdPercent: 70
+    imageGCLowThresholdPercent: 60
