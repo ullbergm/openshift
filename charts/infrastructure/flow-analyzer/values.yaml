@@ -32,7 +32,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer-dashboard
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer-dashboard versioning=semver
-      tag: 0.2.0@sha256:d1cbfd5f9c20728cae03511dfd5ae859a52792f9f2ad4accdeec08e8480d3ec3
+      tag: 0.3.0@sha256:43edb715648b0277233c2e2ade5711723e338ec05673394f1834f9e3b66d8eee
       pullPolicy: IfNotPresent
     resources:
       requests:
