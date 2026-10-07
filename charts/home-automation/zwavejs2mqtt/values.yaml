@@ -25,5 +25,5 @@ pods:
     image:
       repository: ghcr.io/zwave-js/zwave-js-ui
       # renovate: datasource=docker depName=ghcr.io/zwave-js/zwave-js-ui versioning=semver
-      tag: 11.21.1@sha256:1193b96b31488e5a6c7895f16a27b2ead38f8a0c3d1bec335bb10b6d9f9e2905
+      tag: 11.24.2@sha256:717f9d2609021b001d3543ec7144c4fc3ba0e31b61dbcd616383b93613b22f89
       pullPolicy: IfNotPresent
