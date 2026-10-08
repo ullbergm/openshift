@@ -62,6 +62,11 @@ spec:
             - name: DNS_SERVER
               value: {{ $cfg.dnsServer | quote }}
             {{- end }}
+            # The collector's Prometheus page, read for the dashboard's Status
+            # page (collector counters). Without it that page shows only what
+            # ClickHouse knows.
+            - name: COLLECTOR_METRICS_URL
+              value: http://{{ .Release.Name }}-collector-metrics:{{ .Values.pods.collector.metricsPort }}/metrics
             - name: RUST_LOG
               value: {{ .Values.pods.webApi.logLevel | quote }}
           ports:
