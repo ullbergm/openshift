@@ -93,7 +93,7 @@ pods:
     image:
       repository: ghcr.io/dfpc-coe/cloudtak-pmtiles
       # renovate: datasource=docker depName=ghcr.io/dfpc-coe/cloudtak-pmtiles versioning=loose
-      tag: v13.75.0@sha256:60dcd044a32bf59ee419280cbfc8dbfdf1382574ed13fc8ff695732a56a742be
+      tag: v13.106.0@sha256:3385f40773c41bb9417d6b175a34dee4731955dfbfb0ac5d5075f4d5791b0269
       pullPolicy: IfNotPresent
     securityContext:
       runAsUser: 1000
