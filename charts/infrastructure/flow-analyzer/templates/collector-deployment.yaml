@@ -77,7 +77,7 @@ spec:
           envFrom:
             # CLICKHOUSE_PASSWORD and SNMP_COMMUNITY
             - secretRef:
-                name: {{ .Release.Name }}
+                name: {{ include "flow-analyzer.secretName" . }}
           ports:
             - name: netflow
               containerPort: {{ .Values.pods.collector.port }}
