@@ -128,9 +128,21 @@ flow-analyzer:
 
 # Pulled from Infisical by the External Secrets Operator. The collector gets
 # both as environment variables; web-api and ClickHouse only the password.
+# Set enabled to false on a cluster without the operator and supply the
+# secret through `secrets` below instead.
 externalSecret:
+  enabled: true
   data:
     - secretKey: CLICKHOUSE_PASSWORD
       remoteKey: FLOW_ANALYZER_CLICKHOUSE_PASSWORD
     - secretKey: SNMP_COMMUNITY
       remoteKey: FLOW_ANALYZER_SNMP_COMMUNITY
+
+# Only used when externalSecret.enabled is false.
+secrets:
+  # Name of an existing Secret with the CLICKHOUSE_PASSWORD key and, when SNMP
+  # polling is on, SNMP_COMMUNITY. Empty creates the Secret from the values
+  # below; set them in cluster values, never here.
+  existingSecret: ""
+  clickhousePassword: ""
+  snmpCommunity: ""

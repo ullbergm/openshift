@@ -103,6 +103,51 @@
           "description": "Resolver for reverse DNS; empty uses the cluster resolver"
         }
       }
+    },
+    "externalSecret": {
+      "type": "object",
+      "title": "External Secrets Operator",
+      "properties": {
+        "enabled": {
+          "type": "boolean",
+          "description": "Pull the secret from Infisical through the External Secrets Operator; false uses `secrets` instead"
+        },
+        "data": {
+          "type": "array",
+          "items": {
+            "oneOf": [
+              {"type": "string"},
+              {
+                "type": "object",
+                "properties": {
+                  "secretKey": {"type": "string"},
+                  "remoteKey": {"type": "string"}
+                },
+                "required": ["secretKey"]
+              }
+            ]
+          }
+        }
+      }
+    },
+    "secrets": {
+      "type": "object",
+      "title": "Secrets without the External Secrets Operator",
+      "description": "Only used when externalSecret.enabled is false",
+      "properties": {
+        "existingSecret": {
+          "type": "string",
+          "description": "Existing Secret with CLICKHOUSE_PASSWORD and, when SNMP polling is on, SNMP_COMMUNITY; empty renders one from the values below"
+        },
+        "clickhousePassword": {
+          "type": "string",
+          "description": "ClickHouse password for the flow user; required when existingSecret is empty"
+        },
+        "snmpCommunity": {
+          "type": "string",
+          "description": "SNMP community for interface-counter polling"
+        }
+      }
     }
   },
   "required": ["cluster"]

@@ -97,7 +97,7 @@ spec:
             - name: CLICKHOUSE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Release.Name }}
+                  name: {{ include "flow-analyzer.secretName" . }}
                   key: CLICKHOUSE_PASSWORD
             # The users.d file replaces the entrypoint's user setup.
             - name: CLICKHOUSE_SKIP_USER_SETUP

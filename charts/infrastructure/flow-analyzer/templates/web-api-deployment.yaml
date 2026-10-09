@@ -49,7 +49,7 @@ spec:
             - name: CLICKHOUSE_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: {{ .Release.Name }}
+                  name: {{ include "flow-analyzer.secretName" . }}
                   key: CLICKHOUSE_PASSWORD
             - name: INTERNAL_SUBNETS
               value: {{ $cfg.internalSubnets | quote }}
