@@ -5,8 +5,9 @@ The collector keeps NetFlow v9 / IPFIX template state in memory, so it runs as
 one replica and is replaced rather than rolled: two collectors behind one UDP
 address would each see only some of the templates.
 
-Flow exports arrive on a second interface straight on the LAN (see
-collector-network.yaml); the routers send to that address, not to a Service.
+Flow exports (and sFlow, when enabled) arrive on a second interface straight
+on the LAN (see collector-network.yaml); the routers send to that address, not
+to a Service.
 */}}
 ---
 apiVersion: apps/v1
@@ -44,6 +45,14 @@ spec:
         runAsNonRoot: true
         seccompProfile:
           type: RuntimeDefault
+        {{- if contains "icmp://" ($cfg.probes.targets | default "") }}
+        # Lets the unprivileged collector open the ICMP datagram socket the
+        # icmp:// probes need. Namespaced and on Kubernetes' safe list, so
+        # the restricted SCC allows it.
+        sysctls:
+          - name: net.ipv4.ping_group_range
+            value: "0 2147483647"
+        {{- end }}
       # Long enough for the final flush to ClickHouse.
       terminationGracePeriodSeconds: 30
       containers:
@@ -72,6 +81,10 @@ spec:
               value: {{ $cfg.snmp.version | quote }}
             - name: SNMP_INTERVAL_SECS
               value: {{ $cfg.snmp.intervalSecs | quote }}
+            - name: SNMP_BRIDGE_TABLES
+              value: {{ $cfg.snmp.bridgeTables | quote }}
+            - name: SNMP_LLDP
+              value: {{ $cfg.snmp.lldp | quote }}
             {{- if $cfg.routeros.devices }}
             - name: ROUTEROS_DEVICES
               value: {{ $cfg.routeros.devices | quote }}
@@ -83,18 +96,67 @@ spec:
               value: {{ $cfg.routeros.intervalSecs | quote }}
             - name: ROUTEROS_TIMEOUT_SECS
               value: {{ $cfg.routeros.timeoutSecs | quote }}
+            # The connection table (what FastTrack hides from Traffic Flow)
+            # and the other groups, each on its own interval (0 = off).
+            - name: ROUTEROS_CONNECTIONS
+              value: {{ $cfg.routeros.connections | quote }}
+            - name: ROUTEROS_CONNECTIONS_INTERVAL_SECS
+              value: {{ $cfg.routeros.connectionsIntervalSecs | quote }}
+            - name: ROUTEROS_CONNECTIONS_FASTTRACK_ONLY
+              value: {{ $cfg.routeros.connectionsFasttrackOnly | quote }}
+            - name: ROUTEROS_CONNECTIONS_MAX
+              value: {{ $cfg.routeros.connectionsMax | quote }}
+            - name: ROUTEROS_HEALTH_INTERVAL_SECS
+              value: {{ $cfg.routeros.healthIntervalSecs | quote }}
+            - name: ROUTEROS_WIRELESS_INTERVAL_SECS
+              value: {{ $cfg.routeros.wirelessIntervalSecs | quote }}
+            - name: ROUTEROS_QUEUES_INTERVAL_SECS
+              value: {{ $cfg.routeros.queuesIntervalSecs | quote }}
+            - name: ROUTEROS_NETWATCH_INTERVAL_SECS
+              value: {{ $cfg.routeros.netwatchIntervalSecs | quote }}
+            - name: ROUTEROS_FIREWALL_INTERVAL_SECS
+              value: {{ $cfg.routeros.firewallIntervalSecs | quote }}
+            {{- end }}
+            {{- if $cfg.adguard.url }}
+            # AdGuard Home query log as passive DNS; the login, if any, is
+            # ADGUARD_USER / ADGUARD_PASSWORD from the Secret.
+            - name: ADGUARD_URL
+              value: {{ $cfg.adguard.url | quote }}
+            - name: ADGUARD_INTERVAL_SECS
+              value: {{ $cfg.adguard.intervalSecs | quote }}
+            {{- end }}
+            {{- if $cfg.probes.targets }}
+            - name: PROBE_TARGETS
+              value: {{ $cfg.probes.targets | quote }}
+            - name: PROBE_INTERVAL_SECS
+              value: {{ $cfg.probes.intervalSecs | quote }}
+            - name: PROBE_TIMEOUT_SECS
+              value: {{ $cfg.probes.timeoutSecs | quote }}
+            {{- end }}
+            {{- if $cfg.sflow.enabled }}
+            - name: SFLOW_BIND_ADDR
+              value: "0.0.0.0:6343"
+            {{- end }}
+            {{- if $cfg.forwardTo }}
+            - name: FORWARD_TO
+              value: {{ $cfg.forwardTo | quote }}
             {{- end }}
             - name: RUST_LOG
               value: {{ .Values.pods.collector.logLevel | quote }}
           envFrom:
-            # CLICKHOUSE_PASSWORD, SNMP_COMMUNITY and, when polling RouterOS,
-            # ROUTEROS_PASSWORD
+            # CLICKHOUSE_PASSWORD, SNMP_COMMUNITY and, when those pollers are
+            # on, ROUTEROS_PASSWORD and ADGUARD_USER / ADGUARD_PASSWORD
             - secretRef:
                 name: {{ include "flow-analyzer.secretName" . }}
           ports:
             - name: netflow
               containerPort: {{ .Values.pods.collector.port }}
               protocol: UDP
+            {{- if $cfg.sflow.enabled }}
+            - name: sflow
+              containerPort: 6343
+              protocol: UDP
+            {{- end }}
             - name: metrics
               containerPort: {{ .Values.pods.collector.metricsPort }}
               protocol: TCP

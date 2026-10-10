@@ -33,7 +33,10 @@
               "type": "object",
               "properties": {
                 "storageClassName": {
-                  "type": ["string", "null"],
+                  "type": [
+                    "string",
+                    "null"
+                  ],
                   "description": "Storage class for the ClickHouse volume (cluster default if unset)"
                 }
               }
@@ -41,7 +44,12 @@
           }
         }
       },
-      "required": ["top_level_domain", "name", "admin_email", "timezone"]
+      "required": [
+        "top_level_domain",
+        "name",
+        "admin_email",
+        "timezone"
+      ]
     },
     "flow-analyzer": {
       "type": "object",
@@ -82,11 +90,22 @@
             },
             "version": {
               "type": "string",
-              "enum": ["2c", "3"]
+              "enum": [
+                "2c",
+                "3"
+              ]
             },
             "intervalSecs": {
               "type": "integer",
               "minimum": 1
+            },
+            "bridgeTables": {
+              "type": "boolean",
+              "description": "Also walk the bridge forwarding table (which switch port a MAC is on)"
+            },
+            "lldp": {
+              "type": "boolean",
+              "description": "Also walk the LLDP neighbour table"
             }
           }
         },
@@ -112,6 +131,49 @@
             "timeoutSecs": {
               "type": "integer",
               "minimum": 1
+            },
+            "connections": {
+              "type": "boolean",
+              "description": "Poll /ip/firewall/connection and store fasttracked connections' byte deltas as flow records"
+            },
+            "connectionsIntervalSecs": {
+              "type": "integer",
+              "minimum": 5,
+              "description": "Seconds between connection-table polls"
+            },
+            "connectionsFasttrackOnly": {
+              "type": "boolean",
+              "description": "Only connections flagged fasttrack (the ones Traffic Flow does not export)"
+            },
+            "connectionsMax": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Most connection entries used per poll"
+            },
+            "healthIntervalSecs": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Router health poll interval in seconds (0 = off)"
+            },
+            "wirelessIntervalSecs": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Wireless registration poll interval in seconds (0 = off)"
+            },
+            "queuesIntervalSecs": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Simple queue poll interval in seconds (0 = off)"
+            },
+            "netwatchIntervalSecs": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Netwatch poll interval in seconds (0 = off)"
+            },
+            "firewallIntervalSecs": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Firewall counter poll interval in seconds (0 = off)"
             }
           }
         },
@@ -140,6 +202,166 @@
         "dnsServer": {
           "type": "string",
           "description": "Resolver for reverse DNS; empty uses the cluster resolver"
+        },
+        "adguard": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "AdGuard Home address whose query log feeds passive DNS; empty disables polling"
+            },
+            "intervalSecs": {
+              "type": "integer",
+              "minimum": 5,
+              "description": "Seconds between polls"
+            }
+          }
+        },
+        "probes": {
+          "type": "object",
+          "properties": {
+            "targets": {
+              "type": "string",
+              "description": "Active monitoring targets: icmp://host, http://... or https://..., comma-separated; empty disables probing"
+            },
+            "intervalSecs": {
+              "type": "integer",
+              "minimum": 5,
+              "description": "Seconds between probes"
+            },
+            "timeoutSecs": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Seconds to wait for an answer"
+            }
+          }
+        },
+        "sflow": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Listen for sFlow v5 on UDP 6343 of the collector's LAN address"
+            }
+          }
+        },
+        "forwardTo": {
+          "type": "string",
+          "description": "Collectors every accepted NetFlow/IPFIX datagram is relayed to (host:port, comma-separated); empty = none"
+        },
+        "interfaceRoles": {
+          "type": "string",
+          "description": "Interface roles, exporter/interface=role[:name] comma-separated (wan, lan, vpn, management, ignore); direction then follows the interfaces"
+        },
+        "threatFeeds": {
+          "type": "string",
+          "description": "Threat feeds: default, off, or name=url entries comma-separated"
+        },
+        "access": {
+          "type": "object",
+          "properties": {
+            "header": {
+              "type": "string",
+              "description": "Header a login proxy sets whose value marks an admin (e.g. X-Forwarded-Groups); empty = no header rule"
+            },
+            "values": {
+              "type": "string",
+              "description": "Comma-separated values of that header that mean admin"
+            },
+            "token": {
+              "type": "boolean",
+              "description": "Put ADMIN_TOKEN from the Secret on the web-api"
+            }
+          }
+        },
+        "alerts": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Evaluate the alert checks and rules in the web-api"
+            },
+            "dnsServers": {
+              "type": "string",
+              "description": "Resolvers the LAN should use (addresses or CIDRs); empty turns the unexpected-DNS-server check off"
+            },
+            "ntpServers": {
+              "type": "string",
+              "description": "NTP servers the LAN should use; empty turns the unexpected-NTP-server check off"
+            },
+            "mailHosts": {
+              "type": "string",
+              "description": "Hosts allowed to send SMTP to the outside; empty reports every one"
+            },
+            "minSeverity": {
+              "type": "string",
+              "enum": [
+                "info",
+                "notice",
+                "warning",
+                "error",
+                "critical"
+              ],
+              "description": "Lowest severity that is notified"
+            },
+            "firewallWatch": {
+              "type": "string",
+              "description": "Firewall rule comments (substrings, comma-separated) whose hits raise an alert; empty = off"
+            },
+            "webhook": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "description": "Send notifications to the webhook in the Secret (ALERT_WEBHOOK_URL)"
+                },
+                "format": {
+                  "type": "string",
+                  "enum": [
+                    "json",
+                    "slack",
+                    "discord",
+                    "ntfy"
+                  ],
+                  "description": "Webhook body format"
+                }
+              }
+            },
+            "email": {
+              "type": "object",
+              "properties": {
+                "enabled": {
+                  "type": "boolean",
+                  "description": "Send notifications over the SMTP server in the Secret (ALERT_SMTP_URL)"
+                },
+                "from": {
+                  "type": "string",
+                  "description": "From address"
+                },
+                "to": {
+                  "type": "string",
+                  "description": "Recipients, comma-separated"
+                }
+              }
+            },
+            "report": {
+              "type": "object",
+              "properties": {
+                "schedule": {
+                  "type": "string",
+                  "description": "Summary report schedule: 'daily HH:MM' or 'weekly dow HH:MM'; empty = none"
+                },
+                "to": {
+                  "type": "string",
+                  "description": "Report recipients; empty = the alert recipients"
+                }
+              }
+            },
+            "dashboardUrl": {
+              "type": "string",
+              "description": "Dashboard address for links in notifications; empty = the Route's address"
+            }
+          }
         }
       }
     },
@@ -155,14 +377,22 @@
           "type": "array",
           "items": {
             "oneOf": [
-              {"type": "string"},
+              {
+                "type": "string"
+              },
               {
                 "type": "object",
                 "properties": {
-                  "secretKey": {"type": "string"},
-                  "remoteKey": {"type": "string"}
+                  "secretKey": {
+                    "type": "string"
+                  },
+                  "remoteKey": {
+                    "type": "string"
+                  }
                 },
-                "required": ["secretKey"]
+                "required": [
+                  "secretKey"
+                ]
               }
             ]
           }
@@ -174,6 +404,30 @@
         "maxmindLicenseKey": {
           "type": "string",
           "description": "Remote key for MAXMIND_LICENSE_KEY, pulled only when flow-analyzer.geoip.url contains {license_key}"
+        },
+        "adguardUserKey": {
+          "type": "string",
+          "description": "Infisical key of the AdGuard user"
+        },
+        "adguardPasswordKey": {
+          "type": "string",
+          "description": "Infisical key of the AdGuard password"
+        },
+        "alertWebhookUrlKey": {
+          "type": "string",
+          "description": "Infisical key of the alert webhook URL"
+        },
+        "alertWebhookHeadersKey": {
+          "type": "string",
+          "description": "Infisical key of the alert webhook headers"
+        },
+        "alertSmtpUrlKey": {
+          "type": "string",
+          "description": "Infisical key of the SMTP URL"
+        },
+        "adminTokenKey": {
+          "type": "string",
+          "description": "Infisical key of the admin token"
         }
       }
     },
@@ -201,9 +455,35 @@
         "maxmindLicenseKey": {
           "type": "string",
           "description": "MaxMind license key for a GeoLite2 geoip.url"
+        },
+        "adguardUser": {
+          "type": "string",
+          "description": "AdGuard Home user"
+        },
+        "adguardPassword": {
+          "type": "string",
+          "description": "AdGuard Home password"
+        },
+        "alertWebhookUrl": {
+          "type": "string",
+          "description": "Alert webhook URL"
+        },
+        "alertWebhookHeaders": {
+          "type": "string",
+          "description": "Extra webhook headers, Name: value pairs separated by ;"
+        },
+        "alertSmtpUrl": {
+          "type": "string",
+          "description": "SMTP URL with credentials"
+        },
+        "adminToken": {
+          "type": "string",
+          "description": "Admin token for the web-api"
         }
       }
     }
   },
-  "required": ["cluster"]
+  "required": [
+    "cluster"
+  ]
 }
