@@ -90,6 +90,45 @@
             }
           }
         },
+        "routeros": {
+          "type": "object",
+          "properties": {
+            "devices": {
+              "type": "string",
+              "description": "Comma-separated RouterOS 7 REST API URLs to poll (https://user@host, password from the Secret); empty disables polling"
+            },
+            "insecure": {
+              "type": "boolean",
+              "description": "Accept the router's self-signed certificate"
+            },
+            "dnsCache": {
+              "type": "boolean",
+              "description": "Also read /ip/dns/cache into dns_names"
+            },
+            "intervalSecs": {
+              "type": "integer",
+              "minimum": 5
+            },
+            "timeoutSecs": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "geoip": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "Where web-api downloads the GeoIP database from (.mmdb, .mmdb.gz or .tar.gz; {license_key} is replaced with the MaxMind key); empty leaves GeoIP off"
+            },
+            "refreshSecs": {
+              "type": "integer",
+              "minimum": 60,
+              "description": "Seconds between downloads"
+            }
+          }
+        },
         "internalSubnets": {
           "type": "string",
           "description": "Comma-separated CIDRs treated as internal"
@@ -127,6 +166,14 @@
               }
             ]
           }
+        },
+        "routerosPasswordKey": {
+          "type": "string",
+          "description": "Remote key for ROUTEROS_PASSWORD, pulled only when flow-analyzer.routeros.devices is set"
+        },
+        "maxmindLicenseKey": {
+          "type": "string",
+          "description": "Remote key for MAXMIND_LICENSE_KEY, pulled only when flow-analyzer.geoip.url contains {license_key}"
         }
       }
     },
@@ -146,6 +193,14 @@
         "snmpCommunity": {
           "type": "string",
           "description": "SNMP community for interface-counter polling"
+        },
+        "routerosPassword": {
+          "type": "string",
+          "description": "RouterOS REST API password for devices whose URL carries none"
+        },
+        "maxmindLicenseKey": {
+          "type": "string",
+          "description": "MaxMind license key for a GeoLite2 geoip.url"
         }
       }
     }

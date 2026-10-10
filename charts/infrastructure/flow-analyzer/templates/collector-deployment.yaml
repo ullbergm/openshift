@@ -72,10 +72,23 @@ spec:
               value: {{ $cfg.snmp.version | quote }}
             - name: SNMP_INTERVAL_SECS
               value: {{ $cfg.snmp.intervalSecs | quote }}
+            {{- if $cfg.routeros.devices }}
+            - name: ROUTEROS_DEVICES
+              value: {{ $cfg.routeros.devices | quote }}
+            - name: ROUTEROS_INSECURE
+              value: {{ $cfg.routeros.insecure | quote }}
+            - name: ROUTEROS_DNS_CACHE
+              value: {{ $cfg.routeros.dnsCache | quote }}
+            - name: ROUTEROS_INTERVAL_SECS
+              value: {{ $cfg.routeros.intervalSecs | quote }}
+            - name: ROUTEROS_TIMEOUT_SECS
+              value: {{ $cfg.routeros.timeoutSecs | quote }}
+            {{- end }}
             - name: RUST_LOG
               value: {{ .Values.pods.collector.logLevel | quote }}
           envFrom:
-            # CLICKHOUSE_PASSWORD and SNMP_COMMUNITY
+            # CLICKHOUSE_PASSWORD, SNMP_COMMUNITY and, when polling RouterOS,
+            # ROUTEROS_PASSWORD
             - secretRef:
                 name: {{ include "flow-analyzer.secretName" . }}
           ports:

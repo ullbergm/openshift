@@ -2,7 +2,7 @@ apiVersion: v2
 description: A Helm chart for Flow Analyzer, a NetFlow/IPFIX collector with a ClickHouse backend and traffic dashboard
 name: flow-analyzer
 version: 1.0.0
-appVersion: "0.4.0"
+appVersion: "0.7.0"
 kubeVersion: ">=1.31.0-0"
 home: https://github.com/ullbergm/flow-analyzer
 sources:

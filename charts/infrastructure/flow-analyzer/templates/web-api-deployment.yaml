@@ -67,6 +67,24 @@ spec:
             # ClickHouse knows.
             - name: COLLECTOR_METRICS_URL
               value: http://{{ .Release.Name }}-collector-metrics:{{ .Values.pods.collector.metricsPort }}/metrics
+            {{- if $cfg.geoip.url }}
+            # GeoIP database for the Internet page's map and the location in
+            # the IP inspector; downloaded to the emptyDir below (the root
+            # filesystem is read-only) and refreshed every GEOIP_REFRESH_SECS.
+            - name: GEOIP_DB
+              value: /var/lib/flow-analyzer/geoip.mmdb
+            - name: GEOIP_URL
+              value: {{ $cfg.geoip.url | quote }}
+            - name: GEOIP_REFRESH_SECS
+              value: {{ $cfg.geoip.refreshSecs | quote }}
+            {{- if contains "{license_key}" $cfg.geoip.url }}
+            - name: MAXMIND_LICENSE_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "flow-analyzer.secretName" . }}
+                  key: MAXMIND_LICENSE_KEY
+            {{- end }}
+            {{- end }}
             - name: RUST_LOG
               value: {{ .Values.pods.webApi.logLevel | quote }}
           ports:
@@ -91,6 +109,16 @@ spec:
                 - ALL
           resources:
             {{- toYaml .Values.pods.webApi.resources | nindent 12 }}
+          {{- if $cfg.geoip.url }}
+          volumeMounts:
+            - name: geoip
+              mountPath: /var/lib/flow-analyzer
+      volumes:
+        # The downloaded GeoIP database; fetched again after a restart.
+        - name: geoip
+          emptyDir:
+            sizeLimit: 512Mi
+          {{- end }}
 ---
 # The dashboard image's nginx.conf proxies /graphql to http://web-api:8042, so
 # this Service keeps that fixed name rather than the release-prefixed one. It
