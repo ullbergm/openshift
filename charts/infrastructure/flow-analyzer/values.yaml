@@ -32,7 +32,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer-dashboard
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer-dashboard versioning=semver
-      tag: 0.9.1
+      tag: 0.9.2
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -46,7 +46,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.9.1
+      tag: 0.9.2
       pullPolicy: IfNotPresent
     port: 8042
     logLevel: info
@@ -63,7 +63,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.9.1
+      tag: 0.9.2
       pullPolicy: IfNotPresent
     port: 2055
     metricsPort: 9090
