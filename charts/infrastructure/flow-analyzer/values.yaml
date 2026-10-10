@@ -133,13 +133,15 @@ flow-analyzer:
     dnsCache: true
     intervalSecs: 60
     timeoutSecs: 10
-    # The connection table as a second flow source: FastTrack and L3
-    # hardware offload bypass Traffic Flow, so the collector reads
+    # The connection table as a second flow source, for a router whose
+    # Traffic Flow misses FastTracked traffic: the collector then reads
     # /ip/firewall/connection every connectionsIntervalSecs and stores the
-    # byte deltas of fasttracked connections as flow records. Off on a
-    # router without FastTrack, or whose table is too large to read that
-    # often (connectionsMax caps the entries used per poll).
-    connections: true
+    # byte deltas of fasttracked connections as flow records. Check the
+    # Interfaces page's Visibility column before turning it on: the RB5009
+    # on RouterOS 7.16 exports FastTracked flows itself, and the table
+    # would count those bytes twice. connectionsMax caps the entries used
+    # per poll.
+    connections: false
     connectionsIntervalSecs: 30
     connectionsFasttrackOnly: true
     connectionsMax: 50000
