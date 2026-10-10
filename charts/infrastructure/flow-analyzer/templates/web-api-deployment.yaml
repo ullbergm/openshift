@@ -57,6 +57,72 @@ spec:
             - name: KNOWN_NETWORKS
               value: {{ $cfg.knownNetworks | quote }}
             {{- end }}
+            {{- if $cfg.interfaceRoles }}
+            - name: INTERFACE_ROLES
+              value: {{ $cfg.interfaceRoles | quote }}
+            {{- end }}
+            - name: THREAT_FEEDS
+              value: {{ $cfg.threatFeeds | quote }}
+            {{- if $cfg.access.header }}
+            - name: ADMIN_HEADER
+              value: {{ $cfg.access.header | quote }}
+            - name: ADMIN_VALUES
+              value: {{ $cfg.access.values | quote }}
+            {{- end }}
+            {{- if $cfg.access.token }}
+            - name: ADMIN_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "flow-analyzer.secretName" . }}
+                  key: ADMIN_TOKEN
+            {{- end }}
+            # Alerting: the engine runs in this one replica.
+            - name: ALERTS_ENABLED
+              value: {{ $cfg.alerts.enabled | quote }}
+            - name: DNS_SERVERS
+              value: {{ $cfg.alerts.dnsServers | default "" | quote }}
+            - name: NTP_SERVERS
+              value: {{ $cfg.alerts.ntpServers | default "" | quote }}
+            - name: MAIL_HOSTS
+              value: {{ $cfg.alerts.mailHosts | default "" | quote }}
+            - name: ALERT_MIN_SEVERITY
+              value: {{ $cfg.alerts.minSeverity | quote }}
+            - name: ALERT_FIREWALL_WATCH
+              value: {{ $cfg.alerts.firewallWatch | default "" | quote }}
+            - name: DASHBOARD_URL
+              value: {{ $cfg.alerts.dashboardUrl | default (printf "https://%s.apps.%s.%s" .Release.Name .Values.cluster.name .Values.cluster.top_level_domain) | quote }}
+            {{- if $cfg.alerts.webhook.enabled }}
+            - name: ALERT_WEBHOOK_FORMAT
+              value: {{ $cfg.alerts.webhook.format | quote }}
+            - name: ALERT_WEBHOOK_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "flow-analyzer.secretName" . }}
+                  key: ALERT_WEBHOOK_URL
+            - name: ALERT_WEBHOOK_HEADERS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "flow-analyzer.secretName" . }}
+                  key: ALERT_WEBHOOK_HEADERS
+                  optional: true
+            {{- end }}
+            {{- if $cfg.alerts.email.enabled }}
+            - name: ALERT_SMTP_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "flow-analyzer.secretName" . }}
+                  key: ALERT_SMTP_URL
+            - name: ALERT_EMAIL_FROM
+              value: {{ $cfg.alerts.email.from | quote }}
+            - name: ALERT_EMAIL_TO
+              value: {{ $cfg.alerts.email.to | quote }}
+            {{- if $cfg.alerts.report.schedule }}
+            - name: REPORT_SCHEDULE
+              value: {{ $cfg.alerts.report.schedule | quote }}
+            - name: REPORT_EMAIL_TO
+              value: {{ $cfg.alerts.report.to | default $cfg.alerts.email.to | quote }}
+            {{- end }}
+            {{- end }}
             {{- if $cfg.dnsServer }}
             # web-api 0.2.0 rejects an empty DNS_SERVER, so only set it when given.
             - name: DNS_SERVER

@@ -32,7 +32,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer-dashboard
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer-dashboard versioning=semver
-      tag: 0.8.0
+      tag: 0.9.0
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -46,7 +46,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.8.0
+      tag: 0.9.0
       pullPolicy: IfNotPresent
     port: 8042
     logLevel: info
@@ -57,13 +57,13 @@ pods:
       limits:
         memory: 256Mi
 
-  # NetFlow v9 / IPFIX collector: UDP in, batched inserts into ClickHouse,
-  # optional SNMP polling of interface counters.
+  # NetFlow v9 / IPFIX (and sFlow) collector: UDP in, batched inserts into
+  # ClickHouse; optional SNMP, RouterOS REST, AdGuard and probe pollers.
   collector:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.8.0
+      tag: 0.9.0
       pullPolicy: IfNotPresent
     port: 2055
     metricsPort: 9090
@@ -114,6 +114,10 @@ flow-analyzer:
     targets: ""
     version: "2c"
     intervalSecs: 60
+    # Also walk the bridge forwarding table (which switch port a MAC is on)
+    # and the LLDP neighbour table on the same targets.
+    bridgeTables: false
+    lldp: false
   # RouterOS 7 REST API poller (collector): DHCP leases, ARP, bridge hosts,
   # neighbours (MNDP/CDP/LLDP) and the DNS cache, for the Devices, Topology
   # and DNS names pages. Needs `www-ssl` (or `www`) enabled under /ip/service
@@ -129,6 +133,48 @@ flow-analyzer:
     dnsCache: true
     intervalSecs: 60
     timeoutSecs: 10
+    # The connection table as a second flow source: FastTrack and L3
+    # hardware offload bypass Traffic Flow, so the collector reads
+    # /ip/firewall/connection every connectionsIntervalSecs and stores the
+    # byte deltas of fasttracked connections as flow records. Off on a
+    # router without FastTrack, or whose table is too large to read that
+    # often (connectionsMax caps the entries used per poll).
+    connections: true
+    connectionsIntervalSecs: 30
+    connectionsFasttrackOnly: true
+    connectionsMax: 50000
+    # The other groups, each on its own interval in seconds (0 turns one
+    # off): router health (CPU, memory, temperature, voltage; the Routers
+    # card and checks), wireless clients (SSID and signal on Devices),
+    # simple queues, netwatch (joins the active-monitoring probes) and
+    # firewall rule counters.
+    healthIntervalSecs: 60
+    wirelessIntervalSecs: 60
+    queuesIntervalSecs: 60
+    netwatchIntervalSecs: 60
+    firewallIntervalSecs: 60
+  # AdGuard Home whose query log feeds passive DNS (names for CDN addresses).
+  # The login, if the instance has one, comes from the Secret (ADGUARD_USER,
+  # ADGUARD_PASSWORD). Empty disables polling.
+  adguard:
+    url: ""
+    intervalSecs: 60
+  # Active monitoring from the collector: icmp://host, http://... or
+  # https://... targets, comma-separated. An icmp:// target makes the pod ask
+  # for the net.ipv4.ping_group_range sysctl (safe-listed, no SCC change).
+  probes:
+    targets: ""
+    intervalSecs: 30
+    timeoutSecs: 5
+  # sFlow v5 from switches, on UDP 6343 of the collector's LAN address:
+  # packet samples become flows, counter samples fill interface_counters
+  # without SNMP polling.
+  sflow:
+    enabled: false
+  # Relay every accepted NetFlow/IPFIX datagram, unchanged, to other
+  # collectors (host:port, comma-separated), e.g. an ntopng or Akvorado on
+  # the side. Empty = none.
+  forwardTo: ""
   # GeoIP database (MaxMind MMDB format) for web-api: places external
   # addresses on the Internet page's map and names their city in the IP
   # inspector. Without one, external traffic is placed by the country the
@@ -153,6 +199,62 @@ flow-analyzer:
   # Resolver for reverse lookups; the router usually knows the LAN hostnames.
   # Empty uses the cluster resolver.
   dnsServer: ""
+  # Interface roles, `exporter/interface=role[:name]` comma-separated, roles
+  # wan, lan, vpn, management or ignore; the interface is an ifIndex or its
+  # SNMP name. With roles, traffic direction follows the interfaces (a flow
+  # entering a WAN is a download) instead of the address rules alone, and the
+  # Overview and Interfaces pages show each WAN by name. e.g.
+  # "192.168.88.1/ether1=wan:Starlink,192.168.88.1/ether2=wan:T-Mobile,192.168.88.1/wireguard1=vpn:Branch"
+  interfaceRoles: ""
+  # Threat feeds the web-api downloads (abuse.ch, Spamhaus DROP, Tor exits,
+  # Emerging Threats, DShield): "default", "off" without internet access, or
+  # your own name=url entries comma-separated.
+  threatFeeds: default
+  # Who may change things (names and tags, alert acknowledgements, checks
+  # and rules). Reading stays open to whoever reaches the Route. header is a
+  # header a login proxy sets (X-Forwarded-Groups, X-Forwarded-User) and
+  # values the comma-separated values of it that mean admin; token puts
+  # ADMIN_TOKEN from the Secret on the web-api, to be entered on the
+  # dashboard's Settings page. Neither set: everyone may change things.
+  access:
+    header: ""
+    values: ""
+    token: false
+  # Alerting runs inside web-api (one replica evaluates). The checks need no
+  # configuration; these narrow a few of them and say where to notify.
+  alerts:
+    enabled: true
+    # Resolvers and NTP servers the LAN should use (addresses or CIDRs,
+    # comma-separated); empty leaves the unexpected-server checks off.
+    dnsServers: ""
+    ntpServers: ""
+    # Hosts allowed to send mail to the outside; empty reports every one.
+    mailHosts: ""
+    # Lowest severity notified (info, notice, warning, error, critical);
+    # alerts below it are stored but not sent.
+    minSeverity: warning
+    # Firewall rule comments (substrings, comma-separated) whose hits raise
+    # an alert, with the RouterOS firewall group on. Empty = off.
+    firewallWatch: ""
+    # Webhook: the URL (often carrying a token) and extra headers come from
+    # the Secret (ALERT_WEBHOOK_URL, ALERT_WEBHOOK_HEADERS); format is json,
+    # slack (also Mattermost, Rocket.Chat), discord or ntfy.
+    webhook:
+      enabled: false
+      format: json
+    # Email over SMTP: the server URL with its credentials comes from the
+    # Secret (ALERT_SMTP_URL, smtp://user:pass@host:587 or smtps://...).
+    email:
+      enabled: false
+      from: ""
+      to: ""
+    # A summary email: "daily 07:00" or "weekly mon 07:00" in the cluster's
+    # timezone, to reportTo (default: the alert recipients). Empty = none.
+    report:
+      schedule: ""
+      to: ""
+    # Links in notifications and reports; empty uses the Route's address.
+    dashboardUrl: ""
 
 # Pulled from Infisical by the External Secrets Operator. The collector gets
 # both as environment variables; web-api and ClickHouse only the password.
@@ -170,6 +272,15 @@ externalSecret:
   # set, the MaxMind key when geoip.url says {license_key}.
   routerosPasswordKey: FLOW_ANALYZER_ROUTEROS_PASSWORD
   maxmindLicenseKey: FLOW_ANALYZER_MAXMIND_LICENSE_KEY
+  # Likewise: the AdGuard login when adguard.url is set, the webhook URL and
+  # headers when alerts.webhook.enabled, the SMTP URL when
+  # alerts.email.enabled, the admin token when access.token.
+  adguardUserKey: FLOW_ANALYZER_ADGUARD_USER
+  adguardPasswordKey: FLOW_ANALYZER_ADGUARD_PASSWORD
+  alertWebhookUrlKey: FLOW_ANALYZER_ALERT_WEBHOOK_URL
+  alertWebhookHeadersKey: FLOW_ANALYZER_ALERT_WEBHOOK_HEADERS
+  alertSmtpUrlKey: FLOW_ANALYZER_ALERT_SMTP_URL
+  adminTokenKey: FLOW_ANALYZER_ADMIN_TOKEN
 
 # Only used when externalSecret.enabled is false.
 secrets:
@@ -183,3 +294,11 @@ secrets:
   # (MAXMIND_LICENSE_KEY), when those features are on.
   routerosPassword: ""
   maxmindLicenseKey: ""
+  # AdGuard Home login, the alert webhook URL and headers, the SMTP URL and
+  # the admin token, when those features are on.
+  adguardUser: ""
+  adguardPassword: ""
+  alertWebhookUrl: ""
+  alertWebhookHeaders: ""
+  alertSmtpUrl: ""
+  adminToken: ""
