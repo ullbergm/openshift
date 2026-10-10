@@ -114,6 +114,34 @@ flow-analyzer:
     targets: ""
     version: "2c"
     intervalSecs: 60
+  # RouterOS 7 REST API poller (collector): DHCP leases, ARP, bridge hosts,
+  # neighbours (MNDP/CDP/LLDP) and the DNS cache, for the Devices, Topology
+  # and DNS names pages. Needs `www-ssl` (or `www`) enabled under /ip/service
+  # and a user in a read-only group.
+  routeros:
+    # Routers to poll, comma-separated URLs with the user but no password,
+    # e.g. "https://flow@192.168.88.1"; the password comes from the Secret
+    # (ROUTEROS_PASSWORD). Empty disables polling.
+    devices: ""
+    # Accept the self-signed certificate RouterOS ships with.
+    insecure: true
+    # Also read /ip/dns/cache into dns_names.
+    dnsCache: true
+    intervalSecs: 60
+    timeoutSecs: 10
+  # GeoIP database (MaxMind MMDB format) for web-api: places external
+  # addresses on the Internet page's map and names their city in the IP
+  # inspector. Without one, external traffic is placed by the country the
+  # announcing network is registered in.
+  geoip:
+    # Downloaded into the web-api pod (an emptyDir, fetched again after a
+    # restart) and refreshed every refreshSecs. DB-IP Lite needs no account
+    # but the file name carries the month, so bump it now and then.
+    # MaxMind GeoLite2 instead:
+    #   https://download.maxmind.com/app/geoip_download?edition_id=GeoLite2-City&license_key={license_key}&suffix=tar.gz
+    # with the key in the Secret (MAXMIND_LICENSE_KEY). Empty leaves GeoIP off.
+    url: https://download.db-ip.com/free/dbip-city-lite-2026-10.mmdb.gz
+    refreshSecs: 604800
   # Address ranges treated as "inside" when classifying traffic. Add
   # 100.64.0.0/10 or the WAN address when the router sits behind CGNAT.
   internalSubnets: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7,fe80::/10
@@ -137,6 +165,11 @@ externalSecret:
       remoteKey: FLOW_ANALYZER_CLICKHOUSE_PASSWORD
     - secretKey: SNMP_COMMUNITY
       remoteKey: FLOW_ANALYZER_SNMP_COMMUNITY
+  # Added to `data` only when the feature is on, so the keys need not exist
+  # in Infisical otherwise: the RouterOS password when routeros.devices is
+  # set, the MaxMind key when geoip.url says {license_key}.
+  routerosPasswordKey: FLOW_ANALYZER_ROUTEROS_PASSWORD
+  maxmindLicenseKey: FLOW_ANALYZER_MAXMIND_LICENSE_KEY
 
 # Only used when externalSecret.enabled is false.
 secrets:
@@ -146,3 +179,7 @@ secrets:
   existingSecret: ""
   clickhousePassword: ""
   snmpCommunity: ""
+  # RouterOS REST API password (ROUTEROS_PASSWORD) and MaxMind license key
+  # (MAXMIND_LICENSE_KEY), when those features are on.
+  routerosPassword: ""
+  maxmindLicenseKey: ""
