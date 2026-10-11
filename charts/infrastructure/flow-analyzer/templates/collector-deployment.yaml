@@ -133,6 +133,18 @@ spec:
             - name: PROBE_TIMEOUT_SECS
               value: {{ $cfg.probes.timeoutSecs | quote }}
             {{- end }}
+            {{- if $cfg.throughput.targets }}
+            - name: THROUGHPUT_TARGETS
+              value: {{ $cfg.throughput.targets | quote }}
+            - name: THROUGHPUT_INTERVAL_SECS
+              value: {{ $cfg.throughput.intervalSecs | quote }}
+            - name: THROUGHPUT_MAX_BYTES
+              value: {{ $cfg.throughput.maxBytes | int64 | quote }}
+            - name: THROUGHPUT_MAX_SECS
+              value: {{ $cfg.throughput.maxSecs | quote }}
+            - name: THROUGHPUT_TIMEOUT_SECS
+              value: {{ $cfg.throughput.timeoutSecs | quote }}
+            {{- end }}
             {{- if $cfg.sflow.enabled }}
             - name: SFLOW_BIND_ADDR
               value: "0.0.0.0:6343"

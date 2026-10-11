@@ -63,6 +63,16 @@ spec:
             {{- end }}
             - name: THREAT_FEEDS
               value: {{ $cfg.threatFeeds | quote }}
+            - name: UPDATE_CHECK
+              value: {{ ternary "on" "off" $cfg.updateCheck.enabled | quote }}
+            {{- if $cfg.updateCheck.registry }}
+            - name: UPDATE_CHECK_REGISTRY
+              value: {{ $cfg.updateCheck.registry | quote }}
+            {{- end }}
+            {{- if $cfg.updateCheck.images }}
+            - name: UPDATE_CHECK_IMAGES
+              value: {{ $cfg.updateCheck.images | quote }}
+            {{- end }}
             {{- if $cfg.access.header }}
             - name: ADMIN_HEADER
               value: {{ $cfg.access.header | quote }}

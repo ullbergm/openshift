@@ -236,6 +236,36 @@
             }
           }
         },
+        "throughput": {
+          "type": "object",
+          "properties": {
+            "targets": {
+              "type": "string",
+              "description": "Throughput measurements: URLs of large files to download, comma-separated, each optionally followed by upload=URL; empty disables them"
+            },
+            "intervalSecs": {
+              "type": "integer",
+              "minimum": 300,
+              "description": "Seconds between runs per target"
+            },
+            "maxBytes": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Bytes a run moves at most in each direction"
+            },
+            "maxSecs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 60,
+              "description": "Seconds a run lasts at most in each direction"
+            },
+            "timeoutSecs": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Seconds to wait for the connection and the first byte"
+            }
+          }
+        },
         "sflow": {
           "type": "object",
           "properties": {
@@ -256,6 +286,23 @@
         "threatFeeds": {
           "type": "string",
           "description": "Threat feeds: default, off, or name=url entries comma-separated"
+        },
+        "updateCheck": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Ask the container registry about once a day whether a newer release exists"
+            },
+            "registry": {
+              "type": "string",
+              "description": "Registry base URL; empty uses https://ghcr.io"
+            },
+            "images": {
+              "type": "string",
+              "description": "Image repositories whose tags are compared, comma-separated; empty uses the two ullbergm images"
+            }
+          }
         },
         "access": {
           "type": "object",

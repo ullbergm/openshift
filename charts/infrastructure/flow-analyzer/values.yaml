@@ -168,6 +168,19 @@ flow-analyzer:
     targets: ""
     intervalSecs: 30
     timeoutSecs: 5
+  # Throughput measurements from the collector: the URL of a large file to
+  # download every intervalSecs, comma-separated for several, and
+  # "URL upload=URL" to also upload. Every run moves real data (up to
+  # maxBytes or maxSecs, whichever comes first; 25 MiB hourly is about
+  # 18 GiB a month), so this is off unless a target is named. It measures
+  # the path from the collector pod, whichever WAN the router sends that
+  # over. Needs images from the release after 0.9.2.
+  throughput:
+    targets: ""
+    intervalSecs: 3600
+    maxBytes: 26214400
+    maxSecs: 10
+    timeoutSecs: 10
   # sFlow v5 from switches, on UDP 6343 of the collector's LAN address:
   # packet samples become flows, counter samples fill interface_counters
   # without SNMP polling.
@@ -212,6 +225,17 @@ flow-analyzer:
   # Emerging Threats, DShield): "default", "off" without internet access, or
   # your own name=url entries comma-separated.
   threatFeeds: default
+  # Whether the web-api asks the container registry for a newer release
+  # (ghcr.io, anonymously, about once a day: a token and the tag list of
+  # each image, nothing else), which the dashboard then shows next to the
+  # running version. Turn it off on a cluster without internet access.
+  # registry and images point it at a mirror or a fork; empty keeps the
+  # defaults (https://ghcr.io and the two ullbergm images). Needs images
+  # from the release after 0.9.2.
+  updateCheck:
+    enabled: true
+    registry: ""
+    images: ""
   # Who may change things (names and tags, alert acknowledgements, checks
   # and rules). Reading stays open to whoever reaches the Route. header is a
   # header a login proxy sets (X-Forwarded-Groups, X-Forwarded-User) and
