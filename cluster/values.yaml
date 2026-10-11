@@ -57,6 +57,12 @@ config:
       lat: "0.0"
       lon: "0.0"
 
+  actions-runner-controller:
+    # GitHub account that owns the repositories, and the repositories that
+    # get self-hosted runners (comma-separated, names only).
+    owner: YOUR_GITHUB_USER
+    repositories: ""
+
   certificates:
     letsencrypt:
       issuer: production

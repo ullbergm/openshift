@@ -1,0 +1,60 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage:
+    #config:
+    #  storageClassName: synology-iscsi
+    media:
+      nfs:
+        server: nas
+        path: /volume1/media
+
+actions-runner-controller:
+  # GitHub user or organization that owns the repositories.
+  owner: ""
+  # repository: one runner scale set per entry in `repositories`. The only
+  #   option for a personal account, GitHub has no account-wide runners there.
+  # organization: a single runner scale set shared by every repository in the
+  #   `owner` organization; `repositories` is ignored.
+  scope: repository
+  # Repository names (without the owner), as a comma-separated string or a list.
+  repositories: ""
+  # The name workflows target with `runs-on:`. Shared by every scale set, so
+  # the same workflow runs unchanged in any repository.
+  runnerScaleSetName: openshift
+  # Per scale set. Runners are ephemeral: one pod per job, removed afterwards.
+  minRunners: 0
+  maxRunners: 3
+  auth:
+    # app: GitHub App (GITHUB_ACTIONS_RUNNER_APP_ID, _APP_INSTALLATION_ID, _APP_PRIVATE_KEY)
+    # token: personal access token (GITHUB_ACTIONS_RUNNER_TOKEN)
+    type: app
+
+runner:
+  image:
+    repository: ghcr.io/actions/actions-runner
+    # renovate: datasource=docker depName=ghcr.io/actions/actions-runner versioning=semver
+    tag: 2.338.0
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      memory: 4Gi
+
+gha-runner-scale-set-controller:
+  replicaCount: 1
+  flags:
+    logLevel: info
+    # Must match the namespace this chart is deployed to. Keeps the controller
+    # on namespaced Roles instead of a cluster-wide ClusterRole.
+    watchSingleNamespace: actions-runner-controller
+  resources:
+    requests:
+      cpu: 50m
+      memory: 128Mi
+    limits:
+      memory: 512Mi
