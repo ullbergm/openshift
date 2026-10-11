@@ -84,9 +84,6 @@ spec:
     spec:
       restartPolicy: Never
       serviceAccountName: {{ $serviceAccount }}
-      # Root and the Docker daemon's privileges exist only inside the pod's
-      # user namespace; on the node the pod runs as unprivileged UIDs.
-      hostUsers: false
       initContainers:
         - name: init-dind-externals
           image: "{{ $.Values.runner.image.repository }}:{{ $.Values.runner.image.tag }}"
@@ -173,14 +170,15 @@ spec:
 {{- end }}
 {{- if $sets }}
 ---
-# Runner pods need root (sudo, apt-get) and a Docker daemon. This grants both
-# only to pods that run in their own user namespace, so neither is root or
-# privileged on the node. No host namespaces, host paths or host ports.
+# The Docker daemon sidecar has to be privileged: it manages cgroups, mounts
+# and network namespaces for the containers workflows start. Confining it to a
+# pod user namespace was tried and fails, the daemon cannot write its cgroup
+# tree there. Accepted exception to the no-privileged rule, see the README.
+# No host namespaces, host paths or host ports.
 apiVersion: security.openshift.io/v1
 kind: SecurityContextConstraints
 metadata:
   name: {{ .Release.Name }}-runner
-userNamespaceLevel: RequirePodLevel
 allowPrivilegedContainer: true
 allowPrivilegeEscalation: true
 allowHostDirVolumePlugin: false

@@ -68,10 +68,20 @@ with need a `setup-*` action or an `apt-get install` step.
 
 ## Security model
 
-Runner pods run with `hostUsers: false`. Root in the runner and the privileged
-Docker daemon exist only inside the pod's user namespace; on the node they are
-unprivileged UIDs. The chart's SCC only admits pods that use a user namespace,
-and grants no host namespaces, host paths or host ports.
+The Docker daemon sidecar in each runner pod runs **privileged**, which is
+effectively root on the node for anything a workflow executes. This is a
+deliberate exception to the cluster's "no privileged containers without a
+hardware rationale" rule:
+
+- A Docker daemon needs to manage cgroups, mounts and network namespaces.
+  Running it inside a pod user namespace (`hostUsers: false`) was tried and does
+  not work on this cluster: the daemon cannot write its cgroup tree.
+- Only repositories listed in `repositories` get runners. Keep that list to
+  private repositories where every contributor is trusted, and never add a
+  public repository that runs workflows from forks.
+
+The runner container itself runs as UID 1001 with `sudo`; the chart's SCC grants
+no host namespaces, host paths or host ports.
 
 ## Limitations
 
