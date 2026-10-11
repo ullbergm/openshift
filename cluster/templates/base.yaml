@@ -10,9 +10,9 @@ spec:
   generators:
     - list:
         elements:
-        - name: actions-runner-controller
-          group: infrastructure
-          serverSideApply: true
+        # - name: actions-runner-controller
+        #   group: infrastructure
+        #   serverSideApply: true
         - name: certificates
           group: infrastructure
         - name: custom-error-pages
