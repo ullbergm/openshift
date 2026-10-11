@@ -60,8 +60,10 @@ spec:
         runAsUser: 1000
         runAsGroup: 1000
         fsGroup: 1000
+        # The default profile blocks creating the nested user namespace that
+        # BuildKit's rootless mode runs in.
         seccompProfile:
-          type: RuntimeDefault
+          type: Unconfined
       containers:
         - name: buildkitd
           image: "{{ .Values.buildkit.image.repository }}:{{ .Values.buildkit.image.tag }}"
