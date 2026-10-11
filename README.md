@@ -30,6 +30,7 @@ The deployment model follows a two-tier architecture:
     │   ├── ollama/            # Local LLM runtime
     │   └── open-webui/        # Web UI for LLMs
     ├── infrastructure/
+    │   ├── actions-runner-controller/ # Self-hosted GitHub Actions runners
     │   ├── flow-analyzer/     # NetFlow/IPFIX collector and traffic dashboard
     │   ├── gatus/             # Service monitoring and health checks
     │   └── goldilocks/        # VPA recommendations dashboard

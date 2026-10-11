@@ -1,0 +1,128 @@
+{{- /*
+One AutoscalingRunnerSet per repository (or one for the organization), with the
+supporting resources the upstream gha-runner-scale-set chart creates per release.
+That chart is one release per scale set, which does not fit a values-driven list.
+*/ -}}
+{{- $cfg := index .Values "actions-runner-controller" }}
+{{- $ctrl := index .Subcharts "gha-runner-scale-set-controller" }}
+{{- $sets := include "actions-runner-controller.scaleSets" . | fromJsonArray }}
+{{- range $set := $sets }}
+{{- $labels := include "actions-runner-controller.scaleSetLabels" (dict "root" $ "name" $set.name) }}
+{{- $serviceAccount := printf "%s-gha-rs-no-permission" $set.name }}
+{{- $manager := printf "%s-gha-rs-manager" $set.name }}
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: {{ $serviceAccount }}
+  labels:
+    {{- $labels | nindent 4 }}
+  finalizers:
+    - actions.github.com/cleanup-protection
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: {{ $manager }}
+  labels:
+    {{- $labels | nindent 4 }}
+    app.kubernetes.io/component: manager-role
+  finalizers:
+    - actions.github.com/cleanup-protection
+rules:
+  - apiGroups: [""]
+    resources: ["pods"]
+    verbs: ["create", "delete", "get"]
+  - apiGroups: [""]
+    resources: ["pods/status"]
+    verbs: ["get"]
+  - apiGroups: [""]
+    resources: ["secrets", "serviceaccounts"]
+    verbs: ["create", "delete", "get", "list", "patch", "update"]
+  - apiGroups: ["rbac.authorization.k8s.io"]
+    resources: ["rolebindings", "roles"]
+    verbs: ["create", "delete", "get", "patch", "update"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ $manager }}
+  labels:
+    {{- $labels | nindent 4 }}
+    app.kubernetes.io/component: manager-role-binding
+  finalizers:
+    - actions.github.com/cleanup-protection
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ $manager }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "gha-runner-scale-set-controller.serviceAccountName" $ctrl }}
+    namespace: {{ $.Release.Namespace }}
+---
+apiVersion: actions.github.com/v1alpha1
+kind: AutoscalingRunnerSet
+metadata:
+  name: {{ $set.name }}
+  labels:
+    app.kubernetes.io/component: autoscaling-runner-set
+    {{- $labels | nindent 4 }}
+  annotations:
+    # The controller recreates the listener when this hash changes.
+    actions.github.com/values-hash: {{ dict "set" $set "config" (omit $cfg "repositories") "runner" $.Values.runner | toJson | sha256sum | trunc 63 }}
+    actions.github.com/cleanup-manager-role-binding: {{ $manager }}
+    actions.github.com/cleanup-manager-role-name: {{ $manager }}
+    actions.github.com/cleanup-no-permission-service-account-name: {{ $serviceAccount }}
+spec:
+  githubConfigUrl: {{ $set.url }}
+  githubConfigSecret: {{ $.Release.Name }}-github
+  runnerScaleSetName: {{ $cfg.runnerScaleSetName }}
+  minRunners: {{ $cfg.minRunners | int }}
+  maxRunners: {{ $cfg.maxRunners | int }}
+  template:
+    spec:
+      restartPolicy: Never
+      serviceAccountName: {{ $serviceAccount }}
+      securityContext:
+        # The runner image only works as its built-in runner user.
+        runAsNonRoot: true
+        runAsUser: 1001
+        seccompProfile:
+          type: RuntimeDefault
+      containers:
+        - name: runner
+          image: "{{ $.Values.runner.image.repository }}:{{ $.Values.runner.image.tag }}"
+          imagePullPolicy: {{ $.Values.runner.image.pullPolicy }}
+          command: ["/home/runner/run.sh"]
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop: ["ALL"]
+          env:
+            - name: TZ
+              value: {{ $.Values.cluster.timezone | quote }}
+          {{- with $.Values.runner.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+{{- end }}
+{{- if $sets }}
+---
+# The runner image needs UID 1001, outside the range restricted-v2 assigns.
+# nonroot-v2 allows a fixed non-root UID and nothing else beyond restricted-v2.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Release.Name }}-runner-nonroot-v2
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:openshift:scc:nonroot-v2
+subjects:
+  {{- range $set := $sets }}
+  - kind: ServiceAccount
+    name: {{ $set.name }}-gha-rs-no-permission
+    namespace: {{ $.Release.Namespace }}
+  {{- end }}
+{{- end }}

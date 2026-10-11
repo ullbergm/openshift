@@ -1,0 +1,28 @@
+apiVersion: v2
+description: A Helm chart for self-hosted GitHub Actions runners (Actions Runner Controller runner scale sets)
+name: actions-runner-controller
+version: 1.0.0
+kubeVersion: ">=1.31.0-0"
+home: https://github.com/actions/actions-runner-controller
+sources:
+  - https://github.com/actions/actions-runner-controller
+  - https://github.com/ullbergm/openshift
+keywords:
+  - github
+  - actions
+  - runner
+  - ci
+annotations:
+  charts.openshift.io/name: actions-runner-controller
+  charts.openshift.io/provider: ullberg
+  charts.openshift.io/providerType: community
+  category: Infrastructure
+
+maintainers:
+  - name: Magnus Ullberg
+    email: magnus@ullberg.us
+
+dependencies:
+  - name: gha-runner-scale-set-controller
+    version: "0.15.0"
+    repository: "oci://ghcr.io/actions/actions-runner-controller-charts"
