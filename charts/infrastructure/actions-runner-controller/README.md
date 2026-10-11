@@ -73,7 +73,8 @@ daemon in the same namespace, through the buildx `remote` driver:
 
 `docker/login-action`, `docker/metadata-action` and registry or `type=gha`
 caching work unchanged. BuildKit runs under the `nested-container` SCC: inside a
-pod user namespace, non-root, with only SETUID/SETGID. Its layer cache is an
+pod user namespace, non-root, with only SETUID/SETGID (seccomp is unconfined,
+which rootless BuildKit requires). Its layer cache is an
 `emptyDir`, lost when the pod restarts.
 
 ## Limitations
