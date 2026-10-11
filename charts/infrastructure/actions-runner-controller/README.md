@@ -4,7 +4,7 @@ Self-hosted GitHub Actions runners on the cluster, using the upstream
 [Actions Runner Controller](https://github.com/actions/actions-runner-controller)
 runner scale sets. Runners are ephemeral: a pod is created per job and removed
 when the job finishes, and nothing runs while no job is queued (apart from the
-controller and one small listener pod per scale set).
+controller, the BuildKit daemon and one small listener pod per scale set).
 
 ## How it is put together
 
@@ -54,13 +54,36 @@ jobs:
     runs-on: openshift
 ```
 
+## Building images
+
+Runner pods have no Docker daemon. Image builds go to a shared rootless BuildKit
+daemon in the same namespace, through the buildx `remote` driver:
+
+```yaml
+      - uses: docker/setup-buildx-action@v4
+        with:
+          driver: remote
+          endpoint: tcp://buildkit.actions-runner-controller.svc:1234
+
+      - uses: docker/build-push-action@v7
+        with:
+          push: true
+          tags: ghcr.io/owner/image:tag
+```
+
+`docker/login-action`, `docker/metadata-action` and registry or `type=gha`
+caching work unchanged. BuildKit runs under the `nested-container` SCC: inside a
+pod user namespace, non-root, with only SETUID/SETGID. Its layer cache is an
+`emptyDir`, lost when the pod restarts.
+
 ## Limitations
 
 Runner pods run under the `nonroot-v2` SCC as UID 1001 with all capabilities
 dropped. Consequently:
 
-- No Docker daemon: `docker build`, `container:` jobs, service containers and
-  Docker-based actions do not work.
+- Only `docker buildx build` works, as above. `docker run`, `load: true`,
+  `container:` jobs, service containers and Docker-based actions do not.
+- Builds are for the cluster's architecture only (no QEMU emulation).
 - `sudo` does not work, so workflows cannot `apt-get install`. Use `setup-*`
   actions, which install into the runner's home directory.
 

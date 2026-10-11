@@ -58,3 +58,20 @@ gha-runner-scale-set-controller:
       memory: 128Mi
     limits:
       memory: 512Mi
+
+# Shared BuildKit daemon for image builds. Runner pods have no Docker daemon;
+# workflows point docker/setup-buildx-action at this instead (driver: remote).
+buildkit:
+  enabled: true
+  image:
+    repository: docker.io/moby/buildkit
+    # renovate: datasource=docker depName=docker.io/moby/buildkit
+    tag: v0.34.0-rootless
+    pullPolicy: IfNotPresent
+  port: 1234
+  resources:
+    requests:
+      cpu: 500m
+      memory: 1Gi
+    limits:
+      memory: 8Gi
