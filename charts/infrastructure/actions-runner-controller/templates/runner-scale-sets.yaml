@@ -129,6 +129,10 @@ spec:
               mountPath: /var/run/dind
             - name: dind-externals
               mountPath: /home/runner/externals
+            # The container's root filesystem is overlayfs, which Docker cannot
+            # stack its own overlay snapshots on.
+            - name: dind-storage
+              mountPath: /var/lib/docker
       containers:
         - name: runner
           image: "{{ $.Values.runner.image.repository }}:{{ $.Values.runner.image.tag }}"
@@ -166,6 +170,8 @@ spec:
         - name: dind-sock
           emptyDir: {}
         - name: dind-externals
+          emptyDir: {}
+        - name: dind-storage
           emptyDir: {}
 {{- end }}
 {{- if $sets }}
