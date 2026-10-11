@@ -236,12 +236,73 @@
             }
           }
         },
+        "throughput": {
+          "type": "object",
+          "properties": {
+            "targets": {
+              "type": "string",
+              "description": "Files to download for a throughput measurement, comma-separated URLs; \"URL upload=URL\" adds an upload; empty disables it"
+            },
+            "intervalSecs": {
+              "type": "integer",
+              "minimum": 300,
+              "description": "Seconds between measurements"
+            },
+            "maxBytes": {
+              "type": "integer",
+              "minimum": 65536,
+              "description": "Bytes after which a transfer stops"
+            },
+            "maxSecs": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 60,
+              "description": "Seconds after which a transfer stops"
+            },
+            "timeoutSecs": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Seconds to wait for a connection and for the response headers"
+            }
+          }
+        },
+        "updateCheck": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Ask the container registry about once a day whether a newer release is published"
+            },
+            "registry": {
+              "type": "string",
+              "description": "The registry asked, as a base URL; empty = https://ghcr.io"
+            },
+            "images": {
+              "type": "string",
+              "description": "The image repositories compared, comma-separated; empty = the two flow-analyzer images"
+            }
+          }
+        },
         "sflow": {
           "type": "object",
           "properties": {
             "enabled": {
               "type": "boolean",
               "description": "Listen for sFlow v5 on UDP 6343 of the collector's LAN address"
+            }
+          }
+        },
+        "dpi": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Listen for mirrored packets (TZSP) on UDP 37008 of the collector's LAN address and classify them with nDPI"
+            },
+            "license": {
+              "type": "string",
+              "enum": ["lgpl", "not-for-profit"],
+              "description": "nDPI licence mode: lgpl loads only the LGPL dissectors (no TLS, QUIC, DNS or DHCP); not-for-profit loads all of them, for non-commercial use"
             }
           }
         },

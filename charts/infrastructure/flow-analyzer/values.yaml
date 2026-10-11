@@ -168,15 +168,47 @@ flow-analyzer:
     targets: ""
     intervalSecs: 30
     timeoutSecs: 5
+  # Throughput measurements from the collector: a large file to download
+  # once per intervalSecs, up to maxBytes or maxSecs, whichever comes first.
+  # Comma-separated URLs; "URL upload=URL" also uploads. Every run moves
+  # real data (25 MiB by default, about 18 GiB a month hourly), so this is
+  # off unless a target is named. Needs collector image 0.10.0 or later.
+  throughput:
+    targets: ""
+    intervalSecs: 3600
+    maxBytes: 26214400
+    maxSecs: 10
+    timeoutSecs: 10
   # sFlow v5 from switches, on UDP 6343 of the collector's LAN address:
   # packet samples become flows, counter samples fill interface_counters
   # without SNMP polling.
   sflow:
     enabled: false
+  # Deep packet inspection: the router mirrors the first packets of each
+  # connection (RouterOS `sniff-tzsp` mangle rule) to UDP 37008 of the
+  # collector's LAN address, nDPI names the application and the server, and
+  # the flows of that connection get both. Needs collector image 0.10.0 or
+  # later; only allowedExporters may send. The router commands are in
+  # https://github.com/ullbergm/flow-analyzer/blob/master/docs/collector.md
+  dpi:
+    enabled: false
+    # nDPI's licence mode. `lgpl` loads only the LGPL dissectors, which
+    # leaves out TLS, QUIC, DNS and DHCP and so names very little;
+    # `not-for-profit` loads everything and is for non-commercial use only.
+    license: lgpl
   # Relay every accepted NetFlow/IPFIX datagram, unchanged, to other
   # collectors (host:port, comma-separated), e.g. an ntopng or Akvorado on
   # the side. Empty = none.
   forwardTo: ""
+  # web-api asks the container registry (ghcr.io, anonymously, about once a
+  # day: the tag lists of the two images) whether a newer release exists and
+  # the dashboard shows it. Turn it off when the cluster cannot reach the
+  # registry. registry and images are for a mirror; empty = the defaults.
+  # Needs web-api image 0.10.0 or later.
+  updateCheck:
+    enabled: true
+    registry: ""
+    images: ""
   # GeoIP database (MaxMind MMDB format) for web-api: places external
   # addresses on the Internet page's map and names their city in the IP
   # inspector. Without one, external traffic is placed by the country the
