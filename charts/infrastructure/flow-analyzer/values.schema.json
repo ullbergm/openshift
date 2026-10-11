@@ -245,6 +245,20 @@
             }
           }
         },
+        "dpi": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Listen for mirrored packets (TZSP) on UDP 37008 of the collector's LAN address and classify them with nDPI"
+            },
+            "license": {
+              "type": "string",
+              "enum": ["lgpl", "not-for-profit"],
+              "description": "nDPI licence mode: lgpl loads only the LGPL dissectors (no TLS, QUIC, DNS or DHCP); not-for-profit loads all of them, for non-commercial use"
+            }
+          }
+        },
         "forwardTo": {
           "type": "string",
           "description": "Collectors every accepted NetFlow/IPFIX datagram is relayed to (host:port, comma-separated); empty = none"

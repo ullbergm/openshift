@@ -173,6 +173,18 @@ flow-analyzer:
   # without SNMP polling.
   sflow:
     enabled: false
+  # Deep packet inspection: the router mirrors the first packets of each
+  # connection (RouterOS `sniff-tzsp` mangle rule) to UDP 37008 of the
+  # collector's LAN address, nDPI names the application and the server, and
+  # the flows of that connection get both. Needs collector image 0.10.0 or
+  # later; only allowedExporters may send. The router commands are in
+  # https://github.com/ullbergm/flow-analyzer/blob/master/docs/collector.md
+  dpi:
+    enabled: false
+    # nDPI's licence mode. `lgpl` loads only the LGPL dissectors, which
+    # leaves out TLS, QUIC, DNS and DHCP and so names very little;
+    # `not-for-profit` loads everything and is for non-commercial use only.
+    license: lgpl
   # Relay every accepted NetFlow/IPFIX datagram, unchanged, to other
   # collectors (host:port, comma-separated), e.g. an ntopng or Akvorado on
   # the side. Empty = none.

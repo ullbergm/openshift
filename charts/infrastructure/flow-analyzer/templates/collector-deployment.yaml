@@ -5,9 +5,9 @@ The collector keeps NetFlow v9 / IPFIX template state in memory, so it runs as
 one replica and is replaced rather than rolled: two collectors behind one UDP
 address would each see only some of the templates.
 
-Flow exports (and sFlow, when enabled) arrive on a second interface straight
-on the LAN (see collector-network.yaml); the routers send to that address, not
-to a Service.
+Flow exports (and sFlow and mirrored packets, when enabled) arrive on a second
+interface straight on the LAN (see collector-network.yaml); the routers send
+to that address, not to a Service.
 */}}
 ---
 apiVersion: apps/v1
@@ -137,6 +137,15 @@ spec:
             - name: SFLOW_BIND_ADDR
               value: "0.0.0.0:6343"
             {{- end }}
+            {{- if $cfg.dpi.enabled }}
+            # Packets the router mirrors (TZSP), classified with nDPI and
+            # stamped onto the flows of the same connection. Needs an image
+            # built with the dpi feature (0.10.0 or later).
+            - name: TZSP_BIND_ADDR
+              value: "0.0.0.0:37008"
+            - name: DPI_LICENSE
+              value: {{ $cfg.dpi.license | quote }}
+            {{- end }}
             {{- if $cfg.forwardTo }}
             - name: FORWARD_TO
               value: {{ $cfg.forwardTo | quote }}
@@ -155,6 +164,11 @@ spec:
             {{- if $cfg.sflow.enabled }}
             - name: sflow
               containerPort: 6343
+              protocol: UDP
+            {{- end }}
+            {{- if $cfg.dpi.enabled }}
+            - name: tzsp
+              containerPort: 37008
               protocol: UDP
             {{- end }}
             - name: metrics
