@@ -70,7 +70,7 @@ metadata:
     {{- $labels | nindent 4 }}
   annotations:
     # The controller recreates the listener when this hash changes.
-    actions.github.com/values-hash: {{ dict "set" $set "config" (omit $cfg "repositories") "runner" $.Values.runner | toJson | sha256sum | trunc 63 }}
+    actions.github.com/values-hash: {{ dict "set" $set "config" (omit $cfg "repositories") "runner" $.Values.runner "dind" $.Values.dind | toJson | sha256sum | trunc 63 }}
     actions.github.com/cleanup-manager-role-binding: {{ $manager }}
     actions.github.com/cleanup-manager-role-name: {{ $manager }}
     actions.github.com/cleanup-no-permission-service-account-name: {{ $serviceAccount }}
@@ -84,45 +84,123 @@ spec:
     spec:
       restartPolicy: Never
       serviceAccountName: {{ $serviceAccount }}
-      securityContext:
-        # The runner image only works as its built-in runner user.
-        runAsNonRoot: true
-        runAsUser: 1001
-        seccompProfile:
-          type: RuntimeDefault
+      # Root and the Docker daemon's privileges exist only inside the pod's
+      # user namespace; on the node the pod runs as unprivileged UIDs.
+      hostUsers: false
+      initContainers:
+        - name: init-dind-externals
+          image: "{{ $.Values.runner.image.repository }}:{{ $.Values.runner.image.tag }}"
+          imagePullPolicy: {{ $.Values.runner.image.pullPolicy }}
+          command: ["cp"]
+          args: ["-r", "/home/runner/externals/.", "/home/runner/tmpDir/"]
+          volumeMounts:
+            - name: dind-externals
+              mountPath: /home/runner/tmpDir
+        - name: dind
+          image: "{{ $.Values.dind.image.repository }}:{{ $.Values.dind.image.tag }}"
+          imagePullPolicy: {{ $.Values.dind.image.pullPolicy }}
+          args:
+            - dockerd
+            - --host=unix:///var/run/docker.sock
+            - --group=$(DOCKER_GROUP_GID)
+          env:
+            - name: DOCKER_GROUP_GID
+              value: "123"
+          securityContext:
+            privileged: true
+          restartPolicy: Always
+          startupProbe:
+            exec:
+              command: ["docker", "info"]
+            initialDelaySeconds: 0
+            failureThreshold: 24
+            periodSeconds: 5
+          {{- with $.Values.dind.resources }}
+          resources:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+          volumeMounts:
+            - name: work
+              mountPath: /home/runner/_work
+            - name: dind-sock
+              mountPath: /var/run
+            - name: dind-externals
+              mountPath: /home/runner/externals
       containers:
         - name: runner
           image: "{{ $.Values.runner.image.repository }}:{{ $.Values.runner.image.tag }}"
           imagePullPolicy: {{ $.Values.runner.image.pullPolicy }}
-          command: ["/home/runner/run.sh"]
+          command: ["/bin/bash", "-c"]
+          args:
+            - |
+              {{- with $.Values.runner.packages }}
+              sudo apt-get update -q \
+                && sudo DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends {{ join " " . }} \
+                || echo "⚠️ Package installation failed, starting the runner without them"
+              {{- end }}
+              exec /home/runner/run.sh
           securityContext:
-            allowPrivilegeEscalation: false
-            capabilities:
-              drop: ["ALL"]
+            runAsUser: 1001
           env:
             - name: TZ
               value: {{ $.Values.cluster.timezone | quote }}
+            - name: DOCKER_HOST
+              value: unix:///var/run/docker.sock
+            - name: RUNNER_WAIT_FOR_DOCKER_IN_SECONDS
+              value: "120"
           {{- with $.Values.runner.resources }}
           resources:
             {{- toYaml . | nindent 12 }}
           {{- end }}
+          volumeMounts:
+            - name: work
+              mountPath: /home/runner/_work
+            - name: dind-sock
+              mountPath: /var/run
+      volumes:
+        - name: work
+          emptyDir: {}
+        - name: dind-sock
+          emptyDir: {}
+        - name: dind-externals
+          emptyDir: {}
 {{- end }}
 {{- if $sets }}
 ---
-# The runner image needs UID 1001, outside the range restricted-v2 assigns.
-# nonroot-v2 allows a fixed non-root UID and nothing else beyond restricted-v2.
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
+# Runner pods need root (sudo, apt-get) and a Docker daemon. This grants both
+# only to pods that run in their own user namespace, so neither is root or
+# privileged on the node. No host namespaces, host paths or host ports.
+apiVersion: security.openshift.io/v1
+kind: SecurityContextConstraints
 metadata:
-  name: {{ .Release.Name }}-runner-nonroot-v2
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: system:openshift:scc:nonroot-v2
-subjects:
+  name: {{ .Release.Name }}-runner
+userNamespaceLevel: RequirePodLevel
+allowPrivilegedContainer: true
+allowPrivilegeEscalation: true
+allowHostDirVolumePlugin: false
+allowHostIPC: false
+allowHostNetwork: false
+allowHostPID: false
+allowHostPorts: false
+readOnlyRootFilesystem: false
+runAsUser:
+  type: RunAsAny
+seLinuxContext:
+  type: RunAsAny
+fsGroup:
+  type: RunAsAny
+supplementalGroups:
+  type: RunAsAny
+seccompProfiles:
+  - "*"
+volumes:
+  - configMap
+  - downwardAPI
+  - emptyDir
+  - projected
+  - secret
+users:
   {{- range $set := $sets }}
-  - kind: ServiceAccount
-    name: {{ $set.name }}-gha-rs-no-permission
-    namespace: {{ $.Release.Namespace }}
+  - system:serviceaccount:{{ $.Release.Namespace }}:{{ $set.name }}-gha-rs-no-permission
   {{- end }}
 {{- end }}

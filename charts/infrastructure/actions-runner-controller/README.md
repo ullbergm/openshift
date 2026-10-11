@@ -4,7 +4,7 @@ Self-hosted GitHub Actions runners on the cluster, using the upstream
 [Actions Runner Controller](https://github.com/actions/actions-runner-controller)
 runner scale sets. Runners are ephemeral: a pod is created per job and removed
 when the job finishes, and nothing runs while no job is queued (apart from the
-controller, the BuildKit daemon and one small listener pod per scale set).
+controller and one small listener pod per scale set).
 
 ## How it is put together
 
@@ -54,39 +54,31 @@ jobs:
     runs-on: openshift
 ```
 
-## Building images
+## What the runners can do
 
-Runner pods have no Docker daemon. Image builds go to a shared rootless BuildKit
-daemon in the same namespace, through the buildx `remote` driver:
+Each runner pod has its own Docker daemon and passwordless `sudo`, so workflows
+written for `ubuntu-latest` mostly run unchanged: `docker build`,
+`docker/build-push-action`, `container:` jobs, `services:`, Docker-based actions
+and `sudo apt-get install` all work.
 
-```yaml
-      - uses: docker/setup-buildx-action@v4
-        with:
-          driver: remote
-          endpoint: tcp://buildkit.actions-runner-controller.svc:1234
+The upstream runner image is minimal. The packages in `runner.packages`
+(compiler toolchain, `gh`, ...) are installed with apt each time a runner pod
+starts, which adds to job start-up time. Other tools GitHub-hosted runners ship
+with need a `setup-*` action or an `apt-get install` step.
 
-      - uses: docker/build-push-action@v7
-        with:
-          push: true
-          tags: ghcr.io/owner/image:tag
-```
+## Security model
 
-`docker/login-action`, `docker/metadata-action` and registry or `type=gha`
-caching work unchanged. BuildKit runs under the `nested-container` SCC: inside a
-pod user namespace, non-root, with only SETUID/SETGID (seccomp is unconfined,
-which rootless BuildKit requires). Its layer cache is an
-`emptyDir`, lost when the pod restarts.
+Runner pods run with `hostUsers: false`. Root in the runner and the privileged
+Docker daemon exist only inside the pod's user namespace; on the node they are
+unprivileged UIDs. The chart's SCC only admits pods that use a user namespace,
+and grants no host namespaces, host paths or host ports.
 
 ## Limitations
 
-Runner pods run under the `nonroot-v2` SCC as UID 1001 with all capabilities
-dropped. Consequently:
-
-- Only `docker buildx build` works, as above. `docker run`, `load: true`,
-  `container:` jobs, service containers and Docker-based actions do not.
-- Builds are for the cluster's architecture only (no QEMU emulation).
-- `sudo` does not work, so workflows cannot `apt-get install`. Use `setup-*`
-  actions, which install into the runner's home directory.
+- Builds are for the cluster's architecture only unless the workflow sets up
+  QEMU.
+- Nothing is cached between jobs: every runner pod starts with an empty Docker
+  daemon. Use registry or `type=gha` build caches.
 
 GitHub stops accepting runners that fall too far behind the current release, so
 keep the Renovate updates for `ghcr.io/actions/actions-runner` merged.
