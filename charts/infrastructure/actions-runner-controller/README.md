@@ -66,6 +66,13 @@ The upstream runner image is minimal. The packages in `runner.packages`
 starts, which adds to job start-up time. Other tools GitHub-hosted runners ship
 with need a `setup-*` action or an `apt-get install` step.
 
+## Scheduling
+
+Runner pods are pinned to dedicated worker nodes by `runner.affinity`. The
+control plane nodes are schedulable and carry the worker role as well, so the
+affinity excludes them explicitly. Jobs stay pending if no dedicated worker is
+available. The controller and listener pods are not restricted.
+
 ## Security model
 
 The Docker daemon sidecar in each runner pod runs **privileged**, which is

@@ -51,6 +51,20 @@ runner:
       memory: 512Mi
     limits:
       memory: 8Gi
+  # Runner pods only, not the controller or listeners. The control plane nodes
+  # carry the worker role too, so selecting on the worker label alone would not
+  # keep the privileged job pods off them.
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: node-role.kubernetes.io/worker
+                operator: Exists
+              - key: node-role.kubernetes.io/control-plane
+                operator: DoesNotExist
+              - key: node-role.kubernetes.io/master
+                operator: DoesNotExist
 
 # Docker daemon sidecar in every runner pod, for image builds, `container:`
 # jobs, service containers and Docker-based actions.
