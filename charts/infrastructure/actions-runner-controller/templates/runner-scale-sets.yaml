@@ -101,7 +101,10 @@ spec:
           imagePullPolicy: {{ $.Values.dind.image.pullPolicy }}
           args:
             - dockerd
+            # The default socket stays for `container:` jobs, which bind-mount
+            # /var/run/docker.sock from the daemon's filesystem.
             - --host=unix:///var/run/docker.sock
+            - --host=unix:///var/run/dind/docker.sock
             - --group=$(DOCKER_GROUP_GID)
           env:
             - name: DOCKER_GROUP_GID
@@ -122,8 +125,11 @@ spec:
           volumeMounts:
             - name: work
               mountPath: /home/runner/_work
+            # Not /var/run itself: the runtime mounts /run/secrets and the
+            # service account token below it, inside the volume, and the node
+            # can then never unmount it, leaving the pod stuck Terminating.
             - name: dind-sock
-              mountPath: /var/run
+              mountPath: /var/run/dind
             - name: dind-externals
               mountPath: /home/runner/externals
       containers:
@@ -145,7 +151,7 @@ spec:
             - name: TZ
               value: {{ $.Values.cluster.timezone | quote }}
             - name: DOCKER_HOST
-              value: unix:///var/run/docker.sock
+              value: unix:///var/run/dind/docker.sock
             - name: RUNNER_WAIT_FOR_DOCKER_IN_SECONDS
               value: "120"
           {{- with $.Values.runner.resources }}
@@ -156,7 +162,7 @@ spec:
             - name: work
               mountPath: /home/runner/_work
             - name: dind-sock
-              mountPath: /var/run
+              mountPath: /var/run/dind
       volumes:
         - name: work
           emptyDir: {}
