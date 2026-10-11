@@ -38,12 +38,34 @@ runner:
     # renovate: datasource=docker depName=ghcr.io/actions/actions-runner versioning=semver
     tag: 2.338.0
     pullPolicy: IfNotPresent
+  # Installed with apt when a runner pod starts, before it takes a job. The
+  # upstream image is minimal; these are tools GitHub-hosted runners ship with.
+  packages:
+    - build-essential
+    - pkg-config
+    - gh
+    - zstd
   resources:
     requests:
       cpu: 250m
       memory: 512Mi
     limits:
-      memory: 4Gi
+      memory: 8Gi
+
+# Docker daemon sidecar in every runner pod, for image builds, `container:`
+# jobs, service containers and Docker-based actions.
+dind:
+  image:
+    repository: docker.io/library/docker
+    # renovate: datasource=docker depName=docker.io/library/docker
+    tag: 29.9.0-dind
+    pullPolicy: IfNotPresent
+  resources:
+    requests:
+      cpu: 250m
+      memory: 512Mi
+    limits:
+      memory: 8Gi
 
 gha-runner-scale-set-controller:
   replicaCount: 1
@@ -58,20 +80,3 @@ gha-runner-scale-set-controller:
       memory: 128Mi
     limits:
       memory: 512Mi
-
-# Shared BuildKit daemon for image builds. Runner pods have no Docker daemon;
-# workflows point docker/setup-buildx-action at this instead (driver: remote).
-buildkit:
-  enabled: true
-  image:
-    repository: docker.io/moby/buildkit
-    # renovate: datasource=docker depName=docker.io/moby/buildkit
-    tag: v0.34.0-rootless
-    pullPolicy: IfNotPresent
-  port: 1234
-  resources:
-    requests:
-      cpu: 500m
-      memory: 1Gi
-    limits:
-      memory: 8Gi
