@@ -151,6 +151,18 @@ spec:
                   key: MAXMIND_LICENSE_KEY
             {{- end }}
             {{- end }}
+            # Daily look at the container registry for a newer release, shown
+            # on the dashboard's Status page.
+            - name: UPDATE_CHECK
+              value: {{ ternary "on" "off" $cfg.updateCheck.enabled | quote }}
+            {{- if $cfg.updateCheck.registry }}
+            - name: UPDATE_CHECK_REGISTRY
+              value: {{ $cfg.updateCheck.registry | quote }}
+            {{- end }}
+            {{- if $cfg.updateCheck.images }}
+            - name: UPDATE_CHECK_IMAGES
+              value: {{ $cfg.updateCheck.images | quote }}
+            {{- end }}
             - name: RUST_LOG
               value: {{ .Values.pods.webApi.logLevel | quote }}
           ports:
