@@ -84,6 +84,10 @@ spec:
     spec:
       restartPolicy: Never
       serviceAccountName: {{ $serviceAccount }}
+      {{- with $.Values.runner.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       initContainers:
         - name: init-dind-externals
           image: "{{ $.Values.runner.image.repository }}:{{ $.Values.runner.image.tag }}"
