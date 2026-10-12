@@ -171,6 +171,12 @@ spec:
             - name: DPI_LICENSE
               value: {{ $cfg.dpi.license | quote }}
             {{- end }}
+            {{- if $cfg.firewallLog.enabled }}
+            # The lines the routers' firewall rules log, over syslog (0.14.0
+            # or later). 5514 because the container cannot bind 514.
+            - name: SYSLOG_BIND_ADDR
+              value: "0.0.0.0:5514"
+            {{- end }}
             {{- if $cfg.forwardTo }}
             - name: FORWARD_TO
               value: {{ $cfg.forwardTo | quote }}
@@ -195,6 +201,11 @@ spec:
             {{- if $cfg.dpi.enabled }}
             - name: tzsp
               containerPort: 37008
+              protocol: UDP
+            {{- end }}
+            {{- if $cfg.firewallLog.enabled }}
+            - name: syslog
+              containerPort: 5514
               protocol: UDP
             {{- end }}
             - name: metrics
