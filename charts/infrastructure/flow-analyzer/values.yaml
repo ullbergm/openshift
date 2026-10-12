@@ -32,7 +32,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer-dashboard
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer-dashboard versioning=semver
-      tag: 0.10.1
+      tag: 0.12.0
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -46,7 +46,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.10.1
+      tag: 0.12.0
       pullPolicy: IfNotPresent
     port: 8042
     logLevel: info
@@ -58,12 +58,12 @@ pods:
         memory: 256Mi
 
   # NetFlow v9 / IPFIX (and sFlow) collector: UDP in, batched inserts into
-  # ClickHouse; optional SNMP, RouterOS REST, AdGuard and probe pollers.
+  # ClickHouse; optional SNMP, RouterOS REST, AdGuard, LibreNMS and probe pollers.
   collector:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.10.1
+      tag: 0.12.0
       pullPolicy: IfNotPresent
     port: 2055
     metricsPort: 9090
@@ -161,6 +161,17 @@ flow-analyzer:
   adguard:
     url: ""
     intervalSecs: 60
+  # LibreNMS whose devices and ports describe the hosts, exporters and
+  # interfaces flow-analyzer already knows (hardware, system, serial,
+  # location, port descriptions); nothing is added from it. The API token
+  # comes from the Secret (LIBRENMS_TOKEN) and a read-only user's is
+  # enough. Empty disables polling.
+  librenms:
+    url: ""
+    intervalSecs: 300
+    timeoutSecs: 30
+    # Accept a certificate that does not verify.
+    insecure: false
   # Active monitoring from the collector: icmp://host, http://... or
   # https://... targets, comma-separated. An icmp:// target makes the pod ask
   # for the net.ipv4.ping_group_range sysctl (safe-listed, no SCC change).
@@ -306,11 +317,13 @@ externalSecret:
   # set, the MaxMind key when geoip.url says {license_key}.
   routerosPasswordKey: FLOW_ANALYZER_ROUTEROS_PASSWORD
   maxmindLicenseKey: FLOW_ANALYZER_MAXMIND_LICENSE_KEY
-  # Likewise: the AdGuard login when adguard.url is set, the webhook URL and
-  # headers when alerts.webhook.enabled, the SMTP URL when
-  # alerts.email.enabled, the admin token when access.token.
+  # Likewise: the AdGuard login when adguard.url is set, the LibreNMS token
+  # when librenms.url is set, the webhook URL and headers when
+  # alerts.webhook.enabled, the SMTP URL when alerts.email.enabled, the
+  # admin token when access.token.
   adguardUserKey: FLOW_ANALYZER_ADGUARD_USER
   adguardPasswordKey: FLOW_ANALYZER_ADGUARD_PASSWORD
+  librenmsTokenKey: LIBRENMS_TOKEN
   alertWebhookUrlKey: FLOW_ANALYZER_ALERT_WEBHOOK_URL
   alertWebhookHeadersKey: FLOW_ANALYZER_ALERT_WEBHOOK_HEADERS
   alertSmtpUrlKey: FLOW_ANALYZER_ALERT_SMTP_URL
@@ -328,10 +341,11 @@ secrets:
   # (MAXMIND_LICENSE_KEY), when those features are on.
   routerosPassword: ""
   maxmindLicenseKey: ""
-  # AdGuard Home login, the alert webhook URL and headers, the SMTP URL and
-  # the admin token, when those features are on.
+  # AdGuard Home login, the LibreNMS API token, the alert webhook URL and
+  # headers, the SMTP URL and the admin token, when those features are on.
   adguardUser: ""
   adguardPassword: ""
+  librenmsToken: ""
   alertWebhookUrl: ""
   alertWebhookHeaders: ""
   alertSmtpUrl: ""

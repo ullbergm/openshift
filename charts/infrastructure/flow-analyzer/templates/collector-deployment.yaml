@@ -125,6 +125,18 @@ spec:
             - name: ADGUARD_INTERVAL_SECS
               value: {{ $cfg.adguard.intervalSecs | quote }}
             {{- end }}
+            {{- if $cfg.librenms.url }}
+            # LibreNMS device and port metadata for what is already known;
+            # the API token is LIBRENMS_TOKEN from the Secret.
+            - name: LIBRENMS_URL
+              value: {{ $cfg.librenms.url | quote }}
+            - name: LIBRENMS_INTERVAL_SECS
+              value: {{ $cfg.librenms.intervalSecs | quote }}
+            - name: LIBRENMS_TIMEOUT_SECS
+              value: {{ $cfg.librenms.timeoutSecs | quote }}
+            - name: LIBRENMS_INSECURE
+              value: {{ $cfg.librenms.insecure | quote }}
+            {{- end }}
             {{- if $cfg.probes.targets }}
             - name: PROBE_TARGETS
               value: {{ $cfg.probes.targets | quote }}
@@ -167,7 +179,8 @@ spec:
               value: {{ .Values.pods.collector.logLevel | quote }}
           envFrom:
             # CLICKHOUSE_PASSWORD, SNMP_COMMUNITY and, when those pollers are
-            # on, ROUTEROS_PASSWORD and ADGUARD_USER / ADGUARD_PASSWORD
+            # on, ROUTEROS_PASSWORD, ADGUARD_USER / ADGUARD_PASSWORD and
+            # LIBRENMS_TOKEN
             - secretRef:
                 name: {{ include "flow-analyzer.secretName" . }}
           ports:
