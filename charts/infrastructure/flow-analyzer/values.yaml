@@ -32,7 +32,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer-dashboard
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer-dashboard versioning=semver
-      tag: 0.13.0
+      tag: 0.14.0
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -46,7 +46,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.13.0
+      tag: 0.14.0
       pullPolicy: IfNotPresent
     port: 8042
     logLevel: info
@@ -63,7 +63,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.13.0
+      tag: 0.14.0
       pullPolicy: IfNotPresent
     port: 2055
     metricsPort: 9090
@@ -207,6 +207,16 @@ flow-analyzer:
     # leaves out TLS, QUIC, DNS and DHCP and so names very little;
     # `not-for-profit` loads everything and is for non-commercial use only.
     license: lgpl
+  # Firewall log: the router sends the lines its firewall rules log
+  # (RouterOS `log=yes`, a `target=remote` logging action) as syslog to UDP
+  # 5514 of the collector's LAN address, and what was dropped can be listed
+  # by rule, source, destination and port on the Status page. Needs
+  # collector image 0.14.0 or later; only allowedExporters may send. The
+  # router commands, including how to keep the lines out of the router's
+  # own log, are in
+  # https://github.com/ullbergm/flow-analyzer/blob/master/docs/collector.md#firewall-log
+  firewallLog:
+    enabled: false
   # Relay every accepted NetFlow/IPFIX datagram, unchanged, to other
   # collectors (host:port, comma-separated), e.g. an ntopng or Akvorado on
   # the side. Empty = none.
