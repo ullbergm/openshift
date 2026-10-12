@@ -217,6 +217,29 @@
             }
           }
         },
+        "librenms": {
+          "type": "object",
+          "properties": {
+            "url": {
+              "type": "string",
+              "description": "LibreNMS address whose devices and ports describe what flow-analyzer already knows; empty disables polling"
+            },
+            "intervalSecs": {
+              "type": "integer",
+              "minimum": 30,
+              "description": "Seconds between polls"
+            },
+            "timeoutSecs": {
+              "type": "integer",
+              "minimum": 1,
+              "description": "Per-request timeout in seconds"
+            },
+            "insecure": {
+              "type": "boolean",
+              "description": "Accept a certificate that does not verify"
+            }
+          }
+        },
         "probes": {
           "type": "object",
           "properties": {
@@ -474,6 +497,10 @@
           "type": "string",
           "description": "Infisical key of the AdGuard password"
         },
+        "librenmsTokenKey": {
+          "type": "string",
+          "description": "Infisical key of the LibreNMS API token, pulled only when flow-analyzer.librenms.url is set"
+        },
         "alertWebhookUrlKey": {
           "type": "string",
           "description": "Infisical key of the alert webhook URL"
@@ -524,6 +551,10 @@
         "adguardPassword": {
           "type": "string",
           "description": "AdGuard Home password"
+        },
+        "librenmsToken": {
+          "type": "string",
+          "description": "LibreNMS API token"
         },
         "alertWebhookUrl": {
           "type": "string",
