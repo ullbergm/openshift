@@ -32,7 +32,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer-dashboard
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer-dashboard versioning=semver
-      tag: 0.20.1
+      tag: 0.21.0
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -46,7 +46,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.20.1
+      tag: 0.21.0
       pullPolicy: IfNotPresent
     port: 8042
     logLevel: info
@@ -63,7 +63,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.20.1
+      tag: 0.21.0
       pullPolicy: IfNotPresent
     port: 2055
     metricsPort: 9090
@@ -207,6 +207,12 @@ flow-analyzer:
     # leaves out TLS, QUIC, DNS and DHCP and so names very little;
     # `not-for-profit` loads everything and is for non-commercial use only.
     license: lgpl
+    # Memory, in MiB, for the ring of recent mirrored packets the collector
+    # keeps so the packets behind an alert can be stored when it opens
+    # (0.21.0 or later; the image's default is 64, 0 keeps none). Empty
+    # leaves the image's default. Counts against the collector's memory
+    # limit.
+    packetRingMib: ""
   # Firewall log: the router sends the lines its firewall rules log
   # (RouterOS `log=yes`, a `target=remote` logging action) as syslog to UDP
   # 5514 of the collector's LAN address, and what was dropped can be listed
