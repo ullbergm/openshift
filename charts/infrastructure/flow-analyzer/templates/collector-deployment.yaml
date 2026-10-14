@@ -170,6 +170,10 @@ spec:
               value: "0.0.0.0:37008"
             - name: DPI_LICENSE
               value: {{ $cfg.dpi.license | quote }}
+            {{- if ne (toString $cfg.dpi.packetRingMib) "" }}
+            - name: PACKET_RING_MIB
+              value: {{ $cfg.dpi.packetRingMib | quote }}
+            {{- end }}
             {{- end }}
             {{- if $cfg.firewallLog.enabled }}
             # The lines the routers' firewall rules log, over syslog (0.14.0
