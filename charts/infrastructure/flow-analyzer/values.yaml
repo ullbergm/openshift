@@ -32,7 +32,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer-dashboard
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer-dashboard versioning=semver
-      tag: 0.21.0
+      tag: 0.22.0
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -46,7 +46,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.21.0
+      tag: 0.22.0
       pullPolicy: IfNotPresent
     port: 8042
     logLevel: info
@@ -63,7 +63,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.21.0
+      tag: 0.22.0
       pullPolicy: IfNotPresent
     port: 2055
     metricsPort: 9090
@@ -213,6 +213,12 @@ flow-analyzer:
     # leaves the image's default. Counts against the collector's memory
     # limit.
     packetRingMib: ""
+    # Let admins browse that ring on the dashboard's Packets page and each
+    # host's Packets tab (0.22.0 or later): the collector serves the ring
+    # on its metrics port to a bearer token, PACKET_RING_TOKEN, which both
+    # it and the web-api read from the Secret (externalSecret.packetRingTokenKey,
+    # or secrets.packetRingToken). The ring is content; the page is admins'.
+    browse: false
   # Firewall log: the router sends the lines its firewall rules log
   # (RouterOS `log=yes`, a `target=remote` logging action) as syslog to UDP
   # 5514 of the collector's LAN address, and what was dropped can be listed
@@ -344,6 +350,8 @@ externalSecret:
   alertWebhookHeadersKey: FLOW_ANALYZER_ALERT_WEBHOOK_HEADERS
   alertSmtpUrlKey: FLOW_ANALYZER_ALERT_SMTP_URL
   adminTokenKey: FLOW_ANALYZER_ADMIN_TOKEN
+  # The ring token when dpi.browse is on.
+  packetRingTokenKey: PACKET_RING_TOKEN
 
 # Only used when externalSecret.enabled is false.
 secrets:
@@ -366,3 +374,5 @@ secrets:
   alertWebhookHeaders: ""
   alertSmtpUrl: ""
   adminToken: ""
+  # The ring token when dpi.browse is on.
+  packetRingToken: ""

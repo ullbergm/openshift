@@ -133,6 +133,15 @@ spec:
             # ClickHouse knows.
             - name: COLLECTOR_METRICS_URL
               value: http://{{ .Release.Name }}-collector-metrics:{{ .Values.pods.collector.metricsPort }}/metrics
+            {{- if and $cfg.dpi.enabled $cfg.dpi.browse }}
+            # The collector serves its ring of recent packets to this token
+            # (0.22.0 or later); admins browse it on the Packets page.
+            - name: PACKET_RING_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "flow-analyzer.secretName" . }}
+                  key: PACKET_RING_TOKEN
+            {{- end }}
             {{- if $cfg.geoip.url }}
             # GeoIP database for the Internet page's map and the location in
             # the IP inspector; downloaded to the emptyDir below (the root
