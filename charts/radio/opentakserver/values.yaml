@@ -118,7 +118,7 @@ pods:
     image:
       repository: rabbitmq
       # renovate: datasource=docker depName=rabbitmq versioning=docker
-      tag: 4.3-alpine@sha256:60f9d5575c0a96f0df221fa55a9bd82118c0098f006ff08f7c8b797ef7fd0f50
+      tag: 4.3-alpine@sha256:6931816af1a943f471c038b278835d36692d55dec769232739296bb91b7de0f5
       pullPolicy: IfNotPresent
     size: 5Gi
     securityContext:
