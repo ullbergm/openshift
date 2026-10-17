@@ -229,6 +229,29 @@ flow-analyzer:
   # https://github.com/ullbergm/flow-analyzer/blob/master/docs/collector.md#firewall-log
   firewallLog:
     enabled: false
+  # What the devices log over the same listener (0.26.0 or later): every
+  # line a router, switch, access point, Linux host or Synology NAS sends
+  # to UDP 5514 of the collector's LAN address is stored for the Logs
+  # page, the host pages, the reports and the log-fed alert checks; the
+  # firewall lines are counted into the firewall log as before. Needs
+  # firewallLog.enabled, which is what turns the listener on. The router
+  # commands are on the dashboard's MikroTik setup page and in
+  # https://github.com/ullbergm/flow-analyzer/blob/master/docs/collector.md#syslog
+  syslog:
+    # "all" stores every line; "firewall" keeps only the firewall lines,
+    # as before 0.26.0.
+    store: all
+    # TCP on 5514 as well, for a Linux host's rsyslog (`*.* @@<lan ip>:5514`)
+    # or a NAS; RouterOS sends UDP only.
+    tcp: false
+    # Senders allowed besides allowedExporters (addresses or CIDRs,
+    # comma-separated): a NAS or a Linux host is not an exporter. Empty
+    # leaves it at allowedExporters.
+    allowedSources: ""
+    # What a sender is, where its lines do not say: address or CIDR = kind
+    # (routeros, linux, synology, unknown), comma-separated; e.g.
+    # "192.168.1.5=synology,192.168.1.0/24=linux".
+    sources: ""
   # Relay every accepted NetFlow/IPFIX datagram, unchanged, to other
   # collectors (host:port, comma-separated), e.g. an ntopng or Akvorado on
   # the side. Empty = none.
