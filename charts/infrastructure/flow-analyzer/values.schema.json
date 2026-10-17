@@ -334,7 +334,29 @@
           "properties": {
             "enabled": {
               "type": "boolean",
-              "description": "Listen for the routers' firewall log (syslog) on UDP 5514 of the collector's LAN address and store the logged packets"
+              "description": "Listen for syslog on UDP 5514 of the collector's LAN address: the routers' firewall log, counted, and (0.26.0 or later) every other line the devices log"
+            }
+          }
+        },
+        "syslog": {
+          "type": "object",
+          "properties": {
+            "store": {
+              "type": "string",
+              "enum": ["all", "firewall"],
+              "description": "all stores every line the devices log in the syslog table; firewall keeps only the firewall lines, as before 0.26.0"
+            },
+            "tcp": {
+              "type": "boolean",
+              "description": "Listen on TCP 5514 as well, for a Linux host's rsyslog or a NAS (RouterOS sends UDP only)"
+            },
+            "allowedSources": {
+              "type": "string",
+              "description": "Senders allowed besides allowedExporters (addresses or CIDRs, comma-separated); empty leaves it at allowedExporters"
+            },
+            "sources": {
+              "type": "string",
+              "description": "What a sender is where its lines do not say: address or CIDR = kind (routeros, linux, synology, unknown), comma-separated"
             }
           }
         },

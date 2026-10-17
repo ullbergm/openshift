@@ -177,9 +177,26 @@ spec:
             {{- end }}
             {{- if $cfg.firewallLog.enabled }}
             # The lines the routers' firewall rules log, over syslog (0.14.0
-            # or later). 5514 because the container cannot bind 514.
+            # or later), and since 0.26.0 everything else the devices log.
+            # 5514 because the container cannot bind 514.
             - name: SYSLOG_BIND_ADDR
               value: "0.0.0.0:5514"
+            {{- with $cfg.syslog }}
+            - name: SYSLOG_STORE
+              value: {{ .store | default "all" | quote }}
+            {{- if .tcp }}
+            - name: SYSLOG_TCP_BIND_ADDR
+              value: "0.0.0.0:5514"
+            {{- end }}
+            {{- if .allowedSources }}
+            - name: SYSLOG_ALLOWED_SOURCES
+              value: {{ .allowedSources | quote }}
+            {{- end }}
+            {{- if .sources }}
+            - name: SYSLOG_SOURCES
+              value: {{ .sources | quote }}
+            {{- end }}
+            {{- end }}
             {{- end }}
             {{- if $cfg.forwardTo }}
             - name: FORWARD_TO
@@ -211,6 +228,11 @@ spec:
             - name: syslog
               containerPort: 5514
               protocol: UDP
+            {{- if and $cfg.syslog $cfg.syslog.tcp }}
+            - name: syslog-tcp
+              containerPort: 5514
+              protocol: TCP
+            {{- end }}
             {{- end }}
             - name: metrics
               containerPort: {{ .Values.pods.collector.metricsPort }}
