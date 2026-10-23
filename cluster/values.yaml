@@ -56,6 +56,10 @@ config:
       enabled: true
       lat: "0.0"
       lon: "0.0"
+    # "Explain this alert" on alert pages; the Claude API key is the
+    # Infisical secret FLOW_ANALYZER_ANTHROPIC_API_KEY.
+    alertExplain:
+      enabled: true
 
   actions-runner-controller:
     # GitHub account that owns the repositories, and the repositories that

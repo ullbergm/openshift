@@ -265,6 +265,17 @@ flow-analyzer:
     enabled: true
     registry: ""
     images: ""
+  # Claude explanations of alerts: an admin's "Explain this alert" on an
+  # alert's page sends what flow-analyzer knows about that alert to the
+  # Claude API (a few cents each, only when pressed). The API key comes
+  # from externalSecret.anthropicApiKeyKey (or secrets.anthropicApiKey).
+  # With redact, internal addresses, MAC addresses and host names are
+  # replaced with placeholders before sending. model empty = claude-opus-5-5.
+  # Needs web-api image 0.33.0 or later.
+  alertExplain:
+    enabled: false
+    model: ""
+    redact: true
   # GeoIP database (MaxMind MMDB format) for web-api: places external
   # addresses on the Internet page's map and names their city in the IP
   # inspector. Without one, external traffic is placed by the country the
@@ -375,6 +386,8 @@ externalSecret:
   adminTokenKey: FLOW_ANALYZER_ADMIN_TOKEN
   # The ring token when dpi.browse is on.
   packetRingTokenKey: PACKET_RING_TOKEN
+  # The Claude API key when alertExplain.enabled.
+  anthropicApiKeyKey: FLOW_ANALYZER_ANTHROPIC_API_KEY
 
 # Only used when externalSecret.enabled is false.
 secrets:
@@ -399,3 +412,5 @@ secrets:
   adminToken: ""
   # The ring token when dpi.browse is on.
   packetRingToken: ""
+  # Claude API key (ANTHROPIC_API_KEY), when alertExplain.enabled.
+  anthropicApiKey: ""
