@@ -289,6 +289,23 @@
             }
           }
         },
+        "alertExplain": {
+          "type": "object",
+          "properties": {
+            "enabled": {
+              "type": "boolean",
+              "description": "Let admins ask Claude to explain an alert; needs the Claude API key in the Secret (ANTHROPIC_API_KEY)"
+            },
+            "model": {
+              "type": "string",
+              "description": "The Claude model that explains alerts; empty = claude-opus-5-5"
+            },
+            "redact": {
+              "type": "boolean",
+              "description": "Replace internal addresses, MAC addresses and host names with placeholders before sending"
+            }
+          }
+        },
         "updateCheck": {
           "type": "object",
           "properties": {
@@ -528,6 +545,10 @@
           "type": "string",
           "description": "Infisical key of the AdGuard password"
         },
+        "anthropicApiKeyKey": {
+          "type": "string",
+          "description": "Infisical key of the Claude API key, synced when flow-analyzer.alertExplain.enabled"
+        },
         "librenmsTokenKey": {
           "type": "string",
           "description": "Infisical key of the LibreNMS API token, pulled only when flow-analyzer.librenms.url is set"
@@ -582,6 +603,10 @@
         "adguardPassword": {
           "type": "string",
           "description": "AdGuard Home password"
+        },
+        "anthropicApiKey": {
+          "type": "string",
+          "description": "Claude API key (ANTHROPIC_API_KEY), when alertExplain.enabled"
         },
         "librenmsToken": {
           "type": "string",

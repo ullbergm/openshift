@@ -172,6 +172,24 @@ spec:
             - name: UPDATE_CHECK_IMAGES
               value: {{ $cfg.updateCheck.images | quote }}
             {{- end }}
+            # Claude explanations of alerts, asked for from an alert's page.
+            - name: ALERT_EXPLAIN
+              value: {{ ternary "on" "off" $cfg.alertExplain.enabled | quote }}
+            {{- if $cfg.alertExplain.enabled }}
+            - name: ANTHROPIC_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "flow-analyzer.secretName" . }}
+                  key: ANTHROPIC_API_KEY
+                  # Without it the web-api starts with explanations off.
+                  optional: true
+            - name: ALERT_EXPLAIN_REDACT
+              value: {{ ternary "on" "off" $cfg.alertExplain.redact | quote }}
+            {{- if $cfg.alertExplain.model }}
+            - name: ALERT_EXPLAIN_MODEL
+              value: {{ $cfg.alertExplain.model | quote }}
+            {{- end }}
+            {{- end }}
             - name: RUST_LOG
               value: {{ .Values.pods.webApi.logLevel | quote }}
           ports:
