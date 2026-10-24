@@ -60,13 +60,14 @@ config:
     # Infisical secret FLOW_ANALYZER_ANTHROPIC_API_KEY.
     alertExplain:
       enabled: true
-    # The other Claude features (same key); nightly identification stays off,
-    # and Ask is off because a question costs about $0.40.
+    # The other Claude features (same key); nightly identification stays off.
+    # Ask runs on Haiku: about $0.02 a question instead of about $0.60 on Opus.
     ai:
       identify: true
       digest: true
       logExplain: true
-      ask: false
+      ask: true
+      askModel: claude-haiku-5-5
 
   actions-runner-controller:
     # GitHub account that owns the repositories, and the repositories that
