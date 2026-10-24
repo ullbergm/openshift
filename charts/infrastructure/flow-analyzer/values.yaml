@@ -32,7 +32,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer-dashboard
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer-dashboard versioning=semver
-      tag: 0.33.0
+      tag: 0.34.1
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -46,7 +46,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.33.0
+      tag: 0.34.1
       pullPolicy: IfNotPresent
     port: 8042
     logLevel: info
@@ -63,7 +63,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.33.0
+      tag: 0.34.1
       pullPolicy: IfNotPresent
     port: 2055
     metricsPort: 9090
@@ -276,6 +276,23 @@ flow-analyzer:
     enabled: false
     model: ""
     redact: true
+  # The other Claude features (web-api image 0.34.0 or later; see
+  # docs/ai.md in flow-analyzer). Each sends nothing until someone asks,
+  # except the digest (with the scheduled report) and identifyNightly. They
+  # use the same API key as alertExplain. redact hides internal addresses,
+  # MAC addresses and host names from every feature; dailyBudgetUsd stops
+  # them all for the day once reached ("none" for no cap). model empty =
+  # claude-opus-5-5; askModel empty = model.
+  ai:
+    identify: false
+    identifyNightly: false
+    digest: false
+    logExplain: false
+    ask: false
+    model: ""
+    askModel: ""
+    redact: true
+    dailyBudgetUsd: "2"
   # GeoIP database (MaxMind MMDB format) for web-api: places external
   # addresses on the Internet page's map and names their city in the IP
   # inspector. Without one, external traffic is placed by the country the
@@ -386,7 +403,7 @@ externalSecret:
   adminTokenKey: FLOW_ANALYZER_ADMIN_TOKEN
   # The ring token when dpi.browse is on.
   packetRingTokenKey: PACKET_RING_TOKEN
-  # The Claude API key when alertExplain.enabled.
+  # The Claude API key when alertExplain.enabled or an ai.* feature is on.
   anthropicApiKeyKey: FLOW_ANALYZER_ANTHROPIC_API_KEY
 
 # Only used when externalSecret.enabled is false.

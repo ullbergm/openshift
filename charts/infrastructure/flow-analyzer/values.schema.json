@@ -306,6 +306,20 @@
             }
           }
         },
+        "ai": {
+          "type": "object",
+          "properties": {
+            "identify": {"type": "boolean", "description": "Let admins ask Claude what an unknown device is (AI_IDENTIFY)"},
+            "identifyNightly": {"type": "boolean", "description": "Also identify up to 25 unknown devices each night (AI_IDENTIFY_NIGHTLY)"},
+            "digest": {"type": "boolean", "description": "Claude's summary in the scheduled report and on the Status page (AI_DIGEST)"},
+            "logExplain": {"type": "boolean", "description": "Let admins ask Claude what a syslog pattern or packet capture means (AI_LOG_EXPLAIN)"},
+            "ask": {"type": "boolean", "description": "Admin-only Ask page: questions answered with read-only queries (AI_ASK)"},
+            "model": {"type": "string", "description": "The model the Claude features ask; empty = claude-opus-5-5"},
+            "askModel": {"type": "string", "description": "The model that answers Ask questions; empty = model"},
+            "redact": {"type": "boolean", "description": "Replace internal addresses, MAC addresses and host names with placeholders before sending (AI_REDACT)"},
+            "dailyBudgetUsd": {"type": ["string", "number"], "description": "Most dollars the Claude features may spend a day, or none (AI_DAILY_BUDGET_USD)"}
+          }
+        },
         "updateCheck": {
           "type": "object",
           "properties": {
