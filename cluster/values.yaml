@@ -60,6 +60,12 @@ config:
     # Infisical secret FLOW_ANALYZER_ANTHROPIC_API_KEY.
     alertExplain:
       enabled: true
+    # The other Claude features (same key); nightly identification stays off.
+    ai:
+      identify: true
+      digest: true
+      logExplain: true
+      ask: true
 
   actions-runner-controller:
     # GitHub account that owns the repositories, and the repositories that

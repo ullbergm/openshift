@@ -175,20 +175,44 @@ spec:
             # Claude explanations of alerts, asked for from an alert's page.
             - name: ALERT_EXPLAIN
               value: {{ ternary "on" "off" $cfg.alertExplain.enabled | quote }}
-            {{- if $cfg.alertExplain.enabled }}
+            {{- if include "flow-analyzer.aiOn" . }}
             - name: ANTHROPIC_API_KEY
               valueFrom:
                 secretKeyRef:
                   name: {{ include "flow-analyzer.secretName" . }}
                   key: ANTHROPIC_API_KEY
-                  # Without it the web-api starts with explanations off.
+                  # Without it the web-api starts with the Claude features off.
                   optional: true
+            {{- end }}
+            {{- if $cfg.alertExplain.enabled }}
             - name: ALERT_EXPLAIN_REDACT
               value: {{ ternary "on" "off" $cfg.alertExplain.redact | quote }}
             {{- if $cfg.alertExplain.model }}
             - name: ALERT_EXPLAIN_MODEL
               value: {{ $cfg.alertExplain.model | quote }}
             {{- end }}
+            {{- end }}
+            - name: AI_IDENTIFY
+              value: {{ ternary "on" "off" $cfg.ai.identify | quote }}
+            - name: AI_IDENTIFY_NIGHTLY
+              value: {{ ternary "on" "off" $cfg.ai.identifyNightly | quote }}
+            - name: AI_DIGEST
+              value: {{ ternary "on" "off" $cfg.ai.digest | quote }}
+            - name: AI_LOG_EXPLAIN
+              value: {{ ternary "on" "off" $cfg.ai.logExplain | quote }}
+            - name: AI_ASK
+              value: {{ ternary "on" "off" $cfg.ai.ask | quote }}
+            - name: AI_REDACT
+              value: {{ ternary "on" "off" $cfg.ai.redact | quote }}
+            - name: AI_DAILY_BUDGET_USD
+              value: {{ $cfg.ai.dailyBudgetUsd | toString | quote }}
+            {{- if $cfg.ai.model }}
+            - name: AI_MODEL
+              value: {{ $cfg.ai.model | quote }}
+            {{- end }}
+            {{- if $cfg.ai.askModel }}
+            - name: AI_ASK_MODEL
+              value: {{ $cfg.ai.askModel | quote }}
             {{- end }}
             - name: RUST_LOG
               value: {{ .Values.pods.webApi.logLevel | quote }}
