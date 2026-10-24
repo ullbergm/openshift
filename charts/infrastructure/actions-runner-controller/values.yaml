@@ -72,7 +72,7 @@ dind:
   image:
     repository: docker.io/library/docker
     # renovate: datasource=docker depName=docker.io/library/docker
-    tag: 29.9.1-dind
+    tag: 29.9.2-dind
     pullPolicy: IfNotPresent
   resources:
     requests:
