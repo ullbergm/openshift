@@ -1,0 +1,47 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+
+application:
+  group: ADSB
+  iconColor: ''
+
+# squawk runs beside charts/radio/adsb as a trial. It reads the existing
+# ultrafeeder's beast output as a network Receiver and serves its own
+# tar1090. It has no Feeds: nothing is sent to any aggregator, and the
+# NetworkPolicy keeps the Hub from reaching the internet at all.
+images:
+  operator:
+    repository: ghcr.io/ullbergm/squawk
+    tag: 0.1.0-g5bd5c38-1@sha256:e8d1b93c7c7a9ae9c2e1a1443c2e2e2149dae98dc6be1da736b5288b59c8b9f8
+  readsb:
+    repository: ghcr.io/ullbergm/squawk-readsb
+    tag: v3.16.18-2@sha256:c173e0c2c11d61e36ea7e116e7f0fdf98b76804a5461475cc7bfbc0d3f908b9a
+  dump978:
+    repository: ghcr.io/ullbergm/squawk-dump978
+    tag: v11.1-2@sha256:bd4cf6471b62a3dea8b1e5a04835a8ade60224a4928a4dae1c06b5bbd1486eb4
+  tar1090:
+    repository: ghcr.io/ullbergm/squawk-tar1090
+    tag: g958e60e-1@sha256:e8dffa5133858ea2bd32af6f9c1f2e2c4218b36a13fdccdf095fa5847262895e
+
+# The old chart's ultrafeeder, read-only: squawk is one more beast client.
+source:
+  namespace: adsb
+  host: adsb-ultrafeeder.adsb.svc.cluster.local
+  port: 30005
+  podSelector:
+    app.kubernetes.io/controller: ultrafeeder
+
+hub:
+  pageTitle: squawk
+  rangeRings: [50, 100, 150, 200]
+
+# The site position, from the same store keys the adsb chart uses.
+externalSecret:
+  data:
+    - secretKey: lat
+      remoteKey: LAT
+    - secretKey: lon
+      remoteKey: LONG
+    - secretKey: altMeters
+      remoteKey: ALT

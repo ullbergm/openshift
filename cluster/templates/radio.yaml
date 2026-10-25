@@ -11,6 +11,7 @@ spec:
     - list:
         elements:
         - name: adsb
+        - name: squawk
         #- name: cloudtak
         #- name: opentakserver
   template:

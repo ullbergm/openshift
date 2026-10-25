@@ -1,0 +1,14 @@
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha4" }}
+apiVersion: startpunkt.ullberg.us/v1alpha4
+kind: Application
+metadata:
+  name: {{ .Release.Name }}-tar1090
+spec:
+  name: "squawk"
+  group: {{ .Values.application.group | quote }}
+  icon: material-symbols-light:radar
+  iconColor: {{ .Values.application.iconColor | quote }}
+  url: https://hub-main-{{ .Release.Namespace }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  info: "squawk trial: tar1090 from the squawk Hub"
+  location: 0
+{{- end }}

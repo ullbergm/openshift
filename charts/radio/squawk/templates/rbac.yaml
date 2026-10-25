@@ -1,0 +1,68 @@
+# From ullbergm/squawk config/rbac (role.yaml is controller-gen output).
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: squawk-operator
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ .Release.Namespace }}-squawk-manager-role
+rules:
+  - apiGroups: [""]
+    resources: [configmaps, persistentvolumeclaims, services]
+    verbs: [create, delete, get, list, patch, update, watch]
+  - apiGroups: [""]
+    resources: [secrets]
+    verbs: [get, list, watch]
+  - apiGroups: [apps]
+    resources: [deployments]
+    verbs: [create, delete, get, list, patch, update, watch]
+  - apiGroups: [route.openshift.io]
+    resources: [routes, routes/custom-host]
+    verbs: [create, delete, get, list, patch, update, watch]
+  - apiGroups: [squawk.ullberg.io]
+    resources: [hubs, receivers, sites]
+    verbs: [get, list, patch, update, watch]
+  - apiGroups: [squawk.ullberg.io]
+    resources: [hubs/status, receivers/status, sites/status]
+    verbs: [get, patch, update]
+---
+# A RoleBinding: the operator's rights apply only in this namespace.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: squawk-operator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ .Release.Namespace }}-squawk-manager-role
+subjects:
+  - kind: ServiceAccount
+    name: squawk-operator
+    namespace: {{ .Release.Namespace }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: squawk-leader-election
+rules:
+  - apiGroups: [coordination.k8s.io]
+    resources: [leases]
+    verbs: [get, list, watch, create, update, patch, delete]
+  - apiGroups: [""]
+    resources: [events]
+    verbs: [create, patch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: squawk-leader-election
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: squawk-leader-election
+subjects:
+  - kind: ServiceAccount
+    name: squawk-operator
+    namespace: {{ .Release.Namespace }}

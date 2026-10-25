@@ -1,0 +1,44 @@
+# The squawk objects. Argo applies them after the CRDs (sync wave).
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: Site
+metadata:
+  name: home
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  locationRef:
+    name: {{ .Release.Name }}
+---
+# The existing ultrafeeder, read as a decoding box. squawk is just one
+# more client on its beast port; nothing in the adsb namespace changes.
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: Receiver
+metadata:
+  name: ultrafeeder
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  siteRef: {name: home}
+  hubRef: {name: main}
+  band: ADSB1090
+  source:
+    network:
+      host: {{ .Values.source.host }}
+      port: {{ .Values.source.port }}
+      protocol: beast
+---
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: Hub
+metadata:
+  name: main
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  siteRef: {name: home}
+  tar1090:
+    route: true
+    pageTitle: {{ .Values.hub.pageTitle | quote }}
+    rangeRings: {{ .Values.hub.rangeRings | toJson }}
