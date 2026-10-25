@@ -72,11 +72,10 @@ pods:
 
   dump978:
     image:
-      repository: ghcr.io/ullbergm/docker-dump978
-      # renovate: datasource=docker depName=ghcr.io/ullbergm/docker-dump978 versioning=loose
-      tag: 2@sha256:53dd947d4c341e3f781f8db0ea0c5fddc95453c01b0669fa4b02a642c40f5a5e
+      repository: ghcr.io/sdr-enthusiasts/docker-dump978
+      # renovate: datasource=docker depName=ghcr.io/sdr-enthusiasts/docker-dump978 versioning=loose
+      tag: latest-build-806@sha256:07fa322d32f40b27c0eafc7959debe4e46189893aace24a526e21a27fe8833f0
     env:
-      HTTP_PORT: '8080'
       READSB_DEVICE_TYPE: rtlsdr
       DUMP978_SDR_GAIN: 'autogain'
       DUMP978_SDR_PPM: '14'
