@@ -27,6 +27,10 @@ rules:
   - apiGroups: [squawk.ullberg.io]
     resources: [hubs/status, receivers/status, sites/status]
     verbs: [get, patch, update]
+  # OwnerReferencesPermissionEnforcement: blockOwnerDeletion needs this.
+  - apiGroups: [squawk.ullberg.io]
+    resources: [hubs/finalizers, receivers/finalizers]
+    verbs: [update]
 ---
 # A RoleBinding: the operator's rights apply only in this namespace.
 apiVersion: rbac.authorization.k8s.io/v1
