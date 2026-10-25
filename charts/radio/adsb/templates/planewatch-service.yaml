@@ -7,8 +7,8 @@ spec:
   type: ClusterIP
   ports:
     - name: mlat-beast-output
-      port: 31005
-      targetPort: 31005
+      port: 30105
+      targetPort: 30105
       protocol: TCP
   selector:
     app.kubernetes.io/controller: planewatch
