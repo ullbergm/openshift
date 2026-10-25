@@ -26,6 +26,14 @@ spec:
         app.kubernetes.io/name: {{ .Release.Name }}
     spec:
       enableServiceLinks: false
+      # fr24feed's own resolver gives up after a few milliseconds. With the
+      # default ndots:5 it walks every search domain first (two of them go
+      # to the home DNS), times out, and never connects: from Oct 15 to 25
+      # it fed only 7-37 min a day. ndots:1 looks public names up directly.
+      dnsConfig:
+        options:
+          - name: ndots
+            value: "1"
       serviceAccountName: {{ .Release.Name }}
       automountServiceAccountToken: true
       securityContext:
