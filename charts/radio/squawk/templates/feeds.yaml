@@ -1,0 +1,37 @@
+{{- range .Values.feeds }}
+---
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/external-secrets.io/externalsecret_v1beta1.json
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: feed-{{ .name }}
+spec:
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: external-secrets
+  target:
+    name: feed-{{ .name }}
+    creationPolicy: Owner
+  data:
+    - secretKey: uuid
+      remoteRef:
+        key: {{ $.Values.feedSecret.uuidKey }}
+    - secretKey: mlatUser
+      remoteRef:
+        key: {{ $.Values.feedSecret.mlatUserKey }}
+---
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: Feed
+metadata:
+  name: {{ .name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  type: {{ .type }}
+  hubRef: {name: main}
+  credentialsRef: {name: feed-{{ .name }}}
+  mlat:
+    enabled: true
+  suspend: {{ .suspend }}
+{{- end }}

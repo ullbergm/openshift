@@ -1,0 +1,212 @@
+# Built-in FeedTypes, copied from ullbergm/squawk config/feedtypes@379d43e.
+# Cluster-scoped; applied after the CRDs.
+---
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: FeedType
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: adsbexchange
+spec:
+  displayName: ADSBexchange
+  aggregator:
+    host: feed1.adsbexchange.com
+    port: 30004
+    mlat:
+      host: feed.adsbexchange.com
+      port: 31090
+  egress:
+    - host: feed1.adsbexchange.com
+      ports: [30004]
+    - host: feed.adsbexchange.com
+      ports: [31090]
+  statusURL: https://www.adsbexchange.com/myip/
+---
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: FeedType
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: adsb-lol
+spec:
+  displayName: adsb.lol
+  aggregator:
+    host: in.adsb.lol
+    port: 30004
+    mlat:
+      host: in.adsb.lol
+      port: 31090
+  egress:
+    - host: in.adsb.lol
+      ports: [30004]
+    - host: in.adsb.lol
+      ports: [31090]
+  statusURL: https://my.adsb.lol/
+---
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: FeedType
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: adsb-fi
+spec:
+  displayName: adsb.fi
+  aggregator:
+    host: feed.adsb.fi
+    port: 30004
+    mlat:
+      host: feed.adsb.fi
+      port: 31090
+  egress:
+    - host: feed.adsb.fi
+      ports: [30004]
+    - host: feed.adsb.fi
+      ports: [31090]
+  statusURL: https://adsb.fi/
+---
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: FeedType
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: airplanes-live
+spec:
+  displayName: airplanes.live
+  aggregator:
+    host: feed.airplanes.live
+    port: 30004
+    mlat:
+      host: feed.airplanes.live
+      port: 31090
+  egress:
+    - host: feed.airplanes.live
+      ports: [30004]
+    - host: feed.airplanes.live
+      ports: [31090]
+  statusURL: https://airplanes.live/myfeed/
+---
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: FeedType
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: planespotters
+spec:
+  displayName: Planespotters
+  aggregator:
+    host: feed.planespotters.net
+    port: 30004
+    mlat:
+      host: mlat.planespotters.net
+      port: 31090
+  egress:
+    - host: feed.planespotters.net
+      ports: [30004]
+    - host: mlat.planespotters.net
+      ports: [31090]
+  statusURL: https://www.planespotters.net/feed/status
+---
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: FeedType
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: theairtraffic
+spec:
+  displayName: TheAirTraffic
+  aggregator:
+    host: feed.theairtraffic.com
+    port: 30004
+    mlat:
+      host: feed.theairtraffic.com
+      port: 31090
+  egress:
+    - host: feed.theairtraffic.com
+      ports: [30004]
+    - host: feed.theairtraffic.com
+      ports: [31090]
+---
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: FeedType
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: hpradar
+spec:
+  displayName: HPRadar
+  aggregator:
+    host: skyfeed.hpradar.com
+    port: 30004
+    mlat:
+      host: skyfeed.hpradar.com
+      port: 31090
+  egress:
+    - host: skyfeed.hpradar.com
+      ports: [30004]
+    - host: skyfeed.hpradar.com
+      ports: [31090]
+---
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: FeedType
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: radarplane
+spec:
+  displayName: RadarPlane
+  aggregator:
+    host: feed.radarplane.com
+    port: 30001
+    mlat:
+      host: feed.radarplane.com
+      port: 31090
+  egress:
+    - host: feed.radarplane.com
+      ports: [30001]
+    - host: feed.radarplane.com
+      ports: [31090]
+---
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: FeedType
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: flyitalyadsb
+spec:
+  displayName: Fly Italy ADS-B
+  aggregator:
+    host: dati.flyitalyadsb.com
+    port: 4905
+    mlat:
+      host: dati.flyitalyadsb.com
+      port: 30100
+  egress:
+    - host: dati.flyitalyadsb.com
+      ports: [4905]
+    - host: dati.flyitalyadsb.com
+      ports: [30100]
+---
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: FeedType
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: avdelphi
+spec:
+  displayName: AVDelphi
+  aggregator:
+    host: data.avdelphi.com
+    port: 24999
+  egress:
+    - host: data.avdelphi.com
+      ports: [24999]

@@ -1,0 +1,139 @@
+# Copied from ullbergm/squawk config/crd/bases@379d43e. Do not edit; regenerate there.
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.23.0
+  name: feedtypes.squawk.ullberg.io
+spec:
+  group: squawk.ullberg.io
+  names:
+    kind: FeedType
+    listKind: FeedTypeList
+    plural: feedtypes
+    singular: feedtype
+  scope: Cluster
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .spec.displayName
+      name: Display
+      type: string
+    - jsonPath: .spec.aggregator.host
+      name: Host
+      type: string
+    - jsonPath: .spec.aggregator.mlat.host
+      name: MLAT
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: |-
+          FeedType is a kind of feed: the plugin a Feed instantiates. Only cluster
+          admins create FeedTypes; built-in ones ship with squawk.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: |-
+              FeedTypeSpec describes how to run one kind of feed. Exactly one kind is
+              set; only aggregator exists so far (vendor clients come with M3).
+            properties:
+              aggregator:
+                description: |-
+                  Aggregator is a network that takes beast_reduce_plus over TCP and runs
+                  a wiedehopf mlat-server (ADSBexchange, adsb.lol, adsb.fi, ...).
+                properties:
+                  host:
+                    description: Host and Port take beast_reduce_plus with the feeder's
+                      UUID.
+                    minLength: 1
+                    type: string
+                  mlat:
+                    description: Mlat is the network's mlat-server, if it has one.
+                    properties:
+                      host:
+                        minLength: 1
+                        type: string
+                      port:
+                        format: int32
+                        maximum: 65535
+                        minimum: 1
+                        type: integer
+                    required:
+                    - host
+                    - port
+                    type: object
+                  port:
+                    format: int32
+                    maximum: 65535
+                    minimum: 1
+                    type: integer
+                required:
+                - host
+                - port
+                type: object
+              displayName:
+                description: DisplayName is shown in the UI.
+                minLength: 1
+                type: string
+              egress:
+                description: |-
+                  Egress documents where the feed connects. The operator lets Feed Pods
+                  reach the internet but not the cluster or LAN; these hosts are for
+                  hostname-based policies where the platform has them.
+                items:
+                  description: EgressRule is one destination a feed connects to.
+                  properties:
+                    host:
+                      minLength: 1
+                      type: string
+                    ports:
+                      items:
+                        format: int32
+                        type: integer
+                      type: array
+                    protocol:
+                      default: TCP
+                      enum:
+                      - TCP
+                      - UDP
+                      type: string
+                  required:
+                  - host
+                  type: object
+                type: array
+              statusURL:
+                description: StatusURL is a public page where the feeder can check
+                  its feed.
+                type: string
+            required:
+            - displayName
+            type: object
+            x-kubernetes-validations:
+            - message: set aggregator
+              rule: has(self.aggregator)
+        required:
+        - spec
+        type: object
+    served: true
+    storage: true
+    subresources: {}

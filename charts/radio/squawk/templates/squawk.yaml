@@ -28,6 +28,10 @@ spec:
       host: {{ .Values.source.host }}
       port: {{ .Values.source.port }}
       protocol: beast
+  # Feeds run mlat-client against this receiver's own beast stream.
+  mlat:
+    enabled: true
+    clock: auto
 ---
 apiVersion: squawk.ullberg.io/v1alpha1
 kind: Hub

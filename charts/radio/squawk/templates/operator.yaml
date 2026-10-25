@@ -43,6 +43,8 @@ spec:
               value: {{ $img.readsb.repository }}:{{ $img.readsb.tag }}
             - name: SQUAWK_DUMP978_IMAGE
               value: {{ $img.dump978.repository }}:{{ $img.dump978.tag }}
+            - name: SQUAWK_MLAT_CLIENT_IMAGE
+              value: {{ $img.mlatClient.repository }}:{{ $img.mlatClient.tag }}
             - name: SQUAWK_TAR1090_IMAGE
               value: {{ $img.tar1090.repository }}:{{ $img.tar1090.tag }}
             - name: SQUAWK_IMAGE_PULL_POLICY

@@ -13,13 +13,16 @@ application:
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk
-    tag: 0.1.0-g4891042-1@sha256:11909a861cd6244ef58728391f28acc6b6eb30fe08bbb7bfda668f2aa6ac1b73
+    tag: 0.1.0-g379d43e-1@sha256:52b65c090a72375f042638220b90084b5cea8787f12d559df5022fba28192ca3
   readsb:
     repository: ghcr.io/ullbergm/squawk-readsb
     tag: v3.16.18-2@sha256:c173e0c2c11d61e36ea7e116e7f0fdf98b76804a5461475cc7bfbc0d3f908b9a
   dump978:
     repository: ghcr.io/ullbergm/squawk-dump978
     tag: v11.1-2@sha256:bd4cf6471b62a3dea8b1e5a04835a8ade60224a4928a4dae1c06b5bbd1486eb4
+  mlatClient:
+    repository: ghcr.io/ullbergm/squawk-mlat-client
+    tag: v0.4.2-g28ae4f7-2@sha256:51369d2a3b89ad941763e365eae6ef2cbed997a5f679942c6b57d6d65cb03f57
   tar1090:
     repository: ghcr.io/ullbergm/squawk-tar1090
     tag: g958e60e-1@sha256:e8dffa5133858ea2bd32af6f9c1f2e2c4218b36a13fdccdf095fa5847262895e
@@ -35,6 +38,24 @@ source:
 hub:
   pageTitle: squawk
   rangeRings: [50, 100, 150, 200]
+
+# Aggregator feeds. They stay suspended (no Pod, nothing sent) until each
+# one is moved off ultrafeeder: the same UUID must never feed from two
+# places. Each gets its own Secret from the same store keys ultrafeeder
+# uses today, so the aggregators keep the station's history.
+feeds:
+  - name: adsbexchange
+    type: adsbexchange
+    suspend: true
+  - name: adsb-lol
+    type: adsb-lol
+    suspend: true
+  - name: adsb-fi
+    type: adsb-fi
+    suspend: true
+feedSecret:
+  uuidKey: ULTRAFEEDER_UUID
+  mlatUserKey: MLAT_USER
 
 # The site position, from the same store keys the adsb chart uses.
 externalSecret:

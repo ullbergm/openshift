@@ -21,15 +21,18 @@ rules:
   - apiGroups: [route.openshift.io]
     resources: [routes, routes/custom-host]
     verbs: [create, delete, get, list, patch, update, watch]
+  - apiGroups: [networking.k8s.io]
+    resources: [networkpolicies]
+    verbs: [create, delete, get, list, patch, update, watch]
   - apiGroups: [squawk.ullberg.io]
-    resources: [hubs, receivers, sites]
+    resources: [feeds, hubs, receivers, sites]
     verbs: [get, list, patch, update, watch]
   - apiGroups: [squawk.ullberg.io]
-    resources: [hubs/status, receivers/status, sites/status]
+    resources: [feeds/status, hubs/status, receivers/status, sites/status]
     verbs: [get, patch, update]
   # OwnerReferencesPermissionEnforcement: blockOwnerDeletion needs this.
   - apiGroups: [squawk.ullberg.io]
-    resources: [hubs/finalizers, receivers/finalizers]
+    resources: [feeds/finalizers, hubs/finalizers, receivers/finalizers]
     verbs: [update]
 ---
 # A RoleBinding: the operator's rights apply only in this namespace.
@@ -66,6 +69,29 @@ roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
   name: squawk-leader-election
+subjects:
+  - kind: ServiceAccount
+    name: squawk-operator
+    namespace: {{ .Release.Namespace }}
+---
+# FeedTypes are cluster-scoped: reading them needs a ClusterRoleBinding.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: {{ .Release.Namespace }}-squawk-feedtype-reader
+rules:
+  - apiGroups: [squawk.ullberg.io]
+    resources: [feedtypes]
+    verbs: [get, list, watch]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: {{ .Release.Namespace }}-squawk-feedtype-reader
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: {{ .Release.Namespace }}-squawk-feedtype-reader
 subjects:
   - kind: ServiceAccount
     name: squawk-operator
