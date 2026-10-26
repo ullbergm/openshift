@@ -64,6 +64,11 @@ spec:
   overlays:
     tfr:
       enabled: {{ (((.Values.hub.overlays).tfr).enabled) | default false }}
+  {{- with .Values.hub.charts }}
+  charts:
+    enabled: {{ .enabled }}
+    radiusNm: {{ .radiusNm | default 400 }}
+  {{- end }}
   {{- with .Values.uat.url }}
   uat:
     aircraftJsonURL: {{ . | quote }}

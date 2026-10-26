@@ -13,11 +13,15 @@ application:
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk
-    tag: 0.1.0-g40bacad-1@sha256:c0bea4e0797d6658a757972a8d7d5bf3a3fee94912c8239830a7645dc99469df
+    tag: 0.1.0-g874b7c3-1@sha256:d60cb3ee909427441c7900823fcdd0d32e0b1e6723004435333328201f7e812e
   # squawk's own web map (same commit as the operator).
   spa:
     repository: ghcr.io/ullbergm/squawk-spa
-    tag: 0.1.0-g127b1d1-1@sha256:3bd8be5166b4cbbbacbcb97a5a7b7d9c9049e1e8aa9915ebf05bc231deb6bcc7
+    tag: 0.1.0-g874b7c3-1@sha256:19b75cc53c3d80d0c9b13b63f2ffd902142a0f8bc10e1b0d52897a02f9833c96
+  # The FAA chart tiles job (official GDAL image plus squawk-charts).
+  charts:
+    repository: ghcr.io/ullbergm/squawk-charts
+    tag: 0.1.0-g874b7c3-1@sha256:e018a87d80fb8ab66d3b2a5b89090441b1ea8d594f5d6d62055e35d2f4fb652c
   readsb:
     repository: ghcr.io/ullbergm/squawk-readsb
     tag: v3.16.18-3@sha256:9225ec29c727091a817e7d3c5c767daf697376b2a5216840bcc481ee49d1b436
@@ -80,6 +84,12 @@ hub:
   overlays:
     tfr:
       enabled: true
+  # FAA VFR charts (sectionals, terminal areas) within radiusNm of the
+  # station, built daily onto the data volume when a new 56-day cycle is
+  # out, plus the airspace overlay. Needs the database (its volume).
+  charts:
+    enabled: true
+    radiusNm: 400
 
 # Aggregator feeds. They stay suspended (no Pod, nothing sent) until each
 # one is moved off ultrafeeder: the same UUID must never feed from two

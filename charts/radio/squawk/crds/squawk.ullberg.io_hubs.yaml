@@ -1,4 +1,4 @@
-# Copied from ullbergm/squawk config/crd/bases@40bacad. Do not edit; regenerate there.
+# Copied from ullbergm/squawk config/crd/bases@874b7c3. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -60,6 +60,44 @@ spec:
             description: 'HubSpec is the merge point: readsb in network-only mode
               plus tar1090.'
             properties:
+              charts:
+                description: |-
+                  Charts builds the FAA's VFR charts (sectionals, terminal areas)
+                  near the station into map tiles on the data volume, so it needs
+                  spec.database. US only.
+                properties:
+                  enabled:
+                    type: boolean
+                  radiusNm:
+                    default: 400
+                    description: 'RadiusNm: charts within this distance of the station
+                      are built.'
+                    format: int32
+                    maximum: 1500
+                    minimum: 25
+                    type: integer
+                  schedule:
+                    default: 47 5 * * *
+                    description: |-
+                      Schedule is the CronJob schedule (UTC). A run whose cycle is already
+                      built does nothing, so daily picks up each 56-day cycle on its day.
+                    minLength: 9
+                    type: string
+                  types:
+                    default:
+                    - sectional
+                    - tac
+                    description: Types to build.
+                    items:
+                      description: HubChartType is a chart series.
+                      enum:
+                      - sectional
+                      - tac
+                      type: string
+                    maxItems: 2
+                    type: array
+                    x-kubernetes-list-type: set
+                type: object
               database:
                 description: |-
                   Database builds squawk's own aircraft database on its own volume,
@@ -234,9 +272,30 @@ spec:
             required:
             - siteRef
             type: object
+            x-kubernetes-validations:
+            - message: charts need spec.database (they live on its volume)
+              rule: '!has(self.charts) || !has(self.charts.enabled) || !self.charts.enabled
+                || (has(self.database) && has(self.database.enabled) && self.database.enabled)'
           status:
             description: HubStatus is the observed state of a Hub.
             properties:
+              charts:
+                description: Charts is the chart cycle the Hub serves, when spec.charts
+                  is on.
+                properties:
+                  cycle:
+                    description: Cycle is the effective date of the charts served
+                      (YYYY-MM-DD).
+                    type: string
+                  types:
+                    description: Types built, e.g. [sectional, tac].
+                    items:
+                      type: string
+                    type: array
+                  validTo:
+                    description: ValidTo is the cycle's last day (YYYY-MM-DD).
+                    type: string
+                type: object
               conditions:
                 items:
                   description: Condition contains details for one aspect of the current

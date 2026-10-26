@@ -49,6 +49,10 @@ spec:
               value: {{ $img.tar1090.repository }}:{{ $img.tar1090.tag }}
             - name: SQUAWK_SPA_IMAGE
               value: {{ $img.spa.repository }}:{{ $img.spa.tag }}
+            {{- with $img.charts }}
+            - name: SQUAWK_CHARTS_IMAGE
+              value: {{ .repository }}:{{ .tag }}
+            {{- end }}
             - name: SQUAWK_IMAGE_PULL_POLICY
               value: IfNotPresent
           ports:
