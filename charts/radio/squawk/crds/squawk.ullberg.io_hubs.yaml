@@ -1,4 +1,4 @@
-# Copied from ullbergm/squawk config/crd/bases@a67758b. Do not edit; regenerate there.
+# Copied from ullbergm/squawk config/crd/bases@40bacad. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -102,7 +102,10 @@ spec:
                     - type: integer
                     - type: string
                     default: 1Gi
-                    description: Size of the data volume, a separate PVC from spec.storage.
+                    description: |-
+                      Size of the data volume, a separate PVC from spec.storage. It can
+                      grow later, in place when the StorageClass allows volume expansion;
+                      it never shrinks.
                     pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                     x-kubernetes-int-or-string: true
                   storageClassName:
@@ -139,12 +142,26 @@ spec:
                   Storage keeps readsb's state, range outline, heatmaps and globe
                   history across restarts. Without it they live in an emptyDir.
                 properties:
+                  historyDays:
+                    default: 30
+                    description: |-
+                      HistoryDays is how many days of readsb's globe history and heatmaps
+                      the agent keeps (today included), pruned hourly. At least 2: readsb
+                      finishes writing the previous day's traces just after 00:00Z, so
+                      keeping only today would let a prune right after midnight remove the
+                      day readsb is still closing.
+                    format: int32
+                    maximum: 3650
+                    minimum: 2
+                    type: integer
                   size:
                     anyOf:
                     - type: integer
                     - type: string
                     default: 2Gi
-                    description: Size of the PVC.
+                    description: |-
+                      Size of the PVC. It can grow later, in place when the StorageClass
+                      allows volume expansion; it never shrinks.
                     pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                     x-kubernetes-int-or-string: true
                   storageClassName:
@@ -203,6 +220,16 @@ spec:
                       assign one.
                     pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?\.)+[a-z0-9]([-a-z0-9]*[a-z0-9])?$
                     type: string
+                  tileOrigins:
+                    description: |-
+                      TileOrigins are extra origins (scheme://host[:port]) the map may load
+                      tiles from, for viewers' custom tile URLs. The map's CSP allows only
+                      its built-in sources otherwise. Never a wildcard.
+                    items:
+                      pattern: ^https?://[A-Za-z0-9.-]+(:[0-9]{1,5})?$
+                      type: string
+                    maxItems: 16
+                    type: array
                 type: object
             required:
             - siteRef
@@ -335,6 +362,38 @@ spec:
                     description: UpdatedAt is when this summary was taken.
                     format: date-time
                     type: string
+                type: object
+              storage:
+                description: Storage is the state volume's use, when spec.storage
+                  is on.
+                properties:
+                  capacity:
+                    anyOf:
+                    - type: integer
+                    - type: string
+                    description: |-
+                      Capacity is the volume's size as the filesystem sees it; after a
+                      resize it follows once the filesystem has grown.
+                    pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                    x-kubernetes-int-or-string: true
+                  oldestDay:
+                    description: OldestDay of globe history on the volume (UTC, YYYY-MM-DD).
+                    type: string
+                  seriesSince:
+                    description: SeriesSince is the oldest station graph sample kept.
+                    format: date-time
+                    type: string
+                  updatedAt:
+                    description: UpdatedAt is when this was read.
+                    format: date-time
+                    type: string
+                  used:
+                    anyOf:
+                    - type: integer
+                    - type: string
+                    description: Used is the space used on the volume.
+                    pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                    x-kubernetes-int-or-string: true
                 type: object
               uiURL:
                 description: UIURL is the web map's URL, when its Route exists.

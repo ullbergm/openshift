@@ -13,7 +13,7 @@ application:
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk
-    tag: 0.1.0-ga67758b-1@sha256:5b19a58465b1273017ecb2839d47cfe5f61768aa2efa3f558f5c5e4d1acdc4eb
+    tag: 0.1.0-g40bacad-1@sha256:c0bea4e0797d6658a757972a8d7d5bf3a3fee94912c8239830a7645dc99469df
   # squawk's own web map (same commit as the operator).
   spa:
     repository: ghcr.io/ullbergm/squawk-spa
@@ -54,8 +54,15 @@ hub:
   # squawk's own map beside tar1090, on its own Route.
   ui:
     enabled: true
+  # The Hub's state volume: readsb's globe history and heatmaps, kept
+  # historyDays (pruned hourly), and the station graphs (up to a year) and
+  # all-time range outline across restarts. Unset: an emptyDir.
+  storage:
+    size: 50Gi
+    historyDays: 90
   # squawk's own aircraft database, built weekly in the cluster onto its
-  # own 1 Gi volume (docs/DECISIONS.md "Own aircraft database"). Off: readsb
+  # own volume (docs/DECISIONS.md "Own aircraft database"), 10 Gi to leave
+  # room for the chart tiles. Off: readsb
   # uses the database bundled in its image. flagOverlay "tar1090-db" also
   # copies that file's PIA/LADD flags at run time (opt-in). ownerNames
   # "all" includes private owners' names: this is a private station whose
@@ -63,7 +70,7 @@ hub:
   database:
     enabled: true
     schedule: "23 4 * * 1"
-    size: 1Gi
+    size: 10Gi
     flagOverlay: tar1090-db
     ownerNames: all
   # Map overlays the Hub's agent fetches. tfr: the FAA's temporary flight
