@@ -34,10 +34,6 @@ pods:
         adsb,adsb-dump978,30978,uat_in;
         mlathub,adsb-flightaware,30105,beast_in;
         mlathub,adsb-planewatch,30105,beast_in;
-        adsb,feed1.adsbexchange.com,30004,beast_reduce_plus_out;
-        mlat,feed.adsbexchange.com,31090,39008;
-        adsb,feed.adsb.fi,30004,beast_reduce_plus_out;
-        mlat,feed.adsb.fi,31090,39000;
       # mlathub,adsb-radarbox-mlat-beast-output,30105,beast_in;
       # adsb,feed.airplanes.live,30004,beast_reduce_plus_out;
       # adsb,feed.planespotters.net,30004,beast_reduce_plus_out;
