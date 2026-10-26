@@ -13,7 +13,7 @@ application:
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk
-    tag: 0.1.0-g379d43e-1@sha256:52b65c090a72375f042638220b90084b5cea8787f12d559df5022fba28192ca3
+    tag: 0.1.0-g565bd74-1@sha256:e1d308f5d689771c489e27dea5a0148df19395216096247c692d3a131b459078
   readsb:
     repository: ghcr.io/ullbergm/squawk-readsb
     tag: v3.16.18-2@sha256:c173e0c2c11d61e36ea7e116e7f0fdf98b76804a5461475cc7bfbc0d3f908b9a
