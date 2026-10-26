@@ -17,7 +17,7 @@ images:
   # squawk's own web map (same commit as the operator).
   spa:
     repository: ghcr.io/ullbergm/squawk-spa
-    tag: 0.1.0-g5ac8a59-1@sha256:59ead8144cbf0cf3b2fa3b5020b3603dcfb4c72ef05d2de5e61c98e57717e80e
+    tag: 0.1.0-gdcfab13-1@sha256:47682e813dbe9b21a125932d907f6199728a40e195b2b2c06ad6a01de27566f0
   readsb:
     repository: ghcr.io/ullbergm/squawk-readsb
     tag: v3.16.18-2@sha256:c173e0c2c11d61e36ea7e116e7f0fdf98b76804a5461475cc7bfbc0d3f908b9a
