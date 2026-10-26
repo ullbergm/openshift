@@ -49,7 +49,7 @@ feeds:
     suspend: true
   - name: adsb-lol
     type: adsb-lol
-    suspend: true
+    suspend: false   # moved off ultrafeeder 2026-10-26
   - name: adsb-fi
     type: adsb-fi
     suspend: true
