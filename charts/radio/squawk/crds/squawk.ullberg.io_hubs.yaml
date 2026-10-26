@@ -1,4 +1,3 @@
-# Copied from ullbergm/squawk config/crd/bases@6017758. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -112,6 +111,20 @@ spec:
                     description: Route exposes the UI with an OpenShift Route (ignored
                       elsewhere).
                     type: boolean
+                type: object
+              ui:
+                description: |-
+                  UI is squawk's own web map, beside tar1090. Its station name and
+                  range rings come from tar1090.pageTitle and tar1090.rangeRings.
+                properties:
+                  enabled:
+                    description: Enabled runs the web map.
+                    type: boolean
+                  host:
+                    description: Host is the Route's hostname. Empty lets the router
+                      assign one.
+                    pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?\.)+[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                    type: string
                 type: object
             required:
             - siteRef
@@ -230,6 +243,9 @@ spec:
                     format: date-time
                     type: string
                 type: object
+              uiURL:
+                description: UIURL is the web map's URL, when its Route exists.
+                type: string
               url:
                 description: URL of the tar1090 UI, when a Route exists.
                 type: string

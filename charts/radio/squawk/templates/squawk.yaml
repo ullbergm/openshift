@@ -47,3 +47,6 @@ spec:
     host: squawk.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
     pageTitle: {{ .Values.hub.pageTitle | quote }}
     rangeRings: {{ .Values.hub.rangeRings | toJson }}
+  ui:
+    enabled: {{ .Values.hub.ui.enabled }}
+    host: squawk-map.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}

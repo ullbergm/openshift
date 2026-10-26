@@ -47,6 +47,8 @@ spec:
               value: {{ $img.mlatClient.repository }}:{{ $img.mlatClient.tag }}
             - name: SQUAWK_TAR1090_IMAGE
               value: {{ $img.tar1090.repository }}:{{ $img.tar1090.tag }}
+            - name: SQUAWK_SPA_IMAGE
+              value: {{ $img.spa.repository }}:{{ $img.spa.tag }}
             - name: SQUAWK_IMAGE_PULL_POLICY
               value: IfNotPresent
           ports:
