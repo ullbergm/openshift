@@ -1,4 +1,4 @@
-# Copied from ullbergm/squawk config/crd/bases@379d43e. Do not edit; regenerate there.
+# Copied from ullbergm/squawk config/crd/bases@3cc2002. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -92,6 +92,12 @@ spec:
               tar1090:
                 description: Tar1090 settings for the web UI.
                 properties:
+                  host:
+                    description: |-
+                      Host is the Route's hostname, e.g. "squawk.apps.example.com". Empty
+                      lets the router assign one (hub-<name>-<namespace>.apps...).
+                    pattern: ^([a-z0-9]([-a-z0-9]*[a-z0-9])?\.)+[a-z0-9]([-a-z0-9]*[a-z0-9])?$
+                    type: string
                   pageTitle:
                     description: PageTitle is the browser tab title.
                     type: string

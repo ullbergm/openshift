@@ -44,5 +44,6 @@ spec:
   siteRef: {name: home}
   tar1090:
     route: true
+    host: squawk.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
     pageTitle: {{ .Values.hub.pageTitle | quote }}
     rangeRings: {{ .Values.hub.rangeRings | toJson }}

@@ -8,7 +8,7 @@ spec:
   group: {{ .Values.application.group | quote }}
   icon: material-symbols-light:radar
   iconColor: {{ .Values.application.iconColor | quote }}
-  url: https://hub-main-{{ .Release.Namespace }}.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  url: https://squawk.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   info: "squawk trial: tar1090 from the squawk Hub"
   location: 0
 {{- end }}
