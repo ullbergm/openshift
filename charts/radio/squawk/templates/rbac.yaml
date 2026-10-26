@@ -18,6 +18,11 @@ rules:
   - apiGroups: [apps]
     resources: [deployments]
     verbs: [create, delete, get, list, patch, update, watch]
+  # The Hub's aircraft-database CronJob and first build (spec.database);
+  # watched even when it is off.
+  - apiGroups: [batch]
+    resources: [cronjobs, jobs]
+    verbs: [create, delete, get, list, patch, update, watch]
   - apiGroups: [route.openshift.io]
     resources: [routes, routes/custom-host]
     verbs: [create, delete, get, list, patch, update, watch]

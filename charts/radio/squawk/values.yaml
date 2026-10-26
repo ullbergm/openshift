@@ -13,11 +13,11 @@ application:
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk
-    tag: 0.1.0-g5ac8a59-1@sha256:9df96c9f1d162b5c5d13dda3ac73c76b06744a8ca556d20417f95e054c2aa4c7
+    tag: 0.1.0-g865c52b-1@sha256:b3d5f0c049098b9681712a6f501f1627a852b85ac86ec87b1461535b76dcf484
   # squawk's own web map (same commit as the operator).
   spa:
     repository: ghcr.io/ullbergm/squawk-spa
-    tag: 0.1.0-gdcfab13-1@sha256:47682e813dbe9b21a125932d907f6199728a40e195b2b2c06ad6a01de27566f0
+    tag: 0.1.0-g567dea0-1@sha256:3ea46f880a1ac5cd874018302214a9c6a964c5da73b5a0a1088367da1ea3dc22
   readsb:
     repository: ghcr.io/ullbergm/squawk-readsb
     tag: v3.16.18-2@sha256:c173e0c2c11d61e36ea7e116e7f0fdf98b76804a5461475cc7bfbc0d3f908b9a
@@ -54,6 +54,18 @@ hub:
   # squawk's own map beside tar1090, on its own Route.
   ui:
     enabled: true
+  # squawk's own aircraft database, built weekly in the cluster onto its
+  # own 1 Gi volume (docs/DECISIONS.md "Own aircraft database"). Off: readsb
+  # uses the database bundled in its image. flagOverlay "tar1090-db" also
+  # copies that file's PIA/LADD flags at run time (opt-in). ownerNames
+  # "all" includes private owners' names: this is a private station whose
+  # map no one outside sees; the default is "companies".
+  database:
+    enabled: true
+    schedule: "23 4 * * 1"
+    size: 1Gi
+    flagOverlay: tar1090-db
+    ownerNames: all
 
 # Aggregator feeds. They stay suspended (no Pod, nothing sent) until each
 # one is moved off ultrafeeder: the same UUID must never feed from two

@@ -50,6 +50,12 @@ spec:
   ui:
     enabled: {{ .Values.hub.ui.enabled }}
     host: squawk-map.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  database:
+    enabled: {{ .Values.hub.database.enabled }}
+    schedule: {{ .Values.hub.database.schedule | quote }}
+    size: {{ .Values.hub.database.size }}
+    flagOverlay: {{ .Values.hub.database.flagOverlay | quote }}
+    ownerNames: {{ .Values.hub.database.ownerNames | default "companies" | quote }}
   {{- with .Values.uat.url }}
   uat:
     aircraftJsonURL: {{ . | quote }}

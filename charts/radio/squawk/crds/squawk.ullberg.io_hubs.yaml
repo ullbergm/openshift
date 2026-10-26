@@ -1,4 +1,4 @@
-# Copied from ullbergm/squawk config/crd/bases@5ac8a59. Do not edit; regenerate there.
+# Copied from ullbergm/squawk config/crd/bases@865c52b. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -60,6 +60,56 @@ spec:
             description: 'HubSpec is the merge point: readsb in network-only mode
               plus tar1090.'
             properties:
+              database:
+                description: |-
+                  Database builds squawk's own aircraft database on its own volume,
+                  weekly, for readsb and the map (docs/DECISIONS.md "Own aircraft
+                  database"). Off: readsb uses the database bundled in its image.
+                properties:
+                  enabled:
+                    description: |-
+                      Enabled creates the data volume, the weekly CronJob and a first
+                      build, and points readsb and the agent at the volume. A refresh never
+                      restarts the Hub: readsb reloads the file, the agent the release.
+                    type: boolean
+                  flagOverlay:
+                    description: |-
+                      FlagOverlay "tar1090-db" makes each build fetch tar1090-db and copy
+                      its PIA and LADD flags onto our rows. That file carries no licence;
+                      it is fetched at run time only, never baked into an image. Empty: off.
+                    enum:
+                    - ""
+                    - tar1090-db
+                    type: string
+                  ownerNames:
+                    default: companies
+                    description: |-
+                      OwnerNames is whose names the build copies from the FAA and Canadian
+                      registries: "companies" (companies and governments only) or "all"
+                      (private persons too; for a private station that shows its map to
+                      no one else).
+                    enum:
+                    - companies
+                    - all
+                    type: string
+                  schedule:
+                    default: 23 4 * * 1
+                    description: Schedule is the CronJob schedule (UTC).
+                    minLength: 9
+                    type: string
+                  size:
+                    anyOf:
+                    - type: integer
+                    - type: string
+                    default: 1Gi
+                    description: Size of the data volume, a separate PVC from spec.storage.
+                    pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                    x-kubernetes-int-or-string: true
+                  storageClassName:
+                    description: StorageClassName for the data volume; empty uses
+                      the default class.
+                    type: string
+                type: object
               siteRef:
                 description: |-
                   SiteRef names the Site. Its position centres the map and the range
@@ -206,6 +256,21 @@ spec:
                 x-kubernetes-list-map-keys:
                 - type
                 x-kubernetes-list-type: map
+              database:
+                description: Database is the aircraft database's state, when spec.database
+                  is on.
+                properties:
+                  lastSuccessfulBuild:
+                    description: LastSuccessfulBuild is when a build last finished
+                      and swapped in.
+                    format: date-time
+                    type: string
+                  release:
+                    description: |-
+                      Release the agent reads: a UTC timestamp (20261026T042300Z), or
+                      "bootstrap" before the first build finishes.
+                    type: string
+                type: object
               endpoint:
                 description: Endpoint is where Feeds read the merged beast stream.
                 properties:
