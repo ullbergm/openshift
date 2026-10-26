@@ -1,5 +1,6 @@
 # The Hub and any decoder Pods may only reach DNS, the ultrafeeder beast
-# port and this namespace: no internet, so nothing can be fed anywhere.
+# port, dump978's web port (UAT marking) and this namespace: no internet,
+# so nothing can be fed anywhere.
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -43,6 +44,18 @@ spec:
       ports:
         - port: {{ .Values.source.port }}
           protocol: TCP
+{{- if .Values.uat.url }}
+    - to:
+        - namespaceSelector:
+            matchLabels:
+              kubernetes.io/metadata.name: {{ .Values.uat.namespace }}
+          podSelector:
+            matchLabels:
+{{ .Values.uat.podSelector | toYaml | indent 14 }}
+      ports:
+        - port: {{ .Values.uat.port }}
+          protocol: TCP
+{{- end }}
 ---
 # squawk's web map: the router may reach it, and it may reach only the
 # Hub's agent (its /api/ proxy) and DNS. Map tiles are fetched by the

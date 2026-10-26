@@ -50,3 +50,7 @@ spec:
   ui:
     enabled: {{ .Values.hub.ui.enabled }}
     host: squawk-map.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  {{- with .Values.uat.url }}
+  uat:
+    aircraftJsonURL: {{ . | quote }}
+  {{- end }}

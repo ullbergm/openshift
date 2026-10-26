@@ -13,11 +13,11 @@ application:
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk
-    tag: 0.1.0-gee72824-1@sha256:fd2133c3752bb8144f2f679baab2fe0ea6daf8dd28251dddf54f71985e632220
+    tag: 0.1.0-g5ac8a59-1@sha256:9df96c9f1d162b5c5d13dda3ac73c76b06744a8ca556d20417f95e054c2aa4c7
   # squawk's own web map (same commit as the operator).
   spa:
     repository: ghcr.io/ullbergm/squawk-spa
-    tag: 0.1.0-g5bcf188-1@sha256:dfa3144eff7417702d1f42df9f1555dde87380313d695be2b64f9bea5511d631
+    tag: 0.1.0-g5ac8a59-1@sha256:59ead8144cbf0cf3b2fa3b5020b3603dcfb4c72ef05d2de5e61c98e57717e80e
   readsb:
     repository: ghcr.io/ullbergm/squawk-readsb
     tag: v3.16.18-2@sha256:c173e0c2c11d61e36ea7e116e7f0fdf98b76804a5461475cc7bfbc0d3f908b9a
@@ -38,6 +38,15 @@ source:
   port: 30005
   podSelector:
     app.kubernetes.io/controller: ultrafeeder
+
+# The old chart's dump978, read-only: the Hub's agent polls its aircraft
+# list to mark UAT aircraft on squawk's map. Empty url: no UAT marking.
+uat:
+  url: http://adsb-dump978.adsb.svc.cluster.local/skyaware978/data/aircraft.json
+  namespace: adsb
+  port: 80
+  podSelector:
+    app.kubernetes.io/controller: dump978
 
 hub:
   pageTitle: squawk
