@@ -13,14 +13,14 @@ application:
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk
-    tag: 0.1.0-g865c52b-1@sha256:b3d5f0c049098b9681712a6f501f1627a852b85ac86ec87b1461535b76dcf484
+    tag: 0.1.0-ga67758b-1@sha256:5b19a58465b1273017ecb2839d47cfe5f61768aa2efa3f558f5c5e4d1acdc4eb
   # squawk's own web map (same commit as the operator).
   spa:
     repository: ghcr.io/ullbergm/squawk-spa
-    tag: 0.1.0-g567dea0-1@sha256:3ea46f880a1ac5cd874018302214a9c6a964c5da73b5a0a1088367da1ea3dc22
+    tag: 0.1.0-ga67758b-1@sha256:eec7511505ce302b5e83fc99211c6143addaced551bc74a19948a4ac5d4ae923
   readsb:
     repository: ghcr.io/ullbergm/squawk-readsb
-    tag: v3.16.18-2@sha256:c173e0c2c11d61e36ea7e116e7f0fdf98b76804a5461475cc7bfbc0d3f908b9a
+    tag: v3.16.18-3@sha256:9225ec29c727091a817e7d3c5c767daf697376b2a5216840bcc481ee49d1b436
   dump978:
     repository: ghcr.io/ullbergm/squawk-dump978
     tag: v11.1-2@sha256:bd4cf6471b62a3dea8b1e5a04835a8ade60224a4928a4dae1c06b5bbd1486eb4
@@ -66,6 +66,13 @@ hub:
     size: 1Gi
     flagOverlay: tar1090-db
     ownerNames: all
+  # Map overlays the Hub's agent fetches. tfr: the FAA's temporary flight
+  # restrictions (US only), every 5 min; the operator then gives the Hub
+  # Pod egress to DNS and public HTTPS (a NetworkPolicy can't name the
+  # FAA host). Weather and basemap tiles come from the viewer's browser.
+  overlays:
+    tfr:
+      enabled: true
 
 # Aggregator feeds. They stay suspended (no Pod, nothing sent) until each
 # one is moved off ultrafeeder: the same UUID must never feed from two

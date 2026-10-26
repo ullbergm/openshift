@@ -1,4 +1,4 @@
-# Copied from ullbergm/squawk config/crd/bases@865c52b. Do not edit; regenerate there.
+# Copied from ullbergm/squawk config/crd/bases@a67758b. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -109,6 +109,19 @@ spec:
                     description: StorageClassName for the data volume; empty uses
                       the default class.
                     type: string
+                type: object
+              overlays:
+                description: Overlays are extra map layers the Hub's agent fetches
+                  and serves.
+                properties:
+                  tfr:
+                    description: |-
+                      TFR fetches the FAA's temporary flight restrictions (US only) every
+                      5 min for the map's TFR overlay. The Hub Pod gets egress to HTTPS.
+                    properties:
+                      enabled:
+                        type: boolean
+                    type: object
                 type: object
               siteRef:
                 description: |-

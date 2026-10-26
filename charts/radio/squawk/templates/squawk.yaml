@@ -56,6 +56,9 @@ spec:
     size: {{ .Values.hub.database.size }}
     flagOverlay: {{ .Values.hub.database.flagOverlay | quote }}
     ownerNames: {{ .Values.hub.database.ownerNames | default "companies" | quote }}
+  overlays:
+    tfr:
+      enabled: {{ (((.Values.hub.overlays).tfr).enabled) | default false }}
   {{- with .Values.uat.url }}
   uat:
     aircraftJsonURL: {{ . | quote }}
