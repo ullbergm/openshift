@@ -77,7 +77,7 @@ pods:
   planewatch:
     # false stops this client here (it moved to a squawk Feed); see
     # squawk docs/research/vendor-clients.md.
-    enabled: true
+    enabled: false  # stopped feeding 2026-10-27 (user decision)
     image:
       repository: ghcr.io/plane-watch/docker-plane-watch
       # renovate: datasource=docker depName=ghcr.io/plane-watch/docker-plane-watch versioning=semver
@@ -123,7 +123,7 @@ pods:
   opensky:
     # false stops this client here (it moved to a squawk Feed); see
     # squawk docs/research/vendor-clients.md.
-    enabled: true
+    enabled: false  # stopped feeding 2026-10-27 (user decision)
     image:
       repository: ghcr.io/sdr-enthusiasts/docker-opensky-network
       # renovate: datasource=docker depName=ghcr.io/sdr-enthusiasts/docker-opensky-network versioning=loose
