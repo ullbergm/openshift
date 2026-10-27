@@ -10,6 +10,7 @@ spec:
   locationRef:
     name: {{ .Release.Name }}
 ---
+{{- if .Values.source.host }}
 # The existing ultrafeeder, read as a decoding box. squawk is just one
 # more client on its beast port; nothing in the adsb namespace changes.
 apiVersion: squawk.ullberg.io/v1alpha1
@@ -32,6 +33,34 @@ spec:
   mlat:
     enabled: true
     clock: auto
+{{- end }}
+{{- with .Values.usb.adsb }}
+---
+# The 1090 MHz dongle, decoded by squawk's own readsb; its beast output is
+# the MLAT source (one antenna's clock) for every Feed's mlat-client and
+# piaware. The device resource puts it on its node.
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: Receiver
+metadata:
+  name: {{ .name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  siteRef: {name: home}
+  hubRef: {name: main}
+  band: ADSB1090
+  source:
+    usb:
+      resource: {{ .resource }}
+      serial: {{ .serial | quote }}
+      gain: {{ .gain | quote }}
+      ppm: {{ .ppm }}
+  mlat:
+    enabled: true
+    clock: auto
+{{- end }}
+---
 {{- if .Values.uat.rawPort }}
 ---
 # dump978's raw UAT, read as a decoding box: the UAT relay piaware needs.

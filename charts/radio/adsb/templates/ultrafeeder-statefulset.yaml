@@ -1,3 +1,4 @@
+{{- if ne .Values.pods.ultrafeeder.enabled false }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -53,3 +54,4 @@ spec:
                 devic.es/adsb1090: '1'
           image: {{ .Values.pods.ultrafeeder.image.repository }}:{{ .Values.pods.ultrafeeder.image.tag }}
           imagePullPolicy: IfNotPresent
+{{- end }}

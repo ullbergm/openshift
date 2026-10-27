@@ -17,6 +17,9 @@ application:
 
 pods:
   ultrafeeder:
+    # false stops this decoder here: the 1090 dongle moved to squawk's own
+    # Receiver rtl-1090 (2026-10-27). Nothing else in this chart is left.
+    enabled: false
     image:
       repository: ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder
       # renovate: datasource=docker depName=ghcr.io/sdr-enthusiasts/docker-adsb-ultrafeeder versioning=loose

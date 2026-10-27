@@ -51,7 +51,9 @@ images:
 # The old chart's ultrafeeder, read-only: squawk is one more beast client.
 source:
   namespace: adsb
-  host: adsb-ultrafeeder.adsb.svc.cluster.local
+  # Empty since the 1090 dongle moved to squawk's own Receiver (usb.adsb,
+  # 2026-10-27): no network Receiver for the old ultrafeeder.
+  host: ""
   port: 30005
   podSelector:
     app.kubernetes.io/controller: ultrafeeder
@@ -73,6 +75,12 @@ uat:
 # devic.es resources). Settings carried from the old chart: autogain had
 # settled at 49.6 dB (the maximum) on both.
 usb:
+  adsb:
+    name: rtl-1090
+    resource: devic.es/adsb1090
+    serial: "1090"
+    gain: "49.6"
+    ppm: 39
   uat:
     name: rtl-978
     resource: devic.es/adsb978
@@ -181,7 +189,7 @@ feeds:
     suspend: false
     mlat: false
     inputs:
-      - {name: beast, receiverRef: {name: ultrafeeder}}
+      - {name: beast, receiverRef: {name: rtl-1090}}
       - {name: uat, receiverRef: {name: rtl-978}}
     credentials:
       - secretKey: feederId

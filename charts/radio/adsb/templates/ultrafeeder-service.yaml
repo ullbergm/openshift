@@ -1,3 +1,4 @@
+{{- if ne .Values.pods.ultrafeeder.enabled false }}
 ---
 apiVersion: v1
 kind: Service
@@ -74,3 +75,4 @@ spec:
     app.kubernetes.io/controller: ultrafeeder
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/name: {{ .Release.Name }}
+{{- end }}

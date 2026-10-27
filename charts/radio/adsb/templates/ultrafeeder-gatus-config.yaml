@@ -1,3 +1,4 @@
+{{- if ne .Values.pods.ultrafeeder.enabled false }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -20,4 +21,5 @@ data:
   {{- end }}
 {{- else }}
           - "[STATUS] == 200"
+{{- end }}
 {{- end }}

@@ -34,6 +34,7 @@ spec:
       ports:
         - {port: 5353, protocol: UDP}
         - {port: 5353, protocol: TCP}
+{{- if .Values.source.host }}
     - to:
         - namespaceSelector:
             matchLabels:
@@ -44,6 +45,7 @@ spec:
       ports:
         - port: {{ .Values.source.port }}
           protocol: TCP
+{{- end }}
 {{- if .Values.uat.url }}
     - to:
         - namespaceSelector:
