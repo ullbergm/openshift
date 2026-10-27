@@ -2,13 +2,26 @@
 apiVersion: startpunkt.ullberg.us/v1alpha4
 kind: Application
 metadata:
-  name: {{ .Release.Name }}-tar1090
+  name: {{ .Release.Name }}-map
 spec:
   name: "squawk"
   group: {{ .Values.application.group | quote }}
   icon: material-symbols-light:radar
   iconColor: {{ .Values.application.iconColor | quote }}
   url: https://squawk.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
-  info: "squawk trial: tar1090 from the squawk Hub"
+  info: "squawk's map"
   location: 0
+---
+apiVersion: startpunkt.ullberg.us/v1alpha4
+kind: Application
+metadata:
+  name: {{ .Release.Name }}-tar1090
+spec:
+  name: "squawk tar1090"
+  group: {{ .Values.application.group | quote }}
+  icon: material-symbols-light:radar
+  iconColor: {{ .Values.application.iconColor | quote }}
+  url: https://squawk-tar1090.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  info: "tar1090 from the squawk Hub"
+  location: 1
 {{- end }}

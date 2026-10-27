@@ -44,12 +44,12 @@ spec:
   siteRef: {name: home}
   tar1090:
     route: true
-    host: squawk.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+    host: squawk-tar1090.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
     pageTitle: {{ .Values.hub.pageTitle | quote }}
     rangeRings: {{ .Values.hub.rangeRings | toJson }}
   ui:
     enabled: {{ .Values.hub.ui.enabled }}
-    host: squawk-map.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+    host: squawk.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
   {{- with .Values.hub.storage }}
   storage:
     size: {{ .size }}
