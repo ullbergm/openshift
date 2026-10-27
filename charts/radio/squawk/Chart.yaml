@@ -1,5 +1,5 @@
 apiVersion: v2
-description: squawk, the Kubernetes-native ADS-B operator (trial beside charts/radio/adsb)
+description: squawk, the Kubernetes-native ADS-B operator
 name: squawk
 version: 0.1.0
 kubeVersion: ">=1.31.0-0"

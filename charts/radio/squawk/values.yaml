@@ -6,10 +6,10 @@ application:
   group: ADSB
   iconColor: ''
 
-# squawk runs beside charts/radio/adsb as a trial. It reads the existing
-# ultrafeeder's beast output as a network Receiver and serves its own
-# tar1090. It has no Feeds: nothing is sent to any aggregator, and the
-# NetworkPolicy keeps the Hub from reaching the internet at all.
+# squawk is the station's ADS-B stack: its own USB Receivers (usb below),
+# the Hub with its map and tar1090, and a Feed per network. It replaced
+# charts/radio/adsb (removed 2026-10-27; it is in git history). The Hub
+# and Receivers have no internet; only Feed Pods reach their networks.
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk

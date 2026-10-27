@@ -10,7 +10,6 @@ spec:
   generators:
     - list:
         elements:
-        - name: adsb
         - name: squawk
         #- name: cloudtak
         #- name: opentakserver
