@@ -27,7 +27,7 @@ images:
     tag: v3.16.18-3@sha256:9225ec29c727091a817e7d3c5c767daf697376b2a5216840bcc481ee49d1b436
   dump978:
     repository: ghcr.io/ullbergm/squawk-dump978
-    tag: v11.1-2@sha256:bd4cf6471b62a3dea8b1e5a04835a8ade60224a4928a4dae1c06b5bbd1486eb4
+    tag: v11.1-3@sha256:54b871f8227414ab91a6a1ef588e7063ae50c07cc686d9f3d6faefa883f07d5e
   mlatClient:
     repository: ghcr.io/ullbergm/squawk-mlat-client
     tag: v0.4.2-g28ae4f7-2@sha256:51369d2a3b89ad941763e365eae6ef2cbed997a5f679942c6b57d6d65cb03f57
@@ -56,20 +56,29 @@ source:
   podSelector:
     app.kubernetes.io/controller: ultrafeeder
 
-# The old chart's dump978, read-only: the Hub's agent polls its aircraft
-# list to mark UAT aircraft on squawk's map. Empty url: no UAT marking.
+# The old chart's dump978, read over the network: url for UAT marking,
+# rawPort for a network UAT978 Receiver. Both empty since the 978 dongle
+# moved to squawk's own Receiver (usb.uat below, 2026-10-27): the operator
+# then takes the Hub's UAT marking from that Receiver.
 uat:
-  url: http://adsb-dump978.adsb.svc.cluster.local/skyaware978/data/aircraft.json
+  url: ""
   namespace: adsb
   port: 80
-  # dump978's raw UAT output, read by a UAT978 Receiver: the relay path
-  # FlightAware's piaware reads (squawk vendor-clients §2). Until the dongle
-  # move it also reaches the Hub alongside the UAT folded into ultrafeeder's
-  # beast, so UAT message counts read about double. 0: no Receiver.
   host: adsb-dump978.adsb.svc.cluster.local
-  rawPort: 30978
+  rawPort: 0
   podSelector:
     app.kubernetes.io/controller: dump978
+
+# squawk's own USB Receivers (the dongles, through generic-device-plugin's
+# devic.es resources). Settings carried from the old chart: autogain had
+# settled at 49.6 dB (the maximum) on both.
+usb:
+  uat:
+    name: rtl-978
+    resource: devic.es/adsb978
+    serial: "978"
+    gain: "49.6"
+    ppm: 14
 
 hub:
   pageTitle: squawk
@@ -173,7 +182,7 @@ feeds:
     mlat: false
     inputs:
       - {name: beast, receiverRef: {name: ultrafeeder}}
-      - {name: uat, receiverRef: {name: dump978}}
+      - {name: uat, receiverRef: {name: rtl-978}}
     credentials:
       - secretKey: feederId
         remoteKey: FLIGHAWARE_FEEDER_ID

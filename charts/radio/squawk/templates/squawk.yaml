@@ -52,6 +52,28 @@ spec:
       port: {{ .Values.uat.rawPort }}
       protocol: uat
 {{- end }}
+{{- with .Values.usb.uat }}
+---
+# The 978 MHz dongle, decoded by squawk's own dump978-fa (with skyaware978
+# for the Hub's UAT marking). The device resource puts it on its node.
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: Receiver
+metadata:
+  name: {{ .name }}
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  siteRef: {name: home}
+  hubRef: {name: main}
+  band: UAT978
+  source:
+    usb:
+      resource: {{ .resource }}
+      serial: {{ .serial | quote }}
+      gain: {{ .gain | quote }}
+      ppm: {{ .ppm }}
+{{- end }}
 ---
 apiVersion: squawk.ullberg.io/v1alpha1
 kind: Hub
