@@ -13,7 +13,7 @@ application:
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk
-    tag: 0.1.0-g99d405e-1@sha256:44414c98040d57dafc741823d88a307a310f5915df628e8409fb3184c99e5bfc
+    tag: 0.1.0-g6b62526-1@sha256:15ee041095dd660bffa845b6fad32303e471798f9f0451415a2045f959c90686
   # squawk's own web map (same commit as the operator).
   spa:
     repository: ghcr.io/ullbergm/squawk-spa
@@ -36,6 +36,10 @@ images:
     tag: g958e60e-1@sha256:e8dffa5133858ea2bd32af6f9c1f2e2c4218b36a13fdccdf095fa5847262895e
   # Plane Finder's pfclient 5.3.2 (private package: pfclient is not
   # redistributable).
+  # Flightradar24's fr24feed 1.0.57-1 (private package: not redistributable).
+  fr24feed:
+    repository: ghcr.io/ullbergm/squawk-fr24feed
+    tag: 1.0.57-1-2@sha256:45a322c318f27c2a52d3459048be11e5717b372e4ced19b365e0f7f1c0154003
   planefinder:
     repository: ghcr.io/ullbergm/squawk-planefinder
     tag: 5.3.2-1@sha256:7155054feb1f4a6518538d2ee55d94ee2fe78cbfb39983407e27d5194444322f
@@ -145,6 +149,15 @@ feeds:
     credentials:
       - secretKey: sharecode
         remoteKey: PLANEFINDER_SHARE_CODE
+  # Flightradar24 (M3): fr24feed as a vendor Feed on the station's sharing
+  # key, which moved here from the adsb chart's flightradar24 Pod.
+  - name: fr24
+    type: fr24
+    suspend: false
+    mlat: false
+    credentials:
+      - secretKey: fr24key
+        remoteKey: FR24KEY
 feedSecret:
   uuidKey: ULTRAFEEDER_UUID
   mlatUserKey: MLAT_USER

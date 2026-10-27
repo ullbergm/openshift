@@ -12,9 +12,12 @@ rules:
   - apiGroups: [""]
     resources: [configmaps, persistentvolumeclaims, services]
     verbs: [create, delete, get, list, patch, update, watch]
+  # Secrets: the Feeds' credentials (read) and each vendor Feed's rendered
+  # config files, feed-<name>-config (written). Bound by a RoleBinding below,
+  # so only in this namespace.
   - apiGroups: [""]
     resources: [secrets]
-    verbs: [get, list, watch]
+    verbs: [create, delete, get, list, patch, update, watch]
   # Vendor Feeds' logRegex status reader: the client container's log,
   # read-only (only match times are kept).
   - apiGroups: [""]

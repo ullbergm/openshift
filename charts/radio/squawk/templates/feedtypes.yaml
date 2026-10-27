@@ -340,3 +340,68 @@ spec:
     - {host: 2.planefinder.pool.ntp.org, ports: [123], protocol: UDP}
     - {host: 3.planefinder.pool.ntp.org, ports: [123], protocol: UDP}
   statusURL: https://planefinder.net/
+---
+# Flightradar24's fr24feed (from ullbergm/squawk config/feedtypes/fr24.yaml@6b62526,
+# the image pinned to the private squawk-fr24feed this chart deploys).
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: FeedType
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: fr24
+spec:
+  displayName: Flightradar24
+  vendor:
+    image: {{ .Values.images.fr24feed.repository }}:{{ .Values.images.fr24feed.tag }}
+    # sdr-enthusiasts work around a CPU-burning fcntl loop over open fds
+    # with a small fd table; lowering a soft limit needs no privilege.
+    command: [/bin/sh, -c]
+    args:
+      - ulimit -n 128 2>/dev/null; exec /usr/local/bin/fr24feed --config-file=/config/fr24feed.ini --monitor-file=/run/fr24/decoder.txt
+    inputs:
+      - {name: beast, from: hub, protocol: beast}
+    credentials:
+      - {key: fr24key, env: FR24KEY, required: true}
+    env:
+      - {name: TZ, value: UTC}
+    files:
+      - path: /config/fr24feed.ini
+        template: |
+          receiver="beast-tcp"
+          fr24key="{{`{{ .Credentials.fr24key }}`}}"
+          host="{{`{{ .Inputs.beast.Addr }}`}}"
+          bs="no"
+          raw="no"
+          logmode="0"
+          mlat="yes"
+          mlat-without-gps="yes"
+    writablePaths: [/run/fr24, /tmp]
+    ports:
+      - {name: web, port: 8754}
+    status:
+      reader:
+        httpJSON: {port: 8754, path: /monitor.json}
+      # monitor.json holds strings, and until fr24feed has its FR24
+      # configuration (after its NTP check) it lacks the feed_* keys.
+      connected: "'feed_status' in data && data.feed_status == 'connected'"
+      receiving: >-
+        'rx_connected' in data && data.rx_connected == '1' &&
+        'num_messages' in data && 'num_messages' in prev.data &&
+        int(data.num_messages) > int(prev.data.num_messages)
+      # 1.0.48 has no mlat-ok key at all; absent reads as not synced.
+      mlatSynced: "'mlat-ok' in data && data['mlat-ok'] == 'YES'"
+      message: >-
+        !('feed_status' in data) ? 'no FR24 configuration yet (time check or login)' :
+        data.feed_status != 'connected' ?
+        ('feed ' + data.feed_status + ('feed_status_message' in data && data.feed_status_message != '' ? ': ' + data.feed_status_message : '')) :
+        ('feed_num_ac_tracked' in data ? data.feed_num_ac_tracked + ' aircraft tracked' : '')
+  # Where fr24feed connects (vendor-clients §3). The feed server is assigned
+  # at login (monitor.json feed_current_server) and takes TCP and UDP 8099;
+  # MLAT goes to mlat-9.fr24.com on ports it picks; NTP (UDP 123) for its
+  # time check. Exact hosts for the last two: record them from the live Pod.
+  egress:
+    - {host: feed.flightradar24.com, ports: [443, 80]}
+    - {host: mlat-9.fr24.com}
+    - {host: mlat-9.fr24.com, protocol: UDP}
+  statusURL: https://www.flightradar24.com/account/data-sharing
