@@ -21,7 +21,7 @@ images:
   # The FAA chart tiles job (official GDAL image plus squawk-charts).
   charts:
     repository: ghcr.io/ullbergm/squawk-charts
-    tag: 0.1.0-gea8cc3a-1@sha256:9ac3f28fe3e460c5109811209d45f37acca215a6e1a98459b6c8b586a3781562
+    tag: 0.1.0-g5ecc12b-1@sha256:9957a1fc45082dfb2dbca3a79d41b802a7682b7c374f9f8a127bfe772889d6ed
   readsb:
     repository: ghcr.io/ullbergm/squawk-readsb
     tag: v3.16.18-3@sha256:9225ec29c727091a817e7d3c5c767daf697376b2a5216840bcc481ee49d1b436
