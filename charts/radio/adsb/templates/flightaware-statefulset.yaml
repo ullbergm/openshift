@@ -1,3 +1,4 @@
+{{- if ne .Values.pods.flightaware.enabled false }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -46,3 +47,4 @@ spec:
                 name: {{ .Release.Name }}
           image: {{ .Values.pods.flightaware.image.repository }}:{{ .Values.pods.flightaware.image.tag }}
           imagePullPolicy: IfNotPresent
+{{- end }}

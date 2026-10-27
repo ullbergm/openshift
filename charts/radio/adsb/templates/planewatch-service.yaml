@@ -1,3 +1,4 @@
+{{- if ne .Values.pods.planewatch.enabled false }}
 ---
 apiVersion: v1
 kind: Service
@@ -14,3 +15,4 @@ spec:
     app.kubernetes.io/controller: planewatch
     app.kubernetes.io/instance: {{ .Release.Name }}
     app.kubernetes.io/name: {{ .Release.Name }}
+{{- end }}

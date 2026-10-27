@@ -75,6 +75,9 @@ pods:
       DUMP978_SDR_PPM: '14'
 
   planewatch:
+    # false stops this client here (it moved to a squawk Feed); see
+    # squawk docs/research/vendor-clients.md.
+    enabled: true
     image:
       repository: ghcr.io/plane-watch/docker-plane-watch
       # renovate: datasource=docker depName=ghcr.io/plane-watch/docker-plane-watch versioning=semver
@@ -83,6 +86,9 @@ pods:
       BEASTHOST: 'adsb-ultrafeeder'
 
   flightaware:
+    # false stops this client here (it moved to a squawk Feed); see
+    # squawk docs/research/vendor-clients.md.
+    enabled: true
     image:
       repository: ghcr.io/sdr-enthusiasts/docker-piaware
       # renovate: datasource=docker depName=ghcr.io/sdr-enthusiasts/docker-piaware versioning=semver
@@ -93,6 +99,9 @@ pods:
       UAT_RECEIVER_HOST: 'adsb-dump978'
 
   flightradar24:
+    # false stops this client here (it moved to a squawk Feed); see
+    # squawk docs/research/vendor-clients.md.
+    enabled: true
     image:
       repository: ghcr.io/sdr-enthusiasts/docker-flightradar24
       # renovate: datasource=docker depName=ghcr.io/sdr-enthusiasts/docker-flightradar24 versioning=loose
@@ -101,6 +110,9 @@ pods:
       BEASTHOST: 'adsb-ultrafeeder'
 
   adsbhub:
+    # false stops this client here (it moved to a squawk Feed); see
+    # squawk docs/research/vendor-clients.md.
+    enabled: true
     image:
       repository: ghcr.io/sdr-enthusiasts/docker-adsbhub
       # renovate: datasource=docker depName=ghcr.io/sdr-enthusiasts/docker-adsbhub versioning=semver
@@ -109,6 +121,9 @@ pods:
       SBSHOST: 'adsb-ultrafeeder'
 
   opensky:
+    # false stops this client here (it moved to a squawk Feed); see
+    # squawk docs/research/vendor-clients.md.
+    enabled: true
     image:
       repository: ghcr.io/sdr-enthusiasts/docker-opensky-network
       # renovate: datasource=docker depName=ghcr.io/sdr-enthusiasts/docker-opensky-network versioning=loose

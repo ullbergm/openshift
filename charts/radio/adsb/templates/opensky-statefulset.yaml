@@ -1,3 +1,4 @@
+{{- if ne .Values.pods.opensky.enabled false }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -46,3 +47,4 @@ spec:
                 name: {{ .Release.Name }}
           image: {{ .Values.pods.opensky.image.repository }}:{{ .Values.pods.opensky.image.tag }}
           imagePullPolicy: IfNotPresent
+{{- end }}

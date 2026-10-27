@@ -1,3 +1,4 @@
+{{- if ne .Values.pods.planewatch.enabled false }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -46,3 +47,4 @@ spec:
                 name: {{ .Release.Name }}
           image: {{ .Values.pods.planewatch.image.repository }}:{{ .Values.pods.planewatch.image.tag }}
           imagePullPolicy: IfNotPresent
+{{- end }}
