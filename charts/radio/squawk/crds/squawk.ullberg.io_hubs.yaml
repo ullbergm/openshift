@@ -1,4 +1,4 @@
-# Copied from ullbergm/squawk config/crd/bases@ea8cc3a. Do not edit; regenerate there.
+# Copied from ullbergm/squawk config/crd/bases@db56abc. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -102,14 +102,16 @@ spec:
                     description: Types to build.
                     items:
                       description: |-
-                        HubChartType is a chart series: VFR sectional, terminal area, or the
-                        Caribbean VFR charts.
+                        HubChartType is a chart series: VFR sectional, terminal area, the
+                        Caribbean VFR charts, or IFR enroute low (with the area charts) and high.
                       enum:
                       - sectional
                       - tac
                       - caribbean
+                      - ifrLow
+                      - ifrHigh
                       type: string
-                    maxItems: 3
+                    maxItems: 5
                     type: array
                     x-kubernetes-list-type: set
                 type: object
@@ -165,6 +167,64 @@ spec:
                     description: StorageClassName for the data volume; empty uses
                       the default class.
                     type: string
+                type: object
+              external:
+                description: |-
+                  External sources the Hub's agent calls for the map (SPEC-phase7):
+                  each off unless enabled, each with a daily budget the agent
+                  enforces. The browser never calls them.
+                properties:
+                  aeroapi:
+                    description: |-
+                      AeroAPI looks a flight up at FlightAware AeroAPI when the viewer
+                      asks, by callsign (paid per call beyond the monthly credit; the
+                      daily cap keeps it inside).
+                    properties:
+                      dailyCalls:
+                        default: 60
+                        description: |-
+                          DailyCalls caps the lookups a day (UTC). The default, 60, stays
+                          inside the $10 monthly credit AeroAPI gives ADS-B feeders on the
+                          Personal tier at $0.005 a call (2,000 a month).
+                        format: int32
+                        maximum: 5000
+                        minimum: 1
+                        type: integer
+                      enabled:
+                        type: boolean
+                      secretRef:
+                        description: |-
+                          SecretRef names the Secret with the AeroAPI key, and the key in it
+                          (default "apiKey"). Only the Hub's agent mounts it.
+                        properties:
+                          key:
+                            default: apiKey
+                            type: string
+                          name:
+                            minLength: 1
+                            type: string
+                        required:
+                        - name
+                        type: object
+                    type: object
+                    x-kubernetes-validations:
+                    - message: secretRef is required when enabled
+                      rule: '!has(self.enabled) || !self.enabled || has(self.secretRef)'
+                  photos:
+                    description: |-
+                      Photos looks aircraft photos up at Planespotters.net, one at a
+                      time as the panel opens (free, no key; credit and link shown).
+                    properties:
+                      dailyCalls:
+                        default: 1000
+                        description: DailyCalls caps the lookups a day (UTC).
+                        format: int32
+                        maximum: 50000
+                        minimum: 1
+                        type: integer
+                      enabled:
+                        type: boolean
+                    type: object
                 type: object
               overlays:
                 description: Overlays are extra map layers the Hub's agent fetches
@@ -407,6 +467,52 @@ spec:
                 - host
                 - port
                 - protocol
+                type: object
+              external:
+                description: 'External: the external sources on, with their budgets.'
+                properties:
+                  aeroapi:
+                    description: HubExternalSourceStatus is one source's day so far.
+                    properties:
+                      callsToday:
+                        format: int32
+                        type: integer
+                      dailyCap:
+                        format: int32
+                        type: integer
+                      lastError:
+                        type: string
+                      lastErrorAt:
+                        format: date-time
+                        type: string
+                      lastSuccess:
+                        format: date-time
+                        type: string
+                    required:
+                    - callsToday
+                    - dailyCap
+                    type: object
+                  photos:
+                    description: HubExternalSourceStatus is one source's day so far.
+                    properties:
+                      callsToday:
+                        format: int32
+                        type: integer
+                      dailyCap:
+                        format: int32
+                        type: integer
+                      lastError:
+                        type: string
+                      lastErrorAt:
+                        format: date-time
+                        type: string
+                      lastSuccess:
+                        format: date-time
+                        type: string
+                    required:
+                    - callsToday
+                    - dailyCap
+                    type: object
                 type: object
               observedGeneration:
                 format: int64

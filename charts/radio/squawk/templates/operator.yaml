@@ -55,9 +55,14 @@ spec:
             {{- end }}
             - name: SQUAWK_IMAGE_PULL_POLICY
               value: IfNotPresent
+            # The feed board API as the map's nginx reaches it (/feeds).
+            - name: SQUAWK_FEEDS_UPSTREAM
+              value: http://squawk-operator-api.$(POD_NAMESPACE).svc:8082
           ports:
             - name: probes
               containerPort: 8081
+            - name: api
+              containerPort: 8082
           livenessProbe:
             httpGet: {path: /healthz, port: probes}
             initialDelaySeconds: 15

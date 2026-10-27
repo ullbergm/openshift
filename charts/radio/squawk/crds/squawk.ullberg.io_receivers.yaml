@@ -1,4 +1,4 @@
-# Copied from ullbergm/squawk config/crd/bases@ea8cc3a. Do not edit; regenerate there.
+# Copied from ullbergm/squawk config/crd/bases@db56abc. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition

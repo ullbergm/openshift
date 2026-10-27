@@ -1,4 +1,4 @@
-# Copied from ullbergm/squawk config/crd/bases@ea8cc3a. Do not edit; regenerate there.
+# Copied from ullbergm/squawk config/crd/bases@db56abc. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -251,6 +251,41 @@ spec:
                   - synced
                   type: object
                 type: array
+              network:
+                description: |-
+                  Network is what the network itself says about this station, when
+                  the FeedType has spec.public.
+                properties:
+                  aircraft:
+                    format: int64
+                    type: integer
+                  error:
+                    description: Error is why the page or an expression failed, without
+                      the URL.
+                    type: string
+                  lastSeen:
+                    format: date-time
+                    type: string
+                  link:
+                    type: string
+                  messagesPerSecond:
+                    description: MessagesPerSecond, as text with one decimal ("17.4").
+                    type: string
+                  mlatPeers:
+                    format: int64
+                    type: integer
+                  notice:
+                    type: string
+                  online:
+                    type: boolean
+                  rank:
+                    format: int64
+                    type: integer
+                  readAt:
+                    description: ReadAt is the reading these come from.
+                    format: date-time
+                    type: string
+                type: object
               observedGeneration:
                 format: int64
                 type: integer

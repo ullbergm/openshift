@@ -44,6 +44,25 @@ spec:
     - host: in.adsb.lol
       ports: [31090]
   statusURL: https://my.adsb.lol/
+  public:
+    url: https://api.adsb.lol/0/me
+    interval: 5m
+    online: >-
+      data.clients.beast.exists(c, id != "" && id.startsWith(c.uuid.split("...")[0]))
+    messagesPerSecond: >-
+      data.clients.beast.exists(c, id != "" && id.startsWith(c.uuid.split("...")[0]))
+      ? data.clients.beast.filter(c, id.startsWith(c.uuid.split("...")[0]))[0].messages_per_second
+      : null
+    mlatPeers: >-
+      data.clients.mlat.exists(c, id != "" && id.startsWith(c.uuid.split("...")[0]))
+      ? data.clients.mlat.filter(c, id.startsWith(c.uuid.split("...")[0]))[0].peer_count
+      : null
+    link: >-
+      data.clients.beast.exists(c, id != "" && id.startsWith(c.uuid.split("...")[0]))
+      ? data.clients.beast.filter(c, id.startsWith(c.uuid.split("...")[0]))[0].adsblol_my_url
+      : ""
+    notice: >-
+      has(data._motd) ? data._motd.join(" ") : ""
 ---
 apiVersion: squawk.ullberg.io/v1alpha1
 kind: FeedType
@@ -88,6 +107,23 @@ spec:
     - host: feed.airplanes.live
       ports: [31090]
   statusURL: https://airplanes.live/myfeed/
+  public:
+    url: https://api.airplanes.live/feed-status
+    interval: 5m
+    online: >-
+      data.beast_clients.exists(c, id != "" && c.uuid == id)
+    messagesPerSecond: >-
+      data.beast_clients.exists(c, id != "" && c.uuid == id)
+      ? data.beast_clients.filter(c, c.uuid == id)[0].msgs_s
+      : null
+    mlatPeers: >-
+      data.mlat_clients.exists(c, id != "" && c.uuid == id)
+      ? data.mlat_clients.filter(c, c.uuid == id)[0].peer_count
+      : null
+    notice: >-
+      data.mlat_clients.exists(c, id != "" && c.uuid == id && c.bad_sync_timeout > 0)
+      ? "MLAT: the server reports a bad-sync timeout for this station"
+      : ""
 ---
 apiVersion: squawk.ullberg.io/v1alpha1
 kind: FeedType

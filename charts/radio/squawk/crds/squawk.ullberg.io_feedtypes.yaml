@@ -1,4 +1,4 @@
-# Copied from ullbergm/squawk config/crd/bases@ea8cc3a. Do not edit; regenerate there.
+# Copied from ullbergm/squawk config/crd/bases@db56abc. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -122,6 +122,54 @@ spec:
                   - host
                   type: object
                 type: array
+              public:
+                description: |-
+                  Public reads what the network itself says about this station, for
+                  the feed board (Feed status.network). The Feed Pod's agent reads the
+                  URL; the operator maps the reading with CEL.
+                properties:
+                  aircraft:
+                    description: Aircraft (int) the network counts from this station.
+                    type: string
+                  interval:
+                    description: 'Interval between readings: at least 2m (default
+                      5m).'
+                    type: string
+                    x-kubernetes-validations:
+                    - message: at least 2m
+                      rule: duration(self) >= duration('2m')
+                  lastSeen:
+                    description: LastSeen (timestamp) by the network.
+                    type: string
+                  link:
+                    description: 'Link (string): the station''s page at the network.'
+                    type: string
+                  messagesPerSecond:
+                    description: MessagesPerSecond (number) the network receives from
+                      this station.
+                    type: string
+                  mlatPeers:
+                    description: 'MlatPeers (int): the station''s MLAT peers as the
+                      network sees them.'
+                    type: string
+                  notice:
+                    description: 'Notice (string): what the network wants the feeder
+                      to know.'
+                    type: string
+                  online:
+                    description: 'Online (bool): the network sees this station''s
+                      feed.'
+                    type: string
+                  rank:
+                    description: Rank (int) among the network's feeders.
+                    type: string
+                  url:
+                    maxLength: 512
+                    pattern: ^https://[^/@?#]+(/[^@#]*)?$
+                    type: string
+                required:
+                - url
+                type: object
               statusURL:
                 description: StatusURL is a public page where the feeder can check
                   its feed.
@@ -241,6 +289,38 @@ spec:
                     x-kubernetes-list-map-keys:
                     - name
                     x-kubernetes-list-type: map
+                  mlat:
+                    description: |-
+                      Mlat runs squawk's mlat-client beside the client, one per MLAT
+                      Receiver the Feed selects (spec.mlat), as aggregator Feeds do.
+                    properties:
+                      server:
+                        description: |-
+                          Server is the vendor's mlat-server, or a local tunnel the client
+                          opens to it (plane.watch's pw-feeder listens on 127.0.0.1:12346).
+                        properties:
+                          host:
+                            minLength: 1
+                            type: string
+                          port:
+                            format: int32
+                            maximum: 65535
+                            minimum: 1
+                            type: integer
+                        required:
+                        - host
+                        - port
+                        type: object
+                      userCredential:
+                        description: |-
+                          UserCredential is the credential key whose value mlat-client sends
+                          as --user (plane.watch: the API key).
+                        minLength: 1
+                        type: string
+                    required:
+                    - server
+                    - userCredential
+                    type: object
                   mlatResults:
                     default: none
                     description: |-

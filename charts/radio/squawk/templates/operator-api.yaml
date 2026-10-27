@@ -1,0 +1,44 @@
+# The operator's read-only feed board API (squawk SPEC-phase7 §2), as in
+# squawk's config/manager/api.yaml. Only the map's nginx (hub-ui Pods) may
+# reach it; the probes stay open to the kubelet.
+apiVersion: v1
+kind: Service
+metadata:
+  name: squawk-operator-api
+  labels:
+    app.kubernetes.io/name: squawk
+    app.kubernetes.io/component: operator
+spec:
+  selector:
+    app.kubernetes.io/name: squawk
+    app.kubernetes.io/component: operator
+  ports:
+    - name: api
+      port: 8082
+      targetPort: api
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: squawk-operator
+  labels:
+    app.kubernetes.io/name: squawk
+    app.kubernetes.io/component: operator
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: squawk
+      app.kubernetes.io/component: operator
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: squawk
+              app.kubernetes.io/component: hub-ui
+      ports:
+        - port: 8082
+    # Probes, and metrics when --metrics-bind-address turns them on.
+    - ports:
+        - port: 8081
+        - port: 8443

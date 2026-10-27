@@ -13,15 +13,15 @@ application:
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk
-    tag: 0.1.0-gea8cc3a-1@sha256:07fbb9d0ca6c55ff5fc8f610b2a7007c8ef95f4a6195c22e35cddfe23e690040
+    tag: 0.1.0-gdb56abc-1@sha256:2c1edd242b491cb6ba0da97cf47e57219062dca233ca0d79a057218e05b272b0
   # squawk's own web map (same commit as the operator).
   spa:
     repository: ghcr.io/ullbergm/squawk-spa
-    tag: 0.1.0-gea8cc3a-1@sha256:eb8b43df1b3264959e5af9829e91321241a5c824d07e919a705cfdde84f7c7c3
+    tag: 0.1.0-gdb56abc-1@sha256:b92e2eb9a64ea05dce9ee329e79fee6c622a23f085aab3fc6d882fbbd77bd787
   # The FAA chart tiles job (official GDAL image plus squawk-charts).
   charts:
     repository: ghcr.io/ullbergm/squawk-charts
-    tag: 0.1.0-g5ecc12b-1@sha256:9957a1fc45082dfb2dbca3a79d41b802a7682b7c374f9f8a127bfe772889d6ed
+    tag: 0.1.0-gdb56abc-1@sha256:bcec0fca1515620707774de0d3c39df8bd764922288411f0136dbd159909f62a
   readsb:
     repository: ghcr.io/ullbergm/squawk-readsb
     tag: v3.16.18-3@sha256:9225ec29c727091a817e7d3c5c767daf697376b2a5216840bcc481ee49d1b436
@@ -65,8 +65,8 @@ hub:
     size: 50Gi
     historyDays: 365
   # squawk's own aircraft database, built weekly in the cluster onto its
-  # own volume (docs/DECISIONS.md "Own aircraft database"), 10 Gi to leave
-  # room for the chart tiles. Off: readsb
+  # own volume (docs/DECISIONS.md "Own aircraft database"), 20 Gi to leave
+  # room for the chart tiles (two cycles side by side at a rollover). Off: readsb
   # uses the database bundled in its image. flagOverlay "tar1090-db" also
   # copies that file's PIA/LADD flags at run time (opt-in). ownerNames
   # "all" includes private owners' names: this is a private station whose
@@ -74,7 +74,7 @@ hub:
   database:
     enabled: true
     schedule: "23 4 * * 1"
-    size: 10Gi
+    size: 20Gi
     flagOverlay: tar1090-db
     ownerNames: all
   # Map overlays the Hub's agent fetches. tfr: the FAA's temporary flight
@@ -84,7 +84,8 @@ hub:
   overlays:
     tfr:
       enabled: true
-  # FAA VFR charts (sectionals, terminal areas, Caribbean), built daily
+  # FAA charts (sectionals, terminal areas, Caribbean, IFR enroute low
+  # with its area charts, and high), built daily
   # onto the data volume when a new 56-day cycle is out, plus the airspace
   # overlay. coverage all: every sheet squawk has a cut for (CONUS about
   # 1.1 GB); radius: within radiusNm of the station. Needs the database
@@ -92,7 +93,7 @@ hub:
   charts:
     enabled: true
     coverage: all
-    types: [sectional, tac, caribbean]
+    types: [sectional, tac, caribbean, ifrLow, ifrHigh]
     radiusNm: 400
 
 # Aggregator feeds. They stay suspended (no Pod, nothing sent) until each

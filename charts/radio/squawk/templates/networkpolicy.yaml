@@ -58,8 +58,8 @@ spec:
 {{- end }}
 ---
 # squawk's web map: the router may reach it, and it may reach only the
-# Hub's agent (its /api/ proxy) and DNS. Map tiles are fetched by the
-# browser, not by this Pod.
+# Hub's agent (its /api/ proxy), the operator's feed board API and DNS.
+# Map tiles are fetched by the browser, not by this Pod.
 apiVersion: networking.k8s.io/v1
 kind: NetworkPolicy
 metadata:
@@ -84,6 +84,14 @@ spec:
               app.kubernetes.io/component: hub
       ports:
         - port: 8090
+          protocol: TCP
+    - to:
+        - podSelector:
+            matchLabels:
+              app.kubernetes.io/name: squawk
+              app.kubernetes.io/component: operator
+      ports:
+        - port: 8082
           protocol: TCP
     - to:
         - namespaceSelector:
