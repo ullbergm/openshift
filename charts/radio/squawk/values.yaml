@@ -108,11 +108,11 @@ feeds:
     suspend: false   # moved off ultrafeeder 2026-10-26
   - name: adsb-fi
     type: adsb-fi
-    suspend: false   # moved off ultrafeeder 2026-10-26
+    suspend: true    # stopped feeding 2026-10-27 (user decision); kept to come back
   # ADSBHub (M3 step 1): squawk's relay.
   - name: adsbhub
     type: adsbhub
-    suspend: false   # moved off the adsb chart 2026-10-27
+    suspend: true    # stopped feeding 2026-10-27 (user decision); kept to come back
     mlat: false
     credentials:
       - secretKey: ckey
