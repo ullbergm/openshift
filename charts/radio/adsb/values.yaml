@@ -100,8 +100,8 @@ pods:
 
   flightradar24:
     # false stops this client here (it moved to a squawk Feed); see
-    # squawk docs/research/vendor-clients.md.
-    enabled: true
+    # squawk docs/research/vendor-clients.md. Moved 2026-10-27.
+    enabled: false
     image:
       repository: ghcr.io/sdr-enthusiasts/docker-flightradar24
       # renovate: datasource=docker depName=ghcr.io/sdr-enthusiasts/docker-flightradar24 versioning=loose
