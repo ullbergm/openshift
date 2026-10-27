@@ -112,7 +112,7 @@ pods:
   adsbhub:
     # false stops this client here (it moved to a squawk Feed); see
     # squawk docs/research/vendor-clients.md.
-    enabled: true
+    enabled: false  # moved to squawk Feed adsbhub 2026-10-27
     image:
       repository: ghcr.io/sdr-enthusiasts/docker-adsbhub
       # renovate: datasource=docker depName=ghcr.io/sdr-enthusiasts/docker-adsbhub versioning=semver
