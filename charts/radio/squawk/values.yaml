@@ -13,7 +13,7 @@ application:
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk
-    tag: 0.1.0-g3f9d3bb-1@sha256:3e9bb38bb0269338076bc061ca8d8c6a329233ab9338e1b392e68ceddfba6dac
+    tag: 0.1.0-g3b9cc17-1@sha256:78f458ec79d60b132bd5c120fd327b721cc0afb7385cfa269fcc29db5e4638a3
   # squawk's own web map (same commit as the operator).
   spa:
     repository: ghcr.io/ullbergm/squawk-spa
