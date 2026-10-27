@@ -34,6 +34,11 @@ images:
   tar1090:
     repository: ghcr.io/ullbergm/squawk-tar1090
     tag: g958e60e-1@sha256:e8dffa5133858ea2bd32af6f9c1f2e2c4218b36a13fdccdf095fa5847262895e
+  # Plane Finder's pfclient 5.3.2 (private package: pfclient is not
+  # redistributable).
+  planefinder:
+    repository: ghcr.io/ullbergm/squawk-planefinder
+    tag: 5.3.2-1@sha256:7155054feb1f4a6518538d2ee55d94ee2fe78cbfb39983407e27d5194444322f
 
 # The old chart's ultrafeeder, read-only: squawk is one more beast client.
 source:
@@ -129,6 +134,15 @@ feeds:
     credentials:
       - secretKey: ckey
         remoteKey: ADSBHUB_CLIENTKEY
+  # Plane Finder (M3): pfclient as a vendor Feed; the share code keeps the
+  # station's Plane Finder history.
+  - name: planefinder
+    type: planefinder
+    suspend: false
+    mlat: false
+    credentials:
+      - secretKey: sharecode
+        remoteKey: PLANEFINDER_SHARE_CODE
 feedSecret:
   uuidKey: ULTRAFEEDER_UUID
   mlatUserKey: MLAT_USER

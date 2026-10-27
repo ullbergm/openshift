@@ -279,3 +279,57 @@ spec:
     - {host: ip4.adsbhub.org, ports: [443]}
     - {host: ip6.adsbhub.org, ports: [443]}
     - {host: www.adsbhub.org, ports: [443]}
+---
+# Plane Finder's pfclient (from ullbergm/squawk config/feedtypes/planefinder.yaml@ca1ef87,
+# the image pinned to the private squawk-planefinder this chart deploys).
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: FeedType
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: planefinder
+spec:
+  displayName: Plane Finder
+  vendor:
+    image: {{ .Values.images.planefinder.repository }}:{{ .Values.images.planefinder.tag }}
+    command: [/usr/local/bin/pfclient]
+    args:
+      - --connection_type=1
+      - --address=$(INPUT_BEAST_HOST)
+      - --port=$(INPUT_BEAST_PORT)
+      - --data_format=1
+      - --sharecode=$(PF_SHARECODE)
+      - --lat=$(SQUAWK_LAT)
+      - --lon=$(SQUAWK_LON)
+      - --pid_file=/run/pfclient/pfclient.pid
+      - --config_path=/run/pfclient/pfclient-config.json
+      - --log_path=/run/pfclient
+    inputs:
+      - {name: beast, from: hub, protocol: beast}
+    credentials:
+      - {key: sharecode, env: PF_SHARECODE, required: true}
+    writablePaths: [/run/pfclient]
+    ports:
+      - {name: web, port: 30053}
+    status:
+      reader:
+        httpJSON: {port: 30053, path: /ajax/stats}
+      connected: >-
+        data.master_server_bytes_in > 0 &&
+        data.master_server_bytes_out > prev.data.master_server_bytes_out
+      receiving: >-
+        data.receiver_bytes_in > prev.data.receiver_bytes_in &&
+        data.master_server_bytes_out > prev.data.master_server_bytes_out
+      message: >-
+        data.master_server_bytes_in == 0 ? 'no answer from Plane Finder yet' :
+        data.receiver_bytes_in == 0 ? 'no Beast from the Hub yet' :
+        string(data.total_modes_packets_ps) + ' Mode S messages/s'
+  # pfclient syncs to its own NTP pool (UDP 123) before it uploads anything.
+  egress:
+    - {host: pfclient-upload.planefinder.net, ports: [80]}
+    - {host: 0.planefinder.pool.ntp.org, ports: [123], protocol: UDP}
+    - {host: 1.planefinder.pool.ntp.org, ports: [123], protocol: UDP}
+    - {host: 2.planefinder.pool.ntp.org, ports: [123], protocol: UDP}
+    - {host: 3.planefinder.pool.ntp.org, ports: [123], protocol: UDP}
+  statusURL: https://planefinder.net/
