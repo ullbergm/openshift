@@ -65,6 +65,9 @@ pods:
       GRAPHS1090_DARKMODE: 'true'
 
   dump978:
+    # false stops this decoder here: the 978 dongle moved to squawk's own
+    # Receiver rtl-978 (2026-10-27). ultrafeeder's uat_in to it just fails.
+    enabled: false
     image:
       repository: ghcr.io/sdr-enthusiasts/docker-dump978
       # renovate: datasource=docker depName=ghcr.io/sdr-enthusiasts/docker-dump978 versioning=loose

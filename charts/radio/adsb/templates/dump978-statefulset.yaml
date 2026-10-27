@@ -1,3 +1,4 @@
+{{- if ne .Values.pods.dump978.enabled false }}
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
@@ -53,3 +54,4 @@ spec:
                 devic.es/adsb978: '1'
           image: {{ .Values.pods.dump978.image.repository }}:{{ .Values.pods.dump978.image.tag }}
           imagePullPolicy: IfNotPresent
+{{- end }}
