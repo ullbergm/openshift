@@ -36,6 +36,10 @@ images:
     tag: g958e60e-1@sha256:e8dffa5133858ea2bd32af6f9c1f2e2c4218b36a13fdccdf095fa5847262895e
   # Plane Finder's pfclient 5.3.2 (private package: pfclient is not
   # redistributable).
+  # FlightAware's piaware 11.1, built from piaware_builder (private package).
+  piaware:
+    repository: ghcr.io/ullbergm/squawk-piaware
+    tag: v11.1-1@sha256:b32441b2ab2e1d9f92108082c3986aa661c6b5a89a47d6224699af0612db5f07
   # Flightradar24's fr24feed 1.0.57-1 (private package: not redistributable).
   fr24feed:
     repository: ghcr.io/ullbergm/squawk-fr24feed
@@ -157,6 +161,20 @@ feeds:
         remoteKey: PLANEFINDER_SHARE_CODE
   # Flightradar24 (M3): fr24feed as a vendor Feed on the station's sharing
   # key, which moved here from the adsb chart's flightradar24 Pod.
+  # FlightAware (M3, last): piaware on the station's feeder ID, moved from
+  # the adsb chart's flightaware Pod. It reads the 1090 Receiver's own beast
+  # (fa-mlat-client needs one antenna's clock) and dump978's raw UAT; its
+  # MLAT results go to the Hub only.
+  - name: piaware
+    type: piaware
+    suspend: false
+    mlat: false
+    inputs:
+      - {name: beast, receiverRef: {name: ultrafeeder}}
+      - {name: uat, receiverRef: {name: dump978}}
+    credentials:
+      - secretKey: feederId
+        remoteKey: FLIGHAWARE_FEEDER_ID
   - name: fr24
     type: fr24
     suspend: false
