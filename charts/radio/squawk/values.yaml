@@ -13,15 +13,15 @@ application:
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk
-    tag: 0.1.0-gc3c5f0f-1@sha256:7135e62b32f9c56c5d710863db415d5eb584730eb1c16007ec29d699b4f97057
+    tag: 0.1.0-g04d5ae7-1@sha256:799a1650a3a856586332f80ccca81f10d61683136b3eb46c8adbba48cc61d3ac
   # squawk's own web map (same commit as the operator).
   spa:
     repository: ghcr.io/ullbergm/squawk-spa
-    tag: 0.1.0-gc3c5f0f-1@sha256:f738ee7d88ca62fb63d671ce49d6a5513fa48ed76b7f53bf2bcbe3cf54b392e3
+    tag: 0.1.0-g04d5ae7-1@sha256:a6fa873231e52027de6aa8fb557c7c286372c5e262e29b9ff1fdcab3a4f39f41
   # The FAA chart tiles job (official GDAL image plus squawk-charts).
   charts:
     repository: ghcr.io/ullbergm/squawk-charts
-    tag: 0.1.0-gf6ace4c-1@sha256:566a2ba75e82546292a9c705b42c199ea96f01851d4653de6a3853fcbc735458
+    tag: 0.1.0-g04d5ae7-1@sha256:ae7d7f991b385fdb49d0d57228199431cdbfb2e822a9eac6c40b498e60f75a7c
   readsb:
     repository: ghcr.io/ullbergm/squawk-readsb
     tag: v3.16.18-3@sha256:9225ec29c727091a817e7d3c5c767daf697376b2a5216840bcc481ee49d1b436
@@ -63,7 +63,7 @@ hub:
   # all-time range outline across restarts. Unset: an emptyDir.
   storage:
     size: 50Gi
-    historyDays: 90
+    historyDays: 365
   # squawk's own aircraft database, built weekly in the cluster onto its
   # own volume (docs/DECISIONS.md "Own aircraft database"), 10 Gi to leave
   # room for the chart tiles. Off: readsb
@@ -84,11 +84,15 @@ hub:
   overlays:
     tfr:
       enabled: true
-  # FAA VFR charts (sectionals, terminal areas) within radiusNm of the
-  # station, built daily onto the data volume when a new 56-day cycle is
-  # out, plus the airspace overlay. Needs the database (its volume).
+  # FAA VFR charts (sectionals, terminal areas, Caribbean), built daily
+  # onto the data volume when a new 56-day cycle is out, plus the airspace
+  # overlay. coverage all: every sheet squawk has a cut for (CONUS about
+  # 1.1 GB); radius: within radiusNm of the station. Needs the database
+  # (its volume).
   charts:
     enabled: true
+    coverage: all
+    types: [sectional, tac, caribbean]
     radiusNm: 400
 
 # Aggregator feeds. They stay suspended (no Pod, nothing sent) until each

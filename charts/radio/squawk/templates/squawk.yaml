@@ -68,6 +68,12 @@ spec:
   charts:
     enabled: {{ .enabled }}
     radiusNm: {{ .radiusNm | default 400 }}
+    {{- with .coverage }}
+    coverage: {{ . }}
+    {{- end }}
+    {{- with .types }}
+    types: {{ toJson . }}
+    {{- end }}
   {{- end }}
   {{- with .Values.uat.url }}
   uat:

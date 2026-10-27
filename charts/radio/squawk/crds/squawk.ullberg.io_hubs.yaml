@@ -1,4 +1,4 @@
-# Copied from ullbergm/squawk config/crd/bases@874b7c3. Do not edit; regenerate there.
+# Copied from ullbergm/squawk config/crd/bases@04d5ae7. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -66,12 +66,24 @@ spec:
                   near the station into map tiles on the data volume, so it needs
                   spec.database. US only.
                 properties:
+                  coverage:
+                    default: radius
+                    description: |-
+                      Coverage: radius builds the charts within RadiusNm of the station;
+                      all builds every sheet the job has a cut for, wherever it is
+                      (measured for the CONUS: 1.06 GB of archives, a peak of 1.4 GB more
+                      while a new cycle builds, 25 min on 4 CPUs).
+                    enum:
+                    - radius
+                    - all
+                    type: string
                   enabled:
                     type: boolean
                   radiusNm:
                     default: 400
-                    description: 'RadiusNm: charts within this distance of the station
-                      are built.'
+                    description: |-
+                      RadiusNm: with coverage radius, charts within this distance of the
+                      station are built.
                     format: int32
                     maximum: 1500
                     minimum: 25
@@ -89,12 +101,15 @@ spec:
                     - tac
                     description: Types to build.
                     items:
-                      description: HubChartType is a chart series.
+                      description: |-
+                        HubChartType is a chart series: VFR sectional, terminal area, or the
+                        Caribbean VFR charts.
                       enum:
                       - sectional
                       - tac
+                      - caribbean
                       type: string
-                    maxItems: 2
+                    maxItems: 3
                     type: array
                     x-kubernetes-list-type: set
                 type: object
@@ -435,6 +450,15 @@ spec:
                       resize it follows once the filesystem has grown.
                     pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
                     x-kubernetes-int-or-string: true
+                  inodesFree:
+                    format: int64
+                    type: integer
+                  inodesUsed:
+                    description: |-
+                      InodesUsed and InodesFree on the volume. readsb writes a file per
+                      aircraft per day, so inodes can run out before space does.
+                    format: int64
+                    type: integer
                   oldestDay:
                     description: OldestDay of globe history on the volume (UTC, YYYY-MM-DD).
                     type: string
