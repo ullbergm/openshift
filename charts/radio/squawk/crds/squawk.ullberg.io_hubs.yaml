@@ -1,4 +1,4 @@
-# Copied from ullbergm/squawk config/crd/bases@3f9d3bb. Do not edit; regenerate there.
+# Copied from ullbergm/squawk config/crd/bases@8e4bfc9. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -234,6 +234,39 @@ spec:
                         type: integer
                       enabled:
                         type: boolean
+                    type: object
+                  remote:
+                    description: |-
+                      Remote shows aircraft beyond our range from airplanes.live's point
+                      query around the station (free, non-commercial use, attribution on
+                      the map). The agent polls only while a viewer has the overlay on.
+                    properties:
+                      dailyCalls:
+                        default: 3000
+                        description: DailyCalls caps the polls a day (UTC).
+                        format: int32
+                        maximum: 20000
+                        minimum: 1
+                        type: integer
+                      enabled:
+                        type: boolean
+                      interval:
+                        default: 30s
+                        description: |-
+                          Interval between polls while watched. At 30 s a whole day of
+                          watching is 2,880 calls, about 280 MB.
+                        type: string
+                        x-kubernetes-validations:
+                        - message: interval must be at least 10s
+                          rule: duration(self) >= duration('10s')
+                      radiusNm:
+                        default: 250
+                        description: RadiusNm around the station; the API answers
+                          at most 250.
+                        format: int32
+                        maximum: 250
+                        minimum: 10
+                        type: integer
                     type: object
                 type: object
               overlays:
@@ -503,6 +536,27 @@ spec:
                     - dailyCap
                     type: object
                   photos:
+                    description: HubExternalSourceStatus is one source's day so far.
+                    properties:
+                      callsToday:
+                        format: int32
+                        type: integer
+                      dailyCap:
+                        format: int32
+                        type: integer
+                      lastError:
+                        type: string
+                      lastErrorAt:
+                        format: date-time
+                        type: string
+                      lastSuccess:
+                        format: date-time
+                        type: string
+                    required:
+                    - callsToday
+                    - dailyCap
+                    type: object
+                  remote:
                     description: HubExternalSourceStatus is one source's day so far.
                     properties:
                       callsToday:
