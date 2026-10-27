@@ -109,11 +109,10 @@ feeds:
   - name: adsb-fi
     type: adsb-fi
     suspend: false   # moved off ultrafeeder 2026-10-26
-  # ADSBHub (M3 step 1): squawk's relay. Suspended until the adsb chart's
-  # adsbhub client is switched off (the station is known by its IP).
+  # ADSBHub (M3 step 1): squawk's relay.
   - name: adsbhub
     type: adsbhub
-    suspend: true
+    suspend: false   # moved off the adsb chart 2026-10-27
     mlat: false
     credentials:
       - secretKey: ckey
