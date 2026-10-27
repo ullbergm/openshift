@@ -84,6 +84,13 @@ hub:
   overlays:
     tfr:
       enabled: true
+  # Sources the Hub's agent looks up on demand (squawk SPEC-phase7). photos:
+  # Planespotters.net, one lookup per aircraft opened, cached, at most
+  # dailyCalls a day; each viewer also turns photos on in the map's
+  # Settings. aeroapi (flight details) stays off until there is a key.
+  external:
+    photos:
+      enabled: true   # user decision 2026-10-27
   # FAA charts (sectionals, terminal areas, Caribbean, IFR enroute low
   # with its area charts, and high), built daily
   # onto the data volume when a new 56-day cycle is out, plus the airspace

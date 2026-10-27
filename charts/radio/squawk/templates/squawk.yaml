@@ -75,6 +75,10 @@ spec:
     types: {{ toJson . }}
     {{- end }}
   {{- end }}
+  {{- with .Values.hub.external }}
+  external:
+    {{- toYaml . | nindent 4 }}
+  {{- end }}
   {{- with .Values.uat.url }}
   uat:
     aircraftJsonURL: {{ . | quote }}
