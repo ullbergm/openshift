@@ -109,6 +109,10 @@ feeds:
   - name: adsb-fi
     type: adsb-fi
     suspend: true    # stopped feeding 2026-10-27 (user decision); kept to come back
+  # airplanes.live (new 2026-10-27; not fed by the adsb chart before).
+  - name: airplanes-live
+    type: airplanes-live
+    suspend: false
   # ADSBHub (M3 step 1): squawk's relay.
   - name: adsbhub
     type: adsbhub
