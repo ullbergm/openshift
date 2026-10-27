@@ -210,3 +210,36 @@ spec:
   egress:
     - host: data.avdelphi.com
       ports: [24999]
+---
+# ADSBHub, squawk's own relay (from ullbergm/squawk config/feedtypes/adsbhub.yaml@ea8cc3a,
+# the image pinned to the squawk image this chart deploys).
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: FeedType
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  name: adsbhub
+spec:
+  displayName: ADSBHub
+  vendor:
+    image: {{ .Values.images.operator.repository }}:{{ .Values.images.operator.tag }}
+    command: [/squawk-adsbhub]
+    args: [--input, "$(INPUT_SBS_HOST):$(INPUT_SBS_PORT)", --listen, ":9100"]
+    inputs:
+      - {name: sbs, from: hub, protocol: sbs}
+    credentials:
+      - {key: ckey, env: ADSBHUB_CKEY}
+    ports:
+      - {name: metrics, port: 9100}
+    status:
+      reader:
+        prometheus: {port: 9100, path: /metrics}
+      connected: "data.adsbhub_upstream_connected == 1.0"
+      receiving: "data.adsbhub_bytes_sent_total > prev.data.adsbhub_bytes_sent_total"
+      message: "data.adsbhub_input_connected == 1.0 ? '' : 'no SBS from the Hub'"
+  egress:
+    - {host: data.adsbhub.org, ports: [5001]}
+    - {host: ip4.adsbhub.org, ports: [443]}
+    - {host: ip6.adsbhub.org, ports: [443]}
+    - {host: www.adsbhub.org, ports: [443]}

@@ -13,12 +13,20 @@ spec:
     name: feed-{{ .name }}
     creationPolicy: Owner
   data:
+    {{- if .credentials }}
+    {{- range .credentials }}
+    - secretKey: {{ .secretKey }}
+      remoteRef:
+        key: {{ .remoteKey }}
+    {{- end }}
+    {{- else }}
     - secretKey: uuid
       remoteRef:
         key: {{ $.Values.feedSecret.uuidKey }}
     - secretKey: mlatUser
       remoteRef:
         key: {{ $.Values.feedSecret.mlatUserKey }}
+    {{- end }}
 ---
 apiVersion: squawk.ullberg.io/v1alpha1
 kind: Feed
@@ -31,7 +39,9 @@ spec:
   type: {{ .type }}
   hubRef: {name: main}
   credentialsRef: {name: feed-{{ .name }}}
+  {{- if ne .mlat false }}
   mlat:
     enabled: true
+  {{- end }}
   suspend: {{ .suspend }}
 {{- end }}

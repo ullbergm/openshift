@@ -15,6 +15,14 @@ rules:
   - apiGroups: [""]
     resources: [secrets]
     verbs: [get, list, watch]
+  # Vendor Feeds' logRegex status reader: the client container's log,
+  # read-only (only match times are kept).
+  - apiGroups: [""]
+    resources: [pods]
+    verbs: [get, list, watch]
+  - apiGroups: [""]
+    resources: [pods/log]
+    verbs: [get]
   - apiGroups: [apps]
     resources: [deployments]
     verbs: [create, delete, get, list, patch, update, watch]
@@ -88,6 +96,10 @@ rules:
   - apiGroups: [squawk.ullberg.io]
     resources: [feedtypes]
     verbs: [get, list, watch]
+  # FeedType status (Valid: do a vendor FeedType's expressions compile).
+  - apiGroups: [squawk.ullberg.io]
+    resources: [feedtypes/status]
+    verbs: [get, update, patch]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding

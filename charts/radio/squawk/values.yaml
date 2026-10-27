@@ -13,15 +13,15 @@ application:
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk
-    tag: 0.1.0-g04d5ae7-1@sha256:799a1650a3a856586332f80ccca81f10d61683136b3eb46c8adbba48cc61d3ac
+    tag: 0.1.0-gea8cc3a-1@sha256:07fbb9d0ca6c55ff5fc8f610b2a7007c8ef95f4a6195c22e35cddfe23e690040
   # squawk's own web map (same commit as the operator).
   spa:
     repository: ghcr.io/ullbergm/squawk-spa
-    tag: 0.1.0-g04d5ae7-1@sha256:a6fa873231e52027de6aa8fb557c7c286372c5e262e29b9ff1fdcab3a4f39f41
+    tag: 0.1.0-gea8cc3a-1@sha256:eb8b43df1b3264959e5af9829e91321241a5c824d07e919a705cfdde84f7c7c3
   # The FAA chart tiles job (official GDAL image plus squawk-charts).
   charts:
     repository: ghcr.io/ullbergm/squawk-charts
-    tag: 0.1.0-g04d5ae7-1@sha256:ae7d7f991b385fdb49d0d57228199431cdbfb2e822a9eac6c40b498e60f75a7c
+    tag: 0.1.0-gea8cc3a-1@sha256:9ac3f28fe3e460c5109811209d45f37acca215a6e1a98459b6c8b586a3781562
   readsb:
     repository: ghcr.io/ullbergm/squawk-readsb
     tag: v3.16.18-3@sha256:9225ec29c727091a817e7d3c5c767daf697376b2a5216840bcc481ee49d1b436
@@ -109,6 +109,15 @@ feeds:
   - name: adsb-fi
     type: adsb-fi
     suspend: false   # moved off ultrafeeder 2026-10-26
+  # ADSBHub (M3 step 1): squawk's relay. Suspended until the adsb chart's
+  # adsbhub client is switched off (the station is known by its IP).
+  - name: adsbhub
+    type: adsbhub
+    suspend: true
+    mlat: false
+    credentials:
+      - secretKey: ckey
+        remoteKey: ADSBHUB_CLIENTKEY
 feedSecret:
   uuidKey: ULTRAFEEDER_UUID
   mlatUserKey: MLAT_USER

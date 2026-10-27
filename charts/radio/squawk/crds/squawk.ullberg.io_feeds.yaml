@@ -1,4 +1,4 @@
-# Copied from ullbergm/squawk config/crd/bases@04d5ae7. Do not edit; regenerate there.
+# Copied from ullbergm/squawk config/crd/bases@ea8cc3a. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -64,9 +64,10 @@ spec:
             properties:
               credentialsRef:
                 description: |-
-                  CredentialsRef names the Secret with this feed's identity: "uuid"
-                  (required for aggregators), "mlatUser" (required with MLAT) and
-                  optionally "mlatUUID.<receiver>". Only this Feed's Pod sees it.
+                  CredentialsRef names the Secret with this feed's identity: for
+                  aggregators "uuid" (required), "mlatUser" (required with MLAT) and
+                  optionally "mlatUUID.<receiver>"; for vendor clients the keys their
+                  FeedType lists. Only this Feed's Pod sees it.
                 properties:
                   name:
                     minLength: 1
@@ -83,6 +84,34 @@ spec:
                 required:
                 - name
                 type: object
+              inputs:
+                description: |-
+                  Inputs names the Receiver for each of a vendor FeedType's inputs
+                  that come from a Receiver (from: receiver), by input name.
+                items:
+                  description: FeedInputRef binds a vendor FeedType's input to a Receiver.
+                  properties:
+                    name:
+                      pattern: ^[a-z][a-z0-9]{0,15}$
+                      type: string
+                    receiverRef:
+                      description: LocalObjectReference names an object in the same
+                        namespace.
+                      properties:
+                        name:
+                          minLength: 1
+                          type: string
+                      required:
+                      - name
+                      type: object
+                  required:
+                  - name
+                  - receiverRef
+                  type: object
+                type: array
+                x-kubernetes-list-map-keys:
+                - name
+                x-kubernetes-list-type: map
               mlat:
                 description: |-
                   Mlat runs one mlat-client per Receiver against the network's
