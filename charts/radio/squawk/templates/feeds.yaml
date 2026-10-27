@@ -44,4 +44,7 @@ spec:
     enabled: true
   {{- end }}
   suspend: {{ .suspend }}
+  {{- with .statusURL }}
+  statusURL: {{ . | quote }}
+  {{- end }}
 {{- end }}

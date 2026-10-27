@@ -21,7 +21,14 @@ spec:
       ports: [30004]
     - host: feed.adsbexchange.com
       ports: [31090]
+    - host: adsbexchange.com
+      ports: [443]
   statusURL: https://www.adsbexchange.com/myip/
+  # Their stats package, posted by the Feed agent (from ullbergm/squawk
+  # config/feedtypes/aggregators.yaml@51d1df9).
+  stats:
+    url: https://adsbexchange.com/api/receive/
+    format: adsbexchange
 ---
 apiVersion: squawk.ullberg.io/v1alpha1
 kind: FeedType

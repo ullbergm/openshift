@@ -1,4 +1,4 @@
-# Copied from ullbergm/squawk config/crd/bases@db56abc. Do not edit; regenerate there.
+# Copied from ullbergm/squawk config/crd/bases@51d1df9. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -168,6 +168,33 @@ spec:
                     pattern: ^https://[^/@?#]+(/[^@#]*)?$
                     type: string
                 required:
+                - url
+                type: object
+              stats:
+                description: |-
+                  Stats posts the connector's aircraft.json to the network's stats
+                  service, as the network's own stats package does (aggregators only).
+                  The Feed's "uuid" credential goes in the request and nowhere else.
+                properties:
+                  format:
+                    enum:
+                    - adsbexchange
+                    type: string
+                  interval:
+                    description: 'Interval between posts: at least 5s (default 5s,
+                      as the package).'
+                    type: string
+                    x-kubernetes-validations:
+                    - message: at least 5s
+                      rule: duration(self) >= duration('5s')
+                  url:
+                    description: 'URL takes the posts: https, with no credentials
+                      or query.'
+                    maxLength: 512
+                    pattern: ^https://[^/@?#]+(/[^@?#]*)?$
+                    type: string
+                required:
+                - format
                 - url
                 type: object
               statusURL:
@@ -488,6 +515,8 @@ spec:
             x-kubernetes-validations:
             - message: set exactly one of aggregator or vendor
               rule: has(self.aggregator) != has(self.vendor)
+            - message: stats is for aggregator FeedTypes
+              rule: '!has(self.stats) || has(self.aggregator)'
           status:
             description: FeedTypeStatus reports whether the FeedType can be used.
             properties:

@@ -13,7 +13,7 @@ application:
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk
-    tag: 0.1.0-gdb56abc-1@sha256:2c1edd242b491cb6ba0da97cf47e57219062dca233ca0d79a057218e05b272b0
+    tag: 0.1.0-g51d1df9-1@sha256:cfc306871e200935cce764220c0d1470502921085d6cc65cbee31d89ab1756c2
   # squawk's own web map (same commit as the operator).
   spa:
     repository: ghcr.io/ullbergm/squawk-spa
@@ -139,6 +139,8 @@ feeds:
   - name: planefinder
     type: planefinder
     suspend: false
+    # The station's receiver page (public; shown on the feed board).
+    statusURL: https://planefinder.net/coverage/receiver/238534
     mlat: false
     credentials:
       - secretKey: sharecode

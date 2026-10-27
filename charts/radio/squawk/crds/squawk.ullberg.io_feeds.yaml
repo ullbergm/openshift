@@ -1,4 +1,4 @@
-# Copied from ullbergm/squawk config/crd/bases@db56abc. Do not edit; regenerate there.
+# Copied from ullbergm/squawk config/crd/bases@51d1df9. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -135,6 +135,14 @@ spec:
                       type: object
                     type: array
                 type: object
+              statusURL:
+                description: |-
+                  StatusURL is this station's own page at the network (a receiver page,
+                  say), shown on the feed board instead of the FeedType's statusURL. A
+                  public page only: it must hold no credential.
+                maxLength: 512
+                pattern: ^https://[^/@?#]+(/[^@#]*)?$
+                type: string
               suspend:
                 description: |-
                   Suspend stops the feed (no Pod) while keeping it configured, e.g.
