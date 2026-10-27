@@ -1,0 +1,24 @@
+# Gatus watches squawk's two pages (the map and tar1090) in place of the
+# adsb chart's ultrafeeder, dump978 and flightaware entries (removed
+# 2026-10-27). The Gatus sidecar picks this ConfigMap up by its label.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: gatus-config
+  labels:
+    gatus.io/enabled: "true"
+data:
+  config.yaml: |-
+    endpoints:
+      - name: squawk
+        group: {{ .Values.application.group | default "other" | quote }}
+        url: https://squawk.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+        interval: 60s
+        conditions:
+          - "[STATUS] == 200"
+      - name: squawk tar1090
+        group: {{ .Values.application.group | default "other" | quote }}
+        url: https://squawk-tar1090.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+        interval: 60s
+        conditions:
+          - "[STATUS] == 200"
