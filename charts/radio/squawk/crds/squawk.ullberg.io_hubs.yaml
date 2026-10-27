@@ -1,4 +1,4 @@
-# Copied from ullbergm/squawk config/crd/bases@51d1df9. Do not edit; regenerate there.
+# Copied from ullbergm/squawk config/crd/bases@3f9d3bb. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -77,6 +77,17 @@ spec:
                     - radius
                     - all
                     type: string
+                  deadline:
+                    description: |-
+                      Types to build.
+                      Deadline is how long one run of the charts job may take (the Job's
+                      activeDeadlineSeconds). Each type is kept as soon as it is built, so
+                      a run cut short resumes at the type it was on (default 8h).
+                    type: string
+                    x-kubernetes-validations:
+                    - message: between 30m and 24h
+                      rule: duration(self) >= duration('30m') && duration(self) <=
+                        duration('24h')
                   enabled:
                     type: boolean
                   radiusNm:
@@ -99,7 +110,6 @@ spec:
                     default:
                     - sectional
                     - tac
-                    description: Types to build.
                     items:
                       description: |-
                         HubChartType is a chart series: VFR sectional, terminal area, the

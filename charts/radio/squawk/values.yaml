@@ -13,15 +13,15 @@ application:
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk
-    tag: 0.1.0-g6b62526-1@sha256:15ee041095dd660bffa845b6fad32303e471798f9f0451415a2045f959c90686
+    tag: 0.1.0-g3f9d3bb-1@sha256:3e9bb38bb0269338076bc061ca8d8c6a329233ab9338e1b392e68ceddfba6dac
   # squawk's own web map (same commit as the operator).
   spa:
     repository: ghcr.io/ullbergm/squawk-spa
-    tag: 0.1.0-g99d405e-1@sha256:89f4cb79ea09fdc70438cc754a038c6e73a073d15fcfe5e30544fbf96a88e8f9
+    tag: 0.1.0-g3f9d3bb-1@sha256:d5dfd470dc18bf35a6fbed5a4b7095554b0bb58b296c3b0ff540e770b86f484e
   # The FAA chart tiles job (official GDAL image plus squawk-charts).
   charts:
     repository: ghcr.io/ullbergm/squawk-charts
-    tag: 0.1.0-gca1ef87-1@sha256:a65c8db303ab0cdd3c03978c72559cc83d2444aebf3bb030a679a1fc804e6fcc
+    tag: 0.1.0-g3f9d3bb-1@sha256:0adab3ae395d06c4d4793611ed60b0152ca3908be088ed347cc71623c9793460
   readsb:
     repository: ghcr.io/ullbergm/squawk-readsb
     tag: v3.16.18-3@sha256:9225ec29c727091a817e7d3c5c767daf697376b2a5216840bcc481ee49d1b436
@@ -119,7 +119,9 @@ hub:
   charts:
     enabled: true
     coverage: all
-    types: [sectional, tac, caribbean, ifrLow, ifrHigh]
+    # Short types before long ones: a run cut short loses less (each type
+    # goes live as soon as it is built).
+    types: [sectional, tac, caribbean, ifrHigh, ifrLow]
     radiusNm: 400
 
 # Aggregator feeds. They stay suspended (no Pod, nothing sent) until each
