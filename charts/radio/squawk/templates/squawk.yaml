@@ -32,6 +32,26 @@ spec:
   mlat:
     enabled: true
     clock: auto
+{{- if .Values.uat.rawPort }}
+---
+# dump978's raw UAT, read as a decoding box: the UAT relay piaware needs.
+apiVersion: squawk.ullberg.io/v1alpha1
+kind: Receiver
+metadata:
+  name: dump978
+  annotations:
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  siteRef: {name: home}
+  hubRef: {name: main}
+  band: UAT978
+  source:
+    network:
+      host: {{ .Values.uat.host }}
+      port: {{ .Values.uat.rawPort }}
+      protocol: uat
+{{- end }}
 ---
 apiVersion: squawk.ullberg.io/v1alpha1
 kind: Hub

@@ -58,6 +58,12 @@ uat:
   url: http://adsb-dump978.adsb.svc.cluster.local/skyaware978/data/aircraft.json
   namespace: adsb
   port: 80
+  # dump978's raw UAT output, read by a UAT978 Receiver: the relay path
+  # FlightAware's piaware reads (squawk vendor-clients §2). Until the dongle
+  # move it also reaches the Hub alongside the UAT folded into ultrafeeder's
+  # beast, so UAT message counts read about double. 0: no Receiver.
+  host: adsb-dump978.adsb.svc.cluster.local
+  rawPort: 30978
   podSelector:
     app.kubernetes.io/controller: dump978
 

@@ -55,6 +55,10 @@ spec:
       ports:
         - port: {{ .Values.uat.port }}
           protocol: TCP
+        {{- if .Values.uat.rawPort }}
+        - port: {{ .Values.uat.rawPort }}
+          protocol: TCP
+        {{- end }}
 {{- end }}
 ---
 # squawk's web map: the router may reach it, and it may reach only the

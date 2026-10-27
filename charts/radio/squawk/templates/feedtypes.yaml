@@ -341,7 +341,7 @@ spec:
     - {host: 3.planefinder.pool.ntp.org, ports: [123], protocol: UDP}
   statusURL: https://planefinder.net/
 ---
-# Flightradar24's fr24feed (from ullbergm/squawk config/feedtypes/fr24.yaml@6b62526,
+# Flightradar24's fr24feed (from ullbergm/squawk config/feedtypes/fr24.yaml@b704729,
 # the image pinned to the private squawk-fr24feed this chart deploys).
 apiVersion: squawk.ullberg.io/v1alpha1
 kind: FeedType
@@ -374,8 +374,8 @@ spec:
           bs="no"
           raw="no"
           logmode="0"
-          mlat="yes"
-          mlat-without-gps="yes"
+          mlat="no"
+          mlat-without-gps="no"
     writablePaths: [/run/fr24, /tmp]
     ports:
       - {name: web, port: 8754}
