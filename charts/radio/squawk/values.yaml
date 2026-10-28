@@ -146,6 +146,7 @@ hub:
       # ask; a per-feature model is coming, Haiku 5.5 for ask).
       ask:
         enabled: false
+        model: claude-haiku-5-5
         dailyCalls: 50
   # FAA charts (sectionals, terminal areas, Caribbean, IFR enroute low
   # with its area charts, and high), built daily
