@@ -1,4 +1,4 @@
-# Copied from ullbergm/squawk config/crd/bases@8e4bfc9. Do not edit; regenerate there.
+# Copied from ullbergm/squawk config/crd/bases@0ea7e61. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -210,6 +210,56 @@ spec:
                           key:
                             default: apiKey
                             type: string
+                          name:
+                            minLength: 1
+                            type: string
+                        required:
+                        - name
+                        type: object
+                    type: object
+                    x-kubernetes-validations:
+                    - message: secretRef is required when enabled
+                      rule: '!has(self.enabled) || !self.enabled || has(self.secretRef)'
+                  ogn:
+                    description: |-
+                      OGN shows gliders from the Open Glider Network (FLARM and OGN
+                      trackers) around the station: one read-only APRS-IS connection, with
+                      the OGN device database's privacy choices applied.
+                    properties:
+                      enabled:
+                        type: boolean
+                      radiusKm:
+                        default: 150
+                        description: RadiusKm of the range filter around the station.
+                        format: int32
+                        maximum: 500
+                        minimum: 10
+                        type: integer
+                    type: object
+                  opensky:
+                    description: |-
+                      OpenSky looks a day of an aircraft up at OpenSky Network when the
+                      viewer asks, for days the Hub's own history lacks (an API client's
+                      credentials; credits per call, capped a day).
+                    properties:
+                      dailyCredits:
+                        default: 2000
+                        description: |-
+                          DailyCredits caps the credits spent a day (UTC). OpenSky gives a
+                          registered account 4,000 a day per endpoint family (8,000 while
+                          feeding it); the default leaves headroom.
+                        format: int32
+                        maximum: 8000
+                        minimum: 4
+                        type: integer
+                      enabled:
+                        type: boolean
+                      secretRef:
+                        description: |-
+                          SecretRef names the Secret with the OpenSky API client's clientId
+                          and clientSecret (created on the OpenSky account page). Only the
+                          Hub's agent mounts it.
+                        properties:
                           name:
                             minLength: 1
                             type: string
@@ -516,6 +566,49 @@ spec:
                 properties:
                   aeroapi:
                     description: HubExternalSourceStatus is one source's day so far.
+                    properties:
+                      callsToday:
+                        format: int32
+                        type: integer
+                      dailyCap:
+                        format: int32
+                        type: integer
+                      lastError:
+                        type: string
+                      lastErrorAt:
+                        format: date-time
+                        type: string
+                      lastSuccess:
+                        format: date-time
+                        type: string
+                    required:
+                    - callsToday
+                    - dailyCap
+                    type: object
+                  ogn:
+                    description: HubExternalOGNStatus is the OGN connection as the
+                      agent reports it.
+                    properties:
+                      connected:
+                        type: boolean
+                      ddbDevices:
+                        format: int32
+                        type: integer
+                      devices:
+                        format: int32
+                        type: integer
+                      lastError:
+                        type: string
+                      packetsPerMin:
+                        format: int32
+                        type: integer
+                    required:
+                    - connected
+                    - devices
+                    - packetsPerMin
+                    type: object
+                  opensky:
+                    description: OpenSky counts credits, not calls.
                     properties:
                       callsToday:
                         format: int32

@@ -13,11 +13,11 @@ application:
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk
-    tag: 0.1.0-g8e4bfc9-1@sha256:857fc9395e6cfd377655df89b4ac7107c7fb695ce99fc4f4f49c7227cb5f6523
+    tag: 0.1.0-g0ea7e61-1@sha256:5d2285a27b843c0aeb47e3f81e5651b19c0043117e74bc67f9db00f4e33604d3
   # squawk's own web map (same commit as the operator).
   spa:
     repository: ghcr.io/ullbergm/squawk-spa
-    tag: 0.1.0-g8e4bfc9-1@sha256:6bc4c0991129206969cb7906415b9f514a1e100c5b6fac4966bbe88defe85667
+    tag: 0.1.0-g0ea7e61-1@sha256:bf4e0194262642192bc1e280db2860a721a55ab2e850242430cffdeb1010139d
   # The FAA chart tiles job (official GDAL image plus squawk-charts).
   charts:
     repository: ghcr.io/ullbergm/squawk-charts
