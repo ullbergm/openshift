@@ -420,6 +420,46 @@
             }
           }
         },
+        "privacy": {
+          "type": "object",
+          "description": "Privacy switches (images 0.37.0 or later; docs/privacy.md in flow-analyzer); every default keeps what earlier releases did",
+          "properties": {
+            "offline": {"type": "boolean", "description": "Send nothing to a third party: feeds, database downloads, Team Cymru, the update check, the Claude features and throughput measurements stay off (OFFLINE)"},
+            "asnLookup": {"type": "string", "enum": ["auto", "db", "off"], "description": "Where external networks are looked up: the ASN database else Team Cymru, the database only, or not at all (ASN_LOOKUP)"},
+            "reverseDns": {"type": "string", "enum": ["all", "internal", "off"], "description": "Which addresses get a reverse DNS lookup (REVERSE_DNS)"},
+            "externalLinks": {"type": "boolean", "description": "Offer links to outside lookup services on the dashboard (EXTERNAL_LINKS)"},
+            "viewerAccess": {"type": "string", "enum": ["full", "flows", "none"], "description": "What a request that is not an admin's may read (VIEWER_ACCESS); nothing without access.token or access.header"},
+            "store": {
+              "type": "object",
+              "description": "What the collector stores of what packet inspection reads (STORE_*)",
+              "properties": {
+                "serverNames": {"type": "boolean", "description": "The TLS server name and the HTTP host (STORE_SERVER_NAMES)"},
+                "dnsQueries": {"type": "boolean", "description": "Per-client DNS lookups (STORE_DNS_QUERIES)"},
+                "http": {"type": "string", "enum": ["full", "host", "off"], "description": "The HTTP request: whole, the URL cut to its host, or none (STORE_HTTP)"},
+                "tlsFingerprints": {"type": "boolean", "description": "JA4, JA3S, the certificate hash and its issuer (STORE_TLS_FINGERPRINTS)"},
+                "l7Meta": {"type": "string", "enum": ["all", "safe", "off"], "description": "The inspection pairs: all, without what names a person, or none (STORE_L7_META)"},
+                "macAddresses": {"type": "boolean", "description": "MAC addresses on flow records (STORE_MAC_ADDRESSES)"},
+                "packetPayload": {"type": "string", "enum": ["full", "headers"], "description": "Mirrored packets whole or headers only (STORE_PACKET_PAYLOAD)"}
+              }
+            },
+            "flowPrivacy": {"type": "string", "description": "How much of a flow is kept per network: network=mode entries (full, metadata, counts, drop), comma-separated (FLOW_PRIVACY)"},
+            "flowPrivacyDefault": {"type": "string", "enum": ["full", "metadata", "counts"], "description": "The mode for every other network (FLOW_PRIVACY_DEFAULT)"}
+          }
+        },
+        "retention": {
+          "type": "object",
+          "description": "Days each group of tables keeps its rows (RETENTION_*_DAYS, images 0.37.0 or later): empty leaves the schema's TTL, 0 keeps rows for ever",
+          "properties": {
+            "flows": {"type": ["string", "integer"], "description": "The raw flow table (30)"},
+            "summaries": {"type": ["string", "integer"], "description": "The per-minute summary and what was seen per day (365, 180)"},
+            "logs": {"type": ["string", "integer"], "description": "The syslog lines and the firewall log (30)"},
+            "dnsNames": {"type": ["string", "integer"], "description": "The passive DNS names (30)"},
+            "inventory": {"type": ["string", "integer"], "description": "The devices, neighbours, wireless clients and their history, the LibreNMS tables (90, 30)"},
+            "packets": {"type": ["string", "integer"], "description": "The packets behind alerts and the captures (365)"},
+            "alerts": {"type": ["string", "integer"], "description": "The alerts and their events (365)"},
+            "counters": {"type": ["string", "integer"], "description": "Interface, queue and firewall counters, router health, probes, throughput (365, 90)"}
+          }
+        },
         "alerts": {
           "type": "object",
           "properties": {

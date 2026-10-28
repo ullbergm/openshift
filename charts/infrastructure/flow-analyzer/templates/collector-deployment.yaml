@@ -202,6 +202,44 @@ spec:
             - name: FORWARD_TO
               value: {{ $cfg.forwardTo | quote }}
             {{- end }}
+            {{- with $cfg.privacy }}
+            # Privacy (0.37.0 or later): nothing to a third party, what of
+            # what inspection reads is stored, and how much of a flow per
+            # network. The defaults keep what earlier releases did.
+            - name: OFFLINE
+              value: {{ ternary "on" "off" .offline | quote }}
+            - name: STORE_SERVER_NAMES
+              value: {{ ternary "on" "off" .store.serverNames | quote }}
+            - name: STORE_DNS_QUERIES
+              value: {{ ternary "on" "off" .store.dnsQueries | quote }}
+            - name: STORE_HTTP
+              value: {{ .store.http | quote }}
+            - name: STORE_TLS_FINGERPRINTS
+              value: {{ ternary "on" "off" .store.tlsFingerprints | quote }}
+            - name: STORE_L7_META
+              value: {{ .store.l7Meta | quote }}
+            - name: STORE_MAC_ADDRESSES
+              value: {{ ternary "on" "off" .store.macAddresses | quote }}
+            - name: STORE_PACKET_PAYLOAD
+              value: {{ .store.packetPayload | quote }}
+            {{- if .flowPrivacy }}
+            - name: FLOW_PRIVACY
+              value: {{ .flowPrivacy | quote }}
+            {{- end }}
+            - name: FLOW_PRIVACY_DEFAULT
+              value: {{ .flowPrivacyDefault | quote }}
+            {{- end }}
+            {{- with $cfg.retention }}
+            # Days each group of tables keeps (0.37.0 or later); only the
+            # groups given, the rest keep their TTL.
+            {{- range $key, $env := dict "flows" "RETENTION_FLOWS_DAYS" "summaries" "RETENTION_SUMMARIES_DAYS" "logs" "RETENTION_LOGS_DAYS" "dnsNames" "RETENTION_DNS_NAMES_DAYS" "inventory" "RETENTION_INVENTORY_DAYS" "packets" "RETENTION_PACKETS_DAYS" "alerts" "RETENTION_ALERTS_DAYS" "counters" "RETENTION_COUNTERS_DAYS" }}
+            {{- $days := index $ "Values" "flow-analyzer" "retention" $key }}
+            {{- if ne (toString $days) "" }}
+            - name: {{ $env }}
+              value: {{ $days | quote }}
+            {{- end }}
+            {{- end }}
+            {{- end }}
             - name: RUST_LOG
               value: {{ .Values.pods.collector.logLevel | quote }}
           envFrom:

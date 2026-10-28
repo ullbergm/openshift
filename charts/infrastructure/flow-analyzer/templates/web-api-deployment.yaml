@@ -84,6 +84,20 @@ spec:
                   name: {{ include "flow-analyzer.secretName" . }}
                   key: ADMIN_TOKEN
             {{- end }}
+            {{- with $cfg.privacy }}
+            # Privacy (0.37.0 or later): what leaves the network and what a
+            # viewer may read. The defaults keep what earlier releases did.
+            - name: OFFLINE
+              value: {{ ternary "on" "off" .offline | quote }}
+            - name: ASN_LOOKUP
+              value: {{ .asnLookup | quote }}
+            - name: REVERSE_DNS
+              value: {{ .reverseDns | quote }}
+            - name: EXTERNAL_LINKS
+              value: {{ ternary "on" "off" .externalLinks | quote }}
+            - name: VIEWER_ACCESS
+              value: {{ .viewerAccess | quote }}
+            {{- end }}
             # Alerting: the engine runs in this one replica.
             - name: ALERTS_ENABLED
               value: {{ $cfg.alerts.enabled | quote }}
