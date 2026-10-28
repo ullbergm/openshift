@@ -32,7 +32,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer-dashboard
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer-dashboard versioning=semver
-      tag: 0.36.1
+      tag: 0.37.0
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -46,7 +46,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.36.1
+      tag: 0.37.0
       pullPolicy: IfNotPresent
     port: 8042
     logLevel: info
@@ -63,7 +63,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.36.1
+      tag: 0.37.0
       pullPolicy: IfNotPresent
     port: 2055
     metricsPort: 9090
@@ -340,6 +340,62 @@ flow-analyzer:
   # is skipped without one. true puts ABUSECH_AUTH_KEY from the Secret
   # (externalSecret.abusechAuthKey / secrets.abusechAuthKey) into web-api.
   abusechAuthKey: false
+  # Privacy switches (images 0.37.0 or later; docs/privacy.md in
+  # flow-analyzer). Every default keeps what earlier releases did.
+  privacy:
+    # Send nothing to a third party: the threat feeds, the database
+    # downloads, Team Cymru, the update check, the Claude features and the
+    # throughput measurements stay off whatever their own settings say.
+    offline: false
+    # Where the network announcing an external address is looked up: auto
+    # (the ASN database, else Team Cymru's DNS service, which is sent the
+    # address), db (the database only) or off.
+    asnLookup: auto
+    # Reverse DNS for all addresses, internal ones only, or off.
+    reverseDns: all
+    # Links to bgp.tools, Shodan, VirusTotal and the like on the dashboard.
+    externalLinks: true
+    # What a viewer (a request that is not an admin's) may read: full,
+    # flows (who talked to whom, when and how much, the devices and the
+    # alerts; nothing inspection read, no lookups, logs, packets or Claude
+    # answers) or none (the dashboard asks for the admin token). Needs
+    # access.token or access.header to mean anything.
+    viewerAccess: full
+    # What the collector stores of what packet inspection reads.
+    store:
+      # The TLS server name and the HTTP host of each connection.
+      serverNames: true
+      # Which host asked for which name.
+      dnsQueries: true
+      # The HTTP request: full, host (the URL cut to its host) or off.
+      http: full
+      # JA4, JA3S, the certificate hash and its issuer.
+      tlsFingerprints: true
+      # The inspection pairs (banners, user names, what a clear-text login
+      # carried): all, safe (nothing that names a person) or off.
+      l7Meta: all
+      # MAC addresses on flow records.
+      macAddresses: true
+      # Mirrored packets in the ring and behind alerts: full or headers.
+      packetPayload: full
+    # How much of a flow is kept, per network: "network=mode" entries
+    # comma-separated, the mode full, metadata, counts or drop, e.g.
+    # "192.168.30.0/24=counts,192.168.1.10=drop"; and the mode for every
+    # other network (full, metadata, counts).
+    flowPrivacy: ""
+    flowPrivacyDefault: full
+  # Days each group of tables keeps its rows (images 0.37.0 or later).
+  # Empty leaves the schema's TTL as it is; 0 keeps rows for ever. The
+  # groups are in docs/collector.md under "Retention".
+  retention:
+    flows: ""
+    summaries: ""
+    logs: ""
+    dnsNames: ""
+    inventory: ""
+    packets: ""
+    alerts: ""
+    counters: ""
   # Who may change things (names and tags, alert acknowledgements, checks
   # and rules). Reading stays open to whoever reaches the Route. header is a
   # header a login proxy sets (X-Forwarded-Groups, X-Forwarded-User) and
