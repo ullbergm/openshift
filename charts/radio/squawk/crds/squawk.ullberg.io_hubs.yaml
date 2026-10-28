@@ -1,4 +1,4 @@
-# Copied from ullbergm/squawk config/crd/bases@989a7aa. Do not edit; regenerate there.
+# Copied from ullbergm/squawk config/crd/bases@f22cc56. Do not edit; regenerate there.
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -227,6 +227,23 @@ spec:
                       reason behind a TFR. Each feature is off until enabled; the key is
                       mounted into the Hub's agent only.
                     properties:
+                      ask:
+                        description: |-
+                          Ask answers questions over the Hub's own data, through tools that
+                          run inside the agent (SPEC-phase8 §2b).
+                        properties:
+                          dailyCalls:
+                            default: 50
+                            description: |-
+                              DailyCalls caps the questions a day (UTC); each runs up to eight
+                              model turns.
+                            format: int32
+                            maximum: 5000
+                            minimum: 1
+                            type: integer
+                          enabled:
+                            type: boolean
+                        type: object
                       enabled:
                         type: boolean
                       model:
@@ -665,6 +682,28 @@ spec:
                       HubExternalClaudeStatus is the Anthropic API source's day so far, per
                       feature, with the tokens spent (SPEC-phase8 §0).
                     properties:
+                      ask:
+                        description: HubExternalSourceStatus is one source's day so
+                          far.
+                        properties:
+                          callsToday:
+                            format: int32
+                            type: integer
+                          dailyCap:
+                            format: int32
+                            type: integer
+                          lastError:
+                            type: string
+                          lastErrorAt:
+                            format: date-time
+                            type: string
+                          lastSuccess:
+                            format: date-time
+                            type: string
+                        required:
+                        - callsToday
+                        - dailyCap
+                        type: object
                       storyCard:
                         description: HubExternalSourceStatus is one source's day so
                           far.

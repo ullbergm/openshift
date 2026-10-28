@@ -13,11 +13,11 @@ application:
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk
-    tag: 0.1.0-g989a7aa-1@sha256:13bb0ccf74820f0b057ece6c2c38d284c09d07d77d2cbbc8e7c7ee96d54a0fad
+    tag: 0.1.0-gf22cc56-1@sha256:e5fc7d204c755e764322effce8b40fd2c313a84a1b9f99ec33f7f93e805a36b4
   # squawk's own web map (same commit as the operator).
   spa:
     repository: ghcr.io/ullbergm/squawk-spa
-    tag: 0.1.0-g989a7aa-1@sha256:3bedd5b60202fed134c1dd45a6fa2aeb7f2fbd9228ebb9d7fa7376f2a5da48f4
+    tag: 0.1.0-gf22cc56-1@sha256:18e7fbc4297fe7f0c01baf724ec496a2ab2e43911c9adc9c9fc652e982caad89
   # The FAA chart tiles job (official GDAL image plus squawk-charts).
   charts:
     repository: ghcr.io/ullbergm/squawk-charts
@@ -142,6 +142,9 @@ hub:
         enabled: true
         dailyCalls: 20
         radiusNm: 100
+      ask:
+        enabled: true
+        dailyCalls: 50
   # FAA charts (sectionals, terminal areas, Caribbean, IFR enroute low
   # with its area charts, and high), built daily
   # onto the data volume when a new 56-day cycle is out, plus the airspace
