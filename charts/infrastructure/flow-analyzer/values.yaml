@@ -53,9 +53,9 @@ pods:
     resources:
       requests:
         cpu: 50m
-        memory: 64Mi
+        memory: 192Mi
       limits:
-        memory: 256Mi
+        memory: 768Mi
 
   # NetFlow v9 / IPFIX (and sFlow) collector: UDP in, batched inserts into
   # ClickHouse; optional SNMP, RouterOS REST, AdGuard, LibreNMS and probe pollers.
