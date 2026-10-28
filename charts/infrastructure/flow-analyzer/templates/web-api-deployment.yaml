@@ -63,6 +63,14 @@ spec:
             {{- end }}
             - name: THREAT_FEEDS
               value: {{ $cfg.threatFeeds | quote }}
+            {{- if $cfg.abusechAuthKey }}
+            # Fills {auth_key} in feed URLs (the default threatfox feed).
+            - name: ABUSECH_AUTH_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "flow-analyzer.secretName" . }}
+                  key: ABUSECH_AUTH_KEY
+            {{- end }}
             {{- if $cfg.access.header }}
             - name: ADMIN_HEADER
               value: {{ $cfg.access.header | quote }}
