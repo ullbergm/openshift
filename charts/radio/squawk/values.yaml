@@ -13,11 +13,11 @@ application:
 images:
   operator:
     repository: ghcr.io/ullbergm/squawk
-    tag: 0.1.0-g0ea7e61-1@sha256:3bf1d682fd71ab293b1971bd8329816e5610563981f3fa00ca8bd1410a5e3f6a
+    tag: 0.1.0-g989a7aa-1@sha256:13bb0ccf74820f0b057ece6c2c38d284c09d07d77d2cbbc8e7c7ee96d54a0fad
   # squawk's own web map (same commit as the operator).
   spa:
     repository: ghcr.io/ullbergm/squawk-spa
-    tag: 0.1.0-g0ea7e61-1@sha256:5f2647099f20a0e8af3ca85447ee02ed463e3a21fe21f4d607f313c196e1cd1f
+    tag: 0.1.0-g989a7aa-1@sha256:3bedd5b60202fed134c1dd45a6fa2aeb7f2fbd9228ebb9d7fa7376f2a5da48f4
   # The FAA chart tiles job (official GDAL image plus squawk-charts).
   charts:
     repository: ghcr.io/ullbergm/squawk-charts
@@ -127,6 +127,21 @@ hub:
   external:
     photos:
       enabled: true   # user decision 2026-10-27
+    # Claude (squawk SPEC-phase8): a story card for the selected aircraft
+    # and what a TFR is for (web search for the news). The key comes from
+    # Infisical (SQUAWK_ANTHROPIC_API_KEY) into this chart's Secret; only
+    # the Hub's agent mounts it. Opus 5.5 by the user's choice 2026-10-27.
+    claude:
+      enabled: true
+      secretRef: {name: squawk, key: claudeApiKey}
+      model: claude-opus-5-5
+      storyCard:
+        enabled: true
+        dailyCalls: 500
+      tfr:
+        enabled: true
+        dailyCalls: 20
+        radiusNm: 100
   # FAA charts (sectionals, terminal areas, Caribbean, IFR enroute low
   # with its area charts, and high), built daily
   # onto the data volume when a new 56-day cycle is out, plus the airspace
@@ -214,3 +229,5 @@ externalSecret:
       remoteKey: LONG
     - secretKey: altMeters
       remoteKey: ALT
+    - secretKey: claudeApiKey
+      remoteKey: SQUAWK_ANTHROPIC_API_KEY
