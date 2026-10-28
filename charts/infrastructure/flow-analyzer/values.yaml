@@ -32,7 +32,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer-dashboard
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer-dashboard versioning=semver
-      tag: 0.36.0
+      tag: 0.36.1
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -46,7 +46,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.36.0
+      tag: 0.36.1
       pullPolicy: IfNotPresent
     port: 8042
     logLevel: info
@@ -63,7 +63,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.36.0
+      tag: 0.36.1
       pullPolicy: IfNotPresent
     port: 2055
     metricsPort: 9090
@@ -335,6 +335,11 @@ flow-analyzer:
   # Emerging Threats, DShield): "default", "off" without internet access, or
   # your own name=url entries comma-separated.
   threatFeeds: default
+  # abuse.ch retired ThreatFox's open exports in 2026: the default
+  # `threatfox` feed now needs a free abuse.ch Auth-Key (auth.abuse.ch) and
+  # is skipped without one. true puts ABUSECH_AUTH_KEY from the Secret
+  # (externalSecret.abusechAuthKey / secrets.abusechAuthKey) into web-api.
+  abusechAuthKey: false
   # Who may change things (names and tags, alert acknowledgements, checks
   # and rules). Reading stays open to whoever reaches the Route. header is a
   # header a login proxy sets (X-Forwarded-Groups, X-Forwarded-User) and
@@ -397,6 +402,8 @@ externalSecret:
   # set, the MaxMind key when geoip.url says {license_key}.
   routerosPasswordKey: FLOW_ANALYZER_ROUTEROS_PASSWORD
   maxmindLicenseKey: FLOW_ANALYZER_MAXMIND_LICENSE_KEY
+  # The abuse.ch Auth-Key when flow-analyzer.abusechAuthKey is true.
+  abusechAuthKey: FLOW_ANALYZER_ABUSECH_AUTH_KEY
   # Likewise: the AdGuard login when adguard.url is set, the LibreNMS token
   # when librenms.url is set, the webhook URL and headers when
   # alerts.webhook.enabled, the SMTP URL when alerts.email.enabled, the
@@ -425,6 +432,8 @@ secrets:
   # (MAXMIND_LICENSE_KEY), when those features are on.
   routerosPassword: ""
   maxmindLicenseKey: ""
+  # abuse.ch Auth-Key (ABUSECH_AUTH_KEY) when flow-analyzer.abusechAuthKey is true.
+  abusechAuthKey: ""
   # AdGuard Home login, the LibreNMS API token, the alert webhook URL and
   # headers, the SMTP URL and the admin token, when those features are on.
   adguardUser: ""
