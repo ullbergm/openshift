@@ -34,7 +34,7 @@ pods:
   init:
     image:
       repository: docker.io/library/node
-      tag: 24-alpine
+      tag: 26-alpine
   main:
     image:
       repository: docker.io/nginxinc/nginx-unprivileged
