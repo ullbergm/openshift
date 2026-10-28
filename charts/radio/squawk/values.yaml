@@ -142,8 +142,10 @@ hub:
         enabled: true
         dailyCalls: 20
         radiusNm: 100
+      # Off on this cluster (user, 2026-10-28: Opus is too expensive for
+      # ask; a per-feature model is coming, Haiku 5.5 for ask).
       ask:
-        enabled: true
+        enabled: false
         dailyCalls: 50
   # FAA charts (sectionals, terminal areas, Caribbean, IFR enroute low
   # with its area charts, and high), built daily
