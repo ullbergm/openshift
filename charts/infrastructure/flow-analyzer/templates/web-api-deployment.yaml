@@ -152,13 +152,26 @@ spec:
               value: {{ $cfg.geoip.url | quote }}
             - name: GEOIP_REFRESH_SECS
               value: {{ $cfg.geoip.refreshSecs | quote }}
-            {{- if contains "{license_key}" $cfg.geoip.url }}
+            {{- end }}
+            {{- if $cfg.geoip.asnUrl }}
+            # ASN database: which network announces an address, answered
+            # from the file before Team Cymru's DNS service; downloaded to
+            # the same emptyDir and refreshed on the same schedule.
+            - name: GEOIP_ASN_DB
+              value: /var/lib/flow-analyzer/asn.mmdb
+            - name: GEOIP_ASN_URL
+              value: {{ $cfg.geoip.asnUrl | quote }}
+            {{- if not $cfg.geoip.url }}
+            - name: GEOIP_REFRESH_SECS
+              value: {{ $cfg.geoip.refreshSecs | quote }}
+            {{- end }}
+            {{- end }}
+            {{- if or (contains "{license_key}" $cfg.geoip.url) (contains "{license_key}" $cfg.geoip.asnUrl) }}
             - name: MAXMIND_LICENSE_KEY
               valueFrom:
                 secretKeyRef:
                   name: {{ include "flow-analyzer.secretName" . }}
                   key: MAXMIND_LICENSE_KEY
-            {{- end }}
             {{- end }}
             # Daily look at the container registry for a newer release, shown
             # on the dashboard's Status page.
@@ -238,12 +251,13 @@ spec:
                 - ALL
           resources:
             {{- toYaml .Values.pods.webApi.resources | nindent 12 }}
-          {{- if $cfg.geoip.url }}
+          {{- if or $cfg.geoip.url $cfg.geoip.asnUrl }}
           volumeMounts:
             - name: geoip
               mountPath: /var/lib/flow-analyzer
       volumes:
-        # The downloaded GeoIP database; fetched again after a restart.
+        # The downloaded GeoIP (and ASN) databases; fetched again after a
+        # restart.
         - name: geoip
           emptyDir:
             sizeLimit: 512Mi

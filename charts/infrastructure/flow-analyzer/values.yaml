@@ -32,7 +32,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer-dashboard
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer-dashboard versioning=semver
-      tag: 0.35.2
+      tag: 0.36.0
       pullPolicy: IfNotPresent
     resources:
       requests:
@@ -46,7 +46,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.35.2
+      tag: 0.36.0
       pullPolicy: IfNotPresent
     port: 8042
     logLevel: info
@@ -63,7 +63,7 @@ pods:
     image:
       repository: ghcr.io/ullbergm/flow-analyzer
       # renovate: datasource=docker depName=ghcr.io/ullbergm/flow-analyzer versioning=semver
-      tag: 0.35.2
+      tag: 0.36.0
       pullPolicy: IfNotPresent
     port: 2055
     metricsPort: 9090
@@ -306,6 +306,13 @@ flow-analyzer:
     # with the key in the Secret (MAXMIND_LICENSE_KEY). Empty leaves GeoIP off.
     url: https://download.db-ip.com/free/dbip-city-lite-2026-10.mmdb.gz
     refreshSecs: 604800
+    # Optional ASN database (0.36.0 or later): which network announces an
+    # address, answered from the file before Team Cymru's DNS service.
+    # DB-IP Lite ASN (month in the name, like url) or MaxMind's permalink
+    # with edition_id=GeoLite2-ASN. Downloaded and refreshed like url.
+    # Empty leaves it to Team Cymru.
+    #   https://download.db-ip.com/free/dbip-asn-lite-2026-10.mmdb.gz
+    asnUrl: ""
   # Address ranges treated as "inside" when classifying traffic. Add
   # 100.64.0.0/10 or the WAN address when the router sits behind CGNAT.
   internalSubnets: 10.0.0.0/8,172.16.0.0/12,192.168.0.0/16,fc00::/7,fe80::/10
