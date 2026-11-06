@@ -107,6 +107,8 @@ spec:
               value: {{ $cfg.alerts.ntpServers | default "" | quote }}
             - name: MAIL_HOSTS
               value: {{ $cfg.alerts.mailHosts | default "" | quote }}
+            - name: LOCAL_DOMAINS
+              value: {{ $cfg.alerts.localDomains | default "" | quote }}
             - name: ALERT_MIN_SEVERITY
               value: {{ $cfg.alerts.minSeverity | quote }}
             - name: ALERT_FIREWALL_WATCH

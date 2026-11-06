@@ -479,6 +479,10 @@
               "type": "string",
               "description": "Hosts allowed to send SMTP to the outside; empty reports every one"
             },
+            "localDomains": {
+              "type": "string",
+              "description": "Your own DNS zones and search domains, comma-separated; names under them are left out of the DNS-name checks"
+            },
             "minSeverity": {
               "type": "string",
               "enum": [
