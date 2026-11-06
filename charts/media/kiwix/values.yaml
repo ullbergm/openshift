@@ -37,7 +37,7 @@ zimUpdater:
   image:
     # renovate: datasource=docker depName=python versioning=docker
     repository: python
-    tag: "3.14-slim"
+    tag: "3.15-slim"
     pullPolicy: IfNotPresent
   kiwixTools:
     version: "3.8.2"
