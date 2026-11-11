@@ -515,7 +515,7 @@ def download(http, args, pubs, files_dir, state):
     jobs = [url for pub in pubs for _, url in manual_files(pub, args.formats)]
     log(f"ℹ️ Checking {len(jobs)} files ...")
     counts = {"new": 0, "same": 0, "missing": 0}
-    failures = []
+    failures, missing = [], []
     lock = threading.Lock()
     done = [0]
 
@@ -529,8 +529,10 @@ def download(http, args, pubs, files_dir, state):
             done[0] += 1
             if result:
                 counts[result] += 1
-            if result in (None, "missing"):
-                failures.append(f"file {url}" + (" (404)" if result else ""))
+            if result is None:
+                failures.append(f"file {url}")
+            elif result == "missing":  # gone upstream: nothing a re-run can fix
+                missing.append(url)
             if done[0] % 250 == 0:
                 log(f"  ... {done[0]}/{len(jobs)} ({counts['new']} downloaded)")
 
@@ -539,9 +541,9 @@ def download(http, args, pubs, files_dir, state):
     state.save()
     log(
         f"✅ Files: {counts['new']} downloaded, {counts['same']} unchanged, "
-        f"{counts['missing']} missing upstream, {len(failures) - counts['missing']} failed"
+        f"{counts['missing']} missing upstream, {len(failures)} failed"
     )
-    return failures
+    return failures, missing
 
 
 # --------------------------------------------------------------------------
@@ -1107,7 +1109,7 @@ def main():
         d.mkdir(parents=True, exist_ok=True)
     http = Http(args.user_agent, args.delay)
     state = State(work / "state.json")
-    failures = []
+    failures, missing = [], []
 
     seen = None
     if not args.skip_crawl:
@@ -1127,7 +1129,8 @@ def main():
         raise SystemExit("❌ No manuals in the mirror; nothing to build")
 
     if not args.skip_crawl:
-        failures += download(http, args, pubs, files_dir, state)
+        file_failures, missing = download(http, args, pubs, files_dir, state)
+        failures += file_failures
 
     last_path = work / "last-build.json"
     last = json.loads(last_path.read_text()) if last_path.exists() else {}
@@ -1146,8 +1149,12 @@ def main():
             json.dumps({"fingerprint": digest, "zim": dest.name, "registered": registered})
         )
 
+    if missing:
+        log(f"\n⚠️ {len(missing)} files are missing upstream (404) and were left out:")
+        for url in sorted(missing)[:50]:
+            log(f"  - {url}")
     if failures:
-        log(f"\n⚠️ {len(failures)} items could not be mirrored:")
+        log(f"\n❌ {len(failures)} items could not be mirrored:")
         for item in failures[:50]:
             log(f"  - {item}")
         sys.exit(1)
