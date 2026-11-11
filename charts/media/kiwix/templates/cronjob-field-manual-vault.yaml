@@ -1,0 +1,101 @@
+{{- if .Values.fieldManualVault.enabled }}
+---
+# Mirrors the T.REX ARMS Field Manual Vault and packs it into a ZIM, since it is
+# not in the Kiwix catalog. See files/build-trex-vault-zim.py.
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Release.Name }}-field-manual-vault
+  namespace: {{ .Release.Namespace }}
+spec:
+  schedule: {{ .Values.fieldManualVault.schedule | quote }}
+  concurrencyPolicy: Forbid
+  successfulJobsHistoryLimit: 3
+  failedJobsHistoryLimit: 3
+  jobTemplate:
+    spec:
+      # The first run downloads the whole collection; later runs only what changed.
+      # An interrupted run resumes from the mirror on the next one.
+      activeDeadlineSeconds: 86400
+      backoffLimit: 0
+      template:
+        spec:
+          serviceAccountName: {{ .Release.Name }}
+          restartPolicy: Never
+          securityContext:
+            fsGroup: 568
+            fsGroupChangePolicy: OnRootMismatch
+            runAsGroup: 0
+            runAsUser: 0
+          containers:
+            - name: field-manual-vault
+              image: "{{ .Values.zimUpdater.image.repository }}:{{ .Values.zimUpdater.image.tag }}"
+              imagePullPolicy: {{ .Values.zimUpdater.image.pullPolicy }}
+              command: ["/bin/sh", "-c"]
+              args:
+                - |
+                  set -eu
+
+                  if [ ! -x "${KIWIX_TOOLS_BIN_DIR}/kiwix-manage" ]; then
+                    echo "Bootstrapping kiwix-tools..."
+                    python3 /scripts/bootstrap-kiwix-tools.py
+                  fi
+                  export PATH="${KIWIX_TOOLS_BIN_DIR}:${PATH}"
+
+                  # libzim is kept on the volume so it is only installed once per version.
+                  PYLIB="${VAULT_WORK_DIR}/pylib-${LIBZIM_VERSION}"
+                  if [ ! -d "${PYLIB}/libzim" ]; then
+                    echo "Installing libzim ${LIBZIM_VERSION}..."
+                    rm -rf "${VAULT_WORK_DIR}"/pylib-*
+                    pip install --no-cache-dir --disable-pip-version-check \
+                      --target "${PYLIB}" "libzim==${LIBZIM_VERSION}"
+                  fi
+                  export PYTHONPATH="${PYLIB}"
+
+                  exec python3 /scripts/build-trex-vault-zim.py
+              env:
+                - name: TZ
+                  value: {{ .Values.cluster.timezone }}
+                - name: ZIM_DATA_DIR
+                  value: /data
+                - name: VAULT_WORK_DIR
+                  value: /data/.field-manual-vault
+                - name: LIBZIM_VERSION
+                  value: {{ .Values.fieldManualVault.libzim.version | quote }}
+                - name: VAULT_FORMATS
+                  value: {{ .Values.fieldManualVault.formats | join "," | quote }}
+                - name: VAULT_FULLTEXT
+                  value: {{ .Values.fieldManualVault.fullTextIndex | quote }}
+                - name: VAULT_PRUNE
+                  value: {{ .Values.fieldManualVault.prune | quote }}
+                - name: VAULT_REQUEST_DELAY
+                  value: {{ .Values.fieldManualVault.requestDelay | quote }}
+                - name: VAULT_WORKERS
+                  value: {{ .Values.fieldManualVault.workers | quote }}
+                - name: KIWIX_TOOLS_VERSION
+                  value: {{ .Values.zimUpdater.kiwixTools.version | quote }}
+                - name: KIWIX_TOOLS_SHA256
+                  value: {{ .Values.zimUpdater.kiwixTools.sha256 | quote }}
+                - name: KIWIX_TOOLS_DIR
+                  value: /data/.kiwix-tools
+                - name: KIWIX_TOOLS_BIN_DIR
+                  value: /data/.kiwix-tools/bin
+              volumeMounts:
+                - name: data
+                  mountPath: /data
+                  subPath: kiwix
+                - name: scripts
+                  mountPath: /scripts
+              resources:
+                requests:
+                  cpu: 100m
+                  memory: 512Mi
+          volumes:
+            - name: data
+              persistentVolumeClaim:
+                claimName: {{ .Release.Name }}-data-volume
+            - name: scripts
+              configMap:
+                name: {{ .Release.Name }}-updater-script
+                defaultMode: 0755
+{{- end }}
