@@ -27,6 +27,7 @@ import argparse
 import datetime
 import hashlib
 import html
+from http.client import HTTPException
 import json
 import os
 import re
@@ -124,9 +125,26 @@ class Http:
             time.sleep(min(wait, 300))
         raise last
 
+    def retry_read(self, url, fn):
+        """Run fn(), which opens and reads url, again if the connection drops mid-body."""
+        for attempt in range(4):
+            try:
+                return fn()
+            except urllib.error.HTTPError:
+                raise
+            except (OSError, HTTPException) as e:
+                if attempt == 3:
+                    raise
+                wait = 5 * 2**attempt
+                log(f"  ⚠️ {url}: {e}; retrying in {wait}s")
+                time.sleep(wait)
+
     def text(self, url):
-        with self.open(url) as resp:
-            return resp.read().decode("utf-8", "replace")
+        def read():
+            with self.open(url) as resp:
+                return resp.read().decode("utf-8", "replace")
+
+        return self.retry_read(url, read)
 
 
 # --------------------------------------------------------------------------
@@ -460,6 +478,10 @@ def manual_files(pub, formats):
 
 def download_one(http, state, files_dir, url):
     """Returns 'new', 'same', 'missing' or raises."""
+    return http.retry_read(url, lambda: download_once(http, state, files_dir, url))
+
+
+def download_once(http, state, files_dir, url):
     dest = local_path(files_dir, url)
     known = state.get(url)
     headers = {}
