@@ -29,6 +29,32 @@ pods:
       tag: "3.8.2"
       pullPolicy: IfNotPresent
 
+# Offline copy of the T.REX ARMS Field Manual Vault (https://www.trex-arms.com/field-manual-vault),
+# which is not in the Kiwix catalog: a CronJob mirrors the manuals (PDF + EPUB) with their
+# metadata and builds trex-arms-field-manual-vault_en_all_<YYYY-MM>.zim next to the other ZIMs.
+# Runs are incremental; the mirror lives in .field-manual-vault/ on the data volume and takes
+# about as much space again as the ZIM (roughly 50G each with both formats).
+# Runs in the zimUpdater image and uses its kiwixTools settings.
+fieldManualVault:
+  enabled: true
+  # Default: 04:00 on the 1st of each month.
+  schedule: "0 4 1 * *"
+  libzim:
+    # renovate: datasource=pypi depName=libzim
+    version: "4.1.0"
+  # File formats to keep for each manual: pdf, epub.
+  formats:
+    - pdf
+    - epub
+  # Index the manuals' text (taken from the EPUBs) so Kiwix search looks inside them.
+  # When false only titles, summaries and tables of contents are searchable.
+  fullTextIndex: true
+  # Drop manuals that have disappeared from the site. Default keeps them.
+  prune: false
+  # Seconds between requests to one host, and parallel file downloads.
+  requestDelay: 0.5
+  workers: 4
+
 zimUpdater:
   enabled: true
   # Cron schedule for checking and downloading updated ZIM files.

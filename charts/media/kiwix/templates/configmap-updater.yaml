@@ -1,10 +1,14 @@
-{{- if .Values.zimUpdater.enabled }}
+{{- if or .Values.zimUpdater.enabled .Values.fieldManualVault.enabled }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ .Release.Name }}-updater-script
 data:
+  bootstrap-kiwix-tools.py: |
+{{ .Files.Get "files/bootstrap-kiwix-tools.py" | indent 4 }}
   update-zims.py: |
 {{ .Files.Get "files/update-zims.py" | indent 4 }}
+  build-trex-vault-zim.py: |
+{{ .Files.Get "files/build-trex-vault-zim.py" | indent 4 }}
 {{- end }}
