@@ -15,9 +15,7 @@ spec:
         - name: excalidraw
         - name: it-tools
         - name: ladle
-        # Startpunkt 5 is on trial in place of this 4.x chart, deployed from
-        # outside this repo until its chart is published.
-        #- name: startpunkt
+        - name: startpunkt
   template:
     metadata:
       name: '{{ "{{" }} .name {{ "}}" }}'

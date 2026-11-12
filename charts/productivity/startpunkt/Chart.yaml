@@ -1,9 +1,21 @@
 apiVersion: v2
-description: A Helm chart for Startpunkt
+description: A Helm chart for Startpunkt, the cluster's start page
 name: startpunkt
-version: 1.0.0
+version: 2.0.0
 kubeVersion: ">=1.31.0-0"
+home: https://github.com/ullbergm/startpunkt
+sources:
+  - https://github.com/ullbergm/startpunkt
+  - https://github.com/ullbergm/openshift
+keywords:
+  - startpage
+  - dashboard
 
 maintainers:
   - name: Magnus Ullberg
     email: magnus@ullberg.us
+
+dependencies:
+  - name: startpunkt
+    version: "5.0.0"
+    repository: "oci://ghcr.io/ullbergm/charts"

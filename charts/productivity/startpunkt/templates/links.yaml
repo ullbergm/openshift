@@ -1,0 +1,45 @@
+{{- /*
+Tiles for the cluster's own consoles.
+*/}}
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1" }}
+---
+apiVersion: startpunkt.ullberg.us/v1
+kind: Application
+metadata:
+  name: openshift-console
+spec:
+  name: OpenShift
+  group: Infrastructure
+  icon: simple-icons:redhatopenshift
+  iconColor: "red"
+  url: http://console-openshift-console.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}/dashboards
+  info: OpenShift console
+  location: 100
+  {{- if .Values.tagLinks }}
+  tags: admin
+  {{- end }}
+---
+apiVersion: startpunkt.ullberg.us/v1
+kind: Application
+metadata:
+  name: gitops
+spec:
+  name: GitOps
+  group: Infrastructure
+  icon: simple-icons:argo
+  url: https://openshift-gitops-server-openshift-gitops.apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}
+  info: GitOps
+  tags: admin
+---
+apiVersion: startpunkt.ullberg.us/v1
+kind: Application
+metadata:
+  name: github
+spec:
+  name: GitHub Repo
+  group: Infrastructure
+  icon: simple-icons:github
+  url: https://github.com/ullbergm/openshift
+  info: GitHub Repo
+  tags: admin
+{{- end }}

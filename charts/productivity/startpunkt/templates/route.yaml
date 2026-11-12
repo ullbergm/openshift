@@ -1,16 +1,22 @@
+{{- /*
+Two Routes on the address of the start page: /api goes to the api
+Deployment, everything else to the web Deployment. The upstream chart's
+Routes stay off so that the host follows the cluster's naming scheme.
+*/}}
+{{- range $part := list "web" "api" }}
 ---
 kind: Route
 apiVersion: route.openshift.io/v1
 metadata:
   annotations:
     route.openshift.io/termination: "edge"
-  name: {{ .Release.Name }}
+  name: {{ $.Release.Name }}{{ if eq $part "api" }}-api{{ end }}
 spec:
-  host: "apps.{{ .Values.cluster.name }}.{{ .Values.cluster.top_level_domain }}"
-  path: /
+  host: "apps.{{ $.Values.cluster.name }}.{{ $.Values.cluster.top_level_domain }}"
+  path: {{ if eq $part "api" }}/api{{ else }}/{{ end }}
   to:
     kind: Service
-    name: {{ .Release.Name }}
+    name: {{ $.Release.Name }}-{{ $part }}
     weight: 100
   port:
     targetPort: http
@@ -18,3 +24,4 @@ spec:
     termination: edge
     insecureEdgeTerminationPolicy: Redirect
   wildcardPolicy: None
+{{- end }}
