@@ -1,5 +1,5 @@
-{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1alpha4" }}
-apiVersion: startpunkt.ullberg.us/v1alpha4
+{{- if .Capabilities.APIVersions.Has "startpunkt.ullberg.us/v1" }}
+apiVersion: startpunkt.ullberg.us/v1
 kind: Application
 metadata:
   name: {{ .Release.Name }}-map
@@ -12,7 +12,7 @@ spec:
   info: "squawk's map"
   location: 0
 ---
-apiVersion: startpunkt.ullberg.us/v1alpha4
+apiVersion: startpunkt.ullberg.us/v1
 kind: Application
 metadata:
   name: {{ .Release.Name }}-tar1090
