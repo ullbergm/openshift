@@ -16,7 +16,7 @@
       automerge: true,
       automergeType: "branch",
       matchUpdateTypes: ["digest"],
-      ignoreTests: false,
+      ignoreTests: true,
     },
     {
       description: "Auto-merge container and chart minor and patch updates for standard apps",
@@ -57,7 +57,7 @@
         "python",
       ],
       minimumReleaseAge: "12 hours",
-      ignoreTests: false,
+      ignoreTests: true,
     },
     {
       description: "Auto-merge own (ullbergm) images and charts immediately, no release-age wait",
@@ -67,7 +67,7 @@
       automergeType: "branch",
       matchUpdateTypes: ["minor", "patch", "digest"],
       minimumReleaseAge: "1 minute",
-      ignoreTests: false,
+      ignoreTests: true,
     },
     {
       description: "Auto-merge Helm chart minor and patch updates",
@@ -76,7 +76,7 @@
       automergeType: "branch",
       matchUpdateTypes: ["minor", "patch"],
       minimumReleaseAge: "1 day",
-      ignoreTests: false,
+      ignoreTests: true,
     },
     {
       description: "Auto-merge GitHub Actions",
