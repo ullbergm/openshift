@@ -1,6 +1,6 @@
 dependencies:
 - name: startpunkt
   repository: oci://ghcr.io/ullbergm/charts
-  version: 5.4.0
-digest: sha256:bc5390d558906d3d4f2ec2bb8ce942054af92db5b0a07f50ebd72fb2199d1fc0
-generated: "2026-11-13T14:44:08.224059454Z"
+  version: 5.6.0
+digest: sha256:61cd95df265e579ca8ffbe560612d3232513fe447984c856b04868a559376de1
+generated: "2026-11-13T18:31:47.014761444Z"
