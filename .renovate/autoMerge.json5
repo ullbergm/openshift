@@ -19,8 +19,8 @@
       ignoreTests: false,
     },
     {
-      description: "Auto-merge container minor and patch updates for standard apps",
-      matchDatasources: ["docker"],
+      description: "Auto-merge container and chart minor and patch updates for standard apps",
+      matchDatasources: ["docker", "helm"],
       automerge: true,
       automergeType: "branch",
       matchUpdateTypes: ["minor", "patch"],
@@ -43,6 +43,18 @@
         "/excalidraw/",
         "/it-tools/",
         "/startpunkt/",
+        // Radio apps
+        "/cloudtak/",
+        "/cloudflared/",
+        // Infrastructure
+        "/goldilocks/",
+        "/^ghcr\\.io/actions//",
+        "/gha-runner-scale-set/",
+        "/clickhouse/",
+        "/emqx/",
+        "/nodered/",
+        // Base images
+        "python",
       ],
       minimumReleaseAge: "12 hours",
       ignoreTests: false,
