@@ -36,7 +36,7 @@ runner:
   image:
     repository: ghcr.io/actions/actions-runner
     # renovate: datasource=docker depName=ghcr.io/actions/actions-runner versioning=semver
-    tag: 2.338.0
+    tag: 2.338.2
     pullPolicy: IfNotPresent
   # Installed with apt when a runner pod starts, before it takes a job. The
   # upstream image is minimal; these are tools GitHub-hosted runners ship with.
