@@ -1,0 +1,28 @@
+cluster:
+  top_level_domain: example.com
+  name: openshift
+  admin_email: admin@example.com
+  timezone: America/New_York
+  storage: {}
+
+application:
+  name: Mealie
+  group: Productivity
+  icon: mdi:food
+  iconColor: ""
+  image: ""
+  description: "Recipe manager and meal planner"
+  port: 9000
+  location: 0
+  configSize: 10Gi
+
+pods:
+  main:
+    image:
+      repository: ghcr.io/mealie-recipes/mealie
+      # renovate: datasource=docker depName=ghcr.io/mealie-recipes/mealie versioning=semver
+      tag: v3.31.0
+      pullPolicy: IfNotPresent
+    env:
+      ALLOW_SIGNUP: "false"
+      DB_ENGINE: sqlite

@@ -107,6 +107,7 @@ Each application in the `/charts` directory is a complete Helm chart with:
 - **CyberChef**: Data manipulation and analysis toolkit
 - **Excalidraw**: Collaborative whiteboard and diagramming tool
 - **IT-Tools**: Collection of handy IT utilities and converters
+- **Mealie**: Recipe manager and meal planner
 - **Startpunkt**: Customizable homepage and application dashboard
 
 ### Security Applications

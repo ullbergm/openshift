@@ -1,0 +1,29 @@
+apiVersion: v2
+description: A Helm chart for Mealie, a self-hosted recipe manager and meal planner
+name: mealie
+version: 1.0.0
+appVersion: "3.31.0"
+kubeVersion: ">=1.31.0-0"
+home: https://github.com/mealie-recipes/mealie
+sources:
+  - https://github.com/mealie-recipes/mealie
+  - https://github.com/ullbergm/openshift
+keywords:
+  - mealie
+  - recipes
+  - meal-planning
+  - cookbook
+annotations:
+  charts.openshift.io/name: mealie
+  charts.openshift.io/provider: ullberg
+  charts.openshift.io/providerType: community
+  category: Productivity
+
+maintainers:
+  - name: Magnus Ullberg
+    email: magnus@ullberg.us
+
+dependencies:
+  - name: common
+    version: 1.2.0
+    repository: file://../../_common

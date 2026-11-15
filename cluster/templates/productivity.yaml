@@ -15,6 +15,7 @@ spec:
         - name: excalidraw
         - name: it-tools
         - name: ladle
+        - name: mealie
         - name: startpunkt
   template:
     metadata:
