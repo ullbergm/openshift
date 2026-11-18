@@ -113,7 +113,7 @@ pods:
     image:
       repository: ghcr.io/dfpc-coe/cloudtak-events
       # renovate: datasource=docker depName=ghcr.io/dfpc-coe/cloudtak-events versioning=loose
-      tag: v13.122.8@sha256:eac3e0357e7ef535a766ea332611068b0a4b8a4929b1598b8962bbf9204f7456
+      tag: v13.124.0@sha256:b3899cf6e464899852036161757f838b42784684e62ac43225735c2a0c0ee7e5
       pullPolicy: IfNotPresent
     securityContext:
       runAsUser: 1000
