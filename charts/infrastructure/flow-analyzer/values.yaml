@@ -79,7 +79,7 @@ pods:
     image:
       repository: docker.io/clickhouse/clickhouse-server
       # renovate: datasource=docker depName=docker.io/clickhouse/clickhouse-server versioning=semver
-      tag: 26.10@sha256:2e107973b8a8bed7e76b104e0fadb8ce591da9b1cc5bb94aa048208c50b5d658
+      tag: 26.10@sha256:cb030c0616aa80d8daf03033ba68d6297a1c86735b142a8e82b96f4cf119ec98
       pullPolicy: IfNotPresent
     database: default
     # Defined in the users.d file; the password comes from the external secret.
