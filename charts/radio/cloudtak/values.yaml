@@ -22,7 +22,7 @@ pods:
     image:
       repository: ghcr.io/dfpc-coe/cloudtak-api
       # renovate: datasource=docker depName=ghcr.io/dfpc-coe/cloudtak-api versioning=loose
-      tag: v13.124.0@sha256:41fa006305698c4421d28c2521657fe9f00df4f49242802014f1b6c42a64109f
+      tag: v13.126.0@sha256:7c627aa9dece5c13a0d055ffedded12729f92af55c8da42ad293fe1176c3434e
       pullPolicy: IfNotPresent
     securityContext:
       runAsUser: 1000
