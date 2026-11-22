@@ -133,7 +133,7 @@ pods:
     image:
       repository: ghcr.io/dfpc-coe/cloudtak-retention
       # renovate: datasource=docker depName=ghcr.io/dfpc-coe/cloudtak-retention versioning=loose
-      tag: v13.124.0@sha256:03677d2e98a4c97fb4ae03aeb7e8ed912ee827058bcee620eab158404ad12a52
+      tag: v13.127.0@sha256:6c08e0cbb504223b773ea34320b6d49fbbbf57c9ddd7c0d9613432e606375291
       pullPolicy: IfNotPresent
     securityContext:
       runAsUser: 1000
