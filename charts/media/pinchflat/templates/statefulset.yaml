@@ -54,6 +54,10 @@ spec:
             name: config
           - mountPath: /data
             name: data
+          # Pinchflat writes under /downloads; keep it on the NAS, not the container's disk
+          - mountPath: /downloads/media/youtube
+            name: data
+            subPath: media/youtube
           resources:
             requests:
               cpu: 25m
